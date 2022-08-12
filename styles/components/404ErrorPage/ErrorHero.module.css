@@ -1,0 +1,26 @@
+.errorHeroContainer {
+  margin: 4rem 3rem;
+  align-items: center;
+}
+
+.errorHeroText {
+  text-align: center;
+}
+
+.errorHeroText h1 {
+  font-size: 3rem;
+}
+
+.errorHeroText p {
+  margin: 2rem;
+}
+
+.errorHeroText a {
+  text-decoration: underline;
+  color: #0e62cb;
+  transition: all 0.3s ease;
+}
+
+.errorHeroText a:hover {
+  color: #6bb7bf;
+}
