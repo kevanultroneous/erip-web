@@ -1,0 +1,26 @@
+.aboutFeatureContainer {
+  margin: 4rem 3rem;
+  align-items: center;
+  justify-content: center;
+}
+.aboutFeatureHeading {
+  text-align: center;
+  margin: 0 0 2rem;
+}
+
+.featureData {
+  margin: 0 0 1.5rem;
+}
+
+.aboutFeatureCheckbox {
+  all: unset;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  text-align: center;
+  background-color: #6bb7bf;
+  margin-right: 0.5rem;
+}
+.aboutfeatureCheck {
+  color: white;
+}

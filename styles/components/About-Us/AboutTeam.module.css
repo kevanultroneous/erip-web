@@ -1,0 +1,12 @@
+.aboutTeamHeading {
+  text-align: center;
+  margin: 4rem 3rem;
+}
+
+.aboutTeamBoxes {
+  justify-content: center;
+}
+
+.teamImages {
+  margin: 1rem;
+}

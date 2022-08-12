@@ -1,0 +1,14 @@
+.aboutGreenSection {
+  margin: 4rem 3rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.aboutGreenHeading {
+  text-align: center;
+  margin: 0 0 2rem;
+}
+
+.aboutGreenParagraph p {
+  font-size: 1.2rem;
+}
