@@ -1,0 +1,26 @@
+.thankyouContainer {
+  margin: 4rem 7rem;
+}
+
+.thankyouHeroRow {
+  align-items: center;
+  justify-content: center;
+}
+
+.thankYouHeroTextCol {
+  margin: 0 0 0 2rem;
+}
+
+.thankYouHeroText {
+  text-align: center;
+}
+
+.thankYouHeroText h3 {
+  color: #0e62cb;
+  margin: 0 0 4rem;
+  font-size: 50px;
+}
+
+.thankYouHeroText p {
+  font-size: 32px;
+}
