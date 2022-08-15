@@ -1,0 +1,8 @@
+.ImageTitle {
+    font-weight: 700;
+    font-size: 18px;
+    width: 9rem;
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
