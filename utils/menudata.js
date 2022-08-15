@@ -67,29 +67,3 @@ export const footerMenuList = [
         ],
     },
 ];
-export const WhyEripData = [
-    {
-        img: "/assets/images/express-repairs.png",
-        title: "Express Repairs",
-    },
-    {
-        img: "/assets/images/good-for-pocket.png",
-        title: "Good for your pocket",
-    },
-    {
-        img: "/assets/images/good-for-planet.png",
-        title: "Good for our planet",
-    },
-    {
-        img: "/assets/images/erip-certified-parts.png",
-        title: "ERIP certified parts",
-    },
-    {
-        img: "/assets/images/qualified-experts.png",
-        title: "Qualified Experts",
-    },
-    {
-        img: "/assets/images/12-month-warranty.png",
-        title: "Upto 12 month warranty",
-    },
-];

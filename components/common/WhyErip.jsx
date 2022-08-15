@@ -1,7 +1,8 @@
 import { Col, Image, Row } from "react-bootstrap";
-import { WhyEripData } from "utils/menudata";
+
 import styles from "@/styles/components/common/WhyErip.module.css";
 import Container from "./Container";
+import { WhyEripData } from "utils/data";
 export default function WhyErip() {
   return (
     <Container innerstyle={{ backgroundColor: "#EAF4FF" }}>
