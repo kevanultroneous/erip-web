@@ -1,0 +1,60 @@
+.contactHeroContainer {
+  margin: 2rem 5rem;
+}
+
+.contactHeading {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.contactHeroRow {
+  align-items: center;
+}
+
+.formTop p {
+  font-size: 18px;
+  text-align: center;
+}
+
+.contactFormHead {
+  margin: 1rem 0 0 6rem;
+}
+
+.formInputBox {
+  margin: 0 0 1rem;
+}
+
+.formInputBox input,
+.formTextArea {
+  background-color: #ededed;
+}
+
+.formTextArea {
+  height: 10rem;
+}
+
+@media (max-width: 600px) {
+  .contactHeroContainer {
+    margin: 2rem 1rem;
+  }
+  .formTop p {
+    font-size: 16px;
+    text-align: center;
+  }
+  .contactFormHead {
+    margin: 2rem 0 0;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .contactHeroContainer {
+    margin: 2rem;
+  }
+  .contactHeading {
+    text-align: center;
+    margin: 1rem 0;
+  }
+  .contactFormHead {
+    margin: 2rem 0 0;
+  }
+}
