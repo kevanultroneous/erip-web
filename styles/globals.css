@@ -22,3 +22,22 @@ a {
 } */
 
 /* predefined css : over */
+
+/* =================== Accordion =================== */
+
+.AccordionContainer .accordion-button {
+  background-color: #f5f9ff;
+}
+
+.AccordionContainer .accordion-button:focus {
+  box-shadow: none !important;
+}
+
+.AccordionContainer .accordion-button::after {
+  background-image: var(--bs-accordion-btn-active-icon);
+}
+
+.AccordionContainer .accordion-button:not(.collapsed) {
+  background-color: #f5f9ff;
+  color: #000;
+}
