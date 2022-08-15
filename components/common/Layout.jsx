@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Footer from "./Footer";
 
 export default function Layout({ title, keywords, description, children }) {
   return (
@@ -14,6 +15,7 @@ export default function Layout({ title, keywords, description, children }) {
         <link rel="erip icon" href="" />
       </Head>
       <div>{children}</div>
+      <Footer />
     </div>
   );
 }
