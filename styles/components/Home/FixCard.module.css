@@ -1,0 +1,29 @@
+.ImgCard {
+    background-color: #F5F9FF;
+    padding: 1rem 0.5rem;
+    margin-bottom: 2rem;
+    width: 160px;
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    box-shadow: 2px 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.ImgCard img {
+    padding-top: 2rem;
+    height: 80px;
+}
+
+.ImgTitle {
+    font-weight: 700;
+    font-size: 16px;
+    color: #0E62CB;
+}
+
+.ImgTitleWrraper {
+    margin-top: 2rem;
+
+}

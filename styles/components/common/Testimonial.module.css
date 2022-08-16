@@ -1,0 +1,45 @@
+.TestimonialCard {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    margin: 2rem;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    padding: 2rem;
+}
+
+.TestimonialAvatar {}
+
+.RatingWrraper {
+    margin: 1.5rem 0;
+}
+
+.TestimonialIcon {}
+
+.TestimonialName {
+    font-weight: 400;
+    font-size: 20px;
+    margin-bottom: 0.4rem;
+    margin-top: 1rem;
+}
+
+.TestimonialBrand {
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.TestimonialDetail {
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.TestimonialHeadingWrraper {
+    text-align: center;
+}
+
+.TestimonialHeading {
+    font-weight: 400;
+    font-size: 48px;
+}

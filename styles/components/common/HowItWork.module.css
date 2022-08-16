@@ -1,0 +1,50 @@
+.WorkMainTitle {}
+
+.HowItWorkWrraper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #91B3FA;
+}
+
+.Tab1 {
+    font-weight: 400;
+    font-size: 28px;
+    margin-right: 10rem;
+    display: flex;
+    color: #0E62CB;
+    flex-direction: column;
+}
+
+.TabLine {
+    padding: 0rem;
+    border-radius: 20px;
+    border: 3px solid #0E62CB;
+}
+
+.WorkMainTitleWrraper {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.WorkMainTitle {
+    font-weight: 400;
+    font-size: 48px;
+}
+
+.Number {
+    border-radius: 100%;
+    border: 1px solid #0E62CB;
+    font-weight: 400;
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #0E62CB;
+}
+
+.ProgresSection {
+    display: flex;
+}
