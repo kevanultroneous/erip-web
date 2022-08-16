@@ -20,11 +20,14 @@ export default function HowItWork() {
           </div>
         </Col>
         <Col xl={12}>
-          <Row>
+          <Row className={styles.TabContents}>
             <Col xl={6}>
               <div className={styles.ProgresSection}>
                 <div className={styles.Number}>
                   <span>1</span>
+                </div>
+                <div className={styles.LineContainer}>
+                  <span className={styles.ContentLine}></span>
                 </div>
                 <div>
                   <h3>Lorem Ipsum</h3>
@@ -34,19 +37,29 @@ export default function HowItWork() {
                   </p>
                 </div>
               </div>
-              <div>
-                <h3>Lorem Ipsum</h3>
-                <p>
-                  Lörem ipsum semis stenov fasam. Osolude nysede. Heteroplastisk
-                  repore. Svenskad poplaktig plara.
-                </p>
+              <div className={styles.ProgresSection}>
+                <div className={styles.Number}>
+                  <span>2</span>
+                </div>
+                <div>
+                  <h3>Lorem Ipsum</h3>
+                  <p>
+                    Lörem ipsum semis stenov fasam. Osolude nysede.
+                    Heteroplastisk repore. Svenskad poplaktig plara.
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3>Lorem Ipsum</h3>
-                <p>
-                  Lörem ipsum semis stenov fasam. Osolude nysede. Heteroplastisk
-                  repore. Svenskad poplaktig plara.
-                </p>
+              <div className={styles.ProgresSection}>
+                <div className={styles.Number}>
+                  <span>3</span>
+                </div>
+                <div>
+                  <h3>Lorem Ipsum</h3>
+                  <p>
+                    Lörem ipsum semis stenov fasam. Osolude nysede.
+                    Heteroplastisk repore. Svenskad poplaktig plara.
+                  </p>
+                </div>
               </div>
             </Col>
             <Col xl={6}>
