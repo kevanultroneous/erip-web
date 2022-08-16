@@ -1,0 +1,58 @@
+.contactAddressContainer {
+  margin: 4rem 3rem;
+}
+
+.contactAddressRow {
+  background-color: #f5f9ff;
+}
+
+.contactAddressBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contactAdrressText {
+  text-align: center;
+  width: 50%;
+}
+
+.contactAdrressText h4,
+.contactAdrressText p {
+  margin: 0;
+}
+.contactAddressCol {
+  padding: 0;
+}
+.contactAddressMap {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .contactAddressContainer {
+    margin: 2rem;
+  }
+  .contactAdrressText h4 {
+    font-size: 1rem;
+  }
+  .contactAdrressText p {
+    font-size: 0.8rem;
+  }
+
+  .contactAdrressText {
+    text-align: center;
+    width: 100%;
+    padding: 3rem 1rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .contactAddressContainer {
+    margin: 2rem 3rem;
+  }
+  .contactAdrressText {
+    text-align: center;
+    width: 70%;
+    padding: 3rem 1rem;
+  }
+}

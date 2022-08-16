@@ -1,0 +1,13 @@
+.ServiceComponentMainContainer {
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 0.5px solid #ededed;
+}
+
+.ServiceComponentMainContainer h5 {
+  color: #0e62cb;
+}
+
+.servicePrice {
+  text-align: right;
+}

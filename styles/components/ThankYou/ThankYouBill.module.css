@@ -1,0 +1,31 @@
+.ThankyouBillMainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 5.2rem;
+}
+
+.orderNumber {
+  width: 100%;
+  text-align: right;
+  margin: 0 0 1rem;
+}
+
+.totalPrice {
+  width: 100%;
+  margin: 3rem 0 0;
+}
+
+.totalAmount {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1.2rem 0 1rem;
+}
+
+.totalAmount h6 {
+  color: #676767;
+}
+
+.totalAmount h5 {
+  color: #0e62cb;
+}

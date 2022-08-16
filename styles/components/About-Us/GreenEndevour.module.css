@@ -10,5 +10,27 @@
 }
 
 .aboutGreenParagraph p {
-  font-size: 1.2rem;
+  font-size: 20px;
+}
+
+@media (max-width: 600px) {
+  .aboutGreenSection {
+    margin: 2rem 1rem;
+  }
+
+  .aboutGreenHeading {
+    margin: 0 0 1rem;
+  }
+  .aboutGreenParagraph p {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .aboutGreenimage {
+    text-align: center;
+  }
+  .aboutGreenParagraph p {
+    text-align: justify;
+  }
 }

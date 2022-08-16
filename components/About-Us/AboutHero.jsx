@@ -31,7 +31,7 @@ function AboutHero() {
             </p>
           </div>
         </Col>
-        <Col xl={6}>
+        <Col xl={6} md={10}>
           <div className={styles.aboutheroimage}>
             <Image
               fluid
