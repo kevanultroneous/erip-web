@@ -1,6 +1,10 @@
+.aboutTeamContainer {
+  margin: 4rem 3rem;
+}
+
 .aboutTeamHeading {
   text-align: center;
-  margin: 4rem 3rem;
+  margin: 0 0 2rem;
 }
 
 .aboutTeamBoxes {
@@ -9,4 +13,22 @@
 
 .teamImages {
   margin: 1rem;
+}
+
+/* mobile portrait */
+@media (max-width: 600px) {
+  .aboutTeamContainer {
+    margin: 2rem 1rem;
+  }
+  .aboutTeamHeading {
+    margin: 0 0 1rem;
+  }
+
+  .teamImages {
+    margin: 0rem auto 1rem;
+    text-align: center;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
 }

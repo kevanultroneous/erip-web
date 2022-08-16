@@ -24,3 +24,24 @@
 .errorHeroText a:hover {
   color: #6bb7bf;
 }
+
+@media (max-width: 600px) {
+  .errorHeroContainer {
+    margin: 2rem 1rem;
+  }
+
+  .errorHeroText h1 {
+    margin: 2rem 0 0;
+    font-size: 2rem;
+  }
+
+  .errorHeroText p {
+    margin: 1rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .errorHeroText h1 {
+    margin: 2rem 0 0;
+  }
+}

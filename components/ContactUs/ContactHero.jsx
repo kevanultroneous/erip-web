@@ -2,15 +2,15 @@ import React from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import styles from "@/styles/components/ContactUs/ContactHero.module.css";
-import { BsChatDots } from "react-icons/bs";
-import { IoMailOutline } from "react-icons/io";
-import MainButtonCommon from "../common/MainButtonCommon";
 
 function ContactHero() {
   return (
-    <section>
-      <Row
-        <Col xl={6}>
+    <section className={styles.contactHeroContainer}>
+      <div className={styles.contactHeading}>
+        <h2>We’d love to hear from you</h2>
+      </div>
+      <Row className={styles.contactHeroRow}>
+        <Col xl={6} md={6}>
           <div className={styles.contactHeroImage}>
             <Image
               fluid
@@ -19,23 +19,32 @@ function ContactHero() {
             />
           </div>
         </Col>
-        <Col xl={6}>
-          <div>
+        <Col xl={6} md={6}>
+          <div className={styles.contactFormHead}>
             <div className={styles.formTop}>
               <p>
                 Our crew of superheroes are standing by for service and support!
               </p>
-              <Row></Row>
             </div>
             <Form>
-              <Form.Control type="text" placeholder="Your Name" />
-
-              <Col xl={6}>
-                <Form.Control type="number" placeholder="Your Contact" />
-              </Col>
-              <Col xl={6}>
-                <Form.Control type="email" placeholder="Your Email" />
-              </Col>
+              <Row>
+                <Col xl={12} className={styles.formInputBox}>
+                  <Form.Control type="text" placeholder="Your Name" />
+                </Col>
+                <Col xl={6} className={styles.formInputBox}>
+                  <Form.Control type="tel" placeholder="Your Contact" />
+                </Col>
+                <Col xl={6} className={styles.formInputBox}>
+                  <Form.Control type="email" placeholder="Your Email" />
+                </Col>
+                <Col xl={12} className={styles.formInputBox}>
+                  <Form.Control
+                    as="textarea"
+                    placeholder="Your Query"
+                    className={styles.formTextArea}
+                  />
+                </Col>
+              </Row>
             </Form>
           </div>
         </Col>
