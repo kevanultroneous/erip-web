@@ -1,7 +1,8 @@
 .aboutHeroSection {
-  margin: 4rem 3rem;
+  margin: 0rem 3rem;
   align-items: center;
   justify-content: center;
+  height: 100vh;
 }
 
 .aboutHeroHeading {
@@ -19,7 +20,7 @@
 
 .aboutHeroParagraph h3 {
   font-size: 36px;
-  margin: 3rem 0 1.5rem;
+  margin: 3rem 0 1rem;
 }
 
 .aboutheroimage {

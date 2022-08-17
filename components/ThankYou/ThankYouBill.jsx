@@ -16,7 +16,7 @@ function ThankYouBill() {
   return (
     <section className={styles.ThankyouBillMainContainer}>
       <Row>
-        <Col>
+        <Col xl={9} className={styles.thankyouCol}>
           <div className={styles.orderNumber}>
             <h5>Order: #187</h5>
           </div>
@@ -33,12 +33,11 @@ function ThankYouBill() {
           })}
           <div className={styles.totalPrice}>
             <h5>Order Summary</h5>
-            <hr />
+
             <div className={styles.totalAmount}>
               <h6>Total</h6>
               <h5>₹ {totalPrice}</h5>
             </div>
-            <hr />
           </div>
         </Col>
       </Row>

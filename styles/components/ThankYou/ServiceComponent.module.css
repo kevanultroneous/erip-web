@@ -6,6 +6,8 @@
 }
 .serviceComponentRow {
   margin: 0;
+  display: flex;
+  align-items: center;
 }
 
 .ServiceComponentMainContainer img {
@@ -15,11 +17,20 @@
 .ServiceComponentMainContainer h5 {
   color: #0e62cb;
   font-weight: 600;
-  margin: 0 0 1.5rem;
+  margin: 0 0 1.6rem;
 }
 
 .ServiceComponentMainContainer p {
   color: #676767;
+  margin: 0;
+}
+
+.serviceDesc {
+  margin: 0;
+}
+
+.serviceComponentRow div:nth-child(2) {
+  padding: 0;
 }
 
 .servicePrice {
@@ -33,8 +44,5 @@
   }
   .ServiceComponentMainContainer p {
     font-size: 14px;
-  }
-  .serviceComponentRow div:nth-child(1) {
-    padding: 0;
   }
 }

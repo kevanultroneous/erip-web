@@ -22,7 +22,7 @@ function GreenEndevour() {
             </p>
           </div>
         </Col>
-        <Col xl={6}>
+        <Col xl={5}>
           <div className={styles.aboutGreenimage}>
             <Image
               fluid

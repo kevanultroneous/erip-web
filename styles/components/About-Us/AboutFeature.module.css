@@ -1,11 +1,11 @@
 .aboutFeatureContainer {
-  margin: 4rem 3rem;
+  margin: 7rem 3rem;
   align-items: center;
   justify-content: space-between;
 }
 .aboutFeatureHeading {
   text-align: center;
-  margin: 0 0 6rem;
+  margin: 0 0 7.5rem;
 }
 
 .aboutFeatureHeading h2 {
@@ -13,7 +13,8 @@
 }
 
 .featureData {
-  margin: 0 0 1rem;
+  margin: 0 0 2rem;
+  display: flex;
 }
 
 .aboutFeatureCheckbox {
@@ -24,13 +25,20 @@
   text-align: center;
   background-color: #6bb7bf;
   margin-right: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.featureData:nth-child(9) .aboutFeatureCheckbox {
+  width: 2.1rem;
 }
 .aboutfeatureCheck {
   color: white;
 }
 
 .featureData span {
-  font-size: 16px;
+  font-size: 18px;
   margin: 0;
 }
 

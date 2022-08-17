@@ -47,7 +47,7 @@ function AboutFeature() {
             />
           </div>
         </Col>
-        <Col xl={7}>
+        <Col xl={8}>
           <div className={styles.aboutFeatureHeading}>
             <h2>Features</h2>
           </div>
