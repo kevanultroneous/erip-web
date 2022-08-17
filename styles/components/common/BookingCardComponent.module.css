@@ -50,6 +50,7 @@
 
 .BookingDetails p {
   text-align: right;
+  margin-bottom: 0.5rem;
 }
 
 .BookingHelp {
@@ -67,9 +68,29 @@
   color: #00b67f;
   border-radius: 100px;
   height: 0;
-  padding: 1rem 1.5rem;
+  padding: 1rem 1.1rem;
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 400;
+}
+
+@media (min-width: 320px) and (max-width: 450px) {
+  .BookingButton {
+    font-size: 14px;
+  }
+
+  .BookingDetails:nth-of-type(2) {
+    padding-left: 1rem;
+  }
+
+  .BookingHelp {
+    margin-top: 0.5rem;
+  }
+}
+@media (min-width: 768px) and (max-width: 1080px) {
+}
+@media (min-width: 1200px) and (max-width: 1730px) {
+}
+@media (min-width: 650px) and (max-width: 740px) {
 }

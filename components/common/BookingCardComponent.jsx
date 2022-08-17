@@ -41,20 +41,27 @@ const BookingCardComponent = () => {
   return (
     <Row className={styles.BookingCardMain}>
       {arr.map((el, ind) => (
-        <Col xs={12} sm={6} md={4} className={styles.BookingCard}>
+        <Col
+          xs={12}
+          sm={6}
+          md={6}
+          lg={4}
+          key={ind}
+          className={styles.BookingCard}
+        >
           <div className={styles.BookingCardParent}>
             <Row className={styles.BookingCardHead}>
-              <Col xs={4} className={styles.BookingButtonParent}>
+              <Col xs={5} sm={5} className={styles.BookingButtonParent}>
                 <p> Order id: #1234 </p>
               </Col>
-              <Col xs={8} className={styles.BookingButtonParent}>
+              <Col xs={7} sm={7} className={styles.BookingButtonParent}>
                 <button className={styles.BookingButton}>
                   Assigned professional
                 </button>
               </Col>
             </Row>
             <Row>
-              <Col xs={6} sm={4} className={styles.BookingDetails}>
+              <Col xs={5} sm={4} className={styles.BookingDetails}>
                 <div>
                   <Image
                     fluid
@@ -63,7 +70,7 @@ const BookingCardComponent = () => {
                   />
                 </div>
               </Col>
-              <Col xs={6} sm={8} className={styles.BookingDetails}>
+              <Col xs={7} sm={8} className={styles.BookingDetails}>
                 <p>
                   {arr[0].date} {arr[0].time}
                 </p>
