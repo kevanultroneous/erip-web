@@ -9,15 +9,21 @@
   margin: 0 0 2rem;
 }
 
+.aboutGreenHeading h2 {
+  font-size: 54px;
+}
+
 .aboutGreenParagraph p {
-  font-size: 20px;
+  font-size: 24px;
 }
 
 @media (max-width: 600px) {
   .aboutGreenSection {
     margin: 2rem 1rem;
   }
-
+  .aboutGreenHeading h2 {
+    font-size: 34px;
+  }
   .aboutGreenHeading {
     margin: 0 0 1rem;
   }

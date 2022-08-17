@@ -1,0 +1,24 @@
+.MainTitle {
+    font-weight: 400;
+    font-size: 48px;
+}
+
+.MainTitleWrraper {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.ExclusiveCard {
+    height: 18rem;
+    box-shadow: 2px 3px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+}
+
+.ExclusiveCardTitle {
+    text-align: center;
+    font-weight: 400;
+    font-size: 24px;
+    margin-top: 2rem;
+}
+
+.ExclusiveWrraper {}

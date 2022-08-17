@@ -38,7 +38,7 @@ function AboutFeature() {
   return (
     <section>
       <Row className={styles.aboutFeatureContainer}>
-        <Col xl={5}>
+        <Col xl={4}>
           <div className={styles.aboutfeatureimage}>
             <Image
               fluid

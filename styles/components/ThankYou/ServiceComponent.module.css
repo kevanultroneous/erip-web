@@ -2,12 +2,39 @@
   padding: 1rem;
   margin: 1rem 0;
   border: 0.5px solid #ededed;
+  border-radius: 8px;
+}
+.serviceComponentRow {
+  margin: 0;
+}
+
+.ServiceComponentMainContainer img {
+  border-radius: 8px;
 }
 
 .ServiceComponentMainContainer h5 {
   color: #0e62cb;
+  font-weight: 600;
+  margin: 0 0 1.5rem;
+}
+
+.ServiceComponentMainContainer p {
+  color: #676767;
 }
 
 .servicePrice {
   text-align: right;
+}
+
+@media (max-width: 600px) {
+  .ServiceComponentMainContainer h5 {
+    font-size: 16px;
+    margin: 0 0 1rem;
+  }
+  .ServiceComponentMainContainer p {
+    font-size: 14px;
+  }
+  .serviceComponentRow div:nth-child(1) {
+    padding: 0;
+  }
 }

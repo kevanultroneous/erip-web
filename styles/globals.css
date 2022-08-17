@@ -3,7 +3,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  /* font-family: 'Product Sans' !important; */
+  font-family: "ProductSansRegular" !important;
+  font-size: 16px;
 }
 
 a {
@@ -22,3 +23,31 @@ a {
 } */
 
 /* predefined css : over */
+@font-face {
+  font-family: "ProductSansRegular";
+  src: url("/assets/fonts/ProductSansRegular.ttf") format("truetype");
+}
+
+:root {
+}
+
+/* =================== Bootstrap =================== */
+
+/* =================== Accordion =================== */
+
+.AccordionContainer .accordion-button {
+  background-color: #f5f9ff;
+}
+
+.AccordionContainer .accordion-button:focus {
+  box-shadow: none !important;
+}
+
+.AccordionContainer .accordion-button::after {
+  background-image: var(--bs-accordion-btn-active-icon);
+}
+
+.AccordionContainer .accordion-button:not(.collapsed) {
+  background-color: #f5f9ff;
+  color: #000;
+}

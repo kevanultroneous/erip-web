@@ -7,8 +7,12 @@
   margin: 0 0 2rem;
 }
 
+.aboutTeamHeading h2 {
+  font-size: 54px;
+}
+
 .aboutTeamBoxes {
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .teamImages {
@@ -22,6 +26,9 @@
   }
   .aboutTeamHeading {
     margin: 0 0 1rem;
+  }
+  .aboutTeamHeading h2 {
+    font-size: 34px;
   }
 
   .teamImages {

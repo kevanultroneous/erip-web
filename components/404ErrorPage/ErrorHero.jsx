@@ -15,7 +15,7 @@ function ErrorHero() {
             />
           </div>
         </Col>
-        <Col xl={6}>
+        <Col xl={5}>
           <div className={styles.errorHeroText}>
             <h1>404 Page Not Found!</h1>
             <p>

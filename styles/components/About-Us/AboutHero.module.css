@@ -9,8 +9,17 @@
   margin: 0 0 2rem;
 }
 
+.aboutHeroHeading h1 {
+  font-size: 54px;
+}
+
 .aboutHeroParagraph p {
-  font-size: 20px;
+  font-size: 22px;
+}
+
+.aboutHeroParagraph h3 {
+  font-size: 36px;
+  margin: 3rem 0 1.5rem;
 }
 
 .aboutheroimage {
@@ -28,8 +37,16 @@
     text-align: center;
     margin: 0 0 1rem;
   }
+  .aboutHeroHeading h1 {
+    font-size: 34px;
+  }
   .aboutHeroParagraph p {
     font-size: 16px;
+  }
+
+  .aboutHeroParagraph h3 {
+    font-size: 26px;
+    margin: 1.5rem 0 0.5rem;
   }
 }
 

@@ -1,0 +1,28 @@
+.faqContainer {
+  margin: 4rem 2rem;
+}
+
+.faqHeading {
+  text-align: center;
+  margin: 0 0 2rem;
+}
+.faqHeading h2 {
+  font-size: 40px;
+}
+
+@media (max-width: 600px) {
+  .faqContainer {
+    margin: 2rem 0;
+  }
+
+  .faqHeading {
+    margin: 0 0 0.8rem;
+  }
+
+  .faqHeading h2 {
+    font-size: 18px;
+  }
+  .faqTitleStyles button {
+    font-size: 16px;
+  }
+}
