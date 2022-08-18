@@ -52,6 +52,12 @@
 
 @media (max-width: 600px) {
   .ThankyouBillMainContainer {
-    margin: 2rem 1rem;
+    margin: 3rem 1rem 2rem;
+  }
+  .orderNumber h5 {
+    font-size: 16px;
+  }
+  .totalPrice h5 {
+    font-size: 16px;
   }
 }

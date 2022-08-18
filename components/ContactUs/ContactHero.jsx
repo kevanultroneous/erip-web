@@ -23,6 +23,7 @@ function ContactHero() {
         <Col xl={6} md={6}>
           <div className={styles.contactFormHead}>
             <div className={styles.formTop}>
+              <h5>Tell us how we can help</h5>
               <p>
                 Our crew of superheroes are standing by for service and support!
               </p>

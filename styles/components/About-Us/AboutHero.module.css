@@ -9,6 +9,9 @@
   text-align: center;
   margin: 0 0 2rem;
 }
+.aboutHeroSection div {
+  padding: 0;
+}
 
 .aboutHeroHeading h1 {
   font-size: 54px;
@@ -16,6 +19,7 @@
 
 .aboutHeroParagraph p {
   font-size: 22px;
+  text-align: justify;
 }
 
 .aboutHeroParagraph h3 {
@@ -33,6 +37,7 @@
 @media (max-width: 600px) {
   .aboutHeroSection {
     margin: 2rem 1rem;
+    height: auto;
   }
   .aboutHeroHeading {
     text-align: center;
@@ -52,6 +57,10 @@
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
+  .aboutHeroSection {
+    margin: 2rem;
+    height: auto;
+  }
   .aboutheroimage {
     margin: 1rem auto 0;
   }

@@ -38,7 +38,7 @@ function AboutFeature() {
   return (
     <section>
       <Row className={styles.aboutFeatureContainer}>
-        <Col xl={4}>
+        <Col xl={4} md={10}>
           <div className={styles.aboutfeatureimage}>
             <Image
               fluid
@@ -56,7 +56,10 @@ function AboutFeature() {
               return (
                 <Col xl={6} key={ind} className={styles.featureData}>
                   <button className={styles.aboutFeatureCheckbox}>
-                    <BsCheck className={styles.aboutfeatureCheck} />
+                    <Image
+                      src="/assets/icons/about-feature-tick.svg"
+                      alt="about feature tick"
+                    />
                   </button>
                   <span>{featureData.feature}</span>
                 </Col>

@@ -1,10 +1,12 @@
 .errorHeroContainer {
-  margin: 4rem 3rem;
+  margin: 4rem auto;
   align-items: center;
+  justify-content: space-evenly;
 }
 
 .errorHeroText {
   text-align: center;
+  width: 36vw;
 }
 
 .errorHeroText h1 {
@@ -13,8 +15,9 @@
 }
 
 .errorHeroText p {
-  margin: 1rem 0 3rem;
+  margin: 1.5rem 0 4.3rem;
   font-size: 20px;
+  font-weight: 500;
 }
 
 .errorHeroText a {
@@ -24,22 +27,22 @@
   transition: all 0.3s ease;
 }
 
-.errorHeroText a:hover {
-  color: #6bb7bf;
-}
-
 @media (max-width: 600px) {
   .errorHeroContainer {
-    margin: 2rem 1rem;
+    margin: 1.5rem 1rem;
     flex-direction: column-reverse;
   }
 
+  .errorHeroImageRow {
+    padding: 0;
+  }
   .errorHeroText {
-    margin: 0 0 3rem;
+    margin: 0 0 4rem;
+    width: 100%;
   }
 
   .errorHeroText h1 {
-    margin: 2rem 0 0;
+    margin: 0rem 0 0;
     font-size: 24px;
   }
 
@@ -53,7 +56,24 @@
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
+  .errorHeroContainer {
+    margin: 2rem 1rem;
+    flex-direction: column-reverse;
+  }
+  .errorHeroImage {
+    text-align: center;
+    margin: 2rem 0 0;
+  }
+
+  .errorHeroText {
+    width: 57vw;
+    margin: auto;
+  }
   .errorHeroText h1 {
     margin: 2rem 0 0;
+  }
+  .errorHeroText p {
+    margin: 2rem 0 4rem;
+    font-size: 20px;
   }
 }

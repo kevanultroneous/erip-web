@@ -5,7 +5,7 @@
 }
 .aboutFeatureHeading {
   text-align: center;
-  margin: 0 0 7.5rem;
+  margin: 0 0 6rem;
 }
 
 .aboutFeatureHeading h2 {
@@ -13,7 +13,7 @@
 }
 
 .featureData {
-  margin: 0 0 2rem;
+  margin: 0 0 2.2rem;
   display: flex;
 }
 
@@ -32,9 +32,6 @@
 
 .featureData:nth-child(9) .aboutFeatureCheckbox {
   width: 2.1rem;
-}
-.aboutfeatureCheck {
-  color: white;
 }
 
 .featureData span {
@@ -55,13 +52,31 @@
   .aboutfeatureimage {
     display: none;
   }
+
+  .featureData {
+    padding: 0;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
   .aboutFeatureContainer {
+    margin: 3rem;
     flex-direction: column-reverse;
+  }
+  .aboutFeatureContainer div:nth-child(2) {
+    padding: 0;
+  }
+  .aboutFeatureHeading {
+    text-align: center;
+    margin: 0 0 2rem;
   }
   .aboutfeatureimage {
     text-align: center;
+  }
+  .featureData {
+    padding: 0;
+  }
+  .featureData:nth-child(9) .aboutFeatureCheckbox {
+    width: 1.5rem;
   }
 }

@@ -32,10 +32,16 @@
   }
 
   .teamImages {
-    margin: 0rem auto 1rem;
+    margin: 0rem auto 2rem;
     text-align: center;
   }
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
+  .aboutTeamContainer {
+    margin: 2rem;
+  }
+  .aboutTeamBoxes div {
+    padding: 0;
+  }
 }

@@ -15,11 +15,16 @@
 
 .aboutGreenParagraph p {
   font-size: 24px;
+  text-align: justify;
 }
 
 @media (max-width: 600px) {
   .aboutGreenSection {
     margin: 2rem 1rem;
+  }
+
+  .aboutGreenSection div {
+    padding: 0;
   }
   .aboutGreenHeading h2 {
     font-size: 34px;
@@ -33,10 +38,20 @@
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
+  .aboutGreenSection {
+    margin: 2rem;
+  }
+  .aboutGreenimageRow {
+    margin: auto;
+  }
   .aboutGreenimage {
+    margin: 3rem 0 0;
     text-align: center;
   }
   .aboutGreenParagraph p {
     text-align: justify;
+  }
+  .aboutGreenSection div {
+    padding: 0;
   }
 }

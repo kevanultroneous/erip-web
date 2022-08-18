@@ -6,7 +6,7 @@ function ErrorHero() {
   return (
     <section>
       <Row className={styles.errorHeroContainer}>
-        <Col xl={7}>
+        <Col xl={6} className={styles.errorHeroImageRow}>
           <div className={styles.errorHeroImage}>
             <Image
               fluid

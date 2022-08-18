@@ -21,9 +21,9 @@ function AboutTeam() {
       <Row className={styles.aboutTeamBoxes}>
         {teamData.map((teamMember, ind) => {
           return (
-            <Col xl={3} md={5} key={ind} className={styles.aboutTeamCont}>
+            <Col xl={3} md={3} key={ind} className={styles.aboutTeamCont}>
               <div className={styles.teamImages}>
-                <Image src={teamMember.imagesrc} alt={ind + 1} />
+                <Image fluid src={teamMember.imagesrc} alt={ind + 1} />
               </div>
             </Col>
           );

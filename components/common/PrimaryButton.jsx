@@ -1,6 +1,7 @@
 import Link from "next/link";
-// import styles from "@/styles/components/common/PrimaryButton.module.css";
 import { Button } from "react-bootstrap";
+import styles from "@/styles/components/common/PrimaryButton.module.css";
+
 export default function PrimaryButton({
   title = "button title",
   href = "",
@@ -16,7 +17,7 @@ export default function PrimaryButton({
         onClick={clickHandler}
         variant={variant}
         style={buttonStyle}
-        className={customClass}
+        className={`${customClass} ${styles.primaryButtonStyle}`}
         // size={buttonSize}
       >
         {title}

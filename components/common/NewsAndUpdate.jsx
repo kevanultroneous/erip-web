@@ -23,7 +23,7 @@ export default function NewsAndUpdate() {
         <Col xl={12}>
           <Slider {...settings}>
             {NewsandUpdateData.map((value, index) => (
-              <Col>
+              <Col key={index}>
                 <div className={styles.NewsandUpdateCard}>
                   <Image src={value.image} alt={value.image} loading="lazy" />
                   <p className={styles.NewsandUpdateDetail}>{value.detail}</p>
