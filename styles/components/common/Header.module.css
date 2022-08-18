@@ -41,3 +41,36 @@
 .listedItemHead {
   color: black !important;
 }
+
+.mobileMenuLink {
+  color: #0e62cb;
+  font-size: 20px;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid #c7ddeb;
+}
+
+.mobileMenuLink:hover {
+  color: #0e62cb;
+}
+
+.mobileMenuLink:focus {
+  color: #0e62cb;
+}
+
+.mobileMenuLink:nth-child(5) {
+  border: none;
+}
+
+.mobileNavBar {
+  padding: 2px 0 0.5rem;
+}
+
+.mobileToggleButton {
+  border: none;
+}
+
+@media (max-width: 600px) {
+  .brandLogo {
+    width: 20vw;
+  }
+}
