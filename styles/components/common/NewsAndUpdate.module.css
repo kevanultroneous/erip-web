@@ -1,0 +1,21 @@
+.NewsandUpdateHeadingWrraper {
+    text-align: center;
+    padding-bottom: 3rem;
+}
+
+.NewsandUpdateHeading {
+    font-weight: 400;
+    font-size: 48px;
+}
+
+.NewsandUpdateCard {}
+
+.NewsandUpdateCard img {
+    width: 15rem;
+}
+
+.NewsandUpdateDetail {
+    font-weight: 400;
+    font-size: 18px;
+    width: 20rem;
+}

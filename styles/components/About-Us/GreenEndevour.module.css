@@ -1,16 +1,21 @@
 .aboutGreenSection {
   margin: 4rem 3rem;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
 .aboutGreenHeading {
   text-align: center;
-  margin: 0 0 2rem;
+  margin: 0 0 3.2rem;
+}
+
+.aboutGreenHeading h2 {
+  font-size: 54px;
 }
 
 .aboutGreenParagraph p {
-  font-size: 20px;
+  font-size: 24px;
+  text-align: justify;
 }
 
 @media (max-width: 600px) {
@@ -18,6 +23,12 @@
     margin: 2rem 1rem;
   }
 
+  .aboutGreenSection div {
+    padding: 0;
+  }
+  .aboutGreenHeading h2 {
+    font-size: 34px;
+  }
   .aboutGreenHeading {
     margin: 0 0 1rem;
   }
@@ -27,10 +38,20 @@
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
+  .aboutGreenSection {
+    margin: 2rem;
+  }
+  .aboutGreenimageRow {
+    margin: auto;
+  }
   .aboutGreenimage {
+    margin: 3rem 0 0;
     text-align: center;
   }
   .aboutGreenParagraph p {
     text-align: justify;
+  }
+  .aboutGreenSection div {
+    padding: 0;
   }
 }

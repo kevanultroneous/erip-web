@@ -7,10 +7,6 @@
   justify-content: center;
 }
 
-.thankYouHeroTextCol {
-  margin: 0 0 0 2rem;
-}
-
 .thankYouHeroText {
   text-align: center;
 }
@@ -18,9 +14,37 @@
 .thankYouHeroText h3 {
   color: #0e62cb;
   margin: 0 0 4rem;
-  font-size: 50px;
+  font-size: 48px;
 }
 
 .thankYouHeroText p {
   font-size: 32px;
+  margin: 0 0 4rem;
+}
+
+.orderStatusBtn {
+  padding: 1rem 0;
+  width: 90%;
+  font-size: 24px;
+  font-weight: 500;
+  background-color: #0e62cb;
+}
+
+@media (max-width: 600px) {
+  .thankyouContainer {
+    margin: 2rem 1rem;
+  }
+  .thankYouHeroText h3 {
+    margin: 1rem 0;
+    font-size: 36px;
+  }
+  .thankYouHeroText p {
+    font-size: 16px;
+    margin: 0 0 2rem;
+  }
+  .orderStatusBtn {
+    padding: 0.8rem 0;
+    width: 100%;
+    font-size: 16px;
+  }
 }

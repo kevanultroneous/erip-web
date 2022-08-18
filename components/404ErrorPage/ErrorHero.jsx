@@ -6,7 +6,7 @@ function ErrorHero() {
   return (
     <section>
       <Row className={styles.errorHeroContainer}>
-        <Col xl={6}>
+        <Col xl={6} className={styles.errorHeroImageRow}>
           <div className={styles.errorHeroImage}>
             <Image
               fluid
@@ -15,7 +15,7 @@ function ErrorHero() {
             />
           </div>
         </Col>
-        <Col xl={6}>
+        <Col xl={5}>
           <div className={styles.errorHeroText}>
             <h1>404 Page Not Found!</h1>
             <p>

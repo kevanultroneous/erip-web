@@ -1,0 +1,21 @@
+.modelHeroContainer {
+  padding: 1rem;
+  background-color: #ebf3ff;
+}
+
+.modelHeroRow {
+  margin: 0 0 2rem;
+}
+
+.selectDevice {
+  justify-content: center;
+}
+
+.selectButton {
+  display: flex;
+  flex-direction: column;
+}
+
+.filtersOption {
+  padding: 2rem;
+}
