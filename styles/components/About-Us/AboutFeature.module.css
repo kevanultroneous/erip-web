@@ -1,5 +1,5 @@
 .aboutFeatureContainer {
-  margin: 7rem 3rem;
+  margin: 9rem 3rem 7rem;
   align-items: center;
   justify-content: space-between;
 }
@@ -60,7 +60,7 @@
 
 @media (min-width: 768px) and (max-width: 992px) {
   .aboutFeatureContainer {
-    margin: 3rem;
+    margin: 5rem 3rem;
     flex-direction: column-reverse;
   }
   .aboutFeatureContainer div:nth-child(2) {
