@@ -20,20 +20,26 @@
 
 @media (max-width: 600px) {
   .aboutGreenSection {
-    margin: 2rem 1rem;
+    margin: 3rem 1rem 2rem;
+    flex-direction: column-reverse;
   }
 
   .aboutGreenSection div {
     padding: 0;
   }
-  .aboutGreenHeading h2 {
-    font-size: 34px;
-  }
   .aboutGreenHeading {
-    margin: 0 0 1rem;
+    display: none;
+  }
+  .aboutGreenHeadingMobile h2 {
+    font-size: 24px;
+    text-align: center;
   }
   .aboutGreenParagraph p {
     font-size: 16px;
+    text-align: center;
+  }
+  .aboutGreenimageRow {
+    margin: 0 auto 1rem;
   }
 }
 

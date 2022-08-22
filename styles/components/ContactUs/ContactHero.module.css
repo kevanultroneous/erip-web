@@ -15,9 +15,12 @@
   align-items: flex-end;
 }
 
+.formTop {
+  text-align: center;
+}
+
 .formTop p {
   font-size: 20px;
-  text-align: center;
 }
 
 .contactFormHead {
