@@ -14,7 +14,7 @@ export function Header() {
   const [mobileView, setMobileView] = useState(false);
 
   useEffect(() => {
-    window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
+    window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
   }, []);
 
   {

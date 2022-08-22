@@ -1,4 +1,5 @@
 import ErrorHero from "@/components/404ErrorPage/ErrorHero";
+import Footer from "@/components/common/Footer";
 import { Header } from "@/components/common/Header";
 
 function ErrorPage() {
@@ -6,6 +7,7 @@ function ErrorPage() {
     <>
       <Header />
       <ErrorHero />
+      <Footer />
     </>
   );
 }
