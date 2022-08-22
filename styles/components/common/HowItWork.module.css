@@ -12,8 +12,19 @@
     font-size: 28px;
     margin-right: 10rem;
     display: flex;
-    color: #0E62CB;
+
+    cursor: pointer;
     flex-direction: column;
+}
+
+.Tab2 {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.TabColor {
+    color: #0E62CB;
 }
 
 .TabLine {
@@ -55,9 +66,76 @@
     margin-top: 4rem;
 }
 
-.LineContainer {}
+.LineContainer {
+    display: flex;
+    justify-content: center;
+    height: 90px;
+    margin-right: 2.5rem;
+}
 
 .ContentLine {
     padding: 0.2rem;
     border-left: 2px solid #0E62CB;
 }
+
+.ProcessParagraph {
+    width: 26.5rem;
+}
+
+
+@media (min-width:320px) and (max-width: 450px) {
+    .WorkMainTitle {
+        font-size: var(--mobileHeading);
+        font-weight: 400;
+    }
+
+    .NotShowOnMobile {
+        display: none;
+    }
+
+    .ProcessHeading {
+        width: 100%;
+        font-weight: 400;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    .ProcessParagraph {
+        width: fit-content;
+        font-weight: 400;
+        font-size: 14px;
+        color: #676767;
+    }
+
+    .Tab1 {
+        margin-right: 3rem;
+    }
+
+    .TabHeading {
+        font-size: 20px;
+    }
+
+    .ContentLine {
+        border-left: 1px solid #0E62CB;
+    }
+
+    .LineContainer {
+        display: flex;
+        justify-content: center;
+        height: 68px;
+        margin-right: 2.5rem;
+    }
+
+    .Number {
+        font-weight: 400;
+        font-size: 18px;
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {}
+
+@media (min-width: 1200px) and (max-width: 1730px) {}
+
+@media (min-width: 650px) and (max-width: 740px) {}

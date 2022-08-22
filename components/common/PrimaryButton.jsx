@@ -4,12 +4,18 @@ export default function PrimaryButton({
   title = "button title",
   href = "",
   buttonStyle,
+  clickHandler,
+  otherclass,
 }) {
   return (
     <Link href={href}>
-      <div style={buttonStyle} className={styles.ButtonWrraper}>
+      <button
+        onClick={clickHandler}
+        style={buttonStyle}
+        className={`${styles.ButtonWrraper} ${otherclass}`}
+      >
         {title}
-      </div>
+      </button>
     </Link>
   );
 }

@@ -8,8 +8,20 @@ export default function WhyErip() {
     <Container innerstyle={{ backgroundColor: "#EAF4FF" }}>
       <Row>
         {WhyEripData.map((value, index) => (
-          <Col xl={2} lg={2} key={index}>
-            <Image src={value.img} alt={value.title} loading="lazy" fluid />
+          <Col
+            xl={2}
+            lg={2}
+            xs={4}
+            key={index}
+            className={styles.DeviceWrraper}
+          >
+            <Image
+              src={value.img}
+              alt={value.title}
+              loading="lazy"
+              fluid
+              className={styles.MobileImage}
+            />
             <p className={styles.ImageTitle}>{value.title}</p>
           </Col>
         ))}
