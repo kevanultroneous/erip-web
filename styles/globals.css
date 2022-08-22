@@ -61,7 +61,7 @@ a {
 }
 
 .navBarBottomHeader {
-  padding: 0.7rem 3rem !important;
+  padding: 1rem 3rem !important;
   margin: 0;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -115,6 +115,7 @@ a {
   background-color: transparent;
   border: none;
   color: #000;
+  padding: 0;
 }
 
 .dropDownMenuHead .dropdown-toggle:focus {
