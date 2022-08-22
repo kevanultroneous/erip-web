@@ -77,7 +77,7 @@ a {
 }
 
 .navBarBottomHeader .navbar-nav .dropdown-menu div {
-  margin: 1rem 1rem;
+  margin: 0.5rem 1rem 0;
 }
 
 .dropdown-item {
@@ -123,3 +123,13 @@ a {
 }
 
 /* =================== Header =================== */
+
+.selectButton .dropdown {
+  background-color: white !important;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.375rem;
+}
+
+.selectButton .nav-link::after {
+  margin: 0 0 0 13rem !important;
+}

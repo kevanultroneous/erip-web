@@ -30,6 +30,9 @@
   background-color: #0e62cb;
   box-shadow: none;
 }
+.orderStatusBtn p {
+  margin: 0;
+}
 
 .orderStatusBtn:active,
 .orderStatusBtn:focus {

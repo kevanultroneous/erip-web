@@ -49,6 +49,11 @@
   background-color: #ededed;
 }
 
+.formInputBox input:focus,
+.formTextArea:focus {
+  box-shadow: none;
+}
+
 .formTextArea {
   height: 10rem;
 }
@@ -99,6 +104,15 @@
     margin: 1rem 0;
   }
   .contactFormHead {
-    margin: 2rem 0 0;
+    margin: 3rem 0;
+  }
+  .contactHeroImage {
+    display: flex;
+  }
+  .contactHeroImage img {
+    margin: auto;
+  }
+  .formTopBtns {
+    margin: 0 0 2rem;
   }
 }

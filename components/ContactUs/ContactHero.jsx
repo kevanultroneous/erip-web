@@ -26,7 +26,7 @@ function ContactHero() {
         <h2>We’d love to hear from you</h2>
       </div>
       <Row className={styles.contactHeroRow}>
-        <Col xl={6} md={6}>
+        <Col xl={6}>
           <div className={styles.contactHeroImage}>
             <Image
               fluid
@@ -35,7 +35,7 @@ function ContactHero() {
             />
           </div>
         </Col>
-        <Col xl={6} md={6}>
+        <Col xl={6}>
           <div className={styles.contactFormHead}>
             <div className={styles.formTop}>
               {mobileView && <h5>Tell us how we can help</h5>}
