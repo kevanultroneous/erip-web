@@ -1,0 +1,63 @@
+.ThankyouBillMainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 4rem 3rem;
+}
+
+.thankyouCol {
+  margin: auto;
+}
+
+.orderNumber {
+  width: 100%;
+  text-align: right;
+  margin: 0 0 2rem;
+  padding: 0 0.9rem 0 0;
+}
+
+.orderNumber h5 {
+  font-weight: 600;
+}
+
+.totalPrice {
+  width: 100%;
+  margin: 2.5rem 0 0;
+}
+
+.totalPrice h5 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.totalAmount {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  border-top: 2px solid #ededed;
+  border-bottom: 2px solid #ededed;
+}
+
+.totalAmount h6 {
+  color: #676767;
+  font-size: 20px;
+  margin: 0;
+}
+
+.totalAmount h5 {
+  color: #0e62cb;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .ThankyouBillMainContainer {
+    margin: 3rem 1rem 2rem;
+  }
+  .orderNumber h5 {
+    font-size: 16px;
+  }
+  .totalPrice h5 {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,51 @@
+.ServiceComponentMainContainer {
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 0.5px solid #ededed;
+  border-radius: 8px;
+}
+.serviceComponentRow {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.ServiceComponentMainContainer img {
+  border-radius: 8px;
+}
+
+.ServiceComponentMainContainer h5 {
+  color: #0e62cb;
+  font-weight: 600;
+  margin: 0 0 1.6rem;
+}
+
+.ServiceComponentMainContainer p {
+  color: #676767;
+  margin: 0;
+}
+
+.serviceDesc {
+  margin: 0;
+}
+
+.serviceComponentRow div:nth-child(2) {
+  padding: 0;
+}
+
+.servicePrice {
+  text-align: right;
+}
+
+@media (max-width: 600px) {
+  .ServiceComponentMainContainer {
+    padding: 0.5rem;
+  }
+  .ServiceComponentMainContainer h5 {
+    font-size: 16px;
+    margin: 0 0 1rem;
+  }
+  .ServiceComponentMainContainer p {
+    font-size: 14px;
+  }
+}

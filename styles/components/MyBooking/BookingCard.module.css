@@ -1,0 +1,28 @@
+.bookingCardContainer {
+  background: white;
+  margin: 1rem;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.bookingCardHead {
+  justify-content: space-between;
+}
+
+.bookingOrder {
+  color: #646464;
+}
+
+.bookingCardStatus {
+  border: 1px solid #00b67f;
+  background-color: #e5fff7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 20px;
+}
+
+.bookingCardStatus * {
+  margin: 0;
+}

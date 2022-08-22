@@ -1,0 +1,101 @@
+.contactHeroContainer {
+  margin: 2rem 2rem;
+}
+
+.contactHeading {
+  text-align: center;
+  margin: 2rem 0 3rem;
+}
+
+.contactHeading h2 {
+  font-size: 48px;
+}
+
+.contactHeroRow {
+  align-items: flex-end;
+}
+
+.formTop p {
+  font-size: 20px;
+  text-align: center;
+}
+
+.contactFormHead {
+  margin: 1rem 0 0 6rem;
+}
+
+.formInputBox {
+  margin: 0 0 1rem;
+}
+
+.contactInputBox {
+  padding: 0;
+  margin: 0;
+}
+
+.contactInputBox .formInputBox:nth-child(1) {
+  padding-right: 0.5rem;
+}
+
+.contactInputBox .formInputBox:nth-child(2) {
+  padding-left: 0.5rem;
+}
+
+.formInputBox input,
+.formTextArea {
+  background-color: #ededed;
+}
+
+.formTextArea {
+  height: 10rem;
+}
+
+.formTopBtns {
+  margin: 0 0 1rem;
+}
+
+.formBtnGroup:nth-child(2) {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.formBtnGroup {
+  padding: 0;
+}
+
+@media (max-width: 600px) {
+  .contactHeroContainer {
+    margin: 2rem 1rem;
+  }
+  .contactHeading {
+    display: none;
+  }
+  .formTop {
+    text-align: center;
+  }
+  .formTop p {
+    font-size: 16px;
+    color: #676767;
+    margin: 0 0 2rem;
+  }
+  .contactFormHead {
+    margin: 2rem 0 0;
+  }
+
+  .formTopBtns {
+    margin: 1rem 0;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .contactHeroContainer {
+    margin: 2rem;
+  }
+  .contactHeading {
+    text-align: center;
+    margin: 1rem 0;
+  }
+  .contactFormHead {
+    margin: 2rem 0 0;
+  }
+}

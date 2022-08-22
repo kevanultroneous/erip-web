@@ -1,0 +1,51 @@
+.leftMenuCont {
+  padding: 2rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+}
+
+.profileDetailsMainCont {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 3rem;
+}
+
+.profileDetailsCard {
+  text-align: center;
+}
+
+.profileDetails > * {
+  margin: 0 0 0.5rem;
+}
+
+.profileDetails h5 {
+  font-size: 22px;
+  color: #343434;
+}
+
+.profileDetails p {
+  color: #646464;
+  font-size: 16px;
+}
+
+.profileImage {
+  margin: 0 0 2rem;
+}
+
+.bookingMenuText h6 {
+  font-weight: 400;
+  color: #333946;
+}
+.bookingMenuText hr {
+  color: #343434;
+  margin: 0 0 1.5rem;
+}
+
+.profileDetailsLogOut {
+  text-align: center;
+  color: #0e62cb;
+  text-decoration: underline;
+}

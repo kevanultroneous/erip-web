@@ -3,6 +3,7 @@ import Container from "./Container";
 import styles from "@/styles/components/common/Footer.module.css";
 import { footerMenuList } from "utils/menudata";
 import Link from "next/link";
+import { BiPhone } from "react-icons/bi";
 import {
   GrFacebookOption,
   GrInstagram,
@@ -10,6 +11,7 @@ import {
   GrTwitter,
 } from "react-icons/gr";
 import { AiOutlinePhone } from "react-icons/ai";
+import PrimaryButton from "./PrimaryButton";
 export default function Footer() {
   return (
     <Container innerstyle={{ backgroundColor: "#0E62CB" }}>
@@ -61,7 +63,13 @@ export default function Footer() {
         <Col xl={3} lg={3}>
           <div className={styles.LastColumn}>
             <p className={styles.LastColumnTitle}>We are just a call away</p>
-            <p className={styles.LastColumnNumber}>000-000-1111</p>
+            <p className={styles.LastColumnNumber}>
+              <span className={styles.ContactIcon}>
+                <BiPhone style={{ color: "#fff" }} />
+              </span>
+              000-000-1111
+            </p>
+            <PrimaryButton title={"Request a Call Back"} />
             <div className={styles.IconListWrraper}>
               <div className={styles.IconWrraper}>
                 <GrFacebookOption />
