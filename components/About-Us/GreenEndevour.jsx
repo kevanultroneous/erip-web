@@ -1,9 +1,19 @@
 import { Col, Image, Row } from "react-bootstrap";
 import styles from "@/styles/components/About-Us/GreenEndevour.module.css";
+import { useEffect, useState } from "react";
 
 function GreenEndevour() {
+  const [mobileView, setMobileView] = useState(false);
+  useEffect(() => {
+    window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
+  }, []);
   return (
     <section>
+      {mobileView && (
+        <div className={styles.aboutGreenHeadingMobile}>
+          <h2>Our Green Endeavor</h2>
+        </div>
+      )}
       <Row className={styles.aboutGreenSection}>
         <Col xl={6}>
           <div className={styles.aboutGreenHeading}>
@@ -22,7 +32,7 @@ function GreenEndevour() {
             </p>
           </div>
         </Col>
-        <Col xl={5} md={10} className={styles.aboutGreenimageRow}>
+        <Col xl={5} md={10} xs={10} className={styles.aboutGreenimageRow}>
           <div className={styles.aboutGreenimage}>
             <Image
               fluid

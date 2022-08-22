@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AccordionFAQ } from "utils/accordionFAQ";
 import AccordionComponent from "../common/AccordionComponent";
 import styles from "@/styles/components/ContactUs/ContactFAQ.module.css";
 
 function ContactFAQ() {
+  const [mobileView, setMobileView] = useState(true);
+  useEffect(() => {
+    window.innerWidth < 600 ? setMobileView(false) : setMobileView(true);
+  }, []);
+
   return (
     <section className={styles.faqContainer}>
       <div className={styles.faqHeading}>

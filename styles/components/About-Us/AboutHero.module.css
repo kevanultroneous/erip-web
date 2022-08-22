@@ -38,21 +38,27 @@
   .aboutHeroSection {
     margin: 2rem 1rem;
     height: auto;
+    flex-direction: column-reverse;
   }
   .aboutHeroHeading {
     text-align: center;
     margin: 0 0 1rem;
   }
   .aboutHeroHeading h1 {
-    font-size: 34px;
+    font-size: 24px;
   }
   .aboutHeroParagraph p {
-    font-size: 16px;
+    font-size: 18px;
+    text-align: center;
   }
 
   .aboutHeroParagraph h3 {
-    font-size: 26px;
+    font-size: 24px;
     margin: 1.5rem 0 0.5rem;
+    text-align: center;
+  }
+  .aboutheroimage {
+    margin: 0 0 2rem;
   }
 }
 
