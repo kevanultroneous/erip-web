@@ -5,7 +5,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import PrimaryButton from "./PrimaryButton";
 import { Image } from "react-bootstrap";
 import { allProducts } from "utils/dropMenuDataApple";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import styles from "@/styles/components/common/Header.module.css";
@@ -13,24 +13,9 @@ import styles from "@/styles/components/common/Header.module.css";
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
 
-  const dropMenu = useRef();
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
   }, []);
-
-  const getPosition = () => {
-    setTimeout(() => {
-      const parentElement =
-        dropMenu.current.parentElement.getBoundingClientRect();
-      console.log(parentElement);
-      const totalWidth = parentElement.x + parentElement.width;
-      console.log(totalWidth);
-      const translate = totalWidth - window.innerWidth - 50;
-      totalWidth > window.innerWidth
-        ? (parentElement.style = { transform: `translateX(${translate}px)` })
-        : null;
-    }, 0);
-  };
 
   {
     if (mobileView) {
@@ -121,10 +106,9 @@ export function Header() {
                     title={products.menuName}
                     className="dropDownMenuHead"
                     key={products.direction}
-                    // id={`dropdown-button-drop-${products.direction}`}
                     drop={products.direction}
                   >
-                    <div className="dropMenuDiv" ref={dropMenu}>
+                    <div className="dropMenuDiv">
                       {products.menus.map((menu, menuIndex) => {
                         return (
                           <div key={menuIndex}>
