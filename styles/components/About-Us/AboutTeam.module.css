@@ -22,13 +22,13 @@
 /* mobile portrait */
 @media (max-width: 600px) {
   .aboutTeamContainer {
-    margin: 2rem 1rem;
+    margin: 3rem 1rem 2rem;
   }
   .aboutTeamHeading {
     margin: 0 0 1rem;
   }
   .aboutTeamHeading h2 {
-    font-size: 34px;
+    font-size: 24px;
   }
 
   .teamImages {

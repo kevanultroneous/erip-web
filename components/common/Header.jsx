@@ -5,15 +5,33 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import PrimaryButton from "./PrimaryButton";
 import { Image } from "react-bootstrap";
 import { allProducts } from "utils/dropMenuDataApple";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 import styles from "@/styles/components/common/Header.module.css";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
 
+  const dropMenu = useRef();
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
   }, []);
+
+  const getPosition = () => {
+    setTimeout(() => {
+      const parentElement =
+        dropMenu.current.parentElement.getBoundingClientRect();
+      console.log(parentElement);
+      const totalWidth = parentElement.x + parentElement.width;
+      console.log(totalWidth);
+      const translate = totalWidth - window.innerWidth - 50;
+      totalWidth > window.innerWidth
+        ? (parentElement.style = { transform: `translateX(${translate}px)` })
+        : null;
+    }, 0);
+  };
+
   {
     if (mobileView) {
       return (
@@ -99,27 +117,28 @@ export function Header() {
             <Nav variant="pills" activeKey="1" className={styles.navDropMain}>
               {allProducts.map((products, ind) => {
                 return (
-                  <NavDropdown
+                  <DropdownButton
                     title={products.menuName}
-                    id="nav-dropdown"
                     className="dropDownMenuHead"
-                    key={ind}
+                    key={products.direction}
+                    // id={`dropdown-button-drop-${products.direction}`}
+                    drop={products.direction}
                   >
-                    <div>
+                    <div className="dropMenuDiv" ref={dropMenu}>
                       {products.menus.map((menu, menuIndex) => {
                         return (
                           <div key={menuIndex}>
-                            <NavDropdown.Item
+                            <Dropdown.Item
                               eventKey="4.1"
                               className={styles.listedItemHead}
                             >
                               {menu.dropHead}
-                            </NavDropdown.Item>
+                            </Dropdown.Item>
                             {menu.models.map((model, index) => {
                               return (
-                                <NavDropdown.Item eventKey="4.2" key={index}>
+                                <Dropdown.Item eventKey="4.2" key={index}>
                                   {model.modelName}
-                                </NavDropdown.Item>
+                                </Dropdown.Item>
                               );
                             })}
                           </div>
@@ -131,7 +150,7 @@ export function Header() {
                         products.dualMenus.map((menu, menuIndex) => {
                           return (
                             <div key={menuIndex}>
-                              <NavDropdown.Item
+                              <Dropdown.Item
                                 eventKey="4.1"
                                 className="listedItemHead"
                                 style={
@@ -141,20 +160,20 @@ export function Header() {
                                 }
                               >
                                 {menu.dropHead}
-                              </NavDropdown.Item>
+                              </Dropdown.Item>
 
                               {menu.models.map((model, index) => {
                                 return (
-                                  <NavDropdown.Item eventKey="4.2" key={index}>
+                                  <Dropdown.Item eventKey="4.2" key={index}>
                                     {model.modelName}
-                                  </NavDropdown.Item>
+                                  </Dropdown.Item>
                                 );
                               })}
                             </div>
                           );
                         })}
                     </div>
-                  </NavDropdown>
+                  </DropdownButton>
                 );
               })}
             </Nav>

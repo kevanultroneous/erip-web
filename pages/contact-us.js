@@ -1,16 +1,22 @@
+import React, { useEffect, useState } from "react";
 import ContactAddress from "@/components/ContactUs/ContactAddress";
 import ContactFAQ from "@/components/ContactUs/ContactFAQ";
 import ContactHero from "@/components/ContactUs/ContactHero";
-import React from "react";
+import { Header } from "@/components/common/Header";
 
-function contactUs() {
+function ContactUs() {
+  const [mobileView, setMobileView] = useState(true);
+  useEffect(() => {
+    window.innerWidth < 600 ? setMobileView(false) : setMobileView(true);
+  }, []);
   return (
     <>
+      <Header />
       <ContactHero />
       <ContactAddress />
-      <ContactFAQ />
+      {mobileView && <ContactFAQ />}
     </>
   );
 }
 
-export default contactUs;
+export default ContactUs;

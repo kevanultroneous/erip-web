@@ -108,4 +108,17 @@ a {
   color: red !important;
 }
 
+.dropDownMenuHead .dropdown-toggle:focus,
+.dropDownMenuHead .dropdown-toggle:active,
+.dropDownMenuHead .dropdown-toggle,
+.dropDownMenuHead .dropdown-toggle:hover {
+  background-color: transparent;
+  border: none;
+  color: #000;
+}
+
+.dropDownMenuHead .dropdown-toggle:focus {
+  box-shadow: none;
+}
+
 /* =================== Header =================== */
