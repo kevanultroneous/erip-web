@@ -17,11 +17,15 @@
 
 @media (min-width:320px) and (max-width: 450px) {
     .MobileImage {
-        height: 3.5rem;
+        height: 3rem;
     }
 
     .MobileContainer {
         padding: 2.5rem 1rem !important;
+    }
+
+    .ImageTitle {
+        font-size: 14px;
     }
 }
 

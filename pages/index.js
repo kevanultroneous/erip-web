@@ -23,9 +23,10 @@ export default function Home({ data }) {
   }, []);
   return (
     <Layout title={"Home"}>
+      {console.log(data)}
       <Header />
       <HomeHero data={data.herosection.data} />
-      <GetYourFix />
+      <GetYourFix data={data.getyourfix.data} />
       <OfferBanner data={data.offersection.data} />
       <HowItWork />
       <WhyErip />
@@ -55,7 +56,12 @@ export async function getServerSideProps() {
   }).then((res) => res.data).catch((e) => console.log("testimonial error" + e))
   // offersection home api
   let offersection_home = await axios.get(`${API_URL}api/v1/cms/offers_section_home`).then((res) => res.data).catch((e) => console.log("home offer error" + e))
-
+  // get your fix 
+  let getyour_fix = await axios.get(`http://43.204.87.153/api/v1/categories_by_cities`, {
+    params: {
+      city: 1
+    }
+  }).then((res) => res.data).catch((e) => console.log("get your fix error" + e))
   return {
     props: {
       data: {
@@ -63,6 +69,7 @@ export async function getServerSideProps() {
         blogdata: blog_response ? blog_response : NewsandUpdateData,
         hometestimonial: home_testimonial ? home_testimonial : TestimonialData,
         offersection: offersection_home ? offersection_home : OfferBannerhomedata,
+        getyourfix: getyour_fix
       }
     }
   }

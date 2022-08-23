@@ -9,14 +9,30 @@ import { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import styles from "@/styles/components/common/Header.module.css";
+import LoginPopup from "../Popups/LoginPopup";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
-
+  const [loginPopup, setLoginPopup] = useState(false);
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
   }, []);
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
 
+  function showPosition(position) {
+    alert(
+      "Latitude: " +
+        position.coords.latitude +
+        "<br>Longitude: " +
+        position.coords.longitude
+    );
+  }
   {
     if (mobileView) {
       return (
@@ -79,7 +95,7 @@ export function Header() {
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll" className={styles.navBarcolor}>
               <Nav className="me-auto my-2 my-lg-0"></Nav>
-              <div className={styles.navBarGeo}>
+              <div className={styles.navBarGeo} onClick={() => getLocation()}>
                 <Image
                   src="assets/icons/header-location.svg"
                   alt="header location"
@@ -95,7 +111,11 @@ export function Header() {
                 alt="header cart"
                 className={styles.navHeaderCart}
               />
-              <PrimaryButton title="Login" className={styles.headerLoginBtn} />
+              <PrimaryButton
+                title="Login"
+                className={styles.headerLoginBtn}
+                clickHandler={() => setLoginPopup(true)}
+              />
             </Navbar.Collapse>
           </Container>
           <Container fluid className="navBarBottomHeader">
@@ -161,6 +181,7 @@ export function Header() {
                 );
               })}
             </Nav>
+            <LoginPopup show={loginPopup} onHide={() => setLoginPopup(false)} />
           </Container>
         </Navbar>
       );

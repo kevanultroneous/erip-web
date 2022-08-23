@@ -6,7 +6,7 @@ import Slider from "react-slick";
 import { TestimonialData } from "utils/data";
 import styles from "@/styles/components/common/Testimonial.module.css";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-export default function Testimonials({ data }) {
+export default function Testimonials({ data = TestimonialData }) {
   const settings = {
     dots: false,
     infinite: true,

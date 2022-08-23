@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { NewsandUpdateData } from "utils/data";
 import Link from "next/link";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-export default function NewsAndUpdate({ data }) {
+export default function NewsAndUpdate({ data = NewsandUpdateData }) {
   const settings = {
     infinite: true,
     speed: 500,
