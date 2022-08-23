@@ -32,9 +32,14 @@ export default function NewsAndUpdate({ data }) {
       {
         breakpoint: 884,
         settings: {
+          dots: true,
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 2,
+          customPaging: function (i) {
+            return <div className="dot"></div>;
+          },
+          dotsClass: "slick-dots slick-thumb",
         },
       },
     ],
