@@ -6,7 +6,10 @@ export default function ExclusiveService() {
   return (
     <Container>
       <div className={styles.MainTitleWrraper}>
-        <h4 className={styles.MainTitle}>Exclusive Apple services</h4>
+        <h4 className={styles.MainTitle}>
+          Exclusive Apple services which we provide
+        </h4>
+        <h4 className={styles.OnlyShowOnMobile}>Exclusive Apple services</h4>
       </div>
       <Row>
         {ExclusiveServiceData.map((value, index) => (

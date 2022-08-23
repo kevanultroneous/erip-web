@@ -23,6 +23,12 @@
 
 .ExclusiveWrraper {}
 
+.OnlyShowOnMobile {
+    display: none;
+    font-weight: 400;
+    font-size: 48px;
+}
+
 @media (min-width:320px) and (max-width: 450px) {
     .MainTitle {
         font-size: var(--mobileHeading);
@@ -37,11 +43,29 @@
         font-size: 12px;
         margin-top: 1rem;
     }
+
+    .OnlyShowOnMobile {
+        display: block;
+        font-size: var(--mobileHeading);
+        font-weight: 400;
+    }
+
+    .MainTitle {
+        display: none;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1080px) {
     .ExclusiveCard {
         height: 10rem;
+    }
+
+    .OnlyShowOnMobile {
+        display: block;
+    }
+
+    .MainTitle {
+        display: none;
     }
 }
 

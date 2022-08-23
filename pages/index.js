@@ -17,7 +17,7 @@ import { API_URL, HomeHerodata, homeHerodata, NewsandUpdateData, OfferBannerhome
 export default function Home({ data }) {
   const [mobileView, setMobileView] = useState(true);
   useEffect(() => {
-    window.innerWidth < 600 ? setMobileView(false) : setMobileView(true);
+    window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
   }, []);
   return (
     <Layout title={"Home"}>
@@ -31,11 +31,9 @@ export default function Home({ data }) {
       <BrowseOffer imgsrc={"/assets/images/offer-big-banner.png"} imgalt={"offer-big-banner"} />
       <Testimonials data={data.hometestimonial.data} />
       <NewsAndUpdate data={data.blogdata.data} />
-
       {
         mobileView ? <Footer /> : <MobileFooter />
       }
-
     </Layout>
   )
 }

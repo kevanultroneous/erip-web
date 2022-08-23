@@ -55,6 +55,10 @@
         font-weight: 700;
         font-size: 11px;
     }
+
+    .ImgCard img {
+        height: 100px;
+    }
 }
 
 @media (min-width: 1200px) and (max-width: 1730px) {}

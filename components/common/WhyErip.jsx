@@ -5,7 +5,9 @@ import Container from "./Container";
 import { WhyEripData } from "utils/data";
 export default function WhyErip() {
   return (
-    <Container innerstyle={{ backgroundColor: "#EAF4FF" }}>
+    <Container
+      innerstyle={{ backgroundColor: "#EAF4FF", padding: "4rem 2.5rem" }}
+    >
       <Row>
         {WhyEripData.map((value, index) => (
           <Col

@@ -36,7 +36,7 @@ export default function HowItWork() {
         <Col xl={12}>
           {selected_tab === 0 ? (
             <Row className={styles.TabContents}>
-              <Col xl={6}>
+              <Col xl={6} lg={6}>
                 <div className={styles.ProgresSection}>
                   <div className={styles.ProcessGroup}>
                     <div className={styles.Number}>
@@ -86,24 +86,26 @@ export default function HowItWork() {
                   </div>
                 </div>
               </Col>
-              <Col xl={6} className={styles.NotShowOnMobile}>
+              <Col xl={6} lg={6} className={styles.NotShowOnMobile}>
                 <Image
                   src="/assets/images/tab-img.png"
                   alt="active-tabs"
                   loading="lazy"
+                  fluid
                 />
               </Col>
             </Row>
           ) : (
             <Row className={styles.TabContents}>
-              <Col xl={6} className={styles.NotShowOnMobile}>
+              <Col xl={6} lg={6} className={styles.NotShowOnMobile}>
                 <Image
                   src="/assets/images/tab-img.png"
                   alt="active-tabs"
                   loading="lazy"
+                  fluid
                 />
               </Col>
-              <Col xl={6}>
+              <Col xl={6} lg={6}>
                 <div className={styles.ProgresSection}>
                   <div className={styles.ProcessGroup}>
                     <div className={styles.Number}>
