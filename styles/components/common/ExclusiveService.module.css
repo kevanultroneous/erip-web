@@ -1,46 +1,53 @@
 .MainTitle {
-    font-weight: 400;
-    font-size: 48px;
+  font-weight: 400;
+  font-size: 48px;
 }
 
 .MainTitleWrraper {
-    text-align: center;
-    margin-bottom: 3rem;
+  text-align: center;
+  margin-bottom: 3rem;
 }
 
 .ExclusiveCard {
-    height: 18rem;
-    box-shadow: 2px 3px 12px rgba(0, 0, 0, 0.08);
-    border-radius: 8px;
+  height: 18rem;
+  box-shadow: 2px 3px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
 }
 
 .ExclusiveCardTitle {
-    text-align: center;
+  text-align: center;
+  font-weight: 400;
+  font-size: 24px;
+  margin-top: 2rem;
+}
+
+.ExclusiveWrraper {
+}
+
+@media (min-width: 320px) and (max-width: 450px) {
+  .MainTitle {
+    font-size: var(--mobileHeading);
     font-weight: 400;
-    font-size: 24px;
-    margin-top: 2rem;
+  }
+
+  .ExclusiveCard {
+    height: 5rem;
+  }
+
+  .ExclusiveCardTitle {
+    font-size: 12px;
+    margin-top: 1rem;
+  }
 }
 
-.ExclusiveWrraper {}
-
-@media (min-width:320px) and (max-width: 450px) {
-    .MainTitle {
-        font-size: var(--mobileHeading);
-        font-weight: 400;
-    }
-
-    .ExclusiveCard {
-        height: 5rem;
-    }
-
-    .ExclusiveCardTitle {
-        font-size: 12px;
-        margin-top: 1rem;
-    }
+@media (min-width: 768px) and (max-width: 1080px) {
+  .ExclusiveCard {
+    height: 10rem;
+  }
 }
 
-@media (min-width: 768px) and (max-width: 1080px) {}
+@media (min-width: 1200px) and (max-width: 1730px) {
+}
 
-@media (min-width: 1200px) and (max-width: 1730px) {}
-
-@media (min-width: 650px) and (max-width: 740px) {}
+@media (min-width: 650px) and (max-width: 740px) {
+}

@@ -1,141 +1,147 @@
-.WorkMainTitle {}
+.WorkMainTitle {
+}
 
 .HowItWorkWrraper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 2px solid #91B3FA;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid #91b3fa;
 }
 
 .Tab1 {
-    font-weight: 400;
-    font-size: 28px;
-    margin-right: 10rem;
-    display: flex;
+  font-weight: 400;
+  font-size: 28px;
+  margin-right: 10rem;
+  display: flex;
 
-    cursor: pointer;
-    flex-direction: column;
+  cursor: pointer;
+  flex-direction: column;
 }
 
 .Tab2 {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
 }
 
 .TabColor {
-    color: #0E62CB;
+  color: #0e62cb;
 }
 
 .TabLine {
-    padding: 0rem;
-    border-radius: 20px;
-    border: 3px solid #0E62CB;
+  padding: 0rem;
+  border-radius: 20px;
+  border: 3px solid #0e62cb;
 }
 
 .WorkMainTitleWrraper {
-    text-align: center;
-    margin-bottom: 4rem;
+  text-align: center;
+  margin-bottom: 4rem;
 }
 
 .WorkMainTitle {
-    font-weight: 400;
-    font-size: 48px;
+  font-weight: 400;
+  font-size: 48px;
 }
 
 .Number {
-    border-radius: 100%;
-    border: 1px solid #0E62CB;
-    font-weight: 400;
-    font-size: 24px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    color: #0E62CB;
-    margin-right: 3rem;
+  border-radius: 100%;
+  border: 1px solid #0e62cb;
+  font-weight: 400;
+  font-size: 24px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  color: #0e62cb;
+  margin-right: 3rem;
 }
 
 .ProgresSection {
-    display: flex;
+  display: flex;
 }
 
 .TabContents {
-    margin-top: 4rem;
+  margin-top: 4rem;
 }
 
 .LineContainer {
-    display: flex;
-    justify-content: center;
-    height: 90px;
-    margin-right: 2.5rem;
+  display: flex;
+  justify-content: center;
+  height: 90px;
+  margin-right: 2.5rem;
 }
 
 .ContentLine {
-    padding: 0.2rem;
-    border-left: 2px solid #0E62CB;
+  padding: 0.2rem;
+  border-left: 2px solid #0e62cb;
 }
 
 .ProcessParagraph {
-    width: 26.5rem;
+  width: 26.5rem;
 }
 
+@media (min-width: 320px) and (max-width: 450px) {
+  .WorkMainTitle {
+    font-size: var(--mobileHeading);
+    font-weight: 400;
+  }
 
-@media (min-width:320px) and (max-width: 450px) {
-    .WorkMainTitle {
-        font-size: var(--mobileHeading);
-        font-weight: 400;
-    }
+  .NotShowOnMobile {
+    display: none;
+  }
 
-    .NotShowOnMobile {
-        display: none;
-    }
+  .ProcessHeading {
+    width: 100%;
+    font-weight: 400;
+    font-size: 16px;
+    font-weight: 400;
+  }
 
-    .ProcessHeading {
-        width: 100%;
-        font-weight: 400;
-        font-size: 16px;
-        font-weight: 400;
-    }
+  .ProcessParagraph {
+    width: fit-content;
+    font-weight: 400;
+    font-size: 14px;
+    color: #676767;
+  }
 
-    .ProcessParagraph {
-        width: fit-content;
-        font-weight: 400;
-        font-size: 14px;
-        color: #676767;
-    }
+  .Tab1 {
+    margin-right: 3rem;
+  }
 
-    .Tab1 {
-        margin-right: 3rem;
-    }
+  .TabHeading {
+    font-size: 20px;
+  }
 
-    .TabHeading {
-        font-size: 20px;
-    }
+  .ContentLine {
+    border-left: 1px solid #0e62cb;
+  }
 
-    .ContentLine {
-        border-left: 1px solid #0E62CB;
-    }
+  .LineContainer {
+    display: flex;
+    justify-content: center;
+    height: 68px;
+    margin-right: 2.5rem;
+  }
 
-    .LineContainer {
-        display: flex;
-        justify-content: center;
-        height: 68px;
-        margin-right: 2.5rem;
-    }
-
-    .Number {
-        font-weight: 400;
-        font-size: 18px;
-        width: 40px;
-        height: 40px;
-    }
+  .Number {
+    font-weight: 400;
+    font-size: 18px;
+    width: 40px;
+    height: 40px;
+  }
 }
 
-@media (min-width: 768px) and (max-width: 1080px) {}
+@media (min-width: 768px) and (max-width: 1080px) {
+  .NotShowOnMobile {
+    display: none;
+  }
+}
 
-@media (min-width: 1200px) and (max-width: 1730px) {}
+@media (min-width: 1200px) and (max-width: 1730px) {
+}
 
-@media (min-width: 650px) and (max-width: 740px) {}
+@media (min-width: 650px) and (max-width: 740px) {
+}

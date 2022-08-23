@@ -25,6 +25,15 @@ export default function NewsAndUpdate({ data }) {
           initialSlide: 2,
         },
       },
+      {
+        breakpoint: 885,
+        settings: {
+          dots: false,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 2,
+        },
+      },
     ],
   };
   return (
