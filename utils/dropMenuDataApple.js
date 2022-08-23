@@ -1,6 +1,7 @@
 export const allProducts = [
   {
     menuName: "Apple Products",
+    direction: "down",
     menus: [
       {
         dropHead: "iPhones",
@@ -75,6 +76,7 @@ export const allProducts = [
   },
   {
     menuName: "Top Brands",
+    direction: "down",
     menus: [
       {
         models: [
@@ -103,6 +105,7 @@ export const allProducts = [
   },
   {
     menuName: "Mobile Repairs",
+    direction: "down",
     menus: [
       {
         dropHead: "Mobile model name",
@@ -166,6 +169,7 @@ export const allProducts = [
   },
   {
     menuName: "Top Repairs",
+    direction: "start",
     menus: [
       {
         dropHead: "",
@@ -212,6 +216,7 @@ export const allProducts = [
   },
   {
     menuName: "More",
+    direction: "start",
     menus: [
       {
         dropHead: "",

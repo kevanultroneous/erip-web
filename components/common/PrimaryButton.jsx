@@ -10,6 +10,8 @@ export default function PrimaryButton({
   customClass,
   buttonSize = "sm",
   clickHandler,
+  showIcons = false,
+  icon,
 }) {
   return (
     <Link href={href}>
@@ -20,7 +22,8 @@ export default function PrimaryButton({
         className={`${customClass} ${styles.primaryButtonStyle}`}
         // size={buttonSize}
       >
-        {title}
+        {showIcons && <span className={styles.btnIcons}>{icon}</span>}
+        <p>{title}</p>
       </Button>
     </Link>
   );

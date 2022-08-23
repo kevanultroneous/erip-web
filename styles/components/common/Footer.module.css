@@ -1,7 +1,7 @@
 .RepairSmallTitle {
     font-weight: 400;
     font-size: 22px;
-    color: #FFFFFF;
+    color: #ffffff;
     margin: 0%;
     padding-top: 1rem;
 }
@@ -9,7 +9,7 @@
 .Copyright {
     font-weight: 400;
     font-size: 12px;
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 .PaymentSection {
@@ -19,7 +19,7 @@
 .PaymentSmallTitle {
     font-weight: 400;
     font-size: 12px;
-    color: #FFFFFF;
+    color: #ffffff;
     margin: 0%;
     padding-bottom: 1rem;
 }
@@ -31,13 +31,13 @@
 .MenuTitle {
     font-weight: 700;
     font-size: 18px;
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 .MenuName {
     font-weight: 400;
     font-size: 16px;
-    color: #FFFFFF;
+    color: #ffffff;
     cursor: pointer;
     margin-bottom: 1rem;
 }
@@ -47,11 +47,10 @@
 }
 
 .PhoneIconWrraper {
-
     height: 50px;
     width: 50px;
     font-size: 20px;
-    border: 2px solid #FFFFFF !important;
+    border: 2px solid #ffffff !important;
     border-radius: 100%;
 }
 
@@ -62,11 +61,11 @@
     margin: 0%;
     text-align: center;
     display: flex;
-    color: #FFFFFF;
+    color: #ffffff;
     align-items: center;
     justify-content: center;
     border-radius: 100%;
-    border: 2px solid #FFFFFF;
+    border: 2px solid #ffffff;
 }
 
 .IconListWrraper {
@@ -87,21 +86,68 @@
 .LastColumnTitle {
     font-weight: 700;
     font-size: 18px;
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 .LastColumnNumber {
+    display: flex;
     font-weight: 400;
     font-size: 26px;
-    color: #FFFFFF;
+    color: #ffffff;
     margin-top: 1rem;
     margin-bottom: 2rem;
 }
 
 .ContactIcon {
     border-radius: 100%;
-    border: 2px solid #FFFFFF;
+    border: 2px solid #ffffff;
     padding: 0.1rem 0.2rem;
-    font-size: 25px;
+    font-size: 26px;
     margin-right: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footerBtn {
+    border-color: #ffffff !important;
+    color: #ffffff;
+    padding: 0.6rem 2rem;
+}
+
+.footerBtn:hover {
+    color: #0e62cb;
+}
+
+.mobileFooterPay {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .footerLogo {
+        text-align: center;
+        margin: 0 0 3rem;
+    }
+
+    .footerPaymentSection {
+        display: none;
+    }
+
+    .footerBtn {
+        width: 100%;
+    }
+
+    .mobileFooterPay {
+        text-align: center;
+        display: block;
+    }
+
+    .PaymentSmallTitle {
+        font-size: 18px;
+        margin: 0 0 0.2rem;
+    }
+
+    .PaymentSection {
+        margin: 3rem 0 2rem;
+    }
 }
