@@ -5,14 +5,40 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { TestimonialData } from "utils/data";
 import styles from "@/styles/components/common/Testimonial.module.css";
-
-export default function Testimonials() {
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+export default function Testimonials({ data }) {
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
+    nextArrow: <BsChevronRight color="#000" />,
+    prevArrow: <BsChevronLeft color="#000" />,
+    responsive: [
+      {
+        breakpoint: 600,
+        settings: {
+          dots: true,
+          arrows: false,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 2,
+          customPaging: function (i) {
+            return <div className="dot"></div>;
+          },
+          dotsClass: "slick-dots slick-thumb",
+        },
+      },
+      {
+        breakpoint: 884,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 2,
+        },
+      },
+    ],
   };
 
   return (
@@ -23,15 +49,25 @@ export default function Testimonials() {
       <Row>
         <Col xl={12}>
           <Slider {...settings}>
-            {TestimonialData.map((value, index) => (
+            {data.map((value, index) => (
               <Col>
                 <div className={styles.TestimonialCard}>
                   <div className={styles.TestimonialAvatar}>
-                    <Image src={value.image} loading="lazy" />
+                    <Image
+                      src={value.testimonial_image_url}
+                      loading="lazy"
+                      fluid
+                    />
                   </div>
-                  <p className={styles.TestimonialName}>{value.name}</p>
-                  <p className={styles.TestimonialBrand}>{value.brand}</p>
-                  <p className={styles.TestimonialDetail}>{value.detail}</p>
+                  <p className={styles.TestimonialName}>
+                    {value.testimonial_name}
+                  </p>
+                  <p className={styles.TestimonialBrand}>
+                    {value.testimonial_brand}
+                  </p>
+                  <p className={styles.TestimonialDetail}>
+                    {value.testimonial_content}
+                  </p>
                   <div className={styles.RatingWrraper}>
                     <Image
                       src={"/assets/images/rating-star.png"}

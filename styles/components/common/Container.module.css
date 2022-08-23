@@ -2,8 +2,18 @@
   padding: 4rem 6rem;
 }
 
-@media (max-width: 600px) {
+@media (min-width:320px) and (max-width: 450px) {
   .Container {
-    padding: 2rem 1rem;
+    padding: 2.5rem 1rem;
   }
 }
+
+@media (min-width: 768px) and (max-width: 1080px) {
+  .Container {
+    padding: 3rem 3rem;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1730px) {}
+
+@media (min-width: 650px) and (max-width: 740px) {}

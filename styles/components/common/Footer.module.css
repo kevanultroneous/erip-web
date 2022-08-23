@@ -113,7 +113,7 @@
 .footerBtn {
   border-color: #ffffff !important;
   color: #ffffff;
-  padding: 0.6rem 2rem !important;
+  padding: 0.6rem 2rem;
 }
 
 .footerBtn:hover {

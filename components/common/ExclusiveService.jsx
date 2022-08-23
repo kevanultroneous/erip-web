@@ -9,10 +9,11 @@ export default function ExclusiveService() {
         <h4 className={styles.MainTitle}>
           Exclusive Apple services which we provide
         </h4>
+        <h4 className={styles.OnlyShowOnMobile}>Exclusive Apple services</h4>
       </div>
       <Row>
         {ExclusiveServiceData.map((value, index) => (
-          <Col xl={3} lg={3} xs={12}>
+          <Col xl={3} lg={3} xs={3} key={index}>
             <div className={styles.ExclusiveWrraper}>
               <div className={styles.ExclusiveCard}></div>
               <p className={styles.ExclusiveCardTitle}>{value}</p>

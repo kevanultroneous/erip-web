@@ -1,3 +1,4 @@
+export const API_URL = `http://43.204.87.153/`
 export const WhyEripData = [
     {
         img: "/assets/images/express-repairs.png",
@@ -77,60 +78,105 @@ export const GetYourFixCard = [
 ];
 export const TestimonialData = [
     {
-        image: "/assets/images/testimonial-avtar.png",
-        name: "Full Name",
-        brand: "Brand",
-        detail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim praesent ",
+        testimonial_image_url: "/assets/images/testimonial-avtar.png",
+        testimonial_name: "Full Name",
+        testimonial_brand: "Brand",
+        testimonial_content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim praesent ",
         rating: "/assets/images/rating-star.png",
-        icon: "/assets/images/testimonial-icon.png"
+        icon: "/assets/images/testimonial-icon.png",
+        testimonial_rating: 5
     },
     {
-        image: "/assets/images/testimonial-avtar.png",
-        name: "Full Name",
-        brand: "Brand",
-        detail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim praesent ",
+        testimonial_image_url: "/assets/images/testimonial-avtar.png",
+        testimonial_name: "Full Name",
+        testimonial_brand: "Brand",
+        testimonial_content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim praesent ",
         rating: "/assets/images/rating-star.png",
-        icon: "/assets/images/testimonial-icon.png"
+        icon: "/assets/images/testimonial-icon.png",
+        testimonial_rating: 5
     },
     {
-        image: "/assets/images/testimonial-avtar.png",
-        name: "Full Name",
-        brand: "Brand",
-        detail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim praesent ",
+        testimonial_image_url: "/assets/images/testimonial-avtar.png",
+        testimonial_name: "Full Name",
+        testimonial_brand: "Brand",
+        testimonial_content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim praesent ",
         rating: "/assets/images/rating-star.png",
-        icon: "/assets/images/testimonial-icon.png"
+        icon: "/assets/images/testimonial-icon.png",
+        testimonial_rating: 5
     },
     {
-        image: "/assets/images/testimonial-avtar.png",
-        name: "Full Name",
-        brand: "Brand",
-        detail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim praesent ",
+        testimonial_image_url: "/assets/images/testimonial-avtar.png",
+        testimonial_name: "Full Name",
+        testimonial_brand: "Brand",
+        testimonial_content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim praesent ",
         rating: "/assets/images/rating-star.png",
-        icon: "/assets/images/testimonial-icon.png"
+        icon: "/assets/images/testimonial-icon.png",
+        testimonial_rating: 5
     },
     {
-        image: "/assets/images/testimonial-avtar.png",
-        name: "Full Name",
-        brand: "Brand",
-        detail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim praesent ",
+        testimonial_image_url: "/assets/images/testimonial-avtar.png",
+        testimonial_name: "Full Name",
+        testimonial_brand: "Brand",
+        testimonial_content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim praesent ",
         rating: "/assets/images/rating-star.png",
-        icon: "/assets/images/testimonial-icon.png"
+        icon: "/assets/images/testimonial-icon.png",
+        testimonial_rating: 5
     },
     {
-        image: "/assets/images/testimonial-avtar.png",
-        name: "Full Name",
-        brand: "Brand",
-        detail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim praesent ",
+        testimonial_image_url: "/assets/images/testimonial-avtar.png",
+        testimonial_name: "Full Name",
+        testimonial_brand: "Brand",
+        testimonial_content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim praesent ",
         rating: "/assets/images/rating-star.png",
-        icon: "/assets/images/testimonial-icon.png"
-    }
+        icon: "/assets/images/testimonial-icon.png",
+        testimonial_rating: 5
+    },
 ]
 export const NewsandUpdateData = [
-    { image: "/assets/images/news.png", detail: "How to stop your phone from overheating ?", link: "/" },
-    { image: "/assets/images/news.png", detail: "How to stop your phone from overheating ?", link: "/" },
-    { image: "/assets/images/news.png", detail: "How to stop your phone from overheating ?", link: "/" },
-    { image: "/assets/images/news.png", detail: "How to stop your phone from overheating ?", link: "/" },
-    { image: "/assets/images/news.png", detail: "How to stop your phone from overheating ?", link: "/" },
-    { image: "/assets/images/news.png", detail: "How to stop your phone from overheating ?", link: "/" },
+    { post_image_url: "/assets/images/news.png", post_title: "Lorem ipsum dolor sit amet", post_url: "/" },
+    { post_image_url: "/assets/images/news.png", post_title: "Lorem ipsum dolor sit amet", post_url: "/" },
+    { post_image_url: "/assets/images/news.png", post_title: "Lorem ipsum dolor sit amet", post_url: "/" },
+    { post_image_url: "/assets/images/news.png", post_title: "Lorem ipsum dolor sit amet", post_url: "/" },
+    { post_image_url: "/assets/images/news.png", post_title: "Lorem ipsum dolor sit amet", post_url: "/" },
+    { post_image_url: "/assets/images/news.png", post_title: "Lorem ipsum dolor sit amet", post_url: "/" },
 
+]
+
+export const OfferBannerhomedata = [
+    {
+        osection_order: "1",
+        osection_title: "hellow world",
+        osection_description: "lorem ipsum",
+        osection_image: "298x428.png",
+        osection_image_url:
+            "https://via.placeholder.com/298x428.png/ffff00/000000?text=erip",
+        osection_clickable: false,
+        osection_click_url: "",
+    },
+    {
+        osection_order: "1",
+        osection_title: "hellow world",
+        osection_description: "lorem ipsum",
+        osection_image: "298x428.png",
+        osection_image_url:
+            "https://via.placeholder.com/298x428.png/ff0000/000000?text=erip",
+        osection_clickable: false,
+        osection_click_url: "",
+    },
+    {
+        osection_order: "1",
+        osection_title: "hellow world",
+        osection_description: "lorem ipsum",
+        osection_image: "298x428.png",
+        osection_image_url:
+            "https://via.placeholder.com/298x428.png/ff00ff/000000?text=erip",
+        osection_clickable: false,
+        osection_click_url: "",
+    },
+];
+
+export const HomeHerodata = [
+    { hsection_title: "home-hero", hsection_image_url: "/assets/images/home-hero.png", hsection_click_url: "/" },
+    { hsection_title: "home-hero", hsection_image_url: "/assets/images/home-hero.png", hsection_click_url: "/" },
+    { hsection_title: "home-hero", hsection_image_url: "/assets/images/home-hero.png", hsection_click_url: "/" }
 ]

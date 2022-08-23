@@ -1,8 +1,28 @@
 .ImageTitle {
     font-weight: 700;
-    font-size: 18px;
-    width: 9rem;
+    font-size: 17px;
+    width: 7rem;
     margin-top: 1.5rem;
     display: flex;
     justify-content: center;
 }
+
+.DeviceWrraper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+@media (min-width:320px) and (max-width: 450px) {
+    .MobileImage {
+        height: 3.5rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {}
+
+@media (min-width: 1200px) and (max-width: 1730px) {}
+
+@media (min-width: 650px) and (max-width: 740px) {}

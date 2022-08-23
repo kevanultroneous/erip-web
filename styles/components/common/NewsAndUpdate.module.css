@@ -8,14 +8,33 @@
     font-size: 48px;
 }
 
-.NewsandUpdateCard {}
-
-.NewsandUpdateCard img {
-    width: 15rem;
+.NewsandUpdateCard {
+    margin: 2rem;
 }
 
+.NewsandUpdateCard img {}
+
 .NewsandUpdateDetail {
+    margin-top: 1rem;
     font-weight: 400;
     font-size: 18px;
     width: 20rem;
+    margin-bottom: 0%;
 }
+
+@media (min-width:320px) and (max-width: 450px) {
+    .NewsandUpdateHeading {
+        font-size: var(--mobileHeading);
+    }
+
+    .NewsandUpdateHeadingWrraper {
+        padding-bottom: 1rem;
+
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {}
+
+@media (min-width: 1200px) and (max-width: 1730px) {}
+
+@media (min-width: 650px) and (max-width: 740px) {}

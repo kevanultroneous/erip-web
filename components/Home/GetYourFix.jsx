@@ -8,10 +8,10 @@ export default function GetYourFix() {
     <Container>
       <Row>
         <div className={styles.MainTitleWrraper}>
-          <h3 className={styles.MainTitle}>Get Your Fix</h3>
+          <h3 className={styles.MainTitle}>Get Your Fix!</h3>
         </div>
         {GetYourFixCard.map((value, index) => (
-          <Col xl={2} lg={2}>
+          <Col xl={2} lg={2} xs={4}>
             <FixCard
               imgsrc={value.img}
               imgalt={value.title}

@@ -1,4 +1,4 @@
-/* predefined css : start */
+/* / predefined css : start /  */
 html,
 body {
   padding: 0;
@@ -22,19 +22,17 @@ a {
   font-weight: normal;
 } */
 
-/* predefined css : over */
+/* / predefined css : over / */
 @font-face {
   font-family: "ProductSansRegular";
   src: url("/assets/fonts/ProductSansRegular.ttf") format("truetype");
 }
 
 :root {
+  --mobileHeading: 28px;
 }
 
-/* =================== Bootstrap =================== */
-
-/* =================== Accordion =================== */
-
+/* /===================Bootstrap===================/ /===================Accordion===================/  */
 .AccordionContainer .accordion-button {
   background-color: #f5f9ff;
 }
@@ -52,16 +50,13 @@ a {
   color: #000;
 }
 
-/* =================== Accordion =================== */
-
-/* =================== Header =================== */
-
+/* /===================Accordion===================/ /===================Header===================/  */
 .navBarBottomHeader .nav-pills .show > .nav-link {
   background-color: white !important;
 }
 
 .navBarBottomHeader {
-  padding: 1rem 3rem !important;
+  padding: 1rem 6rem !important;
   margin: 0;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -122,8 +117,7 @@ a {
   box-shadow: none;
 }
 
-/* =================== Header =================== */
-
+/* /===================Header===================/ */
 .selectButton .dropdown {
   background-color: white !important;
   padding: 0.4rem 0.8rem;
@@ -132,4 +126,120 @@ a {
 
 .selectButton .nav-link::after {
   margin: 0 0 0 13rem !important;
+}
+
+.MobileFooter {
+  display: none;
+}
+
+/* carousel */
+.carousel-control-prev {
+  left: -60px;
+}
+
+.carousel-control-next {
+  right: -60px;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  height: 1.4rem !important;
+}
+
+@media (min-width: 320px) and (max-width: 450px) {
+  .slick-prev {
+    left: -11px !important;
+  }
+
+  .slick-next {
+    right: -4px !important;
+  }
+
+  .MobileFooter {
+    display: block;
+  }
+
+  .AccordionMobileFooter .accordion-button:focus {
+    z-index: 3;
+    border-color: transparent !important;
+    outline: 0;
+    box-shadow: none !important;
+  }
+
+  .AccordionMobileFooter .accordion-button:not(.collapsed) {
+    color: #000;
+    background-color: transparent !important;
+    box-shadow: inset 0 calc(var(--bs-accordion-border-width) * -1) 0
+      var(--bs-accordion-border-color);
+  }
+
+  .AccordionMobileFooter .accordion-button::after {
+    background-image: url("/assets/icons/footer-menu.png");
+  }
+
+  .AccordionMobileFooter .accordion-button:not(.collapsed)::after {
+    background-image: url("/assets/icons/footer-menu.png");
+    transform: var(--bs-accordion-btn-icon-transform);
+  }
+
+  .carousel-control-next-icon,
+  .carousel-control-prev-icon {
+    height: 1rem;
+  }
+
+  .slick-dots.slick-thumb {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .slick-dots.slick-thumb li {
+    width: 6px;
+    height: 6px;
+    margin: 0 3px;
+    border-radius: 999px;
+    transition: all 0.5s ease-in-out;
+    will-change: width;
+    border: 1px solid #0e62cb;
+  }
+
+  .slick-dots.slick-thumb li.slick-active {
+    background-color: #0e62cb;
+    width: 22.45px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {
+  .MobileFooter {
+    display: block;
+  }
+
+  .AccordionMobileFooter .accordion-button:focus {
+    z-index: 3;
+    border-color: transparent !important;
+    outline: 0;
+    box-shadow: none !important;
+  }
+
+  .AccordionMobileFooter .accordion-button:not(.collapsed) {
+    color: #000;
+    background-color: transparent !important;
+    box-shadow: inset 0 calc(var(--bs-accordion-border-width) * -1) 0
+      var(--bs-accordion-border-color);
+  }
+
+  .AccordionMobileFooter .accordion-button::after {
+    background-image: url("/assets/icons/footer-menu.png");
+  }
+
+  .AccordionMobileFooter .accordion-button:not(.collapsed)::after {
+    background-image: url("/assets/icons/footer-menu.png");
+    transform: var(--bs-accordion-btn-icon-transform);
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1730px) {
+}
+
+@media (min-width: 650px) and (max-width: 740px) {
 }

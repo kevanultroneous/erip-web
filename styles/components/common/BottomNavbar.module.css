@@ -1,0 +1,39 @@
+.BottomNavbar {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.BottomIcon {
+    font-size: 25px;
+}
+
+.BottomMenu {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.SocialIconsWrraper {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.SocialIcon {
+    font-size: 30px;
+    margin-left: 1.5rem;
+}
+
+.FooterAccordian {
+    margin-bottom: 1rem;
+}
+
+.AccordionBorder {
+    border: none !important;
+}
+
+.AccordionBorder:focus {
+    border-color: none !important;
+}
