@@ -1,5 +1,6 @@
 import BrowseOffer from "@/components/common/BrowseOffer";
 import ExclusiveService from "@/components/common/ExclusiveService";
+import Footer from "@/components/common/Footer";
 import { Header } from "@/components/common/Header";
 import HowItWork from "@/components/common/HowItWork";
 import Layout from "@/components/common/Layout";
@@ -11,9 +12,13 @@ import GetYourFix from "@/components/Home/GetYourFix";
 import HomeHero from "@/components/Home/Hero";
 import OfferBanner from "@/components/Home/OfferBanner";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { API_URL, HomeHerodata, homeHerodata, NewsandUpdateData, OfferBannerhomedata, TestimonialData } from "utils/data";
 export default function Home({ data }) {
-
+  const [mobileView, setMobileView] = useState(true);
+  useEffect(() => {
+    window.innerWidth < 600 ? setMobileView(false) : setMobileView(true);
+  }, []);
   return (
     <Layout title={"Home"}>
       <Header />
@@ -26,7 +31,11 @@ export default function Home({ data }) {
       <BrowseOffer imgsrc={"/assets/images/offer-big-banner.png"} imgalt={"offer-big-banner"} />
       <Testimonials data={data.hometestimonial.data} />
       <NewsAndUpdate data={data.blogdata.data} />
-      <MobileFooter />
+
+      {
+        mobileView ? <Footer /> : <MobileFooter />
+      }
+
     </Layout>
   )
 }

@@ -45,7 +45,17 @@
     }
 }
 
-@media (min-width: 768px) and (max-width: 1080px) {}
+@media (min-width: 768px) and (max-width: 1080px) {
+    .ImgCard {
+        width: 100%;
+        height: 200px;
+    }
+
+    .ImgTitle {
+        font-weight: 700;
+        font-size: 11px;
+    }
+}
 
 @media (min-width: 1200px) and (max-width: 1730px) {}
 

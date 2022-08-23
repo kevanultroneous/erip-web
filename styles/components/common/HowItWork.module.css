@@ -134,7 +134,11 @@
     }
 }
 
-@media (min-width: 768px) and (max-width: 1080px) {}
+@media (min-width: 768px) and (max-width: 1080px) {
+    .NotShowOnMobile {
+        display: none;
+    }
+}
 
 @media (min-width: 1200px) and (max-width: 1730px) {}
 

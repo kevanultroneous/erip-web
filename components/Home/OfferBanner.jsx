@@ -25,6 +25,14 @@ export default function OfferBanner({ data }) {
           initialSlide: 2,
         },
       },
+      {
+        breakpoint: 884,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 2,
+        },
+      },
     ],
   };
 

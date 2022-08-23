@@ -39,7 +39,11 @@
     }
 }
 
-@media (min-width: 768px) and (max-width: 1080px) {}
+@media (min-width: 768px) and (max-width: 1080px) {
+    .ExclusiveCard {
+        height: 10rem;
+    }
+}
 
 @media (min-width: 1200px) and (max-width: 1730px) {}
 
