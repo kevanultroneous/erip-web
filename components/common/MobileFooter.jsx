@@ -46,12 +46,7 @@ export default function MobileFooter() {
           </div>
           <PrimaryButton
             title="Request a Call Back"
-            buttonStyle={{
-              border: "2px solid #0E62CB",
-              color: "#0E62CB",
-              width: "100%",
-              justifyContent: "center",
-            }}
+            buttonStyle={{ width: "100%" }}
           />
           <div className={styles.BottomNavbar}>
             <div className={styles.BottomMenu}>

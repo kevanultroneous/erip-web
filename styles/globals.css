@@ -166,6 +166,11 @@ a {
     background-image: url('/assets/icons/footer-menu.png');
     transform: var(--bs-accordion-btn-icon-transform);
   }
+
+  .carousel-control-next-icon,
+  .carousel-control-prev-icon {
+    height: 1rem;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1080px) {}
