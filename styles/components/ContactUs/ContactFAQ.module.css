@@ -1,5 +1,5 @@
-.faqContainer {
-  margin: 4rem 2rem;
+.faqMainContainer {
+  padding: 0rem 6rem 3rem;
 }
 
 .faqHeading {
@@ -11,10 +11,6 @@
 }
 
 @media (max-width: 600px) {
-  .faqContainer {
-    margin: 2rem 0;
-  }
-
   .faqHeading {
     margin: 0 0 0.8rem;
   }
@@ -24,5 +20,11 @@
   }
   .faqTitleStyles button {
     font-size: 16px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .faqMainContainer {
+    padding: 3rem;
   }
 }

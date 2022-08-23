@@ -1,9 +1,6 @@
-.contactAddressContainer {
-  margin: 4rem 3rem;
-}
-
 .contactAddressRow {
   background-color: #f5f9ff;
+  margin: 0;
 }
 
 .contactAddressBox {
@@ -46,26 +43,10 @@
 @media (max-width: 600px) {
   .contactAddressContainer {
     display: none;
-    /* margin: 2rem; */
   }
-  /* .contactAdrressText h4 {
-    font-size: 1rem;
-  }
-  .contactAdrressText p {
-    font-size: 0.8rem;
-  }
-
-  .contactAdrressText {
-    text-align: center;
-    width: 100%;
-    padding: 3rem 1rem;
-  } */
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
-  .contactAddressContainer {
-    margin: 2rem 3rem;
-  }
   .contactAdrressText {
     text-align: center;
     width: 70%;

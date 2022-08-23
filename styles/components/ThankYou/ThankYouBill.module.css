@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 4rem 3rem;
 }
 
 .thankyouCol {
@@ -52,7 +51,6 @@
 
 @media (max-width: 600px) {
   .ThankyouBillMainContainer {
-    margin: 3rem 1rem 2rem;
   }
   .orderNumber h5 {
     font-size: 16px;

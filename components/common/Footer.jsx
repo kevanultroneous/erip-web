@@ -1,6 +1,5 @@
 import { Col, Image, Row } from "react-bootstrap";
 import Container from "./Container";
-import styles from "@/styles/components/common/Footer.module.css";
 import { footerMenuList } from "utils/menudata";
 import Link from "next/link";
 import { BiPhone } from "react-icons/bi";
@@ -12,11 +11,13 @@ import {
 } from "react-icons/gr";
 import { AiOutlinePhone } from "react-icons/ai";
 import PrimaryButton from "./PrimaryButton";
+import styles from "@/styles/components/common/Footer.module.css";
+
 export default function Footer() {
   return (
     <Container innerstyle={{ backgroundColor: "#0E62CB" }}>
       <Row>
-        <Col xl={3} lg={3}>
+        <Col xl={3} lg={3} className={styles.footerLogoDiv}>
           <div className={styles.footerLogo}>
             <Image src="/assets/icons/white-erip.png" alt="footer-icon" />
             <p className={styles.RepairSmallTitle}>Repair In Peace</p>
@@ -29,21 +30,25 @@ export default function Footer() {
               <p className={styles.PaymentSmallTitle}>Secure Payment</p>
               <div>
                 <Image
+                  fluid
                   src="/assets/images/visa.png"
                   alt="visa"
                   className={styles.PaymentImage}
                 />
                 <Image
+                  fluid
                   src="/assets/images/master-card.png"
                   alt="master-card"
                   className={styles.PaymentImage}
                 />
                 <Image
+                  fluid
                   src="/assets/images/maestro.png"
                   alt="maestro"
                   className={styles.PaymentImage}
                 />
                 <Image
+                  fluid
                   src="/assets/images/american-express.png"
                   alt="american-express"
                   className={styles.PaymentImage}
@@ -55,7 +60,7 @@ export default function Footer() {
         <Col xl={6}>
           <Row>
             {footerMenuList.map((value, index) => (
-              <Col xl={4} lg={2} xs={6} key={index}>
+              <Col xl={4} lg={2} xs={6} md={4} key={index}>
                 <h6 className={styles.MenuTitle}>{value.title}</h6>
                 <div className={styles.MenuList}>
                   {value.menu.map((menu, index) => (

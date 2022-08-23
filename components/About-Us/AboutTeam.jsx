@@ -1,5 +1,7 @@
 import { Col, Image, Row } from "react-bootstrap";
 import Slider from "react-slick";
+import Container from "../common/Container";
+
 import styles from "@/styles/components/About-Us/AboutTeam.module.css";
 
 function AboutTeam() {
@@ -38,22 +40,24 @@ function AboutTeam() {
   };
   return (
     <section className={styles.aboutTeamContainer}>
-      <Row className={styles.aboutTeamHeading}>
-        <h2>About The Team</h2>
-      </Row>
-      <Row className={styles.aboutTeamBoxes}>
-        <Slider {...settings}>
-          {teamData.map((teamMember, ind) => {
-            return (
-              <Col xl={3} md={3} key={ind} className={styles.aboutTeamCont}>
-                <div className={styles.teamImages}>
-                  <Image fluid src={teamMember.imagesrc} alt={ind + 1} />
-                </div>
-              </Col>
-            );
-          })}
-        </Slider>
-      </Row>
+      <Container>
+        <Row className={styles.aboutTeamHeading}>
+          <h2>About The Team</h2>
+        </Row>
+        <Row className={`${styles.aboutTeamBoxes} aboutTeamBoxes`}>
+          <Slider {...settings}>
+            {teamData.map((teamMember, ind) => {
+              return (
+                <Col xl={3} md={3} key={ind} className={styles.aboutTeamCont}>
+                  <div className={styles.teamImages}>
+                    <Image fluid src={teamMember.imagesrc} alt={ind + 1} />
+                  </div>
+                </Col>
+              );
+            })}
+          </Slider>
+        </Row>
+      </Container>
     </section>
   );
 }

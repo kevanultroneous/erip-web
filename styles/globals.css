@@ -51,7 +51,7 @@ a {
 }
 
 /* /===================Accordion===================/ /===================Header===================/  */
-.navBarBottomHeader .nav-pills .show>.nav-link {
+.navBarBottomHeader .nav-pills .show > .nav-link {
   background-color: white !important;
 }
 
@@ -67,7 +67,7 @@ a {
   border: none;
 }
 
-.navBarBottomHeader .dropdown-menu.show>div {
+.navBarBottomHeader .dropdown-menu.show > div {
   display: flex !important;
 }
 
@@ -132,6 +132,10 @@ a {
   display: none;
 }
 
+.aboutTeamBoxes .slick-slider {
+  padding: 0 !important;
+}
+
 /* carousel */
 .carousel-control-prev {
   left: -60px;
@@ -141,13 +145,28 @@ a {
   right: -60px;
 }
 
-
 .carousel-control-next-icon,
 .carousel-control-prev-icon {
   height: 1.4rem !important;
 }
 
-@media (min-width:320px) and (max-width: 450px) {
+.getBrands .dropdown-menu.show {
+  width: 80vw;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  top: 130% !important;
+  padding: 1.5rem;
+}
+
+.getModels .dropdown-menu.show {
+  width: 80vw;
+  left: 80% !important;
+  transform: translateX(-90%) !important;
+  top: 140% !important;
+  padding: 1.5rem;
+}
+
+@media (min-width: 320px) and (max-width: 450px) {
   .slick-prev {
     left: -11px !important;
   }
@@ -170,15 +189,16 @@ a {
   .AccordionMobileFooter .accordion-button:not(.collapsed) {
     color: #000;
     background-color: transparent !important;
-    box-shadow: inset 0 calc(var(--bs-accordion-border-width) * -1) 0 var(--bs-accordion-border-color);
+    box-shadow: inset 0 calc(var(--bs-accordion-border-width) * -1) 0
+      var(--bs-accordion-border-color);
   }
 
   .AccordionMobileFooter .accordion-button::after {
-    background-image: url('/assets/icons/footer-menu.png');
+    background-image: url("/assets/icons/footer-menu.png");
   }
 
   .AccordionMobileFooter .accordion-button:not(.collapsed)::after {
-    background-image: url('/assets/icons/footer-menu.png');
+    background-image: url("/assets/icons/footer-menu.png");
     transform: var(--bs-accordion-btn-icon-transform);
   }
 
@@ -200,11 +220,11 @@ a {
     border-radius: 999px;
     transition: all 0.5s ease-in-out;
     will-change: width;
-    border: 1px solid #0E62CB;
+    border: 1px solid #0e62cb;
   }
 
   .slick-dots.slick-thumb li.slick-active {
-    background-color: #0E62CB;
+    background-color: #0e62cb;
     width: 22.45px;
   }
 }
@@ -224,19 +244,22 @@ a {
   .AccordionMobileFooter .accordion-button:not(.collapsed) {
     color: #000;
     background-color: transparent !important;
-    box-shadow: inset 0 calc(var(--bs-accordion-border-width) * -1) 0 var(--bs-accordion-border-color);
+    box-shadow: inset 0 calc(var(--bs-accordion-border-width) * -1) 0
+      var(--bs-accordion-border-color);
   }
 
   .AccordionMobileFooter .accordion-button::after {
-    background-image: url('/assets/icons/footer-menu.png');
+    background-image: url("/assets/icons/footer-menu.png");
   }
 
   .AccordionMobileFooter .accordion-button:not(.collapsed)::after {
-    background-image: url('/assets/icons/footer-menu.png');
+    background-image: url("/assets/icons/footer-menu.png");
     transform: var(--bs-accordion-btn-icon-transform);
   }
 }
 
-@media (min-width: 1200px) and (max-width: 1730px) {}
+@media (min-width: 1200px) and (max-width: 1730px) {
+}
 
-@media (min-width: 650px) and (max-width: 740px) {}
+@media (min-width: 650px) and (max-width: 740px) {
+}

@@ -1,6 +1,6 @@
-.aboutTeamContainer {
+/* .aboutTeamContainer {
   margin: 4rem 3rem;
-}
+} */
 
 .aboutTeamHeading {
   text-align: center;
@@ -13,17 +13,18 @@
 
 .aboutTeamBoxes {
   justify-content: space-between;
+  margin: 0;
 }
 
 .teamImages {
-  margin: 1rem;
+  margin: 0 1rem 0 0;
 }
 
 /* mobile portrait */
 @media (max-width: 600px) {
-  .aboutTeamContainer {
+  /* .aboutTeamContainer {
     margin: 3rem 1rem 2rem;
-  }
+  } */
   .aboutTeamHeading {
     margin: 0 0 1rem;
   }
@@ -38,9 +39,9 @@
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
-  .aboutTeamContainer {
+  /* .aboutTeamContainer {
     margin: 5rem 2rem;
-  }
+  } */
   .aboutTeamBoxes div {
     padding: 0;
   }
