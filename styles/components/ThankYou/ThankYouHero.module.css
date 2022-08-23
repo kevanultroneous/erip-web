@@ -1,10 +1,10 @@
-.thankyouContainer {
-  margin: 4rem 7rem;
-}
-
 .thankyouHeroRow {
   align-items: center;
   justify-content: center;
+}
+
+.thankyouHeroRow div {
+  padding: 0;
 }
 
 .thankYouHeroText {
@@ -30,6 +30,9 @@
   background-color: #0e62cb;
   box-shadow: none;
 }
+.orderStatusBtn p {
+  margin: 0;
+}
 
 .orderStatusBtn:active,
 .orderStatusBtn:focus {
@@ -37,9 +40,6 @@
 }
 
 @media (max-width: 600px) {
-  .thankyouContainer {
-    margin: 2rem 1rem;
-  }
   .thankYouHeroText h3 {
     margin: 1rem 0;
     font-size: 36px;
@@ -52,5 +52,14 @@
     padding: 0.8rem 0;
     width: 100%;
     font-size: 16px;
+  }
+  .orderStatusBtn p {
+    margin: 0;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .orderStatusBtn {
+    margin: auto;
   }
 }

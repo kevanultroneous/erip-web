@@ -136,7 +136,7 @@ export function Header() {
                             <div key={menuIndex}>
                               <Dropdown.Item
                                 eventKey="4.1"
-                                className="listedItemHead"
+                                className={styles.listedItemHead}
                                 style={
                                   menu.dropHead === undefined
                                     ? { display: "none" }

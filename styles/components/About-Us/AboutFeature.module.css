@@ -1,5 +1,5 @@
 .aboutFeatureContainer {
-  margin: 9rem 3rem 7rem;
+  margin: 0;
   align-items: center;
   justify-content: space-between;
 }
@@ -15,6 +15,7 @@
 .featureData {
   margin: 0 0 2.2rem;
   display: flex;
+  padding: 0;
 }
 
 .aboutFeatureCheckbox {
@@ -39,10 +40,11 @@
   margin: 0;
 }
 
+.aboutFeatureContainer div:nth-child(1) {
+  padding: 0 0.5rem 0 0;
+}
+
 @media (max-width: 600px) {
-  .aboutFeatureContainer {
-    margin: 3rem 1rem 2rem;
-  }
   .aboutFeatureHeading {
     margin: 0 0 1rem;
   }
@@ -60,10 +62,10 @@
 
 @media (min-width: 768px) and (max-width: 992px) {
   .aboutFeatureContainer {
-    margin: 5rem 3rem;
     flex-direction: column-reverse;
   }
   .aboutFeatureContainer div:nth-child(2) {
+    margin: 0;
     padding: 0;
   }
   .aboutFeatureHeading {

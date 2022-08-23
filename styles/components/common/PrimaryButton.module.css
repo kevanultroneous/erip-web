@@ -20,6 +20,10 @@
   align-items: center;
 }
 
+.primaryButtonStyle:focus {
+  box-shadow: none;
+}
+
 .btnIcons {
   margin-right: 0.4rem;
   font-size: 30px;
