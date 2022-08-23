@@ -132,6 +132,10 @@ a {
   display: none;
 }
 
+.aboutTeamBoxes .slick-slider {
+  padding: 0 !important;
+}
+
 /* carousel */
 .carousel-control-prev {
   left: -60px;
@@ -144,6 +148,22 @@ a {
 .carousel-control-next-icon,
 .carousel-control-prev-icon {
   height: 1.4rem !important;
+}
+
+.getBrands .dropdown-menu.show {
+  width: 80vw;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  top: 130% !important;
+  padding: 1.5rem;
+}
+
+.getModels .dropdown-menu.show {
+  width: 80vw;
+  left: 80% !important;
+  transform: translateX(-90%) !important;
+  top: 140% !important;
+  padding: 1.5rem;
 }
 
 @media (min-width: 320px) and (max-width: 450px) {

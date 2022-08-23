@@ -30,3 +30,9 @@
 .selectDeviceNav {
   justify-content: space-around;
 }
+
+.navDropBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

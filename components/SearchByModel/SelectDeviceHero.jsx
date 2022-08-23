@@ -27,7 +27,6 @@ function SelectDeviceHero() {
     const brandedData = await axios.get(
       `http://43.204.87.153/api/v1/brands_by_category?category=${eventKey}`
     );
-    console.log();
     setbrandData(brandedData.data.data);
   };
 
@@ -77,48 +76,62 @@ function SelectDeviceHero() {
             </div>
           </Col>
           <Col xl={3}>
-            <div className={`${styles.selectButton} selectButton`}>
+            <div className={`${styles.selectButton} selectButton getBrands`}>
               <p>Step 2</p>
               <NavDropdown
                 title={"Brand"}
                 id="nav-dropdown"
                 onSelect={getModels}
               >
-                {brandData.map((brands, ind) => {
-                  return (
-                    <NavDropdown.Item
-                      eventKey={brands.brand_id}
-                      key={ind}
-                      className={styles.navdropdown}
-                    >
-                      <div className={styles.brandLogoBox}>
-                        <Image
-                          fluid
-                          src={brands.brand_icon_url}
-                          alt={brands.brand_title}
-                        />
-                      </div>
-                    </NavDropdown.Item>
-                  );
-                })}
+                <Row>
+                  {brandData.map((brands, ind) => {
+                    return (
+                      <Col key={ind} xl={2}>
+                        <NavDropdown.Item
+                          eventKey={brands.brand_id}
+                          className={styles.navdropdown}
+                        >
+                          <div className={styles.brandLogoBox}>
+                            <Image
+                              fluid
+                              src={brands.brand_icon_url}
+                              alt={brands.brand_title}
+                            />
+                          </div>
+                        </NavDropdown.Item>
+                      </Col>
+                    );
+                  })}
+                </Row>
               </NavDropdown>
             </div>
           </Col>
           <Col xl={3}>
-            <div className={`${styles.selectButton} selectButton`}>
+            <div className={`${styles.selectButton} selectButton getModels`}>
               <p>Step 3</p>
               <NavDropdown title={"Model"} id="nav-dropdown">
-                {models.map((models, ind) => {
-                  return (
-                    <NavDropdown.Item
-                      eventKey={models.model_id}
-                      key={ind}
-                      className={styles.navdropdown}
-                    >
-                      {models.model_title}
-                    </NavDropdown.Item>
-                  );
-                })}
+                <Row>
+                  {models.map((models, ind) => {
+                    return (
+                      <Col key={ind} xl={2}>
+                        <NavDropdown.Item
+                          eventKey={models.model_id}
+                          key={ind}
+                          className={styles.navdropdown}
+                        >
+                          <div className={styles.navDropBox}>
+                            <Image
+                              fluid
+                              src={models.model_image_url}
+                              alt={models.model_title}
+                            />
+                            {models.model_title}
+                          </div>
+                        </NavDropdown.Item>
+                      </Col>
+                    );
+                  })}
+                </Row>
               </NavDropdown>
             </div>
           </Col>

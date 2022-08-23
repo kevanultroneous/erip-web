@@ -1,6 +1,7 @@
 import { Col, Image, Row } from "react-bootstrap";
 import styles from "@/styles/components/About-Us/AboutFeature.module.css";
 import { BsCheck } from "react-icons/bs";
+import Container from "../common/Container";
 
 function AboutFeature() {
   const aboutFeatureData = [
@@ -37,37 +38,39 @@ function AboutFeature() {
   ];
   return (
     <section>
-      <Row className={styles.aboutFeatureContainer}>
-        <Col xl={4} md={10}>
-          <div className={styles.aboutfeatureimage}>
-            <Image
-              fluid
-              src="/assets/images/about-feature-image.png"
-              alt="about feature image"
-            />
-          </div>
-        </Col>
-        <Col xl={8}>
-          <div className={styles.aboutFeatureHeading}>
-            <h2>Features</h2>
-          </div>
-          <Row>
-            {aboutFeatureData.map((featureData, ind) => {
-              return (
-                <Col xl={6} key={ind} className={styles.featureData}>
-                  <button className={styles.aboutFeatureCheckbox}>
-                    <Image
-                      src="/assets/icons/about-feature-tick.svg"
-                      alt="about feature tick"
-                    />
-                  </button>
-                  <span>{featureData.feature}</span>
-                </Col>
-              );
-            })}
-          </Row>
-        </Col>
-      </Row>
+      <Container>
+        <Row className={styles.aboutFeatureContainer}>
+          <Col xl={4} md={10}>
+            <div className={styles.aboutfeatureimage}>
+              <Image
+                fluid
+                src="/assets/images/about-feature-image.png"
+                alt="about feature image"
+              />
+            </div>
+          </Col>
+          <Col xl={8}>
+            <div className={styles.aboutFeatureHeading}>
+              <h2>Features</h2>
+            </div>
+            <Row>
+              {aboutFeatureData.map((featureData, ind) => {
+                return (
+                  <Col xl={6} key={ind} className={styles.featureData}>
+                    <button className={styles.aboutFeatureCheckbox}>
+                      <Image
+                        src="/assets/icons/about-feature-tick.svg"
+                        alt="about feature tick"
+                      />
+                    </button>
+                    <span>{featureData.feature}</span>
+                  </Col>
+                );
+              })}
+            </Row>
+          </Col>
+        </Row>
+      </Container>
     </section>
   );
 }
