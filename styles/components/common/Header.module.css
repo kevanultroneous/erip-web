@@ -1,5 +1,6 @@
 .navHeader {
   flex-direction: column;
+  padding-bottom: 0%;
 }
 
 .brandLogo {

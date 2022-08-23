@@ -14,10 +14,12 @@ import OfferBanner from "@/components/Home/OfferBanner";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { API_URL, HomeHerodata, homeHerodata, NewsandUpdateData, OfferBannerhomedata, TestimonialData } from "utils/data";
+
 export default function Home({ data }) {
   const [mobileView, setMobileView] = useState(true);
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
+
   }, []);
   return (
     <Layout title={"Home"}>
