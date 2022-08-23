@@ -10,7 +10,10 @@
     padding: 2rem;
 }
 
-.TestimonialAvatar {}
+.TestimonialAvatar img {
+    height: 60px;
+    border-radius: 100%;
+}
 
 .RatingWrraper {
     margin: 1.5rem 0;
@@ -43,3 +46,36 @@
     font-weight: 400;
     font-size: 48px;
 }
+
+@media (min-width:320px) and (max-width: 450px) {
+    .TestimonialHeading {
+        font-size: var(--mobileHeading);
+        font-weight: 400;
+    }
+
+    .TestimonialName {
+        font-weight: 400;
+        font-size: 16px;
+    }
+
+    .TestimonialBrand {
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    .TestimonialDetail {
+        font-weight: 400;
+        font-size: 16px;
+    }
+
+    .TestimonialCard {
+        margin: 1rem;
+        padding: 1rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {}
+
+@media (min-width: 1200px) and (max-width: 1730px) {}
+
+@media (min-width: 650px) and (max-width: 740px) {}

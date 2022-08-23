@@ -1,16 +1,8 @@
-.MainTitleWrraper {
-    text-align: center;
-    padding-bottom: 3rem;
-}
-
-.MainTitle {
-    font-weight: 400;
-    font-size: 48px;
-}
+.MobileImage {}
 
 @media (min-width:320px) and (max-width: 450px) {
-    .MainTitle {
-        font-size: var(--mobileHeading);
+    .MobileSpacing {
+        padding: 0 0rem;
     }
 }
 

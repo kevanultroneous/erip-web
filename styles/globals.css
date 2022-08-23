@@ -28,8 +28,7 @@ a {
   src: url("/assets/fonts/ProductSansRegular.ttf") format("truetype");
 }
 
-:root {
-}
+:root {}
 
 /* =================== Bootstrap =================== */
 
@@ -56,7 +55,7 @@ a {
 
 /* =================== Header =================== */
 
-.navBarBottomHeader .nav-pills .show > .nav-link {
+.navBarBottomHeader .nav-pills .show>.nav-link {
   background-color: white !important;
 }
 
@@ -72,7 +71,7 @@ a {
   border: none;
 }
 
-.navBarBottomHeader .dropdown-menu.show > div {
+.navBarBottomHeader .dropdown-menu.show>div {
   display: flex !important;
 }
 
@@ -108,4 +107,52 @@ a {
   color: red !important;
 }
 
-/* =================== Header =================== */
+:root {
+  --mobileHeading: 28px;
+}
+
+.MobileFooter {
+  display: none;
+}
+
+@media (min-width:320px) and (max-width: 450px) {
+  .slick-prev {
+    left: -11px !important;
+  }
+
+  .slick-next {
+    right: -4px !important;
+  }
+
+  .MobileFooter {
+    display: block;
+  }
+
+  .AccordionMobileFooter .accordion-button:focus {
+    z-index: 3;
+    border-color: transparent !important;
+    outline: 0;
+    box-shadow: none !important;
+  }
+
+  .AccordionMobileFooter .accordion-button:not(.collapsed) {
+    color: #000;
+    background-color: transparent !important;
+    box-shadow: inset 0 calc(var(--bs-accordion-border-width) * -1) 0 var(--bs-accordion-border-color);
+  }
+
+  .AccordionMobileFooter .accordion-button::after {
+    background-image: url('/assets/icons/footer-menu.png');
+  }
+
+  .AccordionMobileFooter .accordion-button:not(.collapsed)::after {
+    background-image: url('/assets/icons/footer-menu.png');
+    transform: var(--bs-accordion-btn-icon-transform);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {}
+
+@media (min-width: 1200px) and (max-width: 1730px) {}
+
+@media (min-width: 650px) and (max-width: 740px) {}
