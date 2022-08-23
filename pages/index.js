@@ -1,5 +1,6 @@
 import BrowseOffer from "@/components/common/BrowseOffer";
 import ExclusiveService from "@/components/common/ExclusiveService";
+import { Header } from "@/components/common/Header";
 import HowItWork from "@/components/common/HowItWork";
 import Layout from "@/components/common/Layout";
 import MobileFooter from "@/components/common/MobileFooter";
@@ -15,6 +16,7 @@ export default function Home({ data }) {
 
   return (
     <Layout title={"Home"}>
+      <Header />
       <HomeHero data={data.herosection.data} />
       <GetYourFix />
       <OfferBanner data={data.offersection.data} />
