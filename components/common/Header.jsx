@@ -59,7 +59,11 @@ export function Header() {
             </div>
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link href="#home" className={styles.mobileMenuLink}>
+                <Nav.Link
+                  href="#home"
+                  className={styles.mobileMenuLink}
+                  onClick={() => setLoginPopup(true)}
+                >
                   Login
                 </Nav.Link>
                 <Nav.Link href="#link" className={styles.mobileMenuLink}>
@@ -76,6 +80,7 @@ export function Header() {
                 </Nav.Link>
               </Nav>
             </Navbar.Collapse>
+            <LoginPopup show={loginPopup} onHide={() => setLoginPopup(false)} />
           </Container>
         </Navbar>
       );

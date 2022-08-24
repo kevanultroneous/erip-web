@@ -166,6 +166,18 @@ a {
   padding: 1.5rem;
 }
 
+/*remove  input number small up-down buttons Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/*remove input number small up-down buttons Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 @media (min-width: 320px) and (max-width: 450px) {
   .slick-prev {
     left: -11px !important;
@@ -242,6 +254,19 @@ a {
 
   .OfferBannerImageSlide .slick-slider {
     padding: 0%;
+  }
+
+  .LoginPopup .modal-dialog {
+    margin: 0%;
+    height: 100%;
+  }
+
+  .LoginPopup .modal-dialog-centered {
+    align-items: flex-end;
+  }
+
+  .LoginPopup .modal-content {
+    border-radius: 10px 10px 0px 0px;
   }
 }
 

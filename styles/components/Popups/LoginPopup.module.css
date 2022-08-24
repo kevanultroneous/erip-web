@@ -1,5 +1,5 @@
 .LoginPopupRow {
-    padding: 2rem 0.5rem;
+    padding: 0rem 0.5rem 2rem 0.5rem;
 }
 
 .InputWrraper {
@@ -15,19 +15,90 @@
     outline: none;
     border-bottom: 1px solid #000000;
     width: 100%;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.4rem;
 }
 
 .InputDefaultLabel {
     padding-bottom: 0.5rem;
     padding-right: 0.5rem;
+    font-weight: 600;
     border-bottom: 1px solid #000000;
 }
 
 .InputCheckBox {
+    display: flex;
     margin-bottom: 1.5rem;
+    font-weight: 400;
+    font-size: 16px;
 }
 
 .CheckBoxwrraper {
     margin-right: 1rem;
 }
+
+.ModalHeaderLine {
+    border-bottom: none !important;
+}
+
+.ModalBody {
+    padding-top: 0%;
+    padding-bottom: 0%;
+}
+
+.CenterImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 0%;
+    padding-right: 0%;
+}
+
+.MobileHeadingWrraper {
+    display: none;
+}
+
+@media (min-width:320px) and (max-width: 450px) {
+    .PopupMobileImage {
+        height: 12rem;
+    }
+
+    .ModalHeaderLine {
+        display: none;
+    }
+
+    .MobileHeadingWrraper {
+        padding-top: 2rem;
+        display: flex;
+        width: 100%;
+        align-items: baseline;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .MobileHeading {
+        font-weight: 700;
+        font-size: 20px;
+    }
+
+    .MobilesubHeading {
+        font-weight: 400;
+        font-size: 16px;
+        color: #AEAEAE;
+    }
+
+    .CloseIconWrraper {
+        position: relative;
+        left: 3rem;
+        /* right: 0; */
+    }
+
+    .CloseIcon {
+        font-size: 25px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {}
+
+@media (min-width: 1200px) and (max-width: 1730px) {}
+
+@media (min-width: 650px) and (max-width: 740px) {}

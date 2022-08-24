@@ -13,17 +13,15 @@ import HomeHero from "@/components/Home/Hero";
 import OfferBanner from "@/components/Home/OfferBanner";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { API_URL, HomeHerodata, homeHerodata, NewsandUpdateData, OfferBannerhomedata, TestimonialData } from "utils/data";
+import { API_URL, GetYourFixCard, HomeHerodata, homeHerodata, NewsandUpdateData, OfferBannerhomedata, TestimonialData } from "utils/data";
 
 export default function Home({ data }) {
   const [mobileView, setMobileView] = useState(true);
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
-
   }, []);
   return (
     <Layout title={"Home"}>
-      {console.log(data)}
       <Header />
       <HomeHero data={data.herosection.data} />
       <GetYourFix data={data.getyourfix.data} />
@@ -65,11 +63,11 @@ export async function getServerSideProps() {
   return {
     props: {
       data: {
-        herosection: hero_section_home ? hero_section_home : HomeHerodata,
-        blogdata: blog_response ? blog_response : NewsandUpdateData,
-        hometestimonial: home_testimonial ? home_testimonial : TestimonialData,
-        offersection: offersection_home ? offersection_home : OfferBannerhomedata,
-        getyourfix: getyour_fix
+        herosection: !hero_section_home ? HomeHerodata : hero_section_home.data.length > 0 ? hero_section_home : HomeHerodata,
+        blogdata: blog_response.data.length > 0 ? blog_response : NewsandUpdateData,
+        hometestimonial: home_testimonial.data.length > 0 ? home_testimonial : TestimonialData,
+        offersection: offersection_home.data.length > 0 ? offersection_home : OfferBannerhomedata,
+        getyourfix: getyour_fix.data.length > 0 ? getyour_fix : GetYourFixCard
       }
     }
   }

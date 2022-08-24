@@ -3,7 +3,12 @@ import styles from "@/styles/components/common/BrowseOffer.module.css";
 export default function BrowseOffer({ imgsrc, imgalt }) {
   return (
     <div>
-      <Image src={imgsrc} alt={imgalt} loading="lazy" fluid />
+      <Image
+        src={imgsrc}
+        alt={imgalt}
+        loading="lazy"
+        className={styles.BrowseImage}
+      />
     </div>
   );
 }
