@@ -6,6 +6,7 @@ import { CgCloseO } from "react-icons/cg";
 import CartProductList from "./CartProductList";
 import Coupons from "./Coupons";
 import { useEffect, useState } from "react";
+import CouponsCard from "./CouponsCard";
 export default function CartAndOffer({ show, onHide }) {
   const [total, setTotal] = useState(0);
   const cartlist = [
@@ -26,6 +27,7 @@ export default function CartAndOffer({ show, onHide }) {
       price: 100,
     },
   ];
+
   useEffect(() => {
     var ans = 0;
     for (let i = 0; i < cartlist.length; i++) {
@@ -33,6 +35,7 @@ export default function CartAndOffer({ show, onHide }) {
     }
     setTotal(ans);
   }, []);
+
   return (
     <Modal
       show={show}
@@ -42,7 +45,7 @@ export default function CartAndOffer({ show, onHide }) {
       centered
       className="CartandOfferPopup"
     >
-      <Modal.Body className={styles.CartAndOfferBody}>
+      {/* <Modal.Body className={styles.CartAndOfferBody}>
         <Row>
           <Col xs={10} md={6} lg={6} xl={6}>
             <h4 className={styles.CartAndOfferMainTitle}>Your Cart</h4>
@@ -67,7 +70,7 @@ export default function CartAndOffer({ show, onHide }) {
             ))}
           </Col>
         </Row>
-        {/*  */}
+     
         <Row className={styles.AvailableCoupons}>
           <Col xs={6} md={6} lg={6} xl={6}>
             <h4 className={styles.CartAndOfferSubMainTitle}>
@@ -81,7 +84,7 @@ export default function CartAndOffer({ show, onHide }) {
               See All
             </lable>
           </Col>
-          {/*  */}
+  
           <Col xs={12} md={12} lg={12} xl={12} className={styles.CouponsCol}>
             <Coupons
               offer={"-- ₹100 (25% OFF)"}
@@ -89,7 +92,7 @@ export default function CartAndOffer({ show, onHide }) {
             />
           </Col>
         </Row>
-        {/*  */}
+      
         <Row>
           <Col xs={12} md={12} lg={12} xl={12}>
             <hr />
@@ -123,6 +126,21 @@ export default function CartAndOffer({ show, onHide }) {
                 color: "#fff",
               }}
             />
+          </Col>
+        </Row>
+      </Modal.Body> */}
+      <Modal.Body className={styles.CartAndOfferBody}>
+        <Row>
+          <Col xs={10} md={6} lg={6} xl={6}>
+            <h4 className={styles.CartAndOfferMainTitle}>Available coupons</h4>
+          </Col>
+          <Col xs={2} md={6} lg={6} xl={6} className={styles.CloseIconWrraper}>
+            <CgCloseO className={styles.CloseIcon} onClick={onHide} />
+          </Col>
+          <Col xs={12} md={12} lg={12} xl={12} className={styles.CouponsView}>
+            <CouponsCard />
+            <CouponsCard />
+            <CouponsCard />
           </Col>
         </Row>
       </Modal.Body>

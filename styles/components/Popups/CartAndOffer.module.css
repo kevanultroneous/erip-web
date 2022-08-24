@@ -61,6 +61,10 @@
     margin-bottom: 6rem;
 }
 
+.CouponsView {
+    margin-top: 1rem;
+}
+
 @media (min-width:320px) and (max-width: 450px) {
     .CouponsCol {
         margin-top: 0.5rem;
@@ -68,7 +72,7 @@
     }
 
     .CartAndOfferBody {
-        padding: 1rem 1.5rem;
+        padding: 2rem 1.5rem;
     }
 
     .CartAndOfferSubMainTitle {
