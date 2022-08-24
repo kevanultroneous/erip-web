@@ -1,0 +1,100 @@
+.CartAndOfferBody {
+    padding: 2rem 1.5rem;
+}
+
+.CartAndOfferMainTitle {
+    font-weight: 400;
+    font-size: 22px;
+}
+
+.CartAndOfferSubMainTitle {
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.CartAndOfferSubMainTitleUni {
+    font-weight: 400;
+    font-size: 20px;
+    color: #EB870E;
+}
+
+.CartAndOfferSubMainTitleBold {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+/* .CartAndOfferSubTitle {} */
+
+.CloseIconWrraper {
+    text-align: right;
+}
+
+.CloseIcon {
+    font-size: 25px;
+}
+
+.CheckoutButtonWrraper {
+    margin-top: 1.5rem;
+}
+
+.TextRight {
+    text-align: right;
+}
+
+.AvailableCoupons {
+    margin-top: 1.5rem;
+}
+
+.LinkType {
+    color: #0E62CB;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+.ProductListWrraper {
+    margin-top: 1rem;
+}
+
+.CouponsCol {
+    margin-top: 0.5rem;
+    margin-bottom: 6rem;
+}
+
+@media (min-width:320px) and (max-width: 450px) {
+    .CouponsCol {
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .CartAndOfferBody {
+        padding: 1rem 1.5rem;
+    }
+
+    .CartAndOfferSubMainTitle {
+        font-weight: 400;
+        font-size: 16px;
+    }
+
+    .CartAndOfferSubMainTitleUni {
+        font-weight: 400;
+        font-size: 18px;
+    }
+
+    .CartAndOfferSubMainTitleBold {
+        font-weight: 700;
+        font-size: 18px;
+    }
+
+    .CartAndOfferMainTitle {
+        text-align: center;
+        font-weight: 700;
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {}
+
+@media (min-width: 1200px) and (max-width: 1730px) {}
+
+@media (min-width: 650px) and (max-width: 740px) {}

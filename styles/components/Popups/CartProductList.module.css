@@ -1,0 +1,47 @@
+.AlignItemsCenter {
+    align-items: center;
+}
+
+.ProductName {
+    font-weight: 400;
+    font-size: 18px;
+    color: #676767;
+}
+
+.PriceActions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.ProductPrice {
+    font-weight: 700;
+    font-size: 18px;
+    margin-right: 1rem;
+}
+
+.DeleteImg {
+    cursor: pointer;
+    height: 1rem;
+}
+
+@media (min-width:320px) and (max-width: 450px) {
+    .ProductName {
+        font-weight: 400;
+        font-size: 16px;
+        margin: 0%;
+        margin-bottom: 0.5rem;
+    }
+
+    .ProductPrice {
+        font-weight: 700;
+        font-size: 14px;
+        margin-right: 0.5rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {}
+
+@media (min-width: 1200px) and (max-width: 1730px) {}
+
+@media (min-width: 650px) and (max-width: 740px) {}

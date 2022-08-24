@@ -49,7 +49,6 @@ export default function LoginPopup({ show, onHide }) {
     if (ContactNumber.length >= 10) {
       setErrorMsgHide(false);
       setValidationNumberHideError(false);
-      setContactNumber(ContactNumber.slice(0, 9));
     } else {
       setErrorMsgHide(true);
       setValidationNumberHideError(true);
@@ -61,7 +60,6 @@ export default function LoginPopup({ show, onHide }) {
     if (Otp.length >= 6) {
       setErrorMsgHide(false);
       setValidationOtpHideError(false);
-      setOtp(Otp.slice(0, 5));
     } else {
       setErrorMsgHide(true);
       setValidationOtpHideError(true);
@@ -161,9 +159,9 @@ export default function LoginPopup({ show, onHide }) {
               <div className={styles.InputWrraper}>
                 <label className={styles.InputDefaultLabel}>+91</label>
                 <input
-                  maxlength={6}
+                  maxlength={10}
                   className={styles.InputNumber}
-                  type={"number"}
+                  type={"tel"}
                   value={ContactNumber}
                   onChange={NumberInputHandler}
                   placeholder="Enter your mobile number"
@@ -176,7 +174,7 @@ export default function LoginPopup({ show, onHide }) {
                 <input
                   maxlength={6}
                   className={styles.InputNumber}
-                  type={"number"}
+                  type={"tel"}
                   value={Otp}
                   onChange={OtpInputHandler}
                   placeholder="Enter the OTP here"

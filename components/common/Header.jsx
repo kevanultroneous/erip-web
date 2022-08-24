@@ -10,10 +10,13 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import styles from "@/styles/components/common/Header.module.css";
 import LoginPopup from "../Popups/LoginPopup";
+import CartAndOffer from "../Popups/CartAndOffer";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
   const [loginPopup, setLoginPopup] = useState(false);
+  const [cartandOfferPopup, setCartAndOfferPopup] = useState(false);
+
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
   }, []);
@@ -51,6 +54,7 @@ export function Header() {
               <Image
                 src="assets/icons/mobile-header-cart.svg"
                 alt="header cart"
+                onClick={() => setCartAndOfferPopup(true)}
               />
               <Navbar.Toggle
                 aria-controls="basic-navbar-nav"
@@ -81,6 +85,10 @@ export function Header() {
               </Nav>
             </Navbar.Collapse>
             <LoginPopup show={loginPopup} onHide={() => setLoginPopup(false)} />
+            <CartAndOffer
+              show={cartandOfferPopup}
+              onHide={() => setCartAndOfferPopup(false)}
+            />
           </Container>
         </Navbar>
       );
@@ -115,6 +123,7 @@ export function Header() {
                 src="assets/icons/header-cart.svg"
                 alt="header cart"
                 className={styles.navHeaderCart}
+                onClick={() => setCartAndOfferPopup(true)}
               />
               <PrimaryButton
                 title="Login"
@@ -187,6 +196,10 @@ export function Header() {
               })}
             </Nav>
             <LoginPopup show={loginPopup} onHide={() => setLoginPopup(false)} />
+            <CartAndOffer
+              show={cartandOfferPopup}
+              onHide={() => setCartAndOfferPopup(false)}
+            />
           </Container>
         </Navbar>
       );
