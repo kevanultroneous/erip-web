@@ -1,0 +1,37 @@
+.issueColumn {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+  padding: 0;
+}
+
+.issuePageRow {
+  margin: 0 0 9rem;
+}
+
+.issuePageTitle {
+  margin: 1rem 0 1rem 3.5rem;
+}
+
+.selectDeviceHero {
+  display: none;
+}
+
+.selectDeviceSection {
+  padding: 1rem 1rem 2rem !important;
+}
+
+@media (max-width: 600px) {
+  .issuePageTitle {
+    margin: 1.5rem 0 0 0.7rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .issuePageTitle {
+    margin: 2rem 0 0 1.5rem;
+  }
+  .issuePageRow {
+    margin: 0 0 17rem;
+  }
+}

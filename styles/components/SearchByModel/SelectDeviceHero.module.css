@@ -1,0 +1,124 @@
+.modelHeroContainer {
+  padding: 1rem;
+  background-color: #ebf3ff;
+}
+
+.modelHeroRow {
+  margin: 0 0 2rem;
+}
+
+.selectDevice {
+  justify-content: center;
+}
+
+.selectButton {
+  display: flex;
+  flex-direction: column;
+}
+
+.selectButton p {
+  margin: 0 0 1rem 0.8rem;
+}
+
+.filtersOption {
+  padding: 2rem;
+}
+
+.selectDeviceFirstRow {
+  margin: 0 1.5rem 0 0;
+}
+
+.selectDeviceFirstRow > div {
+  padding: 0;
+}
+.selectDeviceFirstRow > div:nth-child(1) > div {
+  margin: 0 1.5rem 0 0;
+}
+
+.selectDeviceNav {
+  justify-content: center;
+}
+
+.navDropBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modelContainer {
+  position: relative;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.mobileDataContainer {
+  padding: 1rem;
+  position: absolute;
+  top: 80px;
+  border-radius: 15px;
+  z-index: 999;
+  background-color: #fff;
+}
+
+.selectDeviceFirstRow .mobileDataContainer h4 {
+  margin: 0.5rem 0 2rem;
+  text-align: center;
+}
+
+.categoryDataMobile {
+  justify-content: space-between;
+}
+
+.modelDropRow > div,
+.selectDeviceFirstRow > div {
+  width: 30vw;
+}
+
+.categoryContainer {
+  padding: 0;
+}
+
+.categoryBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0.5rem;
+  background-color: #f5f9ff;
+  margin: 0.5rem;
+}
+
+.categoryBox p {
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .modelHeroRow {
+    display: none;
+  }
+  .selectDevice {
+    margin: 0;
+  }
+  .selectDeviceNav {
+    padding: 0;
+  }
+  .selectDeviceFirstRow {
+    margin: 0;
+  }
+  .selectButton > p {
+    display: none;
+  }
+  .modelDrop {
+    padding: 0;
+  }
+  .modelDropRow {
+    margin: 1rem 0 0;
+  }
+
+  .selectDeviceFirstRow > div {
+    width: 45vw;
+  }
+  .modelDropRow > div {
+    width: 90vw;
+  }
+}

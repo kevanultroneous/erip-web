@@ -1,5 +1,10 @@
 .navHeader {
   flex-direction: column;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 9999;
 }
 
 .brandLogo {
@@ -60,7 +65,7 @@
   color: #0e62cb;
 }
 
-.mobileMenuLink:nth-child(5) {
+.mobileMenuLink:nth-child(4) {
   border: none;
 }
 
