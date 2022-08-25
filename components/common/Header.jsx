@@ -5,7 +5,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import PrimaryButton from "./PrimaryButton";
 import { Image } from "react-bootstrap";
 import { allProducts } from "utils/dropMenuDataApple";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import styles from "@/styles/components/common/Header.module.css";
@@ -15,6 +15,35 @@ export function Header() {
 
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
+  }, []);
+
+  const menuCollapse = useRef();
+
+  useEffect(() => {
+    const handleScroll = (event) => {
+      const scroll = window.scrollY;
+      const menuOpen = menuCollapse.current.classList.contains("show");
+      const childs = menuCollapse.current.children;
+
+      for (let i = 0; i < childs.length; i++) {
+        const element = childs[i];
+        console.log(element.classList.contains("show"));
+        if (element.classList.contains("show")) {
+          element.classList.remove("show");
+        }
+      }
+
+      if (menuOpen) {
+        if (scroll > 70) {
+          menuCollapse.current.classList.remove("show");
+        }
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   {
@@ -41,7 +70,7 @@ export function Header() {
                 className={styles.mobileToggleButton}
               />
             </div>
-            <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar.Collapse id="basic-navbar-nav" ref={menuCollapse}>
               <Nav className="me-auto">
                 <Nav.Link href="#home" className={styles.mobileMenuLink}>
                   Login
@@ -54,9 +83,6 @@ export function Header() {
                 </Nav.Link>
                 <Nav.Link href="#link" className={styles.mobileMenuLink}>
                   Blogs
-                </Nav.Link>
-                <Nav.Link href="#link" className={styles.mobileMenuLink}>
-                  Log out
                 </Nav.Link>
               </Nav>
             </Navbar.Collapse>
@@ -99,7 +125,12 @@ export function Header() {
             </Navbar.Collapse>
           </Container>
           <Container fluid className="navBarBottomHeader">
-            <Nav variant="pills" activeKey="1" className={styles.navDropMain}>
+            <Nav
+              variant="pills"
+              activeKey="1"
+              className={styles.navDropMain}
+              ref={menuCollapse}
+            >
               {allProducts.map((products, ind) => {
                 return (
                   <DropdownButton

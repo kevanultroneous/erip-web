@@ -1,0 +1,113 @@
+.totalBillContainer {
+  position: fixed;
+  bottom: 0;
+  background-color: #ffffff;
+  width: 100%;
+  padding: 1rem 3rem;
+  box-shadow: 0px -2px 25px rgba(0, 0, 0, 0.08);
+}
+
+.totalBillRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+}
+
+.totalBillRow > div {
+  padding: 0;
+}
+
+.totalBillRow > div:nth-child(2) div {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.totalBillRow > div:nth-child(2) div > p {
+  margin: 0 2rem 0 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.totalBillRow a {
+  text-decoration: none;
+}
+
+.couponsBody,
+.couponHead {
+  display: flex;
+  justify-content: space-between;
+}
+
+.couponHead p {
+  font-size: 18px;
+}
+
+.couponHead a {
+  font-size: 18px;
+  color: #0e62cb;
+}
+
+.couponsBody {
+  border: 1px solid #d9d9d9;
+  padding: 1rem;
+  border-radius: 8px;
+  align-items: center;
+}
+
+.couponsBody p {
+  margin: 0;
+}
+
+.couponsBody a {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.couponsName {
+  color: #eb870e;
+}
+
+@media (max-width: 600px) {
+  .totalBillContainer {
+    padding: 1rem 0.5rem;
+  }
+  .couponHead {
+    display: none;
+  }
+  .couponsBody {
+    margin: 0 0 1rem;
+    padding: 0;
+    border: none;
+  }
+  .totalBillRow > div:nth-child(2) {
+    padding: 0;
+  }
+  .totalBillRow > div:nth-child(2) div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .totalBillRow > div:nth-child(2) div > p {
+    display: none;
+  }
+  .totalBillRow > div:nth-child(2) div > button {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .totalBillRow > div:nth-child(2) div {
+    margin: 2rem 0 0;
+  }
+  .totalBillRow > div:nth-child(2) div > p {
+    display: none;
+  }
+  .totalBillRow > div:nth-child(2) div > button {
+    width: 100%;
+  }
+  .totalBillContainer {
+    padding: 1.5rem 0.5rem;
+  }
+}

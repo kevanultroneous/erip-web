@@ -72,6 +72,10 @@
 }
 
 @media (max-width: 600px) {
+  .contactHeroContainer {
+    padding: 2.5rem 1rem;
+  }
+
   .contactHeading {
     display: none;
   }
