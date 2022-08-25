@@ -1,4 +1,28 @@
 export const API_URL = `http://43.204.87.153/`
+export const monthsforcal = [
+    "December",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+
+];
+export const daysforcal = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+];
 export const WhyEripData = [
     {
         img: "/assets/images/express-repairs.png",

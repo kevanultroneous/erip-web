@@ -178,6 +178,45 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+.btn-check:focus+.btn,
+.btn:focus {
+  box-shadow: none !important;
+}
+
+.CalendarSlider .slick-prev {
+  font-size: 28px !important;
+  line-height: 0;
+  position: absolute;
+  top: 50%;
+  display: block;
+  padding: 0;
+  transform: translate(0, -50%);
+  cursor: pointer;
+  color: #0E62CB !important;
+  border: none;
+  outline: none;
+  background: #fff;
+  border-radius: 100%;
+  box-shadow: 0px 2px 4px #323232;
+}
+
+.CalendarSlider .slick-next {
+  font-size: 28px !important;
+  line-height: 0;
+  position: absolute;
+  top: 50%;
+  display: block;
+  padding: 0;
+  transform: translate(0, -50%);
+  cursor: pointer;
+  color: #0E62CB !important;
+  border: none;
+  outline: none;
+  background: #fff;
+  border-radius: 100%;
+  box-shadow: 0px 2px 4px #323232;
+}
+
 @media (min-width: 320px) and (max-width: 450px) {
   .slick-prev {
     left: -11px !important;
@@ -256,9 +295,13 @@ input[type=number] {
     padding: 0%;
   }
 
+  .LoginPopup {
+    display: flex !important;
+    align-items: flex-end;
+  }
+
   .LoginPopup .modal-dialog {
     margin: 0%;
-    height: 100%;
   }
 
   .LoginPopup .modal-dialog-centered {
@@ -269,9 +312,14 @@ input[type=number] {
     border-radius: 10px 10px 0px 0px;
   }
 
+  .CartandOfferPopup {
+    display: flex !important;
+    align-items: flex-end;
+  }
+
   .CartandOfferPopup .modal-dialog {
     margin: 0%;
-    height: 100%;
+
   }
 
   .CartandOfferPopup .modal-dialog-centered {
@@ -279,6 +327,22 @@ input[type=number] {
   }
 
   .CartandOfferPopup .modal-content {
+    border-radius: 10px 10px 0px 0px;
+  }
+
+
+
+
+  .CheckoutPopup .modal-dialog {
+    margin: 0%;
+
+  }
+
+  .CheckoutPopup .modal-dialog-centered {
+    align-items: flex-end;
+  }
+
+  .CheckoutPopup .modal-content {
     border-radius: 10px 10px 0px 0px;
   }
 }
