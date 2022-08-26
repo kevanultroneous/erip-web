@@ -41,6 +41,8 @@ export default function Testimonials({ data }) {
     ],
   };
 
+  console.log(data);
+
   return (
     <Container>
       <div className={styles.TestimonialHeadingWrraper}>
@@ -50,13 +52,14 @@ export default function Testimonials({ data }) {
         <Col xl={12}>
           <Slider {...settings}>
             {data.map((value, index) => (
-              <Col>
+              <Col key={index}>
                 <div className={styles.TestimonialCard}>
                   <div className={styles.TestimonialAvatar}>
                     <Image
                       src={value.testimonial_image_url}
                       loading="lazy"
                       fluid
+                      alt={value.testimonial_name}
                     />
                   </div>
                   <p className={styles.TestimonialName}>

@@ -27,7 +27,6 @@ export function Header() {
 
       for (let i = 0; i < childs.length; i++) {
         const element = childs[i];
-        console.log(element.classList.contains("show"));
         if (element.classList.contains("show")) {
           element.classList.remove("show");
         }
