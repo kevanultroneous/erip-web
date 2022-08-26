@@ -10,59 +10,35 @@ import Slider from "react-slick";
 import PrimaryButton from "../common/PrimaryButton";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { daysforcal, monthsforcal } from "utils/data";
+import { daysforcal, monthsforcal, statictimelist } from "utils/data";
+
 export default function CheckoutPopup({ show, onHide }) {
-  const timelist = [
-    "9 am - 11 am",
-    "11 am - 01 pm",
-    "01 pm - 03 pm",
-    "03 pm - 05 pm",
-    "05 pm - 07 pm",
-    "07 pm - 09 pm",
-  ];
-  const calender = [
-    {
-      day: "Friday",
-      date: "24th",
-      slogan: "today",
-    },
-    {
-      day: "Saturday",
-      date: "25th",
-      slogan: "today",
-    },
-    {
-      day: "Sunday",
-      date: "26th",
-      slogan: "June",
-    },
-    {
-      day: "Monday",
-      date: "27th",
-      slogan: "June",
-    },
-    {
-      day: "Friday",
-      date: "24th",
-      slogan: "today",
-    },
-    {
-      day: "Saturday",
-      date: "25th",
-      slogan: "today",
-    },
-    {
-      day: "Sunday",
-      date: "26th",
-      slogan: "June",
-    },
-    {
-      day: "Monday",
-      date: "27th",
-      slogan: "June",
-    },
-  ];
+  const process = ["Schedule Appointment", "Select Address", "Make Payment"];
+
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [showDateError, setShowDateError] = useState(false);
+  const [showTimeError, setShowTimeError] = useState(false);
+  const [processStatus, setProcessStatus] = useState([0]);
+
+  const ConfirmProcessed = () => {
+    selectedTime === null ? setShowTimeError(true) : setShowTimeError(false);
+    selectedDate === null ? setShowDateError(true) : setShowDateError(false);
+  };
+
+  //  observer for close or open modal
+  useEffect(() => {
+    if (!show) {
+      setSelectedDate(null);
+      setSelectedTime(null);
+      setSelectedTime(null);
+      setShowDateError(false);
+      setShowTimeError(false);
+    }
+  }, [show]);
+
+  // slider settings
+
   const settings = {
     dots: false,
     infinite: true,
@@ -83,28 +59,10 @@ export default function CheckoutPopup({ show, onHide }) {
       },
     ],
   };
-  const process = ["Schedule Appointment", "Select Address", "Make Payment"];
 
-  const [selectedTime, setSelectedTime] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [showDateError, setShowDateError] = useState(false);
-  const [showTimeError, setShowTimeError] = useState(false);
-  const [processStatus, setProcessStatus] = useState([0]);
+  // ================================== Make a calander for a week ================================
 
-  const ConfirmProcessed = () => {
-    selectedTime === null ? setShowTimeError(true) : setShowTimeError(false);
-    selectedDate === null ? setShowDateError(true) : setShowDateError(false);
-  };
-
-  useEffect(() => {
-    if (!show) {
-      setSelectedTime(null);
-      setSelectedTime(null);
-      setShowDateError(false);
-      setShowTimeError(false);
-    }
-  }, [show]);
-
+  // ---------- get a nextweek with year month and date ------------
   function nextweek() {
     var today = new Date();
     var nextweek = new Date(
@@ -114,6 +72,8 @@ export default function CheckoutPopup({ show, onHide }) {
     );
     return nextweek;
   }
+
+  // ----------------- dynamic slogan  [ th , rd , st ,nd and more ] -------------------
   function ordinal_suffix_of(i) {
     var j = i % 10,
       k = i % 100;
@@ -128,6 +88,7 @@ export default function CheckoutPopup({ show, onHide }) {
     }
     return "th";
   }
+  // ---------------- find a dates between 2 date (return array) ------------------
   function getDatesInRange(startDate, endDate) {
     const date = new Date(startDate.getTime());
     const dates = [];
@@ -142,7 +103,7 @@ export default function CheckoutPopup({ show, onHide }) {
     }
     return dates;
   }
-
+  // --------------------------------- today (date,month,year,day) datas ---------------------------------
   let today = new Date();
   let todayDetail = {
     day: today.getDay(),
@@ -150,20 +111,23 @@ export default function CheckoutPopup({ show, onHide }) {
     year: today.getFullYear(),
     month: today.getMonth() + 1,
   };
-
+  // --------------------------------- nextweekdaydetail -------------------------------------
   let nextweekdaydetail = {
     day: nextweek().getDay() - 2,
     date: nextweek().getDate(),
     year: nextweek().getFullYear(),
     month: nextweek().getMonth(),
   };
+  // --------------------------------- convert into fulllDate ---------------------------------
   const startdate = new Date(
     `${todayDetail.year}-${todayDetail.month}-${todayDetail.date}`
   );
   const enddate = new Date(
     `${nextweekdaydetail.year}-${nextweekdaydetail.month}-${nextweekdaydetail.date}`
   );
+  // --------------------------------- make a state for full calender ---------------------------------
   const [datelist, setDateList] = useState(getDatesInRange(startdate, enddate));
+  // =====================================================================================
 
   return (
     <Modal
@@ -193,6 +157,8 @@ export default function CheckoutPopup({ show, onHide }) {
               <Alert variant={"danger"}>Plese Select Time !</Alert>
             )}
           </Col>
+
+          {/*  status of Process  */}
           <Col xs={12} md={12} lg={12} xl={12} className={styles.ProcessCol}>
             <div className={styles.Process}>
               {process.map((v, i) => (
@@ -225,6 +191,8 @@ export default function CheckoutPopup({ show, onHide }) {
           <Col xs={12} md={12} lg={12} xl={12}>
             <h5 className={styles.SubtitleText}>Select Date</h5>
           </Col>
+
+          {/* date calander */}
           <Col
             xs={12}
             md={12}
@@ -251,10 +219,12 @@ export default function CheckoutPopup({ show, onHide }) {
               ))}
             </Slider>
           </Col>
+
+          {/* time sloat  */}
           <Col xs={12} md={12} lg={12} xl={12}>
             <h5 className={styles.SubtitleText}>Select Time</h5>
             <Row className={styles.SelectionTimeRow}>
-              {timelist.map((v, i) => (
+              {statictimelist.map((v, i) => (
                 <Col xs={6} xl={4} key={i} className={`${styles.TimeCardCol}`}>
                   <div
                     onClick={() => {
@@ -271,6 +241,8 @@ export default function CheckoutPopup({ show, onHide }) {
               ))}
             </Row>
           </Col>
+
+          {/* button for actions */}
           <Col xs={12} md={12} lg={12} xl={12} className={styles.ButtonCol}>
             <PrimaryButton
               clickHandler={() => ConfirmProcessed()}

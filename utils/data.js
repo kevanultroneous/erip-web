@@ -1,4 +1,54 @@
 export const API_URL = `http://43.204.87.153/`
+export const statictimelist = [
+    "9 am - 11 am",
+    "11 am - 01 pm",
+    "01 pm - 03 pm",
+    "03 pm - 05 pm",
+    "05 pm - 07 pm",
+    "07 pm - 09 pm",
+];
+export const staticcalender = [
+    {
+        day: "Friday",
+        date: "24th",
+        slogan: "today",
+    },
+    {
+        day: "Saturday",
+        date: "25th",
+        slogan: "today",
+    },
+    {
+        day: "Sunday",
+        date: "26th",
+        slogan: "June",
+    },
+    {
+        day: "Monday",
+        date: "27th",
+        slogan: "June",
+    },
+    {
+        day: "Friday",
+        date: "24th",
+        slogan: "today",
+    },
+    {
+        day: "Saturday",
+        date: "25th",
+        slogan: "today",
+    },
+    {
+        day: "Sunday",
+        date: "26th",
+        slogan: "June",
+    },
+    {
+        day: "Monday",
+        date: "27th",
+        slogan: "June",
+    },
+];
 export const monthsforcal = [
     "December",
     "January",
