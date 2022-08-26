@@ -28,7 +28,7 @@ function MobileModels({
                 <div className={styles.categoryBox}>
                   <div>
                     <Image
-                      src={model.brand_image_url}
+                      src={model.category_icon_url}
                       alt={model.category_icon}
                       fluid
                     />

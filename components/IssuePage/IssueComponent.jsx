@@ -16,6 +16,7 @@ function IssueComponent({
   href,
   addToCart,
   buttonName,
+  discountedPercentage,
 }) {
   const [mobileView, setMobileView] = useState(false);
   useEffect(() => {
@@ -38,7 +39,7 @@ function IssueComponent({
                 ₹{issueOriginalPrice}{" "}
               </span>
               <span className={styles.issueOffer}>
-                ({100 - (issueOfferPrice / issueOriginalPrice) * 100}% OFF)
+                ({discountedPercentage}% OFF)
               </span>
             </p>
           </Col>
@@ -84,7 +85,7 @@ function IssueComponent({
                 ₹{issueOriginalPrice}{" "}
               </span>
               <span className={styles.issueOffer}>
-                ({(issueOfferPrice / issueOriginalPrice) * 100}% OFF)
+                ({discountedPercentage}% OFF)
               </span>
             </p>
             <div>

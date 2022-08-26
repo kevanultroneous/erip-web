@@ -6,6 +6,10 @@ import Nav from "react-bootstrap/Nav";
 import { NavDropdown } from "react-bootstrap";
 import axios from "axios";
 import MobileModels from "../common/MobileModels";
+import IssueComponent from "@/components/IssuePage/IssueComponent";
+import { issueData } from "utils/issueData";
+
+import style from "@/styles/components/IssuePage/issuepage.module.css";
 import styles from "@/styles/components/SearchByModel/SelectDeviceHero.module.css";
 
 function SelectDeviceHero({ headClass, modelSection }) {
@@ -13,7 +17,40 @@ function SelectDeviceHero({ headClass, modelSection }) {
   const [brandData, setbrandData] = useState([{}]);
   const [models, setmodels] = useState([{}]);
   const [mobileCat, setMobileCat] = useState([]);
+  const [categoryName, setCategoryName] = useState("Device");
+  const [brandName, setBrandName] = useState("Brands");
+  const [modelName, setModelName] = useState("Models");
   const [mobileView, setMobileView] = useState(false);
+  const [disableBrands, setDisableBrands] = useState(true);
+  const [disableModel, setDisableModel] = useState(true);
+  const [brandId, setBrandId] = useState(0);
+  const [issues, setIssues] = useState([]);
+
+  const getIssues = async (eventKey) => {
+    await axios
+      .get(
+        `http://43.204.87.153/api/v1/issues_by_models_detail?model=${eventKey}&city=1`
+      )
+      .then((data) => {
+        if (data.data.data !== undefined) {
+          setIssues(data.data.data);
+        } else {
+          setIssues([]);
+        }
+      });
+    await axios
+      .get(`http://43.204.87.153/api/v1/models_by_brand?brand=${brandId}`)
+      .then((data) => {
+        const selectedModel = data.data.data;
+        if (selectedModel) {
+          selectedModel.forEach((model) => {
+            if (model.model_id == eventKey) {
+              setModelName(model.model_title);
+            }
+          });
+        }
+      });
+  };
 
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
@@ -34,144 +71,220 @@ function SelectDeviceHero({ headClass, modelSection }) {
   };
 
   const getBrands = async (eventKey) => {
-    const brandedData = await axios
+    await axios
       .get(
         `http://43.204.87.153/api/v1/brands_by_category?category=${eventKey}`
       )
-      .then((data) => setbrandData(data.data.data))
-      .catch((err) => {
-        setbrandData([{}]);
+      .then((data) => {
+        if (data.data.data !== undefined) {
+          setDisableBrands(false);
+          setbrandData(data.data.data);
+        } else {
+          setDisableBrands(true);
+          console.log("No data found");
+          setbrandData([]);
+        }
       });
+    await axios
+      .get("http://43.204.87.153/api/v1/categories_by_cities?city=1")
+      .then((data) => {
+        const category = data.data.data;
+        category.forEach((element) => {
+          if (element.category_id == eventKey) {
+            setCategoryName(element.category_title);
+          }
+        });
+      });
+    setIssues([]);
+    setDisableModel(true);
+    setBrandName("Brands");
+    setModelName("Models");
   };
 
   const getModels = async (eventKey) => {
     const modelData = await axios
       .get(`http://43.204.87.153/api/v1/models_by_brand?brand=${eventKey}`)
-      .then((data) => setmodels(data.data.data))
-      .catch(() => setmodels([]));
+      .then((data) => {
+        if (data.data.data !== undefined) {
+          setDisableModel(false);
+          setmodels(data.data.data);
+        } else {
+          console.log("no data");
+          setDisableModel(true);
+          setmodels([]);
+        }
+      });
+    setBrandId(eventKey);
+    await axios
+      .get("http://43.204.87.153/api/v1/brands_by_category?category=1")
+      .then((data) => {
+        const model = data.data.data;
+        model.forEach((element) => {
+          if (element.brand_id == eventKey) {
+            setBrandName(element.brand_title);
+          }
+        });
+      });
+    setIssues([]);
+    setModelName("Models");
   };
+
   const findBrands = async (id) => {
     const brands = await axios
       .get(`http://43.204.87.153/api/v1/brands_by_category?category=${id}`)
       .then((data) => {
-        console.log(data.data.data);
         setMobileCat(data.data.data);
       });
   };
 
   return (
-    <section className={`${styles.modelHeroContainer} ${modelSection}`}>
-      <Row className={`${styles.modelHeroRow} ${headClass}`}>
-        <Col xl={2}>
-          <Image
-            fluid
-            src="/assets/images/searchFilter.png"
-            alt="search Filter"
-          />
-        </Col>
-        <Col xl={10}>
-          <h1>Mobile repair service in Bangalore</h1>
-        </Col>
-      </Row>
-      <Row className={styles.selectDevice}>
-        <Nav className={styles.selectDeviceNav}>
-          <Row className={styles.selectDeviceFirstRow}>
-            <Col xl={6} xs={6}>
-              <div className={`${styles.selectButton} selectButton`}>
-                <p>Step 1</p>
-                <NavDropdown
-                  title={"Device"}
-                  id="nav-dropdown"
-                  onSelect={getBrands}
-                >
-                  {mobileView ? (
-                    <MobileModels
-                      heading={"Select your Gadget"}
-                      deviceArray={mobileCat}
-                      clickHandler={findBrands}
-                    />
-                  ) : (
-                    categories.map((categories, ind) => {
-                      return (
-                        <NavDropdown.Item
-                          eventKey={categories.category_id}
-                          key={ind}
-                          className={styles.navdropdown}
-                        >
-                          {categories.category_title}
-                        </NavDropdown.Item>
-                      );
-                    })
-                  )}
-                </NavDropdown>
-              </div>
-            </Col>
-            <Col xl={6} xs={6}>
-              <div className={`${styles.selectButton} selectButton getBrands`}>
-                <p>Step 2</p>
-                <NavDropdown
-                  title={"Brand"}
-                  id="nav-dropdown"
-                  onSelect={getModels}
-                >
-                  <Row>
-                    {brandData.map((brands, ind) => {
-                      return (
-                        <Col key={ind} xl={2}>
+    <>
+      <section className={`${styles.modelHeroContainer} ${modelSection}`}>
+        <Row className={`${styles.modelHeroRow} ${headClass}`}>
+          <Col xl={2}>
+            <Image
+              fluid
+              src="/assets/images/searchFilter.png"
+              alt="search Filter"
+            />
+          </Col>
+          <Col xl={10}>
+            <h1>Mobile repair service in Bangalore</h1>
+          </Col>
+        </Row>
+        <Row className={styles.selectDevice}>
+          <Nav className={styles.selectDeviceNav}>
+            <Row className={styles.selectDeviceFirstRow}>
+              <Col xl={6} xs={6}>
+                <div className={`${styles.selectButton} selectButton`}>
+                  <p>Step 1</p>
+                  <NavDropdown
+                    title={categoryName}
+                    id="nav-dropdown"
+                    onSelect={getBrands}
+                  >
+                    {mobileView ? (
+                      <MobileModels
+                        heading={"Select your Gadget"}
+                        deviceArray={mobileCat}
+                        clickHandler={findBrands}
+                      />
+                    ) : (
+                      categories.map((categories, ind) => {
+                        return (
                           <NavDropdown.Item
-                            eventKey={brands.brand_id}
-                            className={styles.navdropdown}
-                          >
-                            <div className={styles.brandLogoBox}>
-                              <Image
-                                fluid
-                                src={brands.brand_icon_url}
-                                alt={brands.brand_title}
-                              />
-                            </div>
-                          </NavDropdown.Item>
-                        </Col>
-                      );
-                    })}
-                  </Row>
-                </NavDropdown>
-              </div>
-            </Col>
-          </Row>
-          <Row className={styles.modelDropRow}>
-            <Col xl={12} className={styles.modelDrop}>
-              <div className={`${styles.selectButton} selectButton getModels`}>
-                <p>Step 3</p>
-                <NavDropdown title={"Model"} id="nav-dropdown">
-                  <Row>
-                    {models.map((models, ind) => {
-                      return (
-                        <Col key={ind} xl={2}>
-                          <NavDropdown.Item
-                            eventKey={models.model_id}
+                            eventKey={categories.category_id}
                             key={ind}
                             className={styles.navdropdown}
                           >
-                            <div className={styles.navDropBox}>
-                              <Image
-                                fluid
-                                src={models.model_image_url}
-                                alt={models.model_title}
-                              />
-                              {models.model_title}
-                            </div>
+                            {categories.category_title}
                           </NavDropdown.Item>
-                        </Col>
-                      );
-                    })}
-                  </Row>
-                </NavDropdown>
-              </div>
+                        );
+                      })
+                    )}
+                  </NavDropdown>
+                </div>
+              </Col>
+              <Col xl={6} xs={6}>
+                <div
+                  className={`${styles.selectButton} selectButton getBrands`}
+                >
+                  <p>Step 2</p>
+                  <NavDropdown
+                    title={brandName}
+                    id="nav-dropdown"
+                    onSelect={getModels}
+                    disabled={disableBrands}
+                  >
+                    <Row>
+                      {brandData.map((brands, ind) => {
+                        return (
+                          <Col key={ind} xl={2}>
+                            <NavDropdown.Item
+                              eventKey={brands.brand_id}
+                              className={styles.navdropdown}
+                            >
+                              <div className={styles.brandLogoBox}>
+                                <Image
+                                  fluid
+                                  src={brands.brand_icon_url}
+                                  alt={brands.brand_title}
+                                />
+                              </div>
+                            </NavDropdown.Item>
+                          </Col>
+                        );
+                      })}
+                    </Row>
+                  </NavDropdown>
+                </div>
+              </Col>
+            </Row>
+            <Row className={styles.modelDropRow}>
+              <Col xl={12} className={styles.modelDrop}>
+                <div
+                  className={`${styles.selectButton} selectButton getModels`}
+                >
+                  <p>Step 3</p>
+                  <NavDropdown
+                    title={modelName}
+                    id="nav-dropdown"
+                    onSelect={getIssues}
+                    disabled={disableModel}
+                  >
+                    <Row>
+                      {models.map((models, ind) => {
+                        return (
+                          <Col key={ind} xl={2}>
+                            <NavDropdown.Item
+                              eventKey={models.model_id}
+                              key={ind}
+                              className={styles.navdropdown}
+                            >
+                              <div className={styles.navDropBox}>
+                                <Image
+                                  fluid
+                                  src={models.model_image_url}
+                                  alt={models.model_title}
+                                />
+                                {models.model_title}
+                              </div>
+                            </NavDropdown.Item>
+                          </Col>
+                        );
+                      })}
+                    </Row>
+                  </NavDropdown>
+                </div>
+              </Col>
+            </Row>
+          </Nav>
+        </Row>
+      </section>
+      <h3 className={style.issuePageTitle}>Select your Repair Services</h3>
+      <Row className={style.issuePageRow}>
+        {issues.map((issues, index) => {
+          return (
+            <Col key={index} xl={4} md={6} className={style.issueColumn}>
+              <IssueComponent
+                // issueImage={issues.issueImage}
+                // issueAlt={issues.issueAlt}
+                issueName={issues.issue_title}
+                issueOfferPrice={issues.discounted_price}
+                issueOriginalPrice={issues.display_price}
+                discountedPercentage={issues.discount_percentage}
+                serviceTime={issues.repair_duration}
+                warranty={issues.warranty_period}
+                serviceType={issues.repair_type}
+                href={"#"}
+                // addToCart={issues.addToCart}
+                buttonName={"Add to cart"}
+              />
             </Col>
-          </Row>
-        </Nav>
+          );
+        })}
       </Row>
-    </section>
+    </>
   );
 }
 
