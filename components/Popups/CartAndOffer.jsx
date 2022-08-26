@@ -53,6 +53,8 @@ export default function CartAndOffer({ show, onHide }) {
         aria-labelledby="contained-modal-title-vcenter"
         centered
         className="CartandOfferPopup"
+        // make for dynamic opacity
+        style={showCheckout && { opacity: "0" }}
       >
         {active === 0 && (
           <Modal.Body className={styles.CartAndOfferBody}>

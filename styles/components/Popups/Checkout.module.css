@@ -154,12 +154,73 @@
     background-color: #ffffff !important;
 }
 
-.LeftArrow {}
 
 .MobileProcessStatus {
     display: none;
 }
 
+/* Location modal */
+.LocationText {
+    text-align: center;
+    font-weight: 400;
+    font-size: 24px;
+}
+
+.LocationBackArrow {
+    font-size: 25px;
+    color: #25282B;
+}
+
+.LocationHeadLine {
+    width: 100%;
+    margin: 3rem 0 6rem 0;
+}
+
+.HeadLine {
+    font-weight: 400;
+    font-size: 20px;
+    text-align: center;
+}
+
+.OrOptionText {
+    margin: 2rem 0;
+    font-weight: 400;
+    font-size: 18px;
+    color: #676767;
+    text-align: center;
+}
+
+.SearchIcon {
+    color: #024B78;
+    font-size: 25px;
+    margin-left: 3rem;
+}
+
+.SearchInput {
+    padding: 0.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border: 1.5px solid #0E62CB;
+    border-radius: 5px;
+}
+
+.SearchInput input {
+    margin-left: 1rem;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.LocationModalBody {
+    background-color: #ffffff;
+}
+
+.LocationRow {
+    padding-bottom: 4rem;
+}
+
+/*  */
 @media (min-width:320px) and (max-width: 450px) {
     .ProcessName {
         display: none;

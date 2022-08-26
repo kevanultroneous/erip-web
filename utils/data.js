@@ -1,4 +1,5 @@
 export const API_URL = `http://43.204.87.153/`
+export const GMAP_API = `AIzaSyCbbtMC73_MlNh1njcV2srrgNiPT6kSQqg`
 export const statictimelist = [
     "9 am - 11 am",
     "11 am - 01 pm",
