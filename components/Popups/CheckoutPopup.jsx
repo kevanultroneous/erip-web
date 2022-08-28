@@ -1,24 +1,26 @@
 import styles from "@/styles/components/Popups/Checkout.module.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Col, Image, Modal, Row } from "react-bootstrap";
-import {
-  HiOutlineArrowNarrowLeft,
-  HiOutlineArrowSmLeft,
-  HiOutlineArrowSmRight,
-} from "react-icons/hi";
+import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import Slider from "react-slick";
 import PrimaryButton from "../common/PrimaryButton";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { daysforcal, GMAP_API, monthsforcal, statictimelist } from "utils/data";
+import {
+  daysforcal,
+  GMAP_API,
+  monthsforcal,
+  process,
+  statictimelist,
+} from "utils/data";
 import { BiArrowBack } from "react-icons/bi";
 import { FiSearch } from "react-icons/fi";
-import axios from "axios";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
-import { Circle, Gmaps, InfoWindow, Marker } from "react-gmaps";
+import { Gmaps, Marker } from "react-gmaps";
+import { enddate, getDatesInRange, startdate } from "utils/calenderPackage";
+import { calenderslidersettings } from "utils/sliderSettings";
 
 export default function CheckoutPopup({ show, onHide }) {
-  const process = ["Schedule Appointment", "Select Address", "Make Payment"];
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showDateError, setShowDateError] = useState(false);
@@ -27,9 +29,11 @@ export default function CheckoutPopup({ show, onHide }) {
   const [secondProcessShow, setSecondProcessShow] = useState(false);
   const [currentLocation, setCurrentLocation] = useState(0);
   const [selectedAddress, setSelectedAddress] = useState("");
-
+  const [confirmLocationSession, setConfirmLocationSession] = useState(false);
+  const [finalLocationStep, setFinalLocationStep] = useState(false);
   useEffect(() => {
-    getLocation(selectedAddress.formatted_address);
+    getLatandLongByAddress(selectedAddress);
+    setConfirmLocationSession(true);
   }, [selectedAddress]);
 
   const ConfirmProcessed = () => {
@@ -41,10 +45,6 @@ export default function CheckoutPopup({ show, onHide }) {
   };
 
   //current location
-  const coords = {
-    lat: currentLocation.latitude,
-    lng: currentLocation.longitude,
-  };
 
   const params = { v: "3.exp", key: GMAP_API };
 
@@ -52,18 +52,6 @@ export default function CheckoutPopup({ show, onHide }) {
     map.setOptions({
       disableDefaultUI: true,
     });
-  }
-
-  function onDragEnd(e) {
-    console.log("onDragEnd", e);
-  }
-
-  function onCloseClick() {
-    console.log("onCloseClick");
-  }
-
-  function onClick(e) {
-    console.log("onClick", e);
   }
 
   function getLocation() {
@@ -78,6 +66,7 @@ export default function CheckoutPopup({ show, onHide }) {
     setCurrentLocation(position.coords);
     reverseMap(position.coords.latitude, position.coords.longitude);
   }
+
   function reverseMap(lat, lng) {
     var latlng = new google.maps.LatLng(lat, lng);
     var geocoder = (geocoder = new google.maps.Geocoder());
@@ -90,7 +79,8 @@ export default function CheckoutPopup({ show, onHide }) {
       }
     });
   }
-  var getLocation = function (address) {
+
+  function getLatandLongByAddress(address) {
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({ address: address }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
@@ -100,7 +90,7 @@ export default function CheckoutPopup({ show, onHide }) {
         setCurrentLocation({ latitude, longitude });
       }
     });
-  };
+  }
   //  observer for close or open modal
   useEffect(() => {
     if (!show) {
@@ -108,100 +98,11 @@ export default function CheckoutPopup({ show, onHide }) {
       setSelectedTime(null);
       setShowDateError(false);
       setShowTimeError(false);
+      setSelectedAddress("");
     }
   }, [show]);
 
-  // slider settings
-
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    nextArrow: <HiOutlineArrowSmRight color="#000" />,
-    prevArrow: <HiOutlineArrowSmLeft color="#000" />,
-    responsive: [
-      {
-        breakpoint: 600,
-        settings: {
-          arrows: false,
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          initialSlide: 2,
-        },
-      },
-    ],
-  };
-
-  // ================================== Make a calander for a week ================================
-
-  // ---------- get a nextweek with year month and date ------------
-  function nextweek() {
-    var today = new Date();
-    var nextweek = new Date(
-      today.getFullYear(),
-      today.getMonth() + 1,
-      today.getDate() + 6
-    );
-    return nextweek;
-  }
-
-  // ----------------- dynamic slogan  [ th , rd , st ,nd and more ] -------------------
-  function ordinal_suffix_of(i) {
-    var j = i % 10,
-      k = i % 100;
-    if (j == 1 && k != 11) {
-      return "st";
-    }
-    if (j == 2 && k != 12) {
-      return "nd";
-    }
-    if (j == 3 && k != 13) {
-      return "rd";
-    }
-    return "th";
-  }
-  // ---------------- find a dates between 2 date (return array) ------------------
-  function getDatesInRange(startDate, endDate) {
-    const date = new Date(startDate.getTime());
-    const dates = [];
-    while (date <= endDate) {
-      dates.push({
-        days: date.getDay(),
-        dates: date.getDate(),
-        month: date.getMonth(),
-        slogan: ordinal_suffix_of(date.getDate()),
-      });
-      date.setDate(date.getDate() + 1);
-    }
-    return dates;
-  }
-  // --------------------------------- today (date,month,year,day) datas ---------------------------------
-  let today = new Date();
-  let todayDetail = {
-    day: today.getDay(),
-    date: today.getDate(),
-    year: today.getFullYear(),
-    month: today.getMonth() + 1,
-  };
-  // --------------------------------- nextweekdaydetail -------------------------------------
-  let nextweekdaydetail = {
-    day: nextweek().getDay() - 2,
-    date: nextweek().getDate(),
-    year: nextweek().getFullYear(),
-    month: nextweek().getMonth(),
-  };
-  // --------------------------------- convert into fulllDate ---------------------------------
-  const startdate = new Date(
-    `${todayDetail.year}-${todayDetail.month}-${todayDetail.date}`
-  );
-  const enddate = new Date(
-    `${nextweekdaydetail.year}-${nextweekdaydetail.month}-${nextweekdaydetail.date}`
-  );
-  // --------------------------------- make a state for full calender ---------------------------------
   const [datelist, setDateList] = useState(getDatesInRange(startdate, enddate));
-  // =====================================================================================
 
   return (
     <Modal
@@ -217,7 +118,7 @@ export default function CheckoutPopup({ show, onHide }) {
           secondProcessShow && styles.LocationModalBody
         }`}
       >
-        {!secondProcessShow && (
+        {!secondProcessShow ? (
           <Row>
             <Col xs={2} md={2} lg={2} xl={2}>
               <HiOutlineArrowNarrowLeft
@@ -241,27 +142,24 @@ export default function CheckoutPopup({ show, onHide }) {
             <Col xs={12} md={12} lg={12} xl={12} className={styles.ProcessCol}>
               <div className={styles.Process}>
                 {process.map((v, i) => (
-                  <>
-                    <div className={styles.ProcessGroup} key={i}>
-                      <span
-                        className={`${styles.ProcessNumber} ${
-                          processStatus.includes(i) &&
-                          styles.SelectedProcessNumber
-                        }`}
-                      >
-                        {i + 1}
-                      </span>
-                      <p
-                        className={`${styles.ProcessName} ${
-                          processStatus.includes(i) &&
-                          styles.SelectedProcessName
-                        }`}
-                      >
-                        {v}
-                      </p>
-                    </div>
+                  <div className={styles.ProcessGroup} key={i}>
+                    <span
+                      className={`${styles.ProcessNumber} ${
+                        processStatus.includes(i) &&
+                        styles.SelectedProcessNumber
+                      }`}
+                    >
+                      {i + 1}
+                    </span>
+                    <p
+                      className={`${styles.ProcessName} ${
+                        processStatus.includes(i) && styles.SelectedProcessName
+                      }`}
+                    >
+                      {v}
+                    </p>
                     {i !== 2 && <hr className={styles.ProcessLines} />}
-                  </>
+                  </div>
                 ))}
               </div>
             </Col>
@@ -280,7 +178,7 @@ export default function CheckoutPopup({ show, onHide }) {
               xl={12}
               className={styles.CalenderWrraper}
             >
-              <Slider {...settings} className={"CalendarSlider"}>
+              <Slider {...calenderslidersettings} className={"CalendarSlider"}>
                 {datelist.map((v, i) => (
                   <div
                     className={`${styles.CardOfdate} ${
@@ -341,7 +239,7 @@ export default function CheckoutPopup({ show, onHide }) {
               />
             </Col>
           </Row>
-        )}
+        ) : null}
 
         {/* Address and Location  */}
         {secondProcessShow &&
@@ -366,14 +264,14 @@ export default function CheckoutPopup({ show, onHide }) {
                 <PrimaryButton
                   clickHandler={() => getLocation()}
                   title={
-                    <>
+                    <div>
                       <Image
                         src="/assets/icons/location-icon.svg"
                         alt="location-icon"
                         loading="lazy"
                       />
                       &nbsp;&nbsp; Use my current location
-                    </>
+                    </div>
                   }
                   buttonStyle={{
                     width: "100%",
@@ -388,7 +286,7 @@ export default function CheckoutPopup({ show, onHide }) {
                     placeholder="Search street, locality, etc"
                     apiKey={GMAP_API}
                     onPlaceSelected={(place) => {
-                      setSelectedAddress(place);
+                      setSelectedAddress(place.formatted_address);
                     }}
                     defaultValue={selectedAddress}
                     options={{
@@ -400,60 +298,197 @@ export default function CheckoutPopup({ show, onHide }) {
               </div>
             </Col>
           </Row>
-        ) : (
-          // if location is selected  confirm location
-          !(selectedAddress === "" || selectedAddress === null) && (
-            <Row className={styles.LocationRow}>
-              <Col xs={2} md={2} lg={2} xl={2}>
-                <BiArrowBack
-                  className={styles.LocationBackArrow}
-                  onClick={() => setSecondProcessShow(false)}
-                />
-              </Col>
-              <Col xs={8} md={8} lg={8} xl={8}>
-                <h4 className={styles.LocationText}>Confirm Location</h4>
-              </Col>
-              <Col xs={12} md={6} lg={6} xl={6}>
-                <ReactGoogleAutocomplete
-                  placeholder="Search street, locality, etc"
-                  apiKey={GMAP_API}
-                  onPlaceSelected={(place) => {
-                    setSelectedAddress(place);
-                  }}
-                  defaultValue={selectedAddress}
-                  options={{
-                    types: ["establishment"],
-                    componentRestrictions: { country: "in" },
-                  }}
-                />
-              </Col>
-              <Col xs={12} md={6} lg={6} xl={6}>
-                <Gmaps
-                  height={"400px"}
-                  lat={coords.lat}
-                  lng={coords.lng}
-                  zoom={12}
-                  loadingMessage={"Be happy"}
-                  params={params}
-                  onMapCreated={() => onMapCreated}
+        ) : !(selectedAddress === "" || selectedAddress === null) &&
+          secondProcessShow &&
+          confirmLocationSession ? (
+          <Row className={styles.LocationRow}>
+            <Col xs={2} md={2} lg={2} xl={2}>
+              <BiArrowBack
+                className={styles.LocationBackArrow}
+                onClick={() => {
+                  setSecondProcessShow(true);
+                  setSelectedAddress("");
+                }}
+              />
+            </Col>
+            <Col xs={8} md={8} lg={8} xl={8}>
+              <h4 className={styles.LocationText}>Confirm Location</h4>
+            </Col>
+
+            <Col
+              xs={12}
+              md={6}
+              lg={6}
+              xl={5}
+              className={styles.ConfirmLocationSpace}
+            >
+              <div>
+                <div className={styles.ConfirmLocationInput}>
+                  <ReactGoogleAutocomplete
+                    placeholder="Address"
+                    apiKey={GMAP_API}
+                    onPlaceSelected={(place) => {
+                      setSelectedAddress(place.formatted_address);
+                    }}
+                    defaultValue={selectedAddress}
+                    options={{
+                      types: ["establishment"],
+                      componentRestrictions: { country: "in" },
+                      mapTypeControl: false,
+                      streetViewControl: false,
+                    }}
+                    className={styles.SearchInp}
+                  />
+                  <label className={styles.ChangeLable}>CHANGE</label>
+                </div>
+                <div
+                  className={styles.CurrentLocationDiv}
+                  onClick={() => getLocation()}
                 >
-                  <Marker
-                    lat={coords.lat}
-                    lng={coords.lng}
-                    draggable={true}
-                    onDragEnd={() => onDragEnd}
+                  <Image
+                    src="/assets/icons/dark-icon-location.svg"
+                    alt="location-icon"
+                    loading="lazy"
                   />
-                  <InfoWindow
-                    lat={coords.lat}
-                    lng={coords.lng}
-                    content={`${selectedAddress.formatted_address}`}
-                    onCloseClick={() => onCloseClick}
+                  <span className={styles.DetectDirectLabel}>
+                    Use my current location
+                  </span>
+                </div>
+                <div className={styles.ConfirmButtonDiv}>
+                  <PrimaryButton
+                    clickHandler={() => {
+                      setFinalLocationStep(true);
+                      setConfirmLocationSession(false);
+                    }}
+                    title={"Confirm and Proceed"}
+                    buttonStyle={{
+                      width: "100%",
+                      backgroundColor: "#0E62CB",
+                      color: "#fff",
+                    }}
                   />
-                </Gmaps>
-              </Col>
-            </Row>
-          )
-        )}
+                </div>
+              </div>
+            </Col>
+            <Col
+              xs={12}
+              md={6}
+              lg={6}
+              xl={7}
+              className={styles.ConfirmLocationSpace}
+            >
+              <Gmaps
+                height={"300px"}
+                lat={currentLocation.latitude}
+                lng={currentLocation.longitude}
+                zoom={12}
+                loadingMessage={"Waiting For Maps...."}
+                params={params}
+                onMapCreated={() => onMapCreated}
+              >
+                <Marker
+                  lat={currentLocation.latitude}
+                  lng={currentLocation.longitude}
+                  draggable={true}
+                />
+              </Gmaps>
+            </Col>
+          </Row>
+        ) : secondProcessShow && setFinalLocationStep ? (
+          <Row className={styles.LocationRow}>
+            <Col xs={2} md={2} lg={2} xl={2}>
+              <BiArrowBack
+                className={styles.LocationBackArrow}
+                onClick={() => {
+                  alert("final ");
+                }}
+              />
+            </Col>
+            <Col xs={8} md={8} lg={8} xl={8}>
+              <h4 className={styles.LocationText}>Confirm Location</h4>
+            </Col>
+
+            <Col
+              xs={12}
+              md={6}
+              lg={6}
+              xl={5}
+              className={styles.ConfirmLocationSpace}
+            >
+              <Row>
+                <Col xs={12} md={12} lg={12} xl={12}>
+                  <p>{selectedAddress}</p>
+                  <PrimaryButton
+                    title="Change"
+                    buttonStyle={{
+                      width: "fit-content",
+                      padding: "0.2rem 0.5rem",
+                      fontSize: "14px",
+                    }}
+                  />
+                  <div>
+                    <input type={"text"} placeholder="House/Flat number" />
+                    <input type={"text"} placeholder="Landmark(optional)" />
+                    <input type={"text"} placeholder="Name" />
+                  </div>
+                  <div className="d-flex justify-content-between">
+                    {["Home", "Office", "Others"].map((v, i) => (
+                      <PrimaryButton
+                        key={i}
+                        title={v}
+                        buttonStyle={{
+                          width: "30%",
+                          padding: "0.2rem 0.5rem",
+                          fontSize: "14px",
+                        }}
+                      />
+                    ))}
+                  </div>
+                </Col>
+              </Row>
+              <div>
+                <div className={styles.ConfirmButtonDiv}>
+                  <PrimaryButton
+                    clickHandler={() => {
+                      setFinalLocationStep(true);
+                      setConfirmLocationSession(false);
+                    }}
+                    title={"Save and Proceed"}
+                    buttonStyle={{
+                      width: "100%",
+                      backgroundColor: "#676767",
+                      color: "#fff",
+                      border: "none",
+                    }}
+                  />
+                </div>
+              </div>
+            </Col>
+            <Col
+              xs={12}
+              md={6}
+              lg={6}
+              xl={7}
+              className={styles.ConfirmLocationSpace}
+            >
+              <Gmaps
+                height={"300px"}
+                lat={currentLocation.latitude}
+                lng={currentLocation.longitude}
+                zoom={12}
+                loadingMessage={"Waiting For Maps...."}
+                params={params}
+                onMapCreated={() => onMapCreated}
+              >
+                <Marker
+                  lat={currentLocation.latitude}
+                  lng={currentLocation.longitude}
+                  draggable={false}
+                />
+              </Gmaps>
+            </Col>
+          </Row>
+        ) : null}
       </Modal.Body>
     </Modal>
   );
