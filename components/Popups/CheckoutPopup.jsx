@@ -1,24 +1,18 @@
 import styles from "@/styles/components/Popups/Checkout.module.css";
 import { useEffect, useState } from "react";
 import { Alert, Col, Image, Modal, Row } from "react-bootstrap";
-import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import Slider from "react-slick";
 import PrimaryButton from "../common/PrimaryButton";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {
-  daysforcal,
-  GMAP_API,
-  monthsforcal,
-  process,
-  statictimelist,
-} from "utils/data";
-import { BiArrowBack } from "react-icons/bi";
+import { daysforcal, GMAP_API, monthsforcal, statictimelist } from "utils/data";
 import { FiSearch } from "react-icons/fi";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
 import { Gmaps, Marker } from "react-gmaps";
 import { enddate, getDatesInRange, startdate } from "utils/calenderPackage";
 import { calenderslidersettings } from "utils/sliderSettings";
+import { StatusProcess } from "./StatusProcess";
+import NavigationHandler from "./NavigationHandler";
 
 export default function CheckoutPopup({ show, onHide }) {
   const [selectedTime, setSelectedTime] = useState(null);
@@ -32,6 +26,13 @@ export default function CheckoutPopup({ show, onHide }) {
   const [confirmLocationSession, setConfirmLocationSession] = useState(false);
   const [finalLocationStep, setFinalLocationStep] = useState(false);
   const [addressType, setAddressType] = useState("Home");
+  const [houseInput, setHouseInput] = useState("");
+  const [landmarkInput, setLandMarkInput] = useState("");
+  const [nameInput, setNameInput] = useState("");
+  const [changeModalSize, setChangeModalSize] = useState(true);
+  const [LocationInputError, setLocationError] = useState(0);
+
+  const [addressdata, setAddressData] = useState({});
 
   useEffect(() => {
     getLatandLongByAddress(selectedAddress);
@@ -43,6 +44,7 @@ export default function CheckoutPopup({ show, onHide }) {
     selectedDate === null ? setShowDateError(true) : setShowDateError(false);
     if (!(selectedTime === null) && !(selectedDate === null)) {
       setSecondProcessShow(true);
+      setChangeModalSize(false);
     }
   };
 
@@ -74,7 +76,7 @@ export default function CheckoutPopup({ show, onHide }) {
     var geocoder = (geocoder = new google.maps.Geocoder());
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        results.map((v) => console.log(v));
+        // results.map((v) => console.log(v));
         if (results[1]) {
           setSelectedAddress(results[1].formatted_address);
         }
@@ -101,16 +103,36 @@ export default function CheckoutPopup({ show, onHide }) {
       setShowDateError(false);
       setShowTimeError(false);
       setSelectedAddress("");
+      setSecondProcessShow(false);
+      setFinalLocationStep(false);
     }
   }, [show]);
 
   const [datelist, setDateList] = useState(getDatesInRange(startdate, enddate));
 
+  //  save and proceed Handle
+  const SaveAndProceedHandle = () => {
+    if (houseInput.length <= 0) {
+      setLocationError(1);
+    } else if (nameInput.length <= 1) {
+      setLocationError(2);
+    } else {
+      setLocationError(0);
+      setAddressData({
+        address: selectedAddress,
+        type: addressType,
+        house: houseInput,
+        landmark: landmarkInput,
+        name: nameInput,
+      });
+      alert("process saved");
+    }
+  };
   return (
     <Modal
       show={show}
       onHide={onHide}
-      size={secondProcessShow ? "lg" : "xl"}
+      size={changeModalSize ? "xl" : "lg"}
       aria-labelledby="contained-modal-title-vcenter"
       centered
       className="CheckoutPopup"
@@ -122,52 +144,19 @@ export default function CheckoutPopup({ show, onHide }) {
       >
         {!secondProcessShow ? (
           <Row>
-            <Col xs={2} md={2} lg={2} xl={2}>
-              <HiOutlineArrowNarrowLeft
-                className={styles.BackArrow}
-                onClick={onHide}
-              />
-            </Col>
-            <Col xs={8} md={8} lg={8} xl={8}>
-              <h4 className={styles.CheckoutText}>Checkout</h4>
-            </Col>
+            <NavigationHandler backhandler={onHide} navtitle="Checkout" />
             <Col xs={12} md={12} lg={12} xl={12}>
               {showDateError && (
-                <Alert variant={"danger"}>Plese Select Date !</Alert>
+                <Alert variant={"danger"}>Please Select Date !</Alert>
               )}
               {showTimeError && (
-                <Alert variant={"danger"}>Plese Select Time !</Alert>
+                <Alert variant={"danger"}>Please Select Time !</Alert>
               )}
             </Col>
 
             {/*  status of Process  */}
-            <Col xs={12} md={12} lg={12} xl={12} className={styles.ProcessCol}>
-              <div className={styles.Process}>
-                {process.map((v, i) => (
-                  <div className={styles.ProcessGroup} key={i}>
-                    <span
-                      className={`${styles.ProcessNumber} ${
-                        processStatus.includes(i) &&
-                        styles.SelectedProcessNumber
-                      }`}
-                    >
-                      {i + 1}
-                    </span>
-                    <p
-                      className={`${styles.ProcessName} ${
-                        processStatus.includes(i) && styles.SelectedProcessName
-                      }`}
-                    >
-                      {v}
-                    </p>
-                    {i !== 2 && <hr className={styles.ProcessLines} />}
-                  </div>
-                ))}
-              </div>
-            </Col>
-            <h6 className={styles.MobileProcessStatus}>
-              {process[processStatus.indexOf(processStatus.length - 1)]}
-            </h6>
+            <StatusProcess processStatus={processStatus} />
+            {/* =================== */}
             <Col xs={12} md={12} lg={12} xl={12}>
               <h5 className={styles.SubtitleText}>Select Date</h5>
             </Col>
@@ -243,11 +232,16 @@ export default function CheckoutPopup({ show, onHide }) {
           </Row>
         ) : null}
 
-        {/* Address and Location  */}
+        {/* Address and Location  popup 0 */}
         {secondProcessShow &&
         (selectedAddress === null || selectedAddress === "") ? (
           <Row className={styles.LocationRow}>
-            <Col xs={2} md={2} lg={2} xl={2}>
+            <NavigationHandler
+              navtitle={"Select Location"}
+              backhandler={() => setSecondProcessShow(false)}
+              unique
+            />
+            {/* <Col xs={2} md={2} lg={2} xl={2}>
               <BiArrowBack
                 className={styles.LocationBackArrow}
                 onClick={() => setSecondProcessShow(false)}
@@ -255,7 +249,7 @@ export default function CheckoutPopup({ show, onHide }) {
             </Col>
             <Col xs={8} md={8} lg={8} xl={8}>
               <h4 className={styles.LocationText}>Select Location</h4>
-            </Col>
+            </Col> */}
             <Col xs={12} md={12} lg={12} xl={12}>
               <div className={styles.LocationHeadLine}>
                 <p className={styles.HeadLine}>
@@ -300,11 +294,20 @@ export default function CheckoutPopup({ show, onHide }) {
               </div>
             </Col>
           </Row>
-        ) : !(selectedAddress === "" || selectedAddress === null) &&
+        ) : //address & location popup 1
+        !(selectedAddress === "" || selectedAddress === null) &&
           secondProcessShow &&
           confirmLocationSession ? (
           <Row className={styles.LocationRow}>
-            <Col xs={2} md={2} lg={2} xl={2}>
+            <NavigationHandler
+              navtitle={"Confirm Location"}
+              backhandler={() => {
+                setSecondProcessShow(true);
+                setSelectedAddress("");
+              }}
+              unique
+            />
+            {/* <Col xs={2} md={2} lg={2} xl={2}>
               <BiArrowBack
                 className={styles.LocationBackArrow}
                 onClick={() => {
@@ -315,7 +318,7 @@ export default function CheckoutPopup({ show, onHide }) {
             </Col>
             <Col xs={8} md={8} lg={8} xl={8}>
               <h4 className={styles.LocationText}>Confirm Location</h4>
-            </Col>
+            </Col> */}
 
             <Col
               xs={12}
@@ -361,6 +364,7 @@ export default function CheckoutPopup({ show, onHide }) {
                     clickHandler={() => {
                       setFinalLocationStep(true);
                       setConfirmLocationSession(false);
+                      setChangeModalSize(true);
                     }}
                     title={"Confirm and Proceed"}
                     buttonStyle={{
@@ -391,13 +395,26 @@ export default function CheckoutPopup({ show, onHide }) {
                 <Marker
                   lat={currentLocation.latitude}
                   lng={currentLocation.longitude}
-                  draggable={true}
+                  draggable={false}
                 />
               </Gmaps>
             </Col>
           </Row>
-        ) : secondProcessShow && setFinalLocationStep ? (
+        ) : // address & location popup 2
+        secondProcessShow && setFinalLocationStep ? (
           <Row className={styles.LocationRow}>
+            <NavigationHandler backhandler={onHide} navtitle="Checkout" />
+            <StatusProcess processStatus={processStatus} />
+            <Col xs={12} md={12} lg={12} xl={12}>
+              {LocationInputError == 1 ? (
+                <Alert variant={"danger"}>
+                  House/Flat number is Required !
+                </Alert>
+              ) : null}
+              {LocationInputError == 2 ? (
+                <Alert variant={"danger"}>Name is Required !</Alert>
+              ) : null}
+            </Col>
             <Col
               xs={12}
               md={6}
@@ -410,6 +427,11 @@ export default function CheckoutPopup({ show, onHide }) {
                   <div className="d-flex align-items-start">
                     <p>{selectedAddress}</p>
                     <PrimaryButton
+                      clickHandler={() => {
+                        setChangeModalSize(false);
+                        setConfirmLocationSession(true);
+                        setFinalLocationStep(false);
+                      }}
                       title="Change"
                       buttonStyle={{
                         width: "fit-content",
@@ -422,15 +444,21 @@ export default function CheckoutPopup({ show, onHide }) {
                     <input
                       type={"text"}
                       placeholder="House/Flat number"
+                      value={houseInput}
+                      onChange={(e) => setHouseInput(e.target.value)}
                       className={styles.FinalInput}
                     />
                     <input
                       type={"text"}
+                      value={landmarkInput}
+                      onChange={(e) => setLandMarkInput(e.target.value)}
                       placeholder="Landmark(optional)"
                       className={styles.FinalInput}
                     />
                     <input
                       type={"text"}
+                      value={nameInput}
+                      onChange={(e) => setNameInput(e.target.value)}
                       placeholder="Name"
                       className={styles.FinalInput}
                     />
@@ -438,12 +466,15 @@ export default function CheckoutPopup({ show, onHide }) {
                   <div className={styles.SelectionMenu}>
                     {["Home", "Office", "Others"].map((v, i) => (
                       <PrimaryButton
+                        clickHandler={() => setAddressType(v)}
                         key={i}
                         title={v}
                         buttonStyle={{
                           width: "30%",
                           padding: "0.2rem 0.5rem",
                           fontSize: "18px",
+                          backgroundColor: addressType === v ? "#0E62CB" : null,
+                          color: addressType === v && "#fff",
                         }}
                       />
                     ))}
@@ -453,10 +484,7 @@ export default function CheckoutPopup({ show, onHide }) {
               <div>
                 <div>
                   <PrimaryButton
-                    clickHandler={() => {
-                      setFinalLocationStep(true);
-                      setConfirmLocationSession(false);
-                    }}
+                    clickHandler={() => SaveAndProceedHandle()}
                     title={"Save and Proceed"}
                     buttonStyle={{
                       width: "100%",
