@@ -254,6 +254,18 @@
 .ConfirmButtonDiv {
   margin-top: 10.5rem;
 }
+.FinalInput {
+  width: 100%;
+  border: 1.5px solid #c4c4c4;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1.5rem;
+}
+.SelectionMenu {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5rem;
+}
 /*  */
 @media (min-width: 320px) and (max-width: 450px) {
   .ProcessName {

@@ -31,6 +31,8 @@ export default function CheckoutPopup({ show, onHide }) {
   const [selectedAddress, setSelectedAddress] = useState("");
   const [confirmLocationSession, setConfirmLocationSession] = useState(false);
   const [finalLocationStep, setFinalLocationStep] = useState(false);
+  const [addressType, setAddressType] = useState("Home");
+
   useEffect(() => {
     getLatandLongByAddress(selectedAddress);
     setConfirmLocationSession(true);
@@ -396,18 +398,6 @@ export default function CheckoutPopup({ show, onHide }) {
           </Row>
         ) : secondProcessShow && setFinalLocationStep ? (
           <Row className={styles.LocationRow}>
-            <Col xs={2} md={2} lg={2} xl={2}>
-              <BiArrowBack
-                className={styles.LocationBackArrow}
-                onClick={() => {
-                  alert("final ");
-                }}
-              />
-            </Col>
-            <Col xs={8} md={8} lg={8} xl={8}>
-              <h4 className={styles.LocationText}>Confirm Location</h4>
-            </Col>
-
             <Col
               xs={12}
               md={6}
@@ -417,21 +407,35 @@ export default function CheckoutPopup({ show, onHide }) {
             >
               <Row>
                 <Col xs={12} md={12} lg={12} xl={12}>
-                  <p>{selectedAddress}</p>
-                  <PrimaryButton
-                    title="Change"
-                    buttonStyle={{
-                      width: "fit-content",
-                      padding: "0.2rem 0.5rem",
-                      fontSize: "14px",
-                    }}
-                  />
-                  <div>
-                    <input type={"text"} placeholder="House/Flat number" />
-                    <input type={"text"} placeholder="Landmark(optional)" />
-                    <input type={"text"} placeholder="Name" />
+                  <div className="d-flex align-items-start">
+                    <p>{selectedAddress}</p>
+                    <PrimaryButton
+                      title="Change"
+                      buttonStyle={{
+                        width: "fit-content",
+                        padding: "0.2rem 0.5rem",
+                        fontSize: "17px",
+                      }}
+                    />
                   </div>
-                  <div className="d-flex justify-content-between">
+                  <div className="d-block">
+                    <input
+                      type={"text"}
+                      placeholder="House/Flat number"
+                      className={styles.FinalInput}
+                    />
+                    <input
+                      type={"text"}
+                      placeholder="Landmark(optional)"
+                      className={styles.FinalInput}
+                    />
+                    <input
+                      type={"text"}
+                      placeholder="Name"
+                      className={styles.FinalInput}
+                    />
+                  </div>
+                  <div className={styles.SelectionMenu}>
                     {["Home", "Office", "Others"].map((v, i) => (
                       <PrimaryButton
                         key={i}
@@ -439,7 +443,7 @@ export default function CheckoutPopup({ show, onHide }) {
                         buttonStyle={{
                           width: "30%",
                           padding: "0.2rem 0.5rem",
-                          fontSize: "14px",
+                          fontSize: "18px",
                         }}
                       />
                     ))}
@@ -447,7 +451,7 @@ export default function CheckoutPopup({ show, onHide }) {
                 </Col>
               </Row>
               <div>
-                <div className={styles.ConfirmButtonDiv}>
+                <div>
                   <PrimaryButton
                     clickHandler={() => {
                       setFinalLocationStep(true);
@@ -472,7 +476,7 @@ export default function CheckoutPopup({ show, onHide }) {
               className={styles.ConfirmLocationSpace}
             >
               <Gmaps
-                height={"300px"}
+                height={"430px"}
                 lat={currentLocation.latitude}
                 lng={currentLocation.longitude}
                 zoom={12}
