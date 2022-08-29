@@ -1,10 +1,10 @@
 .contactHeroContainer {
-  padding: 2rem 6rem;
+  padding: 0rem 6rem 2rem;
 }
 
 .contactHeading {
   text-align: center;
-  margin: 2rem 0 3rem;
+  margin: 1rem 0 2rem;
 }
 
 .contactHeading h2 {
@@ -21,6 +21,7 @@
 
 .formTop p {
   font-size: 20px;
+  font-weight: 500;
 }
 
 .contactFormHead {
@@ -47,6 +48,7 @@
 .formInputBox input,
 .formTextArea {
   background-color: #ededed;
+  padding: 0.7rem 0.5rem;
 }
 
 .formInputBox input:focus,
@@ -75,7 +77,6 @@
   .contactHeroContainer {
     padding: 2.5rem 1rem;
   }
-
   .contactHeading {
     display: none;
   }

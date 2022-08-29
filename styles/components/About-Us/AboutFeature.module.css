@@ -15,7 +15,7 @@
 .featureData {
   margin: 0 0 2.2rem;
   display: flex;
-  padding: 0;
+  padding: 0 0 0 0.5rem;
 }
 
 .aboutFeatureCheckbox {
@@ -40,11 +40,10 @@
   margin: 0;
 }
 
-.aboutFeatureContainer div:nth-child(1) {
-  padding: 0 0.5rem 0 0;
-}
-
 @media (max-width: 600px) {
+  .aboutFeatureContainer {
+    margin: 1rem 0 0;
+  }
   .aboutFeatureHeading {
     margin: 0 0 1rem;
   }

@@ -11,6 +11,10 @@
 }
 
 @media (max-width: 600px) {
+  .faqMainContainer {
+    padding: 0;
+    margin: 1rem 0;
+  }
   .faqHeading {
     margin: 0 0 0.8rem;
   }

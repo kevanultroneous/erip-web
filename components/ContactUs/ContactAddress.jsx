@@ -7,7 +7,7 @@ import Container from "../common/Container";
 function ContactAddress() {
   return (
     <section className={styles.contactAddressContainer}>
-      <Container>
+      <Container userdefinedclass={styles.contactContainer}>
         <Row className={styles.contactAddressRow}>
           <Col xl={6} className={styles.contactAddressBox}>
             <div className={styles.contactAdrressText}>

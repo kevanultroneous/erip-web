@@ -47,6 +47,9 @@
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
+  .contactContainer {
+    padding: 0 3rem;
+  }
   .contactAdrressText {
     text-align: center;
     width: 70%;

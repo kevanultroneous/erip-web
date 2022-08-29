@@ -4,46 +4,72 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import PrimaryButton from "./PrimaryButton";
 import { Image } from "react-bootstrap";
-import { allProducts } from "utils/dropMenuDataApple";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import axios from "axios";
 import styles from "@/styles/components/common/Header.module.css";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
+  const [appleNavData, setAppleNavData] = useState([
+    { subMenu: "iPhones", subMenuData: [] },
+    { subMenu: "Macbooks", subMenuData: [] },
+    { subMenu: "Smart Watches", subMenuData: [] },
+    { subMenu: "iPads", subMenuData: [] },
+  ]);
+  const [navTopModel, setNavTopModel] = useState([]);
+  const [navTopBrands, setNavTopBrands] = useState([]);
+  const [navTopIssues, setNavTopIssues] = useState([]);
 
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
+    // fetchNavData();
   }, []);
 
-  const menuCollapse = useRef();
+  // const fetchNavData = async () => {
+  //   await axios
+  //     .get("http://43.204.87.153/api/v1/cms/top_apple_products")
+  //     .then((data) => {
+  //       for (let i = 0; i < data.data.data_count; i++) {
+  //         const products = data.data.data[i];
 
-  useEffect(() => {
-    const handleScroll = (event) => {
-      const scroll = window.scrollY;
-      const menuOpen = menuCollapse.current.classList.contains("show");
-      const childs = menuCollapse.current.children;
-
-      for (let i = 0; i < childs.length; i++) {
-        const element = childs[i];
-        if (element.classList.contains("show")) {
-          element.classList.remove("show");
-        }
-      }
-
-      if (menuOpen) {
-        if (scroll > 70) {
-          menuCollapse.current.classList.remove("show");
-        }
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  //         if (products.model_is_mobile) {
+  //           setAppleNavData((prevData) => {
+  //             prevData.map((menuData, index) => {
+  //               index == 0
+  //                 ? { subMenu: "iPhones", subMenuData: [data.data.data] }
+  //                 : menuData;
+  //             });
+  //           });
+  //         } else if (products.model_is_laptop) {
+  //           setAppleNavData((prevData) => {
+  //             prevData.map((menuData, index) => {
+  //               index == 1
+  //                 ? { subMenu: "Macbooks", subMenuData: [data.data.data] }
+  //                 : menuData;
+  //             });
+  //           });
+  //         } else if (products.model_is_smartwatch) {
+  //           setAppleNavData((prevData) => {
+  //             prevData.map((menuData, index) => {
+  //               index == 2
+  //                 ? { subMenu: "Smart Watches", subMenuData: [data.data.data] }
+  //                 : menuData;
+  //             });
+  //           });
+  //         } else if (products.model_is_tablet) {
+  //           setAppleNavData((prevData) => {
+  //             prevData.map((menuData, index) => {
+  //               index == 3
+  //                 ? { subMenu: "iPads", subMenuData: [data.data.data] }
+  //                 : menuData;
+  //             });
+  //           });
+  //         }
+  //       }
+  //     });
+  // };
 
   {
     if (mobileView) {
@@ -124,73 +150,33 @@ export function Header() {
             </Navbar.Collapse>
           </Container>
           <Container fluid className="navBarBottomHeader">
-            <Nav
-              variant="pills"
-              activeKey="1"
-              className={styles.navDropMain}
-              ref={menuCollapse}
-            >
-              {allProducts.map((products, ind) => {
-                return (
-                  <DropdownButton
-                    title={products.menuName}
-                    className="dropDownMenuHead"
-                    key={products.direction}
-                    drop={products.direction}
-                  >
-                    <div className="dropMenuDiv">
-                      {products.menus.map((menu, menuIndex) => {
-                        return (
-                          <div key={menuIndex}>
-                            <Dropdown.Item
-                              eventKey="4.1"
-                              className={styles.listedItemHead}
-                            >
-                              {menu.dropHead}
-                            </Dropdown.Item>
-                            {menu.models.map((model, index) => {
-                              return (
-                                <Dropdown.Item eventKey="4.2" key={index}>
-                                  {model.modelName}
-                                </Dropdown.Item>
-                              );
-                            })}
-                          </div>
-                        );
-                      })}
-                    </div>
-                    <div>
-                      {products.dualMenus.length > 0 &&
-                        products.dualMenus.map((menu, menuIndex) => {
-                          return (
-                            <div key={menuIndex}>
-                              <Dropdown.Item
-                                eventKey="4.1"
-                                className={styles.listedItemHead}
-                                style={
-                                  menu.dropHead === undefined
-                                    ? { display: "none" }
-                                    : null
-                                }
-                              >
-                                {menu.dropHead}
-                              </Dropdown.Item>
-
-                              {menu.models.map((model, index) => {
-                                return (
-                                  <Dropdown.Item eventKey="4.2" key={index}>
-                                    {model.modelName}
-                                  </Dropdown.Item>
-                                );
-                              })}
-                            </div>
-                          );
-                        })}
-                    </div>
-                  </DropdownButton>
-                );
-              })}
-            </Nav>
+            {/* <Nav variant="pills" activeKey="1" className={styles.navDropMain}>
+              <DropdownButton
+                title={"Apple Products"}
+                className="dropDownMenuHead"
+                key={"down"}
+                drop={"down"}
+              >
+                <div className="dropMenuDiv">
+                  {console.log(appleNavData)}
+                  {appleNavData.map((menu, menuIndex) => {
+                    return (
+                      <div key={menuIndex}>
+                        <Dropdown.Item
+                          eventKey="4.1"
+                          className={styles.listedItemHead}
+                        >
+                          {menu.subMenu}
+                        </Dropdown.Item>
+                        <Dropdown.Item eventKey="4.2" key={1}>
+                          {menu.model_title}
+                        </Dropdown.Item>
+                      </div>
+                    );
+                  })}
+                </div>
+              </DropdownButton>
+            </Nav> */}
           </Container>
         </Navbar>
       );

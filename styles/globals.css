@@ -209,6 +209,19 @@ a {
   padding: 1.5rem;
 }
 
+.aboutTeamBoxes .slick-arrow {
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.1rem;
+  width: 1.1rem;
+  background-color: #0e62cb;
+  border-radius: 50%; */
+}
+.aboutTeamBoxes .slick-arrow::before {
+  color: #0e62cb;
+}
+
 @media (min-width: 320px) and (max-width: 450px) {
   .slick-prev {
     left: -11px !important;

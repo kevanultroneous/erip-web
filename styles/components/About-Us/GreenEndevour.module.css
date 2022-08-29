@@ -30,6 +30,10 @@
   .aboutGreenHeading {
     display: none;
   }
+
+  .aboutGreenHeadingMobile {
+    margin: 0 0 2rem;
+  }
   .aboutGreenHeadingMobile h2 {
     font-size: 24px;
     text-align: center;
