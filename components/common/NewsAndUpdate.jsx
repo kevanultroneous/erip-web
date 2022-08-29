@@ -55,18 +55,22 @@ export default function NewsAndUpdate({ data = NewsandUpdateData }) {
             {data.map((value, index) => (
               <Col key={index}>
                 <div className={styles.NewsandUpdateCard}>
-                  <Image
-                    src={value.post_image_url}
-                    alt={value.post_image_url}
-                    loading="lazy"
-                    fluid
-                  />
+                  <div className={styles.NewsImageWrraper}>
+                    <Image
+                      src={value.post_image_url}
+                      alt={value.post_image_url}
+                      loading="lazy"
+                      fluid
+                    />
+                  </div>
                   <p className={styles.NewsandUpdateDetail}>
                     {value.post_title}
                   </p>
-                  <Link href={value.post_url} target={"_blank"}>
-                    Read More
-                  </Link>
+                  <div className={styles.PostUrl}>
+                    <Link href={value.post_url} target={"_blank"}>
+                      Read More
+                    </Link>
+                  </div>
                 </div>
               </Col>
             ))}

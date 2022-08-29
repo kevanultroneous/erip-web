@@ -253,6 +253,7 @@ input[type=number] {
 .pac-icon {
   background: url('/assets/icons/gmap-location.svg');
   background-size: 100% 100%;
+  background-position: center;
   padding-left: 2rem;
 }
 
@@ -391,11 +392,15 @@ input[type=number] {
   }
 
   .CheckoutPopup .modal-dialog-centered {
-    align-items: flex-end;
+    align-items: flex-end !important;
   }
 
   .CheckoutPopup .modal-content {
     border-radius: 10px 10px 0px 0px;
+  }
+
+  .modal {
+    transform: translate(0%, 2%);
   }
 }
 

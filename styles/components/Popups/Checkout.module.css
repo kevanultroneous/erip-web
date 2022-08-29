@@ -217,6 +217,17 @@
   margin-bottom: 5rem;
 }
 
+.SelectedAddressActions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.SelectedAddressText {
+  margin: 0%;
+}
+
 /*  */
 @media (min-width: 320px) and (max-width: 450px) {
 
@@ -255,9 +266,11 @@
   .ModalBody {
     padding-left: 1rem;
     padding-right: 1rem;
+    padding-bottom: 3rem;
   }
 
   .SubtitleText {
+    margin-top: 1rem;
     text-align: left;
   }
 
@@ -265,6 +278,14 @@
 
   .ButtonwidthMobile {
     width: 100% !important;
+  }
+
+  .ColReverse {
+    flex-direction: column-reverse;
+  }
+
+  .FinalGmap {
+    display: none;
   }
 }
 

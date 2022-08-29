@@ -2,7 +2,12 @@ import { Col } from "react-bootstrap";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import styles from "@/styles/components/Popups/NavigationHandler.module.css";
 import { BiArrowBack } from "react-icons/bi";
-export default function NavigationHandler({ backhandler, navtitle, unique }) {
+export default function NavigationHandler({
+  backhandler,
+  navtitle,
+  unique,
+  hide = false,
+}) {
   return (
     <>
       <Col xs={2} md={2} lg={2} xl={2}>

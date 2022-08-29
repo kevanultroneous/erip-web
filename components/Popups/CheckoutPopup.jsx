@@ -128,6 +128,12 @@ export default function CheckoutPopup({ show, onHide }) {
       alert("process saved");
     }
   };
+
+  const OnPlaceSelect = async (place) => {
+    if (!(place == undefined)) {
+      setSelectedAddress(place.formatted_address);
+    }
+  };
   return (
     <Modal
       show={show}
@@ -235,7 +241,7 @@ export default function CheckoutPopup({ show, onHide }) {
         {/* Address and Location  popup 0 */}
         {secondProcessShow &&
         (selectedAddress === null || selectedAddress === "") ? (
-          <Row className={styles.LocationRow}>
+          <Row>
             <NavigationHandler
               navtitle={"Select Location"}
               backhandler={() => setSecondProcessShow(false)}
@@ -281,9 +287,7 @@ export default function CheckoutPopup({ show, onHide }) {
                   <ReactGoogleAutocomplete
                     placeholder="Search street, locality, etc"
                     apiKey={GMAP_API}
-                    onPlaceSelected={(place) => {
-                      setSelectedAddress(place.formatted_address);
-                    }}
+                    onPlaceSelected={(place) => OnPlaceSelect(place)}
                     defaultValue={selectedAddress}
                     options={{
                       types: ["establishment"],
@@ -298,7 +302,7 @@ export default function CheckoutPopup({ show, onHide }) {
         !(selectedAddress === "" || selectedAddress === null) &&
           secondProcessShow &&
           confirmLocationSession ? (
-          <Row className={styles.LocationRow}>
+          <Row className={styles.ColReverse}>
             <NavigationHandler
               navtitle={"Confirm Location"}
               backhandler={() => {
@@ -332,9 +336,7 @@ export default function CheckoutPopup({ show, onHide }) {
                   <ReactGoogleAutocomplete
                     placeholder="Address"
                     apiKey={GMAP_API}
-                    onPlaceSelected={(place) => {
-                      setSelectedAddress(place.formatted_address);
-                    }}
+                    onPlaceSelected={(place) => OnPlaceSelect(place)}
                     defaultValue={selectedAddress}
                     options={{
                       types: ["establishment"],
@@ -381,7 +383,7 @@ export default function CheckoutPopup({ show, onHide }) {
               md={6}
               lg={6}
               xl={7}
-              className={styles.ConfirmLocationSpace}
+              className={`${styles.ConfirmLocationSpace}`}
             >
               <Gmaps
                 height={"300px"}
@@ -402,7 +404,7 @@ export default function CheckoutPopup({ show, onHide }) {
           </Row>
         ) : // address & location popup 2
         secondProcessShow && setFinalLocationStep ? (
-          <Row className={styles.LocationRow}>
+          <Row>
             <NavigationHandler backhandler={onHide} navtitle="Checkout" />
             <StatusProcess processStatus={processStatus} />
             <Col xs={12} md={12} lg={12} xl={12}>
@@ -420,12 +422,14 @@ export default function CheckoutPopup({ show, onHide }) {
               md={6}
               lg={6}
               xl={5}
-              className={styles.ConfirmLocationSpace}
+              className={`${styles.ConfirmLocationSpace} ${styles.finalLocationStep}`}
             >
               <Row>
                 <Col xs={12} md={12} lg={12} xl={12}>
-                  <div className="d-flex align-items-start">
-                    <p>{selectedAddress}</p>
+                  <div className={styles.SelectedAddressActions}>
+                    <p className={styles.SelectedAddressText}>
+                      {selectedAddress}
+                    </p>
                     <PrimaryButton
                       clickHandler={() => {
                         setChangeModalSize(false);
@@ -501,7 +505,7 @@ export default function CheckoutPopup({ show, onHide }) {
               md={6}
               lg={6}
               xl={7}
-              className={styles.ConfirmLocationSpace}
+              className={`${styles.ConfirmLocationSpace}  ${styles.FinalGmap}`}
             >
               <Gmaps
                 height={"430px"}
