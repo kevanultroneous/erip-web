@@ -68,14 +68,8 @@ a {
   top: 110% !important;
 }
 
-.navbar-expand-lg
-  .navbar-nav
-  .dropDownMenuHead:nth-child(5)
-  .dropdown-menu.show,
-.navbar-expand-lg
-  .navbar-nav
-  .dropDownMenuHead:nth-child(4)
-  .dropdown-menu.show {
+.navbar-expand-lg .navbar-nav .dropDownMenuHead:nth-child(5) .dropdown-menu.show,
+.navbar-expand-lg .navbar-nav .dropDownMenuHead:nth-child(4) .dropdown-menu.show {
   right: -10% !important;
 }
 
@@ -310,6 +304,10 @@ input[type=number] {
 
 .pac-item:hover {
   background: #6666;
+}
+
+.modal {
+  top: 90px !important;
 }
 
 /*  */
