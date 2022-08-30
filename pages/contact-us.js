@@ -4,6 +4,7 @@ import ContactFAQ from "@/components/ContactUs/ContactFAQ";
 import ContactHero from "@/components/ContactUs/ContactHero";
 import { Header } from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import Layout from "@/components/common/Layout";
 
 function ContactUs() {
   const [mobileView, setMobileView] = useState(true);
@@ -12,11 +13,13 @@ function ContactUs() {
   }, []);
   return (
     <>
-      <Header />
-      <ContactHero />
-      <ContactAddress />
-      {mobileView && <ContactFAQ />}
-      <Footer />
+      <Layout>
+        <Header />
+        <ContactHero />
+        <ContactAddress />
+        {mobileView && <ContactFAQ />}
+        <Footer />
+      </Layout>
     </>
   );
 }
