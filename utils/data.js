@@ -1,4 +1,79 @@
 export const API_URL = `http://43.204.87.153/`
+export const GMAP_API = `AIzaSyCbbtMC73_MlNh1njcV2srrgNiPT6kSQqg`
+export const statictimelist = [
+    "9 am - 11 am",
+    "11 am - 01 pm",
+    "01 pm - 03 pm",
+    "03 pm - 05 pm",
+    "05 pm - 07 pm",
+    "07 pm - 09 pm",
+];
+export const staticcalender = [
+    {
+        day: "Friday",
+        date: "24th",
+        slogan: "today",
+    },
+    {
+        day: "Saturday",
+        date: "25th",
+        slogan: "today",
+    },
+    {
+        day: "Sunday",
+        date: "26th",
+        slogan: "June",
+    },
+    {
+        day: "Monday",
+        date: "27th",
+        slogan: "June",
+    },
+    {
+        day: "Friday",
+        date: "24th",
+        slogan: "today",
+    },
+    {
+        day: "Saturday",
+        date: "25th",
+        slogan: "today",
+    },
+    {
+        day: "Sunday",
+        date: "26th",
+        slogan: "June",
+    },
+    {
+        day: "Monday",
+        date: "27th",
+        slogan: "June",
+    },
+];
+export const monthsforcal = [
+    "December",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+
+];
+export const daysforcal = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+];
 export const WhyEripData = [
     {
         img: "/assets/images/express-repairs.png",
@@ -27,53 +102,53 @@ export const WhyEripData = [
 ];
 export const GetYourFixCard = [
     {
-        img: "/assets/images/mobile-product.png",
-        title: "Mobile",
+        category_icon_url: "/assets/images/mobile-product.png",
+        category_title: "Mobile",
     },
     {
-        img: "/assets/images/Tablet-product.png",
-        title: "Tablet",
+        category_icon_url: "/assets/images/Tablet-product.png",
+        category_title: "Tablet",
     },
     {
-        img: "/assets/images/Laptop-product.png",
-        title: "Laptop",
+        category_icon_url: "/assets/images/Laptop-product.png",
+        category_title: "Laptop",
     },
     {
-        img: "/assets/images/Smartwatch-product.png",
-        title: "Smart Watch",
+        category_icon_url: "/assets/images/Smartwatch-product.png",
+        category_title: "Smart Watch",
     },
     {
-        img: "/assets/images/ac-product.png",
-        title: "Air Conditioner",
+        category_icon_url: "/assets/images/ac-product.png",
+        category_title: "Air Conditioner",
     },
     {
-        img: "/assets/images/washing-machine-product.png",
-        title: "Washing Machine",
+        category_icon_url: "/assets/images/washing-machine-product.png",
+        category_title: "Washing Machine",
     },
 
     {
-        img: "/assets/images/refrigerator-product.png",
-        title: "Refrigerator",
+        category_icon_url: "/assets/images/refrigerator-product.png",
+        category_title: "Refrigerator",
     },
     {
-        img: "/assets/images/water-purifier-product.png",
-        title: "Water Purifier",
+        category_icon_url: "/assets/images/water-purifier-product.png",
+        category_title: "Water Purifier",
     },
     {
-        img: "/assets/images/tv-product.png",
-        title: "Television",
+        category_icon_url: "/assets/images/tv-product.png",
+        category_title: "Television",
     },
     {
-        img: "/assets/images/microwave-product.png",
-        title: "Microwave",
+        category_icon_url: "/assets/images/microwave-product.png",
+        category_title: "Microwave",
     },
     {
-        img: "/assets/images/chimney-product.png",
-        title: "Chimney",
+        category_icon_url: "/assets/images/chimney-product.png",
+        category_title: "Chimney",
     },
     {
-        img: "/assets/images/gyser-product.png",
-        title: "Gyser",
+        category_icon_url: "/assets/images/gyser-product.png",
+        category_title: "Gyser",
     },
 ];
 export const TestimonialData = [

@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { NewsandUpdateData } from "utils/data";
 import Link from "next/link";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-export default function NewsAndUpdate({ data }) {
+export default function NewsAndUpdate({ data = NewsandUpdateData }) {
   const settings = {
     infinite: true,
     speed: 500,
@@ -32,9 +32,14 @@ export default function NewsAndUpdate({ data }) {
       {
         breakpoint: 884,
         settings: {
+          dots: true,
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 2,
+          customPaging: function (i) {
+            return <div className="dot"></div>;
+          },
+          dotsClass: "slick-dots slick-thumb",
         },
       },
     ],

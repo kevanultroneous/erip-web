@@ -7,6 +7,7 @@ export default function WhyErip() {
   return (
     <Container
       innerstyle={{ backgroundColor: "#EAF4FF", padding: "4rem 2.5rem" }}
+      userdefinedclass={styles.MobileContainer}
     >
       <Row>
         {WhyEripData.map((value, index) => (

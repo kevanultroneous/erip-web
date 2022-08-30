@@ -6,7 +6,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import styles from "@/styles/components/Home/OfferBanner.module.css";
-export default function OfferBanner({ data }) {
+import { OfferBannerhomedata } from "utils/data";
+export default function OfferBanner({ data = OfferBannerhomedata }) {
   const settings = {
     dots: false,
     infinite: true,
@@ -19,7 +20,7 @@ export default function OfferBanner({ data }) {
       {
         breakpoint: 600,
         settings: {
-          arrows: false,
+          arrows: true,
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 2,
@@ -38,7 +39,7 @@ export default function OfferBanner({ data }) {
 
   return (
     <Container userdefinedclass={styles.MobileSpacing}>
-      <Row className="justify-content-center m-0">
+      <Row className="justify-content-center m-0 OfferBannerImageSlide">
         <Slider {...settings}>
           {data.map((value, index) => (
             <Col xl={4} key={index}>
@@ -46,6 +47,7 @@ export default function OfferBanner({ data }) {
                 <Image
                   src={value.osection_image_url}
                   alt={value.osection_title}
+                  className={styles.OfferBannerImage}
                   loading="lazy"
                 />
               </Link>

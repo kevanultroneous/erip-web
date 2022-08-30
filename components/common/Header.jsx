@@ -9,13 +9,24 @@ import { useEffect, useRef, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import styles from "@/styles/components/common/Header.module.css";
+import LoginPopup from "../Popups/LoginPopup";
+import CartAndOffer from "../Popups/CartAndOffer";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
+  const [loginPopup, setLoginPopup] = useState(false);
+  const [cartandOfferPopup, setCartAndOfferPopup] = useState(false);
 
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
   }, []);
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
 
   const menuCollapse = useRef();
 
@@ -45,6 +56,14 @@ export function Header() {
     };
   }, []);
 
+  function showPosition(position) {
+    alert(
+      "Latitude: " +
+        position.coords.latitude +
+        "<br>Longitude: " +
+        position.coords.longitude
+    );
+  }
   {
     if (mobileView) {
       return (
@@ -63,6 +82,7 @@ export function Header() {
               <Image
                 src="assets/icons/mobile-header-cart.svg"
                 alt="header cart"
+                onClick={() => setCartAndOfferPopup(true)}
               />
               <Navbar.Toggle
                 aria-controls="basic-navbar-nav"
@@ -71,7 +91,11 @@ export function Header() {
             </div>
             <Navbar.Collapse id="basic-navbar-nav" ref={menuCollapse}>
               <Nav className="me-auto">
-                <Nav.Link href="#home" className={styles.mobileMenuLink}>
+                <Nav.Link
+                  href="#home"
+                  className={styles.mobileMenuLink}
+                  onClick={() => setLoginPopup(true)}
+                >
                   Login
                 </Nav.Link>
                 <Nav.Link href="#link" className={styles.mobileMenuLink}>
@@ -85,6 +109,11 @@ export function Header() {
                 </Nav.Link>
               </Nav>
             </Navbar.Collapse>
+            <LoginPopup show={loginPopup} onHide={() => setLoginPopup(false)} />
+            <CartAndOffer
+              show={cartandOfferPopup}
+              onHide={() => setCartAndOfferPopup(false)}
+            />
           </Container>
         </Navbar>
       );
@@ -104,7 +133,7 @@ export function Header() {
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll" className={styles.navBarcolor}>
               <Nav className="me-auto my-2 my-lg-0"></Nav>
-              <div className={styles.navBarGeo}>
+              <div className={styles.navBarGeo} onClick={() => getLocation()}>
                 <Image
                   src="assets/icons/header-location.svg"
                   alt="header location"
@@ -119,8 +148,13 @@ export function Header() {
                 src="assets/icons/header-cart.svg"
                 alt="header cart"
                 className={styles.navHeaderCart}
+                onClick={() => setCartAndOfferPopup(true)}
               />
-              <PrimaryButton title="Login" className={styles.headerLoginBtn} />
+              <PrimaryButton
+                title="Login"
+                className={styles.headerLoginBtn}
+                clickHandler={() => setLoginPopup(true)}
+              />
             </Navbar.Collapse>
           </Container>
           <Container fluid className="navBarBottomHeader">
@@ -191,6 +225,11 @@ export function Header() {
                 );
               })}
             </Nav>
+            <LoginPopup show={loginPopup} onHide={() => setLoginPopup(false)} />
+            <CartAndOffer
+              show={cartandOfferPopup}
+              onHide={() => setCartAndOfferPopup(false)}
+            />
           </Container>
         </Navbar>
       );
