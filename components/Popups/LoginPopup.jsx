@@ -93,7 +93,6 @@ export default function LoginPopup({ show, onHide }) {
           if (reg_user.data.success) {
             alert(reg_user.data.message);
             setRegOtpModal(false);
-            LoginOtpsendStage();
           } else {
             alert(reg_user.data.message);
           }
@@ -108,6 +107,7 @@ export default function LoginPopup({ show, onHide }) {
           console.log(r.data.mobile_registered);
           if (r.data.success) {
             if (r.data.mobile_registered) {
+              LoginOtpsendStage();
               setOtpSending(true);
             } else {
               SendRegistrationOtpAPI(ContactNumber)
@@ -162,6 +162,7 @@ export default function LoginPopup({ show, onHide }) {
           setOtp("");
           setContactNumber("");
           setCheckBoxStatus(false);
+          show = false;
         } else {
           alert(login_user.data.message);
         }
@@ -298,7 +299,7 @@ export default function LoginPopup({ show, onHide }) {
                   <input
                     maxlength={6}
                     className={styles.InputNumber}
-                    type={"tel"}
+                    type={"number"}
                     value={Otp}
                     onChange={OtpInputHandler}
                     placeholder="Enter the OTP here"
