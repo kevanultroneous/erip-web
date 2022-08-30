@@ -179,6 +179,11 @@ a {
   padding: 0 !important;
 }
 
+.offerSections .slick-arrow::before,
+.aboutTeamBoxes .slick-arrow::before {
+  color: #0e62cb;
+}
+
 /* carousel */
 .carousel-control-prev {
   left: -60px;
@@ -321,8 +326,20 @@ input[type="number"] {
   top: 90px !important;
 }
 
+.form-check-input:focus {
+  box-shadow: none !important;
+}
+
+.btn-close:focus {
+  box-shadow: none !important;
+}
+
 /*  */
 @media (min-width: 320px) and (max-width: 450px) {
+  .modal {
+    top: 0px !important;
+  }
+
   .slick-prev {
     left: -11px !important;
   }

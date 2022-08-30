@@ -1,34 +1,85 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Image, Row } from "react-bootstrap";
+import { Col, Image, Row } from "react-bootstrap";
+import Slider from "react-slick";
+import styles from "@/styles/components/OfferPage/Offers.module.css";
 
 function Offers() {
   const [offer, setOffer] = useState([]);
   useEffect(() => {
-    fetchDetails();
+    fetchOffers();
   }, []);
 
-  const fetchDetails = async () => {
-    const offerData = await axios.get(
-      "http://43.204.87.153/api/v1/cms/offers?city=1"
-    );
-    setOffer(offerData.data.data);
+  const fetchOffers = async () => {
+    await axios
+      .get("http://43.204.87.153/api/v1/cms/offers?city=1")
+      .then((data) => {
+        console.log(data.data.data);
+        setOffer(data.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        setOffer([]);
+      });
+  };
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    responsive: [
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   return (
     <>
-      {offer.map((offersData, index) => {
-        return (
-          <Row key={index}>
-            <div>
-              <Image
-                fluid
-                src={offersData.offer_image_url}
-                alt={offersData.offer_image}
-              />
-            </div>
-          </Row>
-        );
+      {offer.map((newOffers, offerIndex) => {
+        if (newOffers.length < 2 && newOffers.length > 0) {
+          return (
+            <Row className={styles.offerSections}>
+              <div className={styles.offerBigImage}>
+                <Image
+                  fluid
+                  src={newOffers[0].offer_image_url}
+                  alt={newOffers[0].offer_promo_code}
+                />
+              </div>
+            </Row>
+          );
+        } else if (newOffers.length > 2) {
+          return (
+            <Row
+              className={`${
+                (styles.offerSections, styles.offerSlider)
+              } offerSections`}
+            >
+              <Slider {...settings}>
+                {newOffers.map((sliderOffer, sliderOfferIndex) => {
+                  return (
+                    <Col key={sliderOfferIndex}>
+                      <div className={styles.offerSliderImage}>
+                        <Image
+                          fluid
+                          src={sliderOffer.offer_image_url}
+                          alt={sliderOffer.offer_promo_code}
+                        />
+                      </div>
+                    </Col>
+                  );
+                })}
+              </Slider>
+            </Row>
+          );
+        }
       })}
     </>
   );

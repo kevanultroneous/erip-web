@@ -57,6 +57,14 @@
   display: none;
 }
 
+.RegModalBody {
+  padding: 2rem 3rem;
+}
+
+.RegModalText {
+  font-size: 20px;
+}
+
 @media (min-width: 320px) and (max-width: 450px) {
   .ModalBody {
     padding-top: 1rem;
@@ -111,8 +119,6 @@
   }
 }
 
-@media (min-width: 1200px) and (max-width: 1730px) {
-}
+@media (min-width: 1200px) and (max-width: 1730px) {}
 
-@media (min-width: 650px) and (max-width: 740px) {
-}
+@media (min-width: 650px) and (max-width: 740px) {}
