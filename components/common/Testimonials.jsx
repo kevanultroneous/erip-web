@@ -56,8 +56,8 @@ export default function Testimonials({ data = TestimonialData }) {
       <Row>
         <Col xl={12}>
           <Slider {...settings}>
-            {data.map((value, index) => (
-              <Col key={index}>
+            {data.slice(0, 3).map((value, index) => (
+              <Col>
                 <div className={styles.TestimonialCard}>
                   <div className={styles.TestimonialAvatar}>
                     <Image

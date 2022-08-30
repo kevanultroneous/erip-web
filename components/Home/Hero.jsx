@@ -8,11 +8,13 @@ export default function HomeHero({ data = HomeHerodata }) {
       {data.map((value, index) => (
         <Carousel.Item key={index} className={styles.CarouselSlide}>
           <Link href={value.hsection_click_url} target="_blank">
-            <Image
-              src={value.hsection_image_url}
-              alt={value.hsection_title}
-              className={styles.CarouselImage}
-            />
+            <div className={styles.CarouselImage}>
+              <Image
+                src={value.hsection_image_url}
+                alt={value.hsection_title}
+                loading="lazy"
+              />
+            </div>
           </Link>
         </Carousel.Item>
       ))}

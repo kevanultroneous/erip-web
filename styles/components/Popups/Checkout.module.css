@@ -1,294 +1,295 @@
 .BackArrow {
-    font-size: 30px;
-    cursor: pointer;
+  font-size: 30px;
+  cursor: pointer;
 }
 
 .CheckoutText {
-    font-weight: 700;
-    font-size: 24px;
-    text-align: center;
+  font-weight: 700;
+  font-size: 24px;
+  text-align: center;
 }
 
 .SubtitleText {
-    font-size: 18px;
-    text-align: center;
-    font-weight: 100;
+  font-size: 18px;
+  text-align: center;
+  font-weight: 100;
 }
 
 .ButtonCol {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
 }
 
 .SelectionTimeRow {
-    margin-top: 1.5rem;
-    text-align: center;
-    display: flex;
-    padding: 0 16rem;
+  margin-top: 1.5rem;
+  text-align: center;
+  display: flex;
+  padding: 0 16rem;
 }
 
 .TimeCard {
-    padding: 1rem 0;
-    width: 10rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 2rem;
-    background-color: #ffffff;
-    cursor: pointer;
+  padding: 1rem 0;
+  width: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  background-color: #ffffff;
+  cursor: pointer;
 }
 
 .SelectedCard {
-    background-color: #0E62CB;
-    color: #ffffff;
+  background-color: #0e62cb;
+  color: #ffffff;
 }
 
 .TimeCardCol {
-    display: flex;
-    /* justify-content: center; */
+  display: flex;
+  /* justify-content: center; */
 }
 
 .TimeText {
-    margin: 0%;
-    font-weight: 700;
+  margin: 0%;
+  font-weight: 700;
 }
 
 .ModalBody {
-    background-color: #F5F6FA;
-    padding: 2rem 1.5rem;
-    border-radius: 10px;
+  background-color: #f5f6fa;
+  padding: 2rem 1.5rem;
+  border-radius: 10px;
 }
 
-.Process {
-    display: flex;
-}
-
-.ProcessNumber {
-    margin: 0%;
-    height: 2.5rem;
-    width: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #676767;
-    border-radius: 100%;
-    font-weight: 400;
-    font-size: 18px;
-    margin-right: 0.4rem;
-    color: #676767;
-}
-
-.ProcessGroup {
-    display: flex;
-    align-items: center;
-}
-
-.SelectedProcessNumber {
-    border: 2px solid #0E62CB;
-    color: #0E62CB;
-}
-
-.ProcessName {
-    margin: 0%;
-    font-weight: 400;
-    font-size: 20px;
-    color: #676767;
-}
-
-.SelectedProcessName {
-    color: #000;
-}
-
-.ProcessLines {
-    color: #ACBFF7;
-    width: 10rem;
-    margin: 2rem 1rem;
-    opacity: 1 !important;
-}
-
-.ProcessCol {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 0.5rem;
-}
 
 .CardOfdate {
-    padding: 1rem 2.5rem;
-    background-color: #ffffff;
-    text-align: center;
-    width: 9rem !important;
-    border-radius: 8px;
-    margin-left: 0.5rem;
-    cursor: pointer;
+  padding: 1rem 2.5rem;
+  background-color: #ffffff;
+  text-align: center;
+  width: 9rem !important;
+  border-radius: 8px;
+  margin-left: 0.5rem;
+  cursor: pointer;
 }
 
 .SelectedCardOfDate {
-    background-color: #0E62CB;
-    color: #ffffff;
+  background-color: #0e62cb;
+  color: #ffffff;
 }
 
 .Day {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .Date {
-    font-size: 23px;
-    font-weight: 900;
+  font-size: 23px;
+  font-weight: 900;
 }
 
 .Slogan {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .CalenderWrraper {
-    margin-top: 3rem;
-    margin-bottom: 3rem;
-    padding: 0 15rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  padding: 0 15rem;
 }
 
 .RightArrow {
-    background-color: #ffffff !important;
-}
-
-
-.MobileProcessStatus {
-    display: none;
+  background-color: #ffffff !important;
 }
 
 /* Location modal */
 .LocationText {
-    text-align: center;
-    font-weight: 400;
-    font-size: 24px;
+  text-align: center;
+  font-weight: 400;
+  font-size: 24px;
 }
 
 .LocationBackArrow {
-    font-size: 25px;
-    color: #25282B;
+  font-size: 25px;
+  color: #25282b;
 }
 
 .LocationHeadLine {
-    width: 100%;
-    margin: 3rem 0 6rem 0;
+  width: 100%;
+  margin: 3rem 0 6rem 0;
 }
 
 .HeadLine {
-    font-weight: 400;
-    font-size: 20px;
-    text-align: center;
+  font-weight: 400;
+  font-size: 20px;
+  text-align: center;
 }
 
 .OrOptionText {
-    margin: 2rem 0;
-    font-weight: 400;
-    font-size: 18px;
-    color: #676767;
-    text-align: center;
+  margin: 2rem 0;
+  font-weight: 400;
+  font-size: 18px;
+  color: #676767;
+  text-align: center;
 }
 
 .SearchIcon {
-    color: #024B78;
-    font-size: 25px;
-    margin-left: 3rem;
+  color: #024b78;
+  font-size: 25px;
+  margin-left: 3rem;
 }
 
 .SearchInput {
-    padding: 0.5rem;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    border: 1.5px solid #0E62CB;
-    border-radius: 5px;
+  padding: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border: 1.5px solid #0e62cb;
+  border-radius: 5px;
 }
 
 .SearchInput input {
-    margin-left: 1rem;
-    border: none;
-    background: none;
-    outline: none;
+  margin-left: 1rem;
+  border: none;
+  background: none;
+  outline: none;
 }
 
 .LocationModalBody {
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
 
 .LocationRow {
-    padding-bottom: 4rem;
+  padding-bottom: 4rem;
+}
+
+.ConfirmLocationSpace {
+  padding-top: 2rem;
+}
+
+.ConfirmLocationInput {
+  border: 1.5px solid #0e62cb;
+  border-radius: 5px;
+  padding: 0.5rem 0.3rem;
+  display: flex;
+}
+
+.SearchInp {
+  border: none;
+  outline: none;
+  font-size: 12px;
+  width: 100%;
+}
+
+.ChangeLable {
+  font-weight: 700;
+  font-size: 14px;
+  color: #0e62cb;
+  cursor: pointer;
+  float: right;
+  margin: 0%;
+  margin-right: 0.2rem;
+}
+
+.DetectDirectLabel {
+  font-weight: 400;
+  font-size: 16px;
+  margin-left: 0.5rem;
+}
+
+.CurrentLocationDiv {
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.ConfirmButtonDiv {
+  margin-top: 10.5rem;
+}
+
+.FinalInput {
+  width: 100%;
+  border: 1.5px solid #c4c4c4;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.SelectionMenu {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5rem;
+}
+
+.SelectedAddressActions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.SelectedAddressText {
+  margin: 0%;
 }
 
 /*  */
-@media (min-width:320px) and (max-width: 450px) {
-    .ProcessName {
-        display: none;
-    }
+@media (min-width: 320px) and (max-width: 450px) {
 
-    .CalenderWrraper {
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-        padding: 0%;
-    }
 
-    .CardOfdate {
-        padding: 1rem 1rem;
-        width: 7rem !important;
-    }
+  .CalenderWrraper {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 0%;
+  }
 
-    .Date {
-        font-size: 20px;
-    }
+  .CardOfdate {
+    padding: 1rem 1rem;
+    width: 7rem !important;
+  }
 
-    .Day {
-        font-size: 14px;
-    }
+  .Date {
+    font-size: 20px;
+  }
 
-    .Slogan {
-        font-size: 14px;
-    }
+  .Day {
+    font-size: 14px;
+  }
 
-    .SelectionTimeRow {
-        padding: 0%;
-    }
+  .Slogan {
+    font-size: 14px;
+  }
 
-    .ProcessLines {
-        width: 6rem;
-    }
+  .SelectionTimeRow {
+    padding: 0%;
+  }
 
-    .CardOfdate {
-        width: 6rem;
-    }
+  .CardOfdate {
+    width: 6rem;
+  }
 
-    .ModalBody {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
+  .ModalBody {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 3rem;
+  }
 
-    .SubtitleText {
-        text-align: left;
-    }
+  .SubtitleText {
+    margin-top: 1rem;
+    text-align: left;
+  }
 
-    .MobileProcessStatus {
-        display: block;
-        text-align: center;
-        font-weight: 400;
-        font-size: 20px;
-        margin-bottom: 2rem;
-    }
 
-    .ButtonwidthMobile {
-        width: 100% !important;
-    }
+
+  .ButtonwidthMobile {
+    width: 100% !important;
+  }
+
+  .ColReverse {
+    flex-direction: column-reverse;
+  }
+
+  .FinalGmap {
+    display: none;
+  }
 }
 
-@media (min-width: 768px) and (max-width: 1080px) {
-
-    .MobileProcessStatus {
-        display: none;
-    }
-}
+@media (min-width: 768px) and (max-width: 1080px) {}
 
 @media (min-width: 1200px) and (max-width: 1730px) {}
 

@@ -11,15 +11,24 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import styles from "@/styles/components/common/Header.module.css";
 import LoginPopup from "../Popups/LoginPopup";
 import CartAndOffer from "../Popups/CartAndOffer";
+import ReactGoogleAutocomplete from "react-google-autocomplete";
+import { GMAP_API } from "utils/data";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
   const [loginPopup, setLoginPopup] = useState(false);
   const [cartandOfferPopup, setCartAndOfferPopup] = useState(false);
+  const [locationPopupShow, setLocationPopupShow] = useState(false);
 
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
+    // window.onclick = function (event) {
+    //   if (event.target.id != "dropdown_location") {
+    //     setLocationPopupShow(false);
+    //   }
+    // };
   }, []);
+
   function getLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
@@ -57,12 +66,57 @@ export function Header() {
   }, []);
 
   function showPosition(position) {
-    alert(
-      "Latitude: " +
-        position.coords.latitude +
-        "<br>Longitude: " +
-        position.coords.longitude
-    );
+    alert(position.coords);
+    reverseMap(position.coords.latitude, position.coords.longitude);
+    displayLocation(position.coords.latitude, position.coords.longitude);
+  }
+
+  function reverseMap(lat, lng) {
+    var latlng = new google.maps.LatLng(lat, lng);
+    var geocoder = (geocoder = new google.maps.Geocoder());
+    geocoder.geocode({ latLng: latlng }, function (results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        // results.map((v) => console.log(v));
+        if (results[1]) {
+          setLocationPopupShow(false);
+          alert(results[1].formatted_address);
+        }
+      }
+    });
+  }
+  function getLatandLongByAddress(address) {
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address: address }, function (results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        var latitude = results[0].geometry.location.lat();
+        var longitude = results[0].geometry.location.lng();
+        displayLocation(latitude, longitude);
+      }
+    });
+  }
+  function displayLocation(latitude, longitude) {
+    var geocoder;
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(latitude, longitude);
+    var count, country, state, city;
+    geocoder.geocode({ latLng: latlng }, function (results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        if (results[0]) {
+          var add = results[0].formatted_address;
+          var value = add.split(",");
+
+          count = value.length;
+          country = value[count - 1];
+          state = value[count - 2];
+          city = value[count - 3];
+          alert("city name is: " + city);
+        } else {
+          alert("address not found");
+        }
+      } else {
+        alert("Geocoder failed due to: " + status);
+      }
+    });
   }
   {
     if (mobileView) {
@@ -82,6 +136,7 @@ export function Header() {
               <Image
                 src="assets/icons/mobile-header-cart.svg"
                 alt="header cart"
+                className={styles.CartSpace}
                 onClick={() => setCartAndOfferPopup(true)}
               />
               <Navbar.Toggle
@@ -133,17 +188,26 @@ export function Header() {
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll" className={styles.navBarcolor}>
               <Nav className="me-auto my-2 my-lg-0"></Nav>
-              <div className={styles.navBarGeo} onClick={() => getLocation()}>
+              {/* location popup */}
+
+              <div
+                className={styles.navBarGeo}
+                onClick={() => setLocationPopupShow(!locationPopupShow)}
+              >
                 <Image
+                  id="dropdown_location"
                   src="assets/icons/header-location.svg"
                   alt="header location"
                 />
-                <p>Bengaluru</p>
+
+                <p id="dropdown_location">Bengaluru</p>
                 <Image
+                  id="dropdown_location"
                   src="assets/icons/header-down-arrow.svg"
                   alt="header down arrow"
                 />
               </div>
+
               <Image
                 src="assets/icons/header-cart.svg"
                 alt="header cart"
@@ -231,6 +295,41 @@ export function Header() {
               onHide={() => setCartAndOfferPopup(false)}
             />
           </Container>
+          <div
+            className={`${styles.LocationSmallModal} ${
+              locationPopupShow && styles.LocationModalVisible
+            }`}
+          >
+            <div className={styles.ModalHeadDir}>
+              <Image src="/assets/icons/gmap-location.svg" loading="lazy" />
+              <p className={styles.LocationText}>
+                Please provide your location for best experience
+              </p>
+            </div>
+
+            <div
+              className={styles.ModalHeadDetect}
+              onClick={() => getLocation()}
+            >
+              <Image src="/assets/icons/location-color.svg" loading="lazy" />
+              <p className={styles.LocationDetectText}>Detect My Location</p>
+            </div>
+            <div className={styles.InputGroup}>
+              <p className={styles.InputOrText}>or</p>
+              <ReactGoogleAutocomplete
+                placeholder="Search city, area, pincode"
+                apiKey={GMAP_API}
+                onPlaceSelected={(place) =>
+                  getLatandLongByAddress(place.formatted_address)
+                }
+                options={{
+                  types: ["establishment"],
+                  componentRestrictions: { country: "in" },
+                }}
+                className={styles.SearchBox}
+              />
+            </div>
+          </div>
         </Navbar>
       );
     }

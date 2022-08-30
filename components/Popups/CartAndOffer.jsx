@@ -21,14 +21,6 @@ export default function CartAndOffer({ show, onHide }) {
       name: "Lorem Ipsum ABC issues X",
       price: 100,
     },
-    {
-      name: "Lorem Ipsum ABC issues X",
-      price: 200,
-    },
-    {
-      name: "Lorem Ipsum ABC issues X",
-      price: 100,
-    },
   ];
   useEffect(() => {
     if (!show) {

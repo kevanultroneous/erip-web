@@ -1,0 +1,15 @@
+.BackArrow {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.CheckoutText {
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center;
+}
+
+.UniqueTitle {
+    font-weight: 400;
+    font-size: 24px;
+}

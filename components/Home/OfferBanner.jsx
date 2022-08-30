@@ -44,12 +44,14 @@ export default function OfferBanner({ data = OfferBannerhomedata }) {
           {data.map((value, index) => (
             <Col xl={4} key={index}>
               <Link href={value.osection_click_url} target={"_blank"}>
-                <Image
-                  src={value.osection_image_url}
-                  alt={value.osection_title}
-                  className={styles.OfferBannerImage}
-                  loading="lazy"
-                />
+                <div className={styles.SliderImage}>
+                  <Image
+                    src={value.osection_image_url}
+                    alt={value.osection_title}
+                    className={styles.OfferBannerImage}
+                    loading="lazy"
+                  />
+                </div>
               </Link>
             </Col>
           ))}
