@@ -34,6 +34,11 @@ export default function CheckoutPopup({ show, onHide }) {
 
   const [addressdata, setAddressData] = useState({});
 
+  const [mobileView, setMobileView] = useState(false);
+  useEffect(() => {
+    window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
+  }, []);
+
   useEffect(() => {
     getLatandLongByAddress(selectedAddress);
     setConfirmLocationSession(true);
@@ -316,14 +321,16 @@ export default function CheckoutPopup({ show, onHide }) {
           secondProcessShow &&
           confirmLocationSession ? (
           <Row className={styles.ColReverse}>
-            <NavigationHandler
-              navtitle={"Confirm Location"}
-              backhandler={() => {
-                setSecondProcessShow(true);
-                setSelectedAddress("");
-              }}
-              unique
-            />
+            <div className={styles.HideNavigationBar}>
+              <NavigationHandler
+                navtitle={"Confirm Location"}
+                backhandler={() => {
+                  setSecondProcessShow(true);
+                  setSelectedAddress("");
+                }}
+                unique
+              />
+            </div>
             {/* <Col xs={2} md={2} lg={2} xl={2}>
               <BiArrowBack
                 className={styles.LocationBackArrow}
@@ -366,7 +373,11 @@ export default function CheckoutPopup({ show, onHide }) {
                   onClick={() => getLocation()}
                 >
                   <Image
-                    src="/assets/icons/dark-icon-location.svg"
+                    src={
+                      mobileView
+                        ? "/assets/icons/blue-location.svg"
+                        : "/assets/icons/dark-icon-location.svg"
+                    }
                     alt="location-icon"
                     loading="lazy"
                   />
@@ -374,6 +385,7 @@ export default function CheckoutPopup({ show, onHide }) {
                     Use my current location
                   </span>
                 </div>
+
                 <div className={styles.ConfirmButtonDiv}>
                   <PrimaryButton
                     clickHandler={() => {
@@ -399,7 +411,7 @@ export default function CheckoutPopup({ show, onHide }) {
               className={`${styles.ConfirmLocationSpace}`}
             >
               <Gmaps
-                height={"300px"}
+                height={mobileView ? "500px" : "300px"}
                 lat={currentLocation.latitude}
                 lng={currentLocation.longitude}
                 zoom={12}

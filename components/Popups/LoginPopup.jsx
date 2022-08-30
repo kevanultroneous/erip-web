@@ -242,6 +242,7 @@ export default function LoginPopup({ show, onHide }) {
                 </div>
                 <div className={styles.CloseIconWrraper}>
                   <Image
+                    onClick={onHide}
                     src="/assets/icons/cross-close.svg"
                     alt="cross-close"
                     loading="lazy"
@@ -260,6 +261,7 @@ export default function LoginPopup({ show, onHide }) {
                 </div>
                 <div className={styles.CloseIconWrraper}>
                   <Image
+                    onClick={onHide}
                     src="/assets/icons/cross-close.svg"
                     alt="cross-close"
                     loading="lazy"

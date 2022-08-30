@@ -12,6 +12,7 @@ import GetYourFix from "@/components/Home/GetYourFix";
 import HomeHero from "@/components/Home/Hero";
 import OfferBanner from "@/components/Home/OfferBanner";
 import axios from "axios";
+import geoLocationDetect from "hooks/locationHook";
 import { useEffect, useState } from "react";
 import {
   API_URL,
@@ -25,8 +26,10 @@ import {
 
 export default function Home({ data }) {
   const [mobileView, setMobileView] = useState(true);
+  const location = geoLocationDetect({ getAddressByLocation: false, getCityByLatlngbool: false })
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
+    console.log(location)
   }, []);
   return (
     <Layout title={"Home"}>

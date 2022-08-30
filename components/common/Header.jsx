@@ -13,21 +13,31 @@ import LoginPopup from "../Popups/LoginPopup";
 import CartAndOffer from "../Popups/CartAndOffer";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
 import { GMAP_API } from "utils/data";
+import { CityDetactionAPI } from "pages/api/api";
+import { MatchCity } from "utils/utilsfunctions";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
   const [loginPopup, setLoginPopup] = useState(false);
   const [cartandOfferPopup, setCartAndOfferPopup] = useState(false);
   const [locationPopupShow, setLocationPopupShow] = useState(false);
+  const [currentCity, setCurrentCity] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState("");
+  const [cityData, setCityData] = useState([]);
 
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
-    // window.onclick = function (event) {
-    //   if (event.target.id != "dropdown_location") {
-    //     setLocationPopupShow(false);
-    //   }
-    // };
   }, []);
+
+  useEffect(() => {
+    setLocationPopupShow(false);
+
+    CityDetactionAPI()
+      .then((r) => setCityData(r.data.data))
+      .catch((e) => console.log(e));
+
+    MatchCity(cityData, currentCity);
+  }, [currentCity]);
 
   function getLocation() {
     if (navigator.geolocation) {
@@ -66,7 +76,6 @@ export function Header() {
   }, []);
 
   function showPosition(position) {
-    alert(position.coords);
     reverseMap(position.coords.latitude, position.coords.longitude);
     displayLocation(position.coords.latitude, position.coords.longitude);
   }
@@ -76,10 +85,9 @@ export function Header() {
     var geocoder = (geocoder = new google.maps.Geocoder());
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        // results.map((v) => console.log(v));
         if (results[1]) {
           setLocationPopupShow(false);
-          alert(results[1].formatted_address);
+          setSelectedAddress(results[1].formatted_address);
         }
       }
     });
@@ -109,7 +117,7 @@ export function Header() {
           country = value[count - 1];
           state = value[count - 2];
           city = value[count - 3];
-          alert("city name is: " + city);
+          setCurrentCity(city);
         } else {
           alert("address not found");
         }
@@ -317,6 +325,7 @@ export function Header() {
             <div className={styles.InputGroup}>
               <p className={styles.InputOrText}>or</p>
               <ReactGoogleAutocomplete
+                defaultValue={selectedAddress}
                 placeholder="Search city, area, pincode"
                 apiKey={GMAP_API}
                 onPlaceSelected={(place) =>
