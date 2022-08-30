@@ -10,18 +10,21 @@ import Testimonials from "@/components/common/Testimonials";
 import { TestimonialData } from "utils/data";
 import Footer from "@/components/common/Footer";
 import styles from "@/styles/components/IssuePage/issuepage.module.css";
+import Layout from "@/components/common/Layout";
 
 function IssuePage({ data }) {
   return (
     <>
-      <Header />
-      <SelectDeviceHero
-        headClass={styles.selectDeviceHero}
-        modelSection={styles.selectDeviceSection}
-      />
-      <WhyErip />
-      <Testimonials data={data.hometestimonial} />
-      <Footer />
+      <Layout title={"Issue Page"}>
+        <Header />
+        <SelectDeviceHero
+          headClass={styles.selectDeviceHero}
+          modelSection={styles.selectDeviceSection}
+        />
+        <WhyErip />
+        <Testimonials data={data.hometestimonial} />
+        <Footer />
+      </Layout>
     </>
   );
 }

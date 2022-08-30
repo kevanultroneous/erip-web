@@ -3,11 +3,12 @@ import axios from "axios";
 import CategoryModels from "./CategoryModels";
 import { BsChevronDown } from "react-icons/bs";
 import { Col, Row } from "react-bootstrap";
-import styles from "@/styles/components/SearchByModel/selectMobile.module.css";
 import BrandModels from "./BrandModels";
 import Models from "./Model";
+import { API_URL } from "utils/data";
+import styles from "@/styles/components/SearchByModel/selectMobile.module.css";
 
-function MobileModels({ getIssuesFromMobile }) {
+function MobileModels({ getIssuesFromMobile, issues, setissues }) {
   const [categoryName, setCategoryName] = useState("Device");
   const [brandName, setBrandName] = useState("Brands");
   const [modelName, setModelName] = useState("Models");
@@ -27,7 +28,7 @@ function MobileModels({ getIssuesFromMobile }) {
 
   const getCategory = async () => {
     await axios
-      .get("http://43.204.87.153/api/v1/categories_by_cities?city=1")
+      .get(`${API_URL}api/v1/categories_by_cities?city=1`)
       .then((data) => {
         setCategories(data.data.data);
       })
@@ -36,22 +37,24 @@ function MobileModels({ getIssuesFromMobile }) {
 
   const getBrands = async (categoryId) => {
     await axios
-      .get(
-        `http://43.204.87.153/api/v1/brands_by_category?category=${categoryId}`
-      )
+      .get(`${API_URL}api/v1/brands_by_category?category=${categoryId}`)
       .then((data) => {
         setdisplayBrands(true);
         setDisplayCategory(false);
+        setDisableBrandsClick(true);
         if (data.data.data !== undefined) {
           setBrands(data.data.data);
         } else {
           setBrands([]);
+          setModels([]);
+          setDisableModelsClick(false);
+          setDisableBrandsClick(false);
           setdisplayBrands(false);
         }
       })
       .catch(() => setBrands([]));
     await axios
-      .get("http://43.204.87.153/api/v1/categories_by_cities?city=1")
+      .get(`${API_URL}api/v1/categories_by_cities?city=1`)
       .then((data) => {
         const category = data.data.data;
         category.forEach((element) => {
@@ -60,26 +63,29 @@ function MobileModels({ getIssuesFromMobile }) {
           }
         });
       });
+    setissues([]);
     setBrandName("Brands");
     setModelName("Models");
   };
 
   const getModels = async (brandID) => {
     await axios
-      .get(`http://43.204.87.153/api/v1/models_by_brand?brand=${brandID}`)
+      .get(`${API_URL}api/v1/models_by_brand?brand=${brandID}`)
       .then((data) => {
         setdisplayBrands(false);
         setDisplayModels(true);
+        setDisableModelsClick(true);
         if (data.data.data !== undefined) {
           setModels(data.data.data);
         } else {
+          setDisableModelsClick(false);
           setModels([]);
           setDisplayModels(false);
         }
       });
     setBrandId(brandID);
     await axios
-      .get("http://43.204.87.153/api/v1/brands_by_category?category=1")
+      .get(`${API_URL}api/v1/brands_by_category?category=1`)
       .then((data) => {
         const model = data.data.data;
         model.forEach((element) => {
@@ -88,13 +94,13 @@ function MobileModels({ getIssuesFromMobile }) {
           }
         });
       });
-    setBrandName("Brands");
+    setissues([]);
     setModelName("Models");
   };
 
   const getIssues = async (issueID) => {
     await axios
-      .get(`http://43.204.87.153/api/v1/models_by_brand?brand=${brandId}`)
+      .get(`${API_URL}api/v1/models_by_brand?brand=${brandId}`)
       .then((data) => {
         const selectedModel = data.data.data;
         if (selectedModel) {
@@ -107,7 +113,6 @@ function MobileModels({ getIssuesFromMobile }) {
       });
     getIssuesFromMobile(issueID);
     setDisplayModels(false);
-    setModelName("Models");
   };
 
   return (
@@ -124,6 +129,7 @@ function MobileModels({ getIssuesFromMobile }) {
             </div>
             {displayCategory && (
               <CategoryModels
+                heading={"Select your Gadget"}
                 categoryArray={categories}
                 clickHandler={getBrands}
                 overlayHandling={() => {
@@ -134,13 +140,18 @@ function MobileModels({ getIssuesFromMobile }) {
           </Col>
           <Col xs={6}>
             <div
-              className={styles.selectDrop}
-              onClick={() => setdisplayBrands(!displayBrands)}
+              className={`${styles.selectDrop} ${
+                disableBrandsClick ? null : styles.disabledClick
+              }`}
+              onClick={() => {
+                disableBrandsClick ? setdisplayBrands(!displayBrands) : null;
+              }}
             >
               <p>{brandName}</p>
               <BsChevronDown className={styles.selectDropIcons} />
               {displayBrands && (
                 <BrandModels
+                  heading={"Select your Brand"}
                   brandsArray={brands}
                   clickHandler={getModels}
                   overlayHandling={() => {
@@ -154,13 +165,18 @@ function MobileModels({ getIssuesFromMobile }) {
         <Row>
           <Col xs={12}>
             <div
-              className={styles.selectDrop}
-              onClick={() => setDisplayModels(!displayModels)}
+              className={`${styles.selectDrop} ${
+                disableModelsClick ? null : styles.disabledClick
+              }`}
+              onClick={() => {
+                disableModelsClick ? setDisplayModels(!displayModels) : null;
+              }}
             >
               <p>{modelName}</p>
               <BsChevronDown className={styles.selectDropIcons} />
               {displayModels && (
                 <Models
+                  heading={"Select your Model"}
                   modelsArray={models}
                   clickHandler={getIssues}
                   overlayHandling={() => {

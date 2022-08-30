@@ -51,7 +51,7 @@ a {
 }
 
 /* /===================Accordion===================/ /===================Header===================/  */
-.navBarBottomHeader .nav-pills .show>.nav-link {
+.navBarBottomHeader .nav-pills .show > .nav-link {
   background-color: white !important;
 }
 
@@ -68,12 +68,18 @@ a {
   top: 110% !important;
 }
 
-.navbar-expand-lg .navbar-nav .dropDownMenuHead:nth-child(5) .dropdown-menu.show,
-.navbar-expand-lg .navbar-nav .dropDownMenuHead:nth-child(4) .dropdown-menu.show {
+.navbar-expand-lg
+  .navbar-nav
+  .dropDownMenuHead:nth-child(5)
+  .dropdown-menu.show,
+.navbar-expand-lg
+  .navbar-nav
+  .dropDownMenuHead:nth-child(4)
+  .dropdown-menu.show {
   right: -10% !important;
 }
 
-.navBarBottomHeader .dropdown-menu.show>div {
+.navBarBottomHeader .dropdown-menu.show > div {
   display: flex !important;
 }
 
@@ -203,6 +209,10 @@ a {
   padding: 1.5rem;
 }
 
+.selectButton .dropdown-item.active {
+  color: white !important;
+}
+
 /*remove  input number small up-down buttons Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -211,11 +221,11 @@ input::-webkit-inner-spin-button {
 }
 
 /*remove input number small up-down buttons Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.btn-check:focus+.btn,
+.btn-check:focus + .btn,
 .btn:focus {
   box-shadow: none !important;
 }
@@ -229,7 +239,7 @@ input[type=number] {
   padding: 0;
   transform: translate(0, -50%);
   cursor: pointer;
-  color: #0E62CB !important;
+  color: #0e62cb !important;
   border: none;
   outline: none;
   background: #fff;
@@ -246,7 +256,7 @@ input[type=number] {
   padding: 0;
   transform: translate(0, -50%);
   cursor: pointer;
-  color: #0E62CB !important;
+  color: #0e62cb !important;
   border: none;
   outline: none;
   background: #fff;
@@ -275,7 +285,7 @@ input[type=number] {
   font-weight: 400;
   font-size: 16px;
   padding: 1rem;
-  border-bottom: 0.5px solid #C4C4C4;
+  border-bottom: 0.5px solid #c4c4c4;
 }
 
 .pac-item,
@@ -285,10 +295,11 @@ input[type=number] {
   color: #000;
 }
 
-.pac-matched {}
+.pac-matched {
+}
 
 .pac-icon {
-  background: url('/assets/icons/gmap-location.svg');
+  background: url("/assets/icons/gmap-location.svg");
   background-size: 100% 100%;
   background-position: center;
   padding-left: 2rem;
@@ -334,7 +345,8 @@ input[type=number] {
   .AccordionMobileFooter .accordion-button:not(.collapsed) {
     color: #000;
     background-color: transparent !important;
-    box-shadow: inset 0 calc(var(--bs-accordion-border-width) * -1) 0 var(--bs-accordion-border-color);
+    box-shadow: inset 0 calc(var(--bs-accordion-border-width) * -1) 0
+      var(--bs-accordion-border-color);
   }
 
   .AccordionMobileFooter .accordion-button::after {
@@ -413,7 +425,6 @@ input[type=number] {
 
   .CartandOfferPopup .modal-dialog {
     margin: 0%;
-
   }
 
   .CartandOfferPopup .modal-dialog-centered {
@@ -424,12 +435,8 @@ input[type=number] {
     border-radius: 10px 10px 0px 0px;
   }
 
-
-
-
   .CheckoutPopup .modal-dialog {
     margin: 0%;
-
   }
 
   .CheckoutPopup .modal-dialog-centered {
@@ -460,7 +467,8 @@ input[type=number] {
   .AccordionMobileFooter .accordion-button:not(.collapsed) {
     color: #000;
     background-color: transparent !important;
-    box-shadow: inset 0 calc(var(--bs-accordion-border-width) * -1) 0 var(--bs-accordion-border-color);
+    box-shadow: inset 0 calc(var(--bs-accordion-border-width) * -1) 0
+      var(--bs-accordion-border-color);
   }
 
   .AccordionMobileFooter .accordion-button::after {
@@ -485,15 +493,17 @@ input[type=number] {
     border-radius: 999px;
     transition: all 0.5s ease-in-out;
     will-change: width;
-    border: 1px solid #0E62CB;
+    border: 1px solid #0e62cb;
   }
 
   .slick-dots.slick-thumb li.slick-active {
-    background-color: #0E62CB;
+    background-color: #0e62cb;
     width: 22.45px;
   }
 }
 
-@media (min-width: 1200px) and (max-width: 1730px) {}
+@media (min-width: 1200px) and (max-width: 1730px) {
+}
 
-@media (min-width: 650px) and (max-width: 740px) {}
+@media (min-width: 650px) and (max-width: 740px) {
+}
