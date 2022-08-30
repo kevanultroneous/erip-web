@@ -1,0 +1,22 @@
+.selectDeviceDependency {
+  position: relative;
+}
+
+.selectDrop {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 0.8rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 10px;
+}
+
+.selectDrop p {
+  margin: 0;
+}
+
+.selectDropIcons {
+  color: #0e62cb;
+}
