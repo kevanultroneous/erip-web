@@ -39,6 +39,7 @@ export default function CheckoutPopup({ show, onHide }) {
     setConfirmLocationSession(true);
   }, [selectedAddress]);
 
+  useEffect(() => {});
   const ConfirmProcessed = () => {
     selectedTime === null ? setShowTimeError(true) : setShowTimeError(false);
     selectedDate === null ? setShowDateError(true) : setShowDateError(false);
@@ -113,6 +114,7 @@ export default function CheckoutPopup({ show, onHide }) {
       setSelectedAddress("");
       setSecondProcessShow(false);
       setFinalLocationStep(false);
+      setChangeModalSize(true);
     }
   }, [show]);
 
@@ -252,7 +254,10 @@ export default function CheckoutPopup({ show, onHide }) {
           <Row>
             <NavigationHandler
               navtitle={"Select Location"}
-              backhandler={() => setSecondProcessShow(false)}
+              backhandler={() => {
+                setSecondProcessShow(false);
+                setChangeModalSize(true);
+              }}
               unique
             />
             {/* <Col xs={2} md={2} lg={2} xl={2}>
