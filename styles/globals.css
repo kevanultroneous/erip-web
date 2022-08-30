@@ -209,6 +209,10 @@ a {
   padding: 1.5rem;
 }
 
+.selectButton .dropdown-item.active {
+  color: white !important;
+}
+
 @media (min-width: 320px) and (max-width: 450px) {
   .slick-prev {
     left: -11px !important;

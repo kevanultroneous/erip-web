@@ -12,6 +12,7 @@ import { issueData } from "utils/issueData";
 import style from "@/styles/components/IssuePage/issuepage.module.css";
 import styles from "@/styles/components/SearchByModel/SelectDeviceHero.module.css";
 import MobileModels from "./MobileModels";
+import { API_URL } from "utils/data";
 
 function SelectDeviceHero({ headClass, modelSection }) {
   const [categories, setcategories] = useState([]);
@@ -31,9 +32,7 @@ function SelectDeviceHero({ headClass, modelSection }) {
 
   const getIssues = async (eventKey) => {
     await axios
-      .get(
-        `http://43.204.87.153/api/v1/issues_by_models_detail?model=${eventKey}&city=1`
-      )
+      .get(`${API_URL}api/v1/issues_by_models_detail?model=${eventKey}&city=1`)
       .then((data) => {
         if (data.data.data !== undefined) {
           setIssues(data.data.data);
@@ -42,7 +41,7 @@ function SelectDeviceHero({ headClass, modelSection }) {
         }
       });
     await axios
-      .get(`http://43.204.87.153/api/v1/models_by_brand?brand=${brandId}`)
+      .get(`${API_URL}api/v1/models_by_brand?brand=${brandId}`)
       .then((data) => {
         const selectedModel = data.data.data;
         if (selectedModel) {
@@ -65,7 +64,7 @@ function SelectDeviceHero({ headClass, modelSection }) {
 
   const getCategory = async () => {
     const categoryData = await axios
-      .get("http://43.204.87.153/api/v1/categories_by_cities?city=1")
+      .get(`${API_URL}api/v1/categories_by_cities?city=1`)
       .then((data) => {
         setcategories(data.data.data);
         setMobileCat(data.data.data);
@@ -75,9 +74,7 @@ function SelectDeviceHero({ headClass, modelSection }) {
 
   const getBrands = async (eventKey) => {
     await axios
-      .get(
-        `http://43.204.87.153/api/v1/brands_by_category?category=${eventKey}`
-      )
+      .get(`${API_URL}api/v1/brands_by_category?category=${eventKey}`)
       .then((data) => {
         if (data.data.data !== undefined) {
           setDisableBrands(false);
@@ -89,7 +86,7 @@ function SelectDeviceHero({ headClass, modelSection }) {
         }
       });
     await axios
-      .get("http://43.204.87.153/api/v1/categories_by_cities?city=1")
+      .get(`${API_URL}api/v1/categories_by_cities?city=1`)
       .then((data) => {
         const category = data.data.data;
         category.forEach((element) => {
@@ -106,7 +103,7 @@ function SelectDeviceHero({ headClass, modelSection }) {
 
   const getModels = async (eventKey) => {
     const modelData = await axios
-      .get(`http://43.204.87.153/api/v1/models_by_brand?brand=${eventKey}`)
+      .get(`${API_URL}api/v1/models_by_brand?brand=${eventKey}`)
       .then((data) => {
         if (data.data.data !== undefined) {
           setDisableModel(false);
@@ -119,7 +116,7 @@ function SelectDeviceHero({ headClass, modelSection }) {
       });
     setBrandId(eventKey);
     await axios
-      .get("http://43.204.87.153/api/v1/brands_by_category?category=1")
+      .get(`${API_URL}api/v1/brands_by_category?category=1`)
       .then((data) => {
         const model = data.data.data;
         model.forEach((element) => {
@@ -134,7 +131,7 @@ function SelectDeviceHero({ headClass, modelSection }) {
 
   const findBrands = async (id) => {
     await axios
-      .get(`http://43.204.87.153/api/v1/brands_by_category?category=${id}`)
+      .get(`${API_URL}api/v1/brands_by_category?category=${id}`)
       .then((data) => {
         setMobileBrands(data.data.data);
       });
@@ -164,7 +161,11 @@ function SelectDeviceHero({ headClass, modelSection }) {
           </Col>
         </Row>
         {mobileView ? (
-          <MobileModels getIssuesFromMobile={getIssues} />
+          <MobileModels
+            getIssuesFromMobile={getIssues}
+            issues={issues}
+            setissues={setIssues}
+          />
         ) : (
           <Row className={styles.selectDevice}>
             <Nav className={styles.selectDeviceNav}>
@@ -185,6 +186,13 @@ function SelectDeviceHero({ headClass, modelSection }) {
                             key={ind}
                             className={styles.navdropdown}
                           >
+                            <div className={styles.categoryImages}>
+                              <Image
+                                fluid
+                                src={categories.category_icon_url}
+                                alt={categories.category_slug_01}
+                              />
+                            </div>
                             {categories.category_title}
                           </NavDropdown.Item>
                         );
@@ -202,6 +210,7 @@ function SelectDeviceHero({ headClass, modelSection }) {
                       id="nav-dropdown"
                       onSelect={getModels}
                       disabled={disableBrands}
+                      className={disableBrands && styles.disabledDrop}
                     >
                       <Row>
                         {brandData.map((brands, ind) => {
@@ -238,6 +247,7 @@ function SelectDeviceHero({ headClass, modelSection }) {
                       id="nav-dropdown"
                       onSelect={getIssues}
                       disabled={disableModel}
+                      className={disableModel && styles.disabledDrop}
                     >
                       <Row>
                         {models.map((models, ind) => {
@@ -275,8 +285,6 @@ function SelectDeviceHero({ headClass, modelSection }) {
           return (
             <Col key={index} xl={4} md={6} className={style.issueColumn}>
               <IssueComponent
-                // issueImage={issues.issueImage}
-                // issueAlt={issues.issueAlt}
                 issueName={issues.issue_title}
                 issueOfferPrice={issues.discounted_price}
                 issueOriginalPrice={issues.display_price}
@@ -285,7 +293,6 @@ function SelectDeviceHero({ headClass, modelSection }) {
                 warranty={issues.warranty_period}
                 serviceType={issues.repair_type}
                 href={"#"}
-                // addToCart={issues.addToCart}
                 buttonName={"Add to cart"}
               />
             </Col>
