@@ -19,7 +19,7 @@ function BrandModels({ heading, brandsArray, overlayHandling, clickHandler }) {
                 onClick={() => clickHandler(brands.brand_id)}
               >
                 <div className={styles.categoryBox}>
-                  <div>
+                  <div className={styles.modelIcons}>
                     <Image
                       src={brands.brand_icon_url}
                       alt={brands.brand_slug_01}
