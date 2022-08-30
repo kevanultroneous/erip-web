@@ -13,7 +13,7 @@ function ContactUs() {
   }, []);
   return (
     <>
-      <Layout>
+      <Layout title={"Contact Us"}>
         <Header />
         <ContactHero />
         <ContactAddress />
