@@ -1,39 +1,32 @@
 import { Col, Image, Row } from "react-bootstrap";
 import React from "react";
-import styles from "@/styles/components/common/MobileModel.module.css";
+import styles from "@/styles/components/SearchByModel/MobileModel.module.css";
 
-function MobileModels({
-  heading,
-  deviceArray,
-  clickHandler,
-  imageurl,
-  atlImage,
-  imageTitle,
-}) {
+function Models({ heading, modelsArray, overlayHandling, clickHandler }) {
   return (
-    <section className={styles.modelContainer}>
+    <section className={styles.modelContainer} onClick={overlayHandling}>
       <div className={styles.mobileDataContainer}>
         <div className={styles.modelHeader}>
           <h4>{heading}</h4>
         </div>
         <Row className={styles.categoryDataMobile}>
-          {deviceArray.map((model, ind) => {
+          {modelsArray.map((models, ind) => {
             return (
               <Col
                 key={ind}
                 xs={6}
                 className={styles.categoryContainer}
-                onClick={() => clickHandler(model.category_id)}
+                onClick={() => clickHandler(models.model_id)}
               >
                 <div className={styles.categoryBox}>
                   <div>
                     <Image
-                      src={model.category_icon_url}
-                      alt={model.category_icon}
+                      src={models.model_image_url}
+                      alt={models.model_slug_01}
                       fluid
                     />
                   </div>
-                  <p>{model.category_title}</p>
+                  <p>{models.model_title}</p>
                 </div>
               </Col>
             );
@@ -44,4 +37,4 @@ function MobileModels({
   );
 }
 
-export default MobileModels;
+export default Models;

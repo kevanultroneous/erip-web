@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import { searchDeviceData } from "utils/SearchByModelData";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import { NavDropdown } from "react-bootstrap";
 import axios from "axios";
-import MobileModels from "../common/MobileModels";
+import CategoryModels from "./CategoryModels";
 import IssueComponent from "@/components/IssuePage/IssueComponent";
 import { issueData } from "utils/issueData";
 
 import style from "@/styles/components/IssuePage/issuepage.module.css";
 import styles from "@/styles/components/SearchByModel/SelectDeviceHero.module.css";
+import MobileModels from "./MobileModels";
 
 function SelectDeviceHero({ headClass, modelSection }) {
   const [categories, setcategories] = useState([]);
   const [brandData, setbrandData] = useState([{}]);
   const [models, setmodels] = useState([{}]);
   const [mobileCat, setMobileCat] = useState([]);
+  const [mobileBrands, setMobileBrands] = useState([]);
+  const [mobileModels, setMobileModels] = useState([]);
   const [categoryName, setCategoryName] = useState("Device");
   const [brandName, setBrandName] = useState("Brands");
   const [modelName, setModelName] = useState("Models");
@@ -130,11 +133,19 @@ function SelectDeviceHero({ headClass, modelSection }) {
   };
 
   const findBrands = async (id) => {
-    const brands = await axios
+    await axios
       .get(`http://43.204.87.153/api/v1/brands_by_category?category=${id}`)
       .then((data) => {
-        setMobileCat(data.data.data);
+        setMobileBrands(data.data.data);
       });
+  };
+
+  const selectDrop = useRef();
+  const categoryModel = useRef();
+
+  const disableDrop = () => {
+    console.log(selectDrop.current.classList);
+    selectDrop.current.classList.remove("show");
   };
 
   return (
@@ -152,25 +163,22 @@ function SelectDeviceHero({ headClass, modelSection }) {
             <h1>Mobile repair service in Bangalore</h1>
           </Col>
         </Row>
-        <Row className={styles.selectDevice}>
-          <Nav className={styles.selectDeviceNav}>
-            <Row className={styles.selectDeviceFirstRow}>
-              <Col xl={6} xs={6}>
-                <div className={`${styles.selectButton} selectButton`}>
-                  <p>Step 1</p>
-                  <NavDropdown
-                    title={categoryName}
-                    id="nav-dropdown"
-                    onSelect={getBrands}
-                  >
-                    {mobileView ? (
-                      <MobileModels
-                        heading={"Select your Gadget"}
-                        deviceArray={mobileCat}
-                        clickHandler={findBrands}
-                      />
-                    ) : (
-                      categories.map((categories, ind) => {
+        {mobileView ? (
+          <MobileModels getIssuesFromMobile={getIssues} />
+        ) : (
+          <Row className={styles.selectDevice}>
+            <Nav className={styles.selectDeviceNav}>
+              <Row className={styles.selectDeviceFirstRow}>
+                <Col xl={6} xs={6}>
+                  <div className={`${styles.selectButton} selectButton`}>
+                    <p>Step 1</p>
+                    <NavDropdown
+                      title={categoryName}
+                      id="nav-dropdown"
+                      onSelect={getBrands}
+                      ref={selectDrop}
+                    >
+                      {categories.map((categories, ind) => {
                         return (
                           <NavDropdown.Item
                             eventKey={categories.category_id}
@@ -180,86 +188,86 @@ function SelectDeviceHero({ headClass, modelSection }) {
                             {categories.category_title}
                           </NavDropdown.Item>
                         );
-                      })
-                    )}
-                  </NavDropdown>
-                </div>
-              </Col>
-              <Col xl={6} xs={6}>
-                <div
-                  className={`${styles.selectButton} selectButton getBrands`}
-                >
-                  <p>Step 2</p>
-                  <NavDropdown
-                    title={brandName}
-                    id="nav-dropdown"
-                    onSelect={getModels}
-                    disabled={disableBrands}
-                  >
-                    <Row>
-                      {brandData.map((brands, ind) => {
-                        return (
-                          <Col key={ind} xl={2}>
-                            <NavDropdown.Item
-                              eventKey={brands.brand_id}
-                              className={styles.navdropdown}
-                            >
-                              <div className={styles.brandLogoBox}>
-                                <Image
-                                  fluid
-                                  src={brands.brand_icon_url}
-                                  alt={brands.brand_title}
-                                />
-                              </div>
-                            </NavDropdown.Item>
-                          </Col>
-                        );
                       })}
-                    </Row>
-                  </NavDropdown>
-                </div>
-              </Col>
-            </Row>
-            <Row className={styles.modelDropRow}>
-              <Col xl={12} className={styles.modelDrop}>
-                <div
-                  className={`${styles.selectButton} selectButton getModels`}
-                >
-                  <p>Step 3</p>
-                  <NavDropdown
-                    title={modelName}
-                    id="nav-dropdown"
-                    onSelect={getIssues}
-                    disabled={disableModel}
+                    </NavDropdown>
+                  </div>
+                </Col>
+                <Col xl={6} xs={6}>
+                  <div
+                    className={`${styles.selectButton} selectButton getBrands`}
                   >
-                    <Row>
-                      {models.map((models, ind) => {
-                        return (
-                          <Col key={ind} xl={2}>
-                            <NavDropdown.Item
-                              eventKey={models.model_id}
-                              key={ind}
-                              className={styles.navdropdown}
-                            >
-                              <div className={styles.navDropBox}>
-                                <Image
-                                  fluid
-                                  src={models.model_image_url}
-                                  alt={models.model_title}
-                                />
-                                {models.model_title}
-                              </div>
-                            </NavDropdown.Item>
-                          </Col>
-                        );
-                      })}
-                    </Row>
-                  </NavDropdown>
-                </div>
-              </Col>
-            </Row>
-          </Nav>
-        </Row>
+                    <p>Step 2</p>
+                    <NavDropdown
+                      title={brandName}
+                      id="nav-dropdown"
+                      onSelect={getModels}
+                      disabled={disableBrands}
+                    >
+                      <Row>
+                        {brandData.map((brands, ind) => {
+                          return (
+                            <Col key={ind} xl={2}>
+                              <NavDropdown.Item
+                                eventKey={brands.brand_id}
+                                className={styles.navdropdown}
+                              >
+                                <div className={styles.brandLogoBox}>
+                                  <Image
+                                    fluid
+                                    src={brands.brand_icon_url}
+                                    alt={brands.brand_title}
+                                  />
+                                </div>
+                              </NavDropdown.Item>
+                            </Col>
+                          );
+                        })}
+                      </Row>
+                    </NavDropdown>
+                  </div>
+                </Col>
+              </Row>
+              <Row className={styles.modelDropRow}>
+                <Col xl={12} className={styles.modelDrop}>
+                  <div
+                    className={`${styles.selectButton} selectButton getModels`}
+                  >
+                    <p>Step 3</p>
+                    <NavDropdown
+                      title={modelName}
+                      id="nav-dropdown"
+                      onSelect={getIssues}
+                      disabled={disableModel}
+                    >
+                      <Row>
+                        {models.map((models, ind) => {
+                          return (
+                            <Col key={ind} xl={2}>
+                              <NavDropdown.Item
+                                eventKey={models.model_id}
+                                key={ind}
+                                className={styles.navdropdown}
+                              >
+                                <div className={styles.navDropBox}>
+                                  <Image
+                                    fluid
+                                    src={models.model_image_url}
+                                    alt={models.model_title}
+                                  />
+                                  {models.model_title}
+                                </div>
+                              </NavDropdown.Item>
+                            </Col>
+                          );
+                        })}
+                      </Row>
+                    </NavDropdown>
+                  </div>
+                </Col>
+              </Row>
+            </Nav>
+          </Row>
+        )}
       </section>
       <h3 className={style.issuePageTitle}>Select your Repair Services</h3>
       <Row className={style.issuePageRow}>
