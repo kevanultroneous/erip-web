@@ -213,6 +213,115 @@ a {
   color: white !important;
 }
 
+/*remove  input number small up-down buttons Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/*remove input number small up-down buttons Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.btn-check:focus + .btn,
+.btn:focus {
+  box-shadow: none !important;
+}
+
+.CalendarSlider .slick-prev {
+  font-size: 28px !important;
+  line-height: 0;
+  position: absolute;
+  top: 50%;
+  display: block;
+  padding: 0;
+  transform: translate(0, -50%);
+  cursor: pointer;
+  color: #0e62cb !important;
+  border: none;
+  outline: none;
+  background: #fff;
+  border-radius: 100%;
+  box-shadow: 0px 2px 4px #323232;
+}
+
+.CalendarSlider .slick-next {
+  font-size: 28px !important;
+  line-height: 0;
+  position: absolute;
+  top: 50%;
+  display: block;
+  padding: 0;
+  transform: translate(0, -50%);
+  cursor: pointer;
+  color: #0e62cb !important;
+  border: none;
+  outline: none;
+  background: #fff;
+  border-radius: 100%;
+  box-shadow: 0px 2px 4px #323232;
+}
+
+/* btn border (bootstrap) */
+/* .btn {
+  border-color: transparent !important;
+}
+
+.btn:hover {
+  border-color: transparent !important;
+} */
+.pac-container {
+  background-color: #fff;
+  z-index: 200000;
+  width: 30rem !important;
+  font-family: "ProductSansRegular" !important;
+
+  padding: 0rem 1rem;
+}
+
+.pac-item {
+  font-weight: 400;
+  font-size: 16px;
+  padding: 1rem;
+  border-bottom: 0.5px solid #c4c4c4;
+}
+
+.pac-item,
+.pac-item-query {
+  font-weight: 400;
+  font-size: 18px;
+  color: #000;
+}
+
+.pac-matched {
+}
+
+.pac-icon {
+  background: url("/assets/icons/gmap-location.svg");
+  background-size: 100% 100%;
+  background-position: center;
+  padding-left: 2rem;
+}
+
+.pac-item span:nth-child(3n) {
+  display: block;
+  padding-left: 2.5rem;
+  color: #676767;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.pac-item:hover {
+  background: #6666;
+}
+
+.modal {
+  top: 90px !important;
+}
+
+/*  */
 @media (min-width: 320px) and (max-width: 450px) {
   .slick-prev {
     left: -11px !important;
@@ -274,6 +383,73 @@ a {
     background-color: #0e62cb;
     width: 22.45px;
   }
+
+  .OfferBannerImageSlide {
+    overflow: hidden;
+  }
+
+  .OfferBannerImageSlide .slick-prev {
+    left: 15px !important;
+    z-index: 1;
+  }
+
+  .OfferBannerImageSlide .slick-next {
+    right: 15px !important;
+  }
+
+  .OfferBannerImageSlide .slick-slider {
+    padding: 0%;
+  }
+
+  .LoginPopup {
+    display: flex !important;
+    align-items: flex-end;
+  }
+
+  .LoginPopup .modal-dialog {
+    margin: 0%;
+  }
+
+  .LoginPopup .modal-dialog-centered {
+    align-items: flex-end;
+  }
+
+  .LoginPopup .modal-content {
+    border-radius: 10px 10px 0px 0px;
+  }
+
+  .CartandOfferPopup {
+    display: flex !important;
+    align-items: flex-end;
+  }
+
+  .CartandOfferPopup .modal-dialog {
+    margin: 0%;
+  }
+
+  .CartandOfferPopup .modal-dialog-centered {
+    align-items: flex-end;
+  }
+
+  .CartandOfferPopup .modal-content {
+    border-radius: 10px 10px 0px 0px;
+  }
+
+  .CheckoutPopup .modal-dialog {
+    margin: 0%;
+  }
+
+  .CheckoutPopup .modal-dialog-centered {
+    align-items: flex-end !important;
+  }
+
+  .CheckoutPopup .modal-content {
+    border-radius: 10px 10px 0px 0px;
+  }
+
+  .modal {
+    transform: translate(0%, 2%);
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1080px) {
@@ -302,6 +478,27 @@ a {
   .AccordionMobileFooter .accordion-button:not(.collapsed)::after {
     background-image: url("/assets/icons/footer-menu.png");
     transform: var(--bs-accordion-btn-icon-transform);
+  }
+
+  .slick-dots.slick-thumb {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .slick-dots.slick-thumb li {
+    width: 6px;
+    height: 6px;
+    margin: 0 3px;
+    border-radius: 999px;
+    transition: all 0.5s ease-in-out;
+    will-change: width;
+    border: 1px solid #0e62cb;
+  }
+
+  .slick-dots.slick-thumb li.slick-active {
+    background-color: #0e62cb;
+    width: 22.45px;
   }
 }
 

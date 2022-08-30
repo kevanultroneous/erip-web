@@ -17,6 +17,7 @@
 
 .RatingWrraper {
     margin: 1.5rem 0;
+    margin-top: 0rem;
 }
 
 .TestimonialIcon {}
@@ -34,7 +35,7 @@
 }
 
 .TestimonialDetail {
-    font-weight: 400;
+    font-weight: 600;
     font-size: 18px;
 }
 

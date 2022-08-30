@@ -12,7 +12,27 @@ import { AiOutlineTwitter } from "react-icons/ai";
 import { RiLinkedinBoxFill } from "react-icons/ri";
 import { footerMenuList } from "utils/menudata";
 import Link from "next/link";
+import { useState } from "react";
 export default function MobileFooter() {
+  const [selectedMenu, setSelectedMenu] = useState(false);
+  const dataOfBottombar = [
+    {
+      icon: HiHome,
+      name: "Home",
+    },
+    {
+      icon: MdDevices,
+      name: "Devices",
+    },
+    {
+      icon: IoIosHelpCircle,
+      name: "Help",
+    },
+    {
+      icon: RiAccountPinCircleLine,
+      name: "Account",
+    },
+  ];
   return (
     <Container userdefinedclass={"MobileFooter"}>
       <Row>
@@ -44,27 +64,27 @@ export default function MobileFooter() {
               ))}
             </Accordion>
           </div>
-          <PrimaryButton
-            title="Request a Call Back"
-            buttonStyle={{ width: "100%" }}
-          />
+          <div className={styles.PrimaryButtonWrraper}>
+            <PrimaryButton
+              title="Request a Call Back"
+              buttonStyle={{ width: "100%" }}
+            />
+          </div>
           <div className={styles.BottomNavbar}>
-            <div className={styles.BottomMenu}>
-              <HiHome className={styles.BottomIcon} />
-              <p>Home</p>
-            </div>
-            <div className={styles.BottomMenu}>
-              <MdDevices className={styles.BottomIcon} />
-              <p>Devices</p>
-            </div>
-            <div className={styles.BottomMenu}>
-              <IoIosHelpCircle className={styles.BottomIcon} />
-              <p>Help</p>
-            </div>
-            <div className={styles.BottomMenu}>
-              <RiAccountPinCircleLine className={styles.BottomIcon} />
-              <p>Account</p>
-            </div>
+            {dataOfBottombar.map((value, index) => (
+              <div
+                className={styles.BottomMenu}
+                onClick={() => setSelectedMenu(index)}
+              >
+                <value.icon
+                  className={styles.BottomIcon}
+                  style={selectedMenu === index ? { color: "#000" } : null}
+                />
+                <p style={selectedMenu === index ? { color: "#000" } : null}>
+                  {value.name}
+                </p>
+              </div>
+            ))}
           </div>
         </Col>
       </Row>

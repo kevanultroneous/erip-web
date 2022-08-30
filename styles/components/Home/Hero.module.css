@@ -1,18 +1,14 @@
-.MobileImage {}
+.CarouselSlide {
+    cursor: pointer;
+}
 
-
+.CarouselImage img {
+    width: 100%;
+    height: 400px;
+}
 
 @media (min-width:320px) and (max-width: 450px) {
-    .MobileSpacing {
-        padding: 0 0rem;
-    }
-
-    .OfferBannerImage {
-        width: 100%;
-        height: auto;
-    }
-
-    .SliderImage {
+    .CarouselImage img {
         height: 200px;
     }
 }

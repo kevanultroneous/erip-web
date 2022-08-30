@@ -13,7 +13,6 @@ import { enddate, getDatesInRange, startdate } from "utils/calenderPackage";
 import { calenderslidersettings } from "utils/sliderSettings";
 import { StatusProcess } from "./StatusProcess";
 import NavigationHandler from "./NavigationHandler";
-import axios from "axios";
 
 export default function CheckoutPopup({ show, onHide }) {
   const [selectedTime, setSelectedTime] = useState(null);
@@ -34,8 +33,6 @@ export default function CheckoutPopup({ show, onHide }) {
   const [LocationInputError, setLocationError] = useState(0);
 
   const [addressdata, setAddressData] = useState({});
-
-  useEffect(() => {}, []);
 
   useEffect(() => {
     getLatandLongByAddress(selectedAddress);

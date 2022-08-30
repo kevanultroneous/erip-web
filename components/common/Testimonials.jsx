@@ -6,7 +6,7 @@ import Slider from "react-slick";
 import { TestimonialData } from "utils/data";
 import styles from "@/styles/components/common/Testimonial.module.css";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-export default function Testimonials({ data }) {
+export default function Testimonials({ data = TestimonialData }) {
   const settings = {
     dots: false,
     infinite: true,
@@ -33,9 +33,14 @@ export default function Testimonials({ data }) {
       {
         breakpoint: 884,
         settings: {
+          dots: true,
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 2,
+          customPaging: function (i) {
+            return <div className="dot"></div>;
+          },
+          dotsClass: "slick-dots slick-thumb",
         },
       },
     ],
@@ -51,8 +56,8 @@ export default function Testimonials({ data }) {
       <Row>
         <Col xl={12}>
           <Slider {...settings}>
-            {data.map((value, index) => (
-              <Col key={index}>
+            {data.slice(0, 3).map((value, index) => (
+              <Col>
                 <div className={styles.TestimonialCard}>
                   <div className={styles.TestimonialAvatar}>
                     <Image
