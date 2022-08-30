@@ -60,7 +60,15 @@ export default function CheckoutPopup({ show, onHide }) {
 
   function getLocation() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
+      navigator.geolocation.getCurrentPosition(
+        showPosition,
+        (error) => alert(error.message),
+        {
+          enableHighAccuracy: true,
+          maximumAge: 10000,
+          timeout: 5000,
+        }
+      );
     } else {
       alert("Geolocation is not supported by this browser.");
     }
