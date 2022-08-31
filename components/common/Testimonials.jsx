@@ -46,8 +46,6 @@ export default function Testimonials({ data = TestimonialData }) {
     ],
   };
 
-  console.log(data);
-
   return (
     <Container>
       <div className={styles.TestimonialHeadingWrraper}>
