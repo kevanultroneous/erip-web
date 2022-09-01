@@ -14,7 +14,7 @@ import styles from "@/styles/components/SearchByModel/SelectDeviceHero.module.cs
 import MobileModels from "./MobileModels";
 import { API_URL } from "utils/data";
 
-function SelectDeviceHero({ headClass, modelSection }) {
+function SelectDeviceHero({ headClass, modelSection, quoteaction, token }) {
   const [categories, setcategories] = useState([]);
   const [brandData, setbrandData] = useState([{}]);
   const [models, setmodels] = useState([{}]);
@@ -293,7 +293,8 @@ function SelectDeviceHero({ headClass, modelSection }) {
                 warranty={issues.warranty_period}
                 serviceType={issues.repair_type}
                 href={"#"}
-                buttonName={"Add to cart"}
+                addToCart={() => (token ? null : quoteaction())}
+                buttonName={token ? "Add to cart" : "Get Quote"}
               />
             </Col>
           );

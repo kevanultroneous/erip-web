@@ -13,14 +13,14 @@ export default function Logout({ show, noaction, yesaction }) {
       <Modal.Body className="ps-4 pe-3">
         <h5>Are you sure you want to logout?</h5>
         <Row className={"pt-4"}>
-          <Col xs={4} md={4} lg={4} xl={6}>
+          <Col xs={4} md={5} lg={4} xl={6}>
             <PrimaryButton
               clickHandler={yesaction}
               buttonStyle={{ padding: "0.2rem 2rem" }}
               title={"Yes"}
             />
           </Col>
-          <Col xs={4} md={4} lg={4} xl={6}>
+          <Col xs={4} md={5} lg={4} xl={6}>
             <PrimaryButton
               buttonStyle={{
                 padding: "0.2rem 2rem",

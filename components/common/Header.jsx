@@ -29,7 +29,9 @@ export function Header() {
   const [logoutpopup, setLogoutPopup] = useState(false);
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
+    var modal = document.getElementById("dropdown_location");
   }, []);
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setToken(true);
@@ -46,7 +48,10 @@ export function Header() {
       .then((r) => setCityData(r.data.data))
       .catch((e) => console.log(e));
 
-    MatchCity(cityData, currentCity);
+    if (MatchCity(cityData, currentCity)) {
+    } else {
+      setSelectedAddress("");
+    }
   }, [currentCity]);
 
   function getLocation() {

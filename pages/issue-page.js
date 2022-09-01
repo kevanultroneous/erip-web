@@ -14,14 +14,30 @@ import styles from "@/styles/components/IssuePage/issuepage.module.css";
 import { useRouter } from "next/router";
 
 import Layout from "@/components/common/Layout";
+import { useEffect, useState } from "react";
+import LoginPopup from "@/components/Popups/LoginPopup";
 
 function IssuePage({ data }) {
   const router = useRouter()
+  const [popupLogin, setPopupLogin] = useState(false)
   { console.log(router.query.issue) }
+  const [token, setToken] = useState(false);
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setToken(true);
+      setPopupLogin(false)
+    } else {
+      setToken(false);
+    }
+  });
+
   return (
     <Layout title={"Issue Page"}>
       <Header />
+      <LoginPopup show={popupLogin} onHide={() => setPopupLogin(false)} />
       <SelectDeviceHero
+        token={token}
+        quoteaction={() => setPopupLogin(true)}
         headClass={styles.selectDeviceHero}
         modelSection={styles.selectDeviceSection}
       />

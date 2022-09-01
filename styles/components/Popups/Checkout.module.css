@@ -56,7 +56,7 @@
 
 .ModalBody {
   background-color: #f5f6fa;
-  padding: 2rem 1.5rem;
+  padding: 2rem 1.5rem 6rem 1.5rem;
   border-radius: 10px;
 }
 
@@ -273,7 +273,7 @@
   .ModalBody {
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-bottom: 3rem;
+    padding-bottom: 4rem;
   }
 
   .SubtitleText {
@@ -318,7 +318,106 @@
   }
 }
 
-@media (min-width: 768px) and (max-width: 1080px) {}
+@media (min-width: 768px) and (max-width: 1080px) {
+  .HideNavigationBar {
+    display: none;
+  }
+
+  .ProcessName {
+    display: none !important;
+  }
+
+  .ConfirmLocationSpace {
+    padding-top: 2rem;
+  }
+
+  .CalenderWrraper {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 0%;
+  }
+
+  .CardOfdate {
+    padding: 1rem 1rem;
+
+  }
+
+  .Date {
+    font-size: 20px;
+  }
+
+  .Day {
+    font-size: 14px;
+  }
+
+  .Slogan {
+    font-size: 14px;
+  }
+
+  .SelectionTimeRow {
+    padding: 0%;
+  }
+
+  .CardOfdate {
+    width: 6rem;
+  }
+
+  .ModalBody {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 3rem;
+  }
+
+  .SubtitleText {
+    margin-top: 1rem;
+    text-align: left;
+  }
+
+
+
+  .ButtonwidthMobile {
+    width: 100% !important;
+  }
+
+  .ColReverse {
+    flex-direction: column-reverse;
+  }
+
+  .FinalGmap {
+    display: none;
+  }
+
+  .DetectDirectLabel {
+    font-weight: 700;
+    font-size: 14px;
+    color: #0E62CB;
+  }
+
+  .CurrentLocationDiv {
+    padding: 0.2rem 0.6rem;
+    border: 2px solid #0E62CB;
+    border-radius: 5px;
+    width: fit-content;
+    position: fixed;
+    bottom: 24rem;
+    z-index: 1;
+    left: 19rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .ConfirmButtonDiv {
+    margin-top: 2%;
+  }
+
+  .TimeCard {
+    font-size: 12px;
+  }
+
+  .SelectionTimeRow {
+    padding: 0 3rem;
+  }
+
+}
 
 @media (min-width: 1200px) and (max-width: 1730px) {}
 

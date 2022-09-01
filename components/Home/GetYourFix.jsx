@@ -6,7 +6,7 @@ import styles from "@/styles/components/Home/GetYourFix.module.css";
 import Link from "next/link";
 export default function GetYourFix({ data = GetYourFixCard }) {
   return (
-    <Container>
+    <Container userdefinedclass={styles.TablateSpacing}>
       <Row>
         <div className={styles.MainTitleWrraper}>
           <h3 className={styles.MainTitle}>Get Your Fix!</h3>

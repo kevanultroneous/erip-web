@@ -363,15 +363,7 @@ export default function CheckoutPopup({ show, onHide }) {
               }}
               unique
             />
-            {/* <Col xs={2} md={2} lg={2} xl={2}>
-              <BiArrowBack
-                className={styles.LocationBackArrow}
-                onClick={() => setSecondProcessShow(false)}
-              />
-            </Col>
-            <Col xs={8} md={8} lg={8} xl={8}>
-              <h4 className={styles.LocationText}>Select Location</h4>
-            </Col> */}
+
             <Col xs={12} md={12} lg={12} xl={12}>
               <div className={styles.LocationHeadLine}>
                 <p className={styles.HeadLine}>
@@ -432,7 +424,7 @@ export default function CheckoutPopup({ show, onHide }) {
             </div>
             <Col
               xs={12}
-              md={6}
+              md={12}
               lg={6}
               xl={5}
               className={styles.ConfirmLocationSpace}
