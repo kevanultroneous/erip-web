@@ -53,7 +53,7 @@ export const AddressTypes = () => {
 
 // logout
 export const UserLogout = (token) => {
-  return axios.post(`http://43.204.87.153/api/v1/users/logout`, {
+  return axios.get(`http://43.204.87.153/api/v1/users/logout`, {
     headers: { Authorization: `Bearer ${token}` }
   })
 }

@@ -13,8 +13,9 @@ import LoginPopup from "../Popups/LoginPopup";
 import CartAndOffer from "../Popups/CartAndOffer";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
 import { GMAP_API } from "utils/data";
-import { CityDetactionAPI } from "pages/api/api";
+import { CityDetactionAPI, UserLogout } from "pages/api/api";
 import { MatchCity } from "utils/utilsfunctions";
+import Logout from "../Popups/Logout";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
@@ -25,14 +26,12 @@ export function Header() {
   const [selectedAddress, setSelectedAddress] = useState("");
   const [cityData, setCityData] = useState([]);
   const [token, setToken] = useState(false);
+  const [logoutpopup, setLogoutPopup] = useState(false);
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
   }, []);
   useEffect(() => {
-    if (
-      localStorage.getItem("token") !== null ||
-      localStorage.getItem("token") !== ""
-    ) {
+    if (localStorage.getItem("token")) {
       setToken(true);
       setLoginPopup(false);
     } else {
@@ -86,6 +85,21 @@ export function Header() {
     };
   }, []);
 
+  function LogoutUser() {
+    setLogoutPopup(true);
+  }
+  function LogoutAction() {
+    UserLogout(localStorage.getItem("token"))
+      .then((response) => {
+        if (response.data.success) {
+          alert(response.data.message);
+          localStorage.removeItem("token");
+          setLogoutPopup(false);
+        }
+        console.log(response);
+      })
+      .catch((e) => console.log("logout" + e));
+  }
   function showPosition(position) {
     reverseMap(position.coords.latitude, position.coords.longitude);
     displayLocation(position.coords.latitude, position.coords.longitude);
@@ -168,7 +182,7 @@ export function Header() {
                 <Nav.Link
                   href="#home"
                   className={styles.mobileMenuLink}
-                  onClick={() => (token ? null : setLoginPopup(true))}
+                  onClick={() => (token ? LogoutUser() : setLoginPopup(true))}
                 >
                   {token ? "Logout" : "Login"}
                 </Nav.Link>
@@ -188,6 +202,11 @@ export function Header() {
             <CartAndOffer
               show={cartandOfferPopup}
               onHide={() => setCartAndOfferPopup(false)}
+            />
+            <Logout
+              show={logoutpopup}
+              yesaction={() => LogoutAction()}
+              noaction={() => setLogoutPopup(false)}
             />
           </Container>
         </Navbar>
@@ -238,7 +257,9 @@ export function Header() {
               <PrimaryButton
                 title={token ? "Logout" : "Login"}
                 className={styles.headerLoginBtn}
-                clickHandler={() => (token ? false : setLoginPopup(true))}
+                clickHandler={() =>
+                  token ? LogoutUser() : setLoginPopup(true)
+                }
               />
             </Navbar.Collapse>
           </Container>
@@ -314,6 +335,11 @@ export function Header() {
             <CartAndOffer
               show={cartandOfferPopup}
               onHide={() => setCartAndOfferPopup(false)}
+            />
+            <Logout
+              show={logoutpopup}
+              yesaction={() => LogoutAction()}
+              noaction={() => setLogoutPopup(false)}
             />
           </Container>
           <div
