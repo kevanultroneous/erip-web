@@ -5,8 +5,10 @@ export const MatchCity = (cityData, currentCity) => {
             currentCity.replace(/\s/g, "").toLowerCase()
         ) {
             alert("yes we are available in" + currentCity);
+            return true
         } else {
             alert("we are not availble in other location");
+            return false
         }
     }
 };

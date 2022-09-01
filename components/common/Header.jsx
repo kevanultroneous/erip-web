@@ -165,15 +165,13 @@ export function Header() {
             </div>
             <Navbar.Collapse id="basic-navbar-nav" ref={menuCollapse}>
               <Nav className="me-auto">
-                {!token && (
-                  <Nav.Link
-                    href="#home"
-                    className={styles.mobileMenuLink}
-                    onClick={() => setLoginPopup(true)}
-                  >
-                    Login
-                  </Nav.Link>
-                )}
+                <Nav.Link
+                  href="#home"
+                  className={styles.mobileMenuLink}
+                  onClick={() => (token ? null : setLoginPopup(true))}
+                >
+                  {token ? "Logout" : "Login"}
+                </Nav.Link>
 
                 <Nav.Link href="#link" className={styles.mobileMenuLink}>
                   My Bookings
@@ -236,13 +234,12 @@ export function Header() {
                 className={styles.navHeaderCart}
                 onClick={() => setCartAndOfferPopup(true)}
               />
-              {!token && (
-                <PrimaryButton
-                  title="Login"
-                  className={styles.headerLoginBtn}
-                  clickHandler={() => setLoginPopup(true)}
-                />
-              )}
+
+              <PrimaryButton
+                title={token ? "Logout" : "Login"}
+                className={styles.headerLoginBtn}
+                clickHandler={() => (token ? false : setLoginPopup(true))}
+              />
             </Navbar.Collapse>
           </Container>
           <Container fluid className="navBarBottomHeader">

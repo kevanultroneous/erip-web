@@ -10,10 +10,14 @@ import Testimonials from "@/components/common/Testimonials";
 import { TestimonialData } from "utils/data";
 import Footer from "@/components/common/Footer";
 import styles from "@/styles/components/IssuePage/issuepage.module.css";
+import { useRouter } from "next/router";
 
 function IssuePage({ data }) {
+  const router = useRouter()
   return (
     <>
+      {console.log(router.query.issue)}
+
       <Header />
       <SelectDeviceHero
         headClass={styles.selectDeviceHero}

@@ -19,12 +19,12 @@ import { enddate, getDatesInRange, startdate } from "utils/calenderPackage";
 import { calenderslidersettings } from "utils/sliderSettings";
 import { StatusProcess } from "./StatusProcess";
 import NavigationHandler from "./NavigationHandler";
-import { TimeSloatAPI } from "pages/api/api";
-import { TimeSloatOver } from "utils/utilsfunctions";
+import { CityDetactionAPI, TimeSloatAPI } from "pages/api/api";
+import { MatchCity, TimeSloatOver } from "utils/utilsfunctions";
 
 export default function CheckoutPopup({ show, onHide }) {
   const [selectedTime, setSelectedTime] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(0);
   const [showDateError, setShowDateError] = useState(false);
   const [showTimeError, setShowTimeError] = useState(false);
   const [processStatus, setProcessStatus] = useState([0]);
@@ -41,9 +41,11 @@ export default function CheckoutPopup({ show, onHide }) {
   const [LocationInputError, setLocationError] = useState(0);
   const [timesloatsata, setTimeSloatData] = useState([]);
   const [addressdata, setAddressData] = useState({});
-
+  const [currentCity, setCurrentCity] = useState("");
   const [mobileView, setMobileView] = useState(false);
   const [completedSloat, setCompletedSloat] = useState([]);
+  const [cityData, setCityData] = useState([]);
+  const [locationcityError, setLocationcityError] = useState(true);
 
   const TimeIsOver = (timesloatsata, timesofsloats) => {
     let overdata = [];
@@ -123,11 +125,13 @@ export default function CheckoutPopup({ show, onHide }) {
   function showPosition(position) {
     setCurrentLocation(position.coords);
     reverseMap(position.coords.latitude, position.coords.longitude);
+    displayLocation(position.coords.latitude, position.coords.longitude);
   }
 
   function reverseMap(lat, lng) {
     var latlng = new google.maps.LatLng(lat, lng);
     var geocoder = (geocoder = new google.maps.Geocoder());
+
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         // results.map((v) => console.log(v));
@@ -146,6 +150,7 @@ export default function CheckoutPopup({ show, onHide }) {
         var longitude = results[0].geometry.location.lng();
 
         setCurrentLocation({ latitude, longitude });
+        displayLocation(latitude, longitude);
       }
     });
   }
@@ -188,10 +193,45 @@ export default function CheckoutPopup({ show, onHide }) {
       setSelectedAddress(place.formatted_address);
     }
   };
+  function displayLocation(latitude, longitude) {
+    var geocoder;
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(latitude, longitude);
+    var count, country, state, city;
+    geocoder.geocode({ latLng: latlng }, function (results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        if (results[0]) {
+          var add = results[0].formatted_address;
+          var value = add.split(",");
+
+          count = value.length;
+          country = value[count - 1];
+          state = value[count - 2];
+          city = value[count - 3];
+          setCurrentCity(city);
+        } else {
+          alert("address not found");
+        }
+      } else {
+        alert("Geocoder failed due to: " + status);
+      }
+    });
+  }
+  useEffect(() => {
+    CityDetactionAPI()
+      .then((r) => setCityData(r.data.data))
+      .catch((e) => console.log(e));
+
+    if (MatchCity(cityData, currentCity)) {
+    } else {
+      setSelectedAddress("");
+    }
+  }, [currentCity]);
   const timeselectedHandler = (index) => {
     setShowTimeError(false);
     setSelectedTime(index);
   };
+
   return (
     <Modal
       show={show}
@@ -375,6 +415,7 @@ export default function CheckoutPopup({ show, onHide }) {
             </Col>
           </Row>
         ) : //address & location popup 1
+
         !(selectedAddress === "" || selectedAddress === null) &&
           secondProcessShow &&
           confirmLocationSession ? (
@@ -389,19 +430,6 @@ export default function CheckoutPopup({ show, onHide }) {
                 unique
               />
             </div>
-            {/* <Col xs={2} md={2} lg={2} xl={2}>
-              <BiArrowBack
-                className={styles.LocationBackArrow}
-                onClick={() => {
-                  setSecondProcessShow(true);
-                  setSelectedAddress("");
-                }}
-              />
-            </Col>
-            <Col xs={8} md={8} lg={8} xl={8}>
-              <h4 className={styles.LocationText}>Confirm Location</h4>
-            </Col> */}
-
             <Col
               xs={12}
               md={6}
