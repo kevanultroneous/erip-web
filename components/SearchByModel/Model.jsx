@@ -19,7 +19,7 @@ function Models({ heading, modelsArray, overlayHandling, clickHandler }) {
                 onClick={() => clickHandler(models.model_id)}
               >
                 <div className={styles.categoryBox}>
-                  <div>
+                  <div className={styles.modelIcons}>
                     <Image
                       src={models.model_image_url}
                       alt={models.model_slug_01}

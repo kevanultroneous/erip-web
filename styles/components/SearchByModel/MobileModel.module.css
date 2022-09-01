@@ -1,12 +1,11 @@
 .modelContainer {
   position: absolute;
-  /* height: 100vh; */
   width: 100vw;
-  top: 0;
+  top: -70%;
   bottom: 0;
   left: 0;
   right: 0;
-  transform: translate(-4%, -70%);
+  transform: translate(-4%, 0%);
   background: rgba(0, 0, 0, 0.45);
   z-index: 999999999;
 }
@@ -14,9 +13,12 @@
 .mobileDataContainer {
   padding: 1rem;
   position: absolute;
+  height: 100vh;
   top: 80px;
   left: 0;
   right: 0;
+  bottom: 0;
+  overflow-y: auto;
   border-radius: 15px;
   z-index: 999;
   background-color: #fff;
@@ -33,6 +35,10 @@
 
 .categoryContainer {
   padding: 0;
+}
+
+.modelIcons {
+  padding: 1.5rem;
 }
 
 .categoryBox {

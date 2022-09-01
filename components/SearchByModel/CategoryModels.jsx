@@ -24,7 +24,7 @@ function CategoryModels({
                 onClick={() => clickHandler(model.category_id)}
               >
                 <div className={styles.categoryBox}>
-                  <div>
+                  <div className={styles.modelIcons}>
                     <Image
                       src={model.category_icon_url}
                       alt={model.category_icon}

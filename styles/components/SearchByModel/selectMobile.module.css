@@ -15,8 +15,15 @@
 
 .selectDrop p {
   margin: 0;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .selectDropIcons {
   color: #0e62cb;
+}
+
+.disabledClick {
+  color: #6c757d;
+  opacity: 0.7;
 }

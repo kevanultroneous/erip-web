@@ -10,14 +10,16 @@ import Testimonials from "@/components/common/Testimonials";
 import { TestimonialData } from "utils/data";
 import Footer from "@/components/common/Footer";
 import styles from "@/styles/components/IssuePage/issuepage.module.css";
+
 import { useRouter } from "next/router";
+
+import Layout from "@/components/common/Layout";
 
 function IssuePage({ data }) {
   const router = useRouter()
+  { console.log(router.query.issue) }
   return (
-    <>
-      {console.log(router.query.issue)}
-
+    <Layout title={"Issue Page"}>
       <Header />
       <SelectDeviceHero
         headClass={styles.selectDeviceHero}
@@ -26,7 +28,8 @@ function IssuePage({ data }) {
       <WhyErip />
       <Testimonials data={data.hometestimonial} />
       <Footer />
-    </>
+    </Layout>
+
   );
 }
 
