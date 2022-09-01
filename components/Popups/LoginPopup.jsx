@@ -272,13 +272,14 @@ export default function LoginPopup({ show, onHide }) {
 
             {/* center image */}
             <Col xl={12} lg={12} xs={12} md={12} className={styles.CenterImage}>
-              <Image
-                src="/assets/images/login-image.png"
-                alt={"login-image"}
-                loading="lazy"
-                fluid
-                className={styles.PopupMobileImage}
-              />
+              <div className={styles.PopupLoginImageWrraper}>
+                <Image
+                  src="/assets/images/login-image.png"
+                  alt={"login-image"}
+                  loading="lazy"
+                  className={`${styles.PopupMobileImage} ${styles.PopupLoginImage}`}
+                />
+              </div>
             </Col>
             {/* Number Input */}
             <Col xl={12} lg={12} xs={12} md={12}>

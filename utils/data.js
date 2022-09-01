@@ -13,6 +13,122 @@ export const process = [
   "Select Address",
   "Make Payment",
 ];
+export const timesofsloats = [
+  {
+    time: "7:00 AM TO 8:00 AM",
+    over: 8,
+    seen: "AM"
+  }, {
+    time: "8:00 AM TO 9:00 AM",
+    over: 9,
+    seen: "AM"
+  }, {
+    time: "9:00 AM TO 10:00 AM",
+    over: 10,
+    seen: "AM"
+  }, {
+    time: "10:00 AM TO 11:00 AM",
+    over: 11,
+    seen: "AM"
+  }, {
+    time: "11:00 AM TO 12:00 PM",
+    over: 12,
+    seen: "PM"
+  }, {
+    time: "12:00 PM TO 1:00 PM",
+    over: 13,
+    seen: "PM"
+  }, {
+    time: "1:00 PM TO 2:00 PM",
+    over: 14,
+    seen: "PM"
+  }, {
+    time: "2:00 PM TO 3:00 PM",
+    over: 15,
+    seen: "PM"
+  },
+  {
+    time: "3:00 PM TO 4:00 PM",
+    over: 16,
+    seen: "PM"
+  }, {
+    time: "4:00 PM TO 5:00 PM",
+    over: 17,
+    seen: "PM"
+  }, {
+    time: "5:00 PM TO 6:00 PM",
+    over: 18,
+    seen: "PM"
+  }, {
+    time: "6:00 PM TO 7:00 PM",
+    over: 19,
+    seen: "PM"
+  }, {
+    time: "7:00 PM TO 8:00 PM",
+    over: 20,
+    seen: "PM"
+  },
+  {
+    time: "8:00 PM TO 9:00 PM",
+    over: 21,
+    seen: "PM"
+  },
+  {
+    time: "9:00 PM TO 10:00 PM",
+    over: 22,
+    seen: "PM"
+  },
+  {
+    time: "10:00 PM TO 11:00 PM",
+    over: 23,
+    seen: "PM"
+  },
+  {
+    time: "11:00 PM TO 12:00 AM",
+    over: 24,
+    seen: "AM"
+  },
+  {
+    time: "12:00 AM TO 1:00 AM",
+    over: 1,
+    seen: "AM"
+  },
+  {
+    time: "1:00 AM TO 2:00 AM",
+    over: 2,
+    seen: "AM"
+  },
+
+  {
+    time: "2:00 AM TO 3:00 AM",
+    over: 3,
+    seen: "AM"
+  },
+  {
+    time:
+      "3:00 AM TO 4:00 AM",
+    over: 4,
+    seen: "AM"
+  },
+  {
+    time:
+      "4:00 AM TO 5:00 AM",
+    over: 5,
+    seen: "AM"
+  },
+  {
+    time:
+      "5:00 AM TO 6:00 AM",
+    over: 6,
+    seen: "AM"
+  },
+  {
+    time:
+      "6:00 AM TO 7:00 AM",
+    over: 7,
+    seen: "AM"
+  },
+]
 
 export const staticcalender = [
   {

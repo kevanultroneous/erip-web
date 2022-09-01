@@ -32,7 +32,6 @@ export const FinalLoginAPI = (contact, otp) => {
 }
 
 //  Home page 
-
 export const CityDetactionAPI = () => {
   return axios.get(`${API_URL}api/v1/cities`)
 }
@@ -51,9 +50,19 @@ export const PincodeByCity = (cityid) => {
 export const AddressTypes = () => {
   return axios.get(`http://43.204.87.153/api/v1/address_types`)
 }
+
 // logout
 export const UserLogout = (token) => {
   return axios.post(`http://43.204.87.153/api/v1/users/logout`, {
     headers: { Authorization: `Bearer ${token}` }
+  })
+}
+// 
+export const CouponsByCC = (city = 1, category = 1) => {
+  return axios.get("http://43.204.87.153/api/v1/cms/coupons_by_cc?city=1&category=1", {
+    params: {
+      city: city,
+      category: category
+    },
   })
 }
