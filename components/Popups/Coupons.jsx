@@ -1,13 +1,14 @@
 import { Col, Image, Row } from "react-bootstrap";
 import styles from "@/styles/components/Popups/Coupons.module.css";
 
-export default function Coupons({ offer, clickHandler }) {
+export default function Coupons({ offer, clickHandler, title }) {
   return (
     <div className={styles.CouponsRow}>
       <Row>
         <Col xs={9} md={9} lg={9} xl={9}>
           <p className={styles.CouponsTitle}>
-            TRYNEW <span className={styles.AppliedText}>applied</span>
+            {title}
+            <span className={styles.AppliedText}>applied</span>
           </p>
           <p className={styles.CouponsOffer}>{offer}</p>
         </Col>

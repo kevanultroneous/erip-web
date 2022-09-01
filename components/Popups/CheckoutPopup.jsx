@@ -5,7 +5,13 @@ import Slider from "react-slick";
 import PrimaryButton from "../common/PrimaryButton";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { daysforcal, GMAP_API, monthsforcal, statictimelist } from "utils/data";
+import {
+  daysforcal,
+  GMAP_API,
+  monthsforcal,
+  statictimelist,
+  timesofsloats,
+} from "utils/data";
 import { FiSearch } from "react-icons/fi";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
 import { Gmaps, Marker } from "react-gmaps";
@@ -13,6 +19,8 @@ import { enddate, getDatesInRange, startdate } from "utils/calenderPackage";
 import { calenderslidersettings } from "utils/sliderSettings";
 import { StatusProcess } from "./StatusProcess";
 import NavigationHandler from "./NavigationHandler";
+import { TimeSloatAPI } from "pages/api/api";
+import { TimeSloatOver } from "utils/utilsfunctions";
 
 export default function CheckoutPopup({ show, onHide }) {
   const [selectedTime, setSelectedTime] = useState(null);
@@ -31,15 +39,52 @@ export default function CheckoutPopup({ show, onHide }) {
   const [nameInput, setNameInput] = useState("");
   const [changeModalSize, setChangeModalSize] = useState(true);
   const [LocationInputError, setLocationError] = useState(0);
-
+  const [timesloatsata, setTimeSloatData] = useState([]);
   const [addressdata, setAddressData] = useState({});
+
+  const [mobileView, setMobileView] = useState(false);
+  const [completedSloat, setCompletedSloat] = useState([]);
+
+  const TimeIsOver = (timesloatsata, timesofsloats) => {
+    let overdata = [];
+    let newDate = new Date();
+    let hours = newDate.getHours();
+
+    for (let t = 0; t < timesloatsata.length; t++) {
+      for (let l = 0; l < timesofsloats.length; l++) {
+        if (timesloatsata[t].title == timesofsloats[l].time) {
+          if (hours > timesofsloats[l].over) {
+            overdata.push(timesloatsata[t].title);
+          }
+        }
+      }
+    }
+    return overdata;
+  };
+
+  useEffect(() => {
+    window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
+    TimeSloatAPI()
+      .then((time_sloat) => {
+        if (time_sloat.data.success) {
+          setTimeSloatData(time_sloat.data.data);
+        } else {
+          console.log("time sloat says" + time_sloat.data.message);
+        }
+      })
+      .catch((e) => console.log("time sloat api" + e));
+  }, []);
+
+  useEffect(
+    () => setCompletedSloat(TimeIsOver(timesloatsata, timesofsloats)),
+    [timesloatsata]
+  );
 
   useEffect(() => {
     getLatandLongByAddress(selectedAddress);
     setConfirmLocationSession(true);
   }, [selectedAddress]);
 
-  useEffect(() => {});
   const ConfirmProcessed = () => {
     selectedTime === null ? setShowTimeError(true) : setShowTimeError(false);
     selectedDate === null ? setShowDateError(true) : setShowDateError(false);
@@ -138,11 +183,14 @@ export default function CheckoutPopup({ show, onHide }) {
       alert("process saved");
     }
   };
-
   const OnPlaceSelect = async (place) => {
     if (!(place == undefined)) {
       setSelectedAddress(place.formatted_address);
     }
+  };
+  const timeselectedHandler = (index) => {
+    setShowTimeError(false);
+    setSelectedTime(index);
   };
   return (
     <Modal
@@ -209,7 +257,7 @@ export default function CheckoutPopup({ show, onHide }) {
             <Col xs={12} md={12} lg={12} xl={12}>
               <h5 className={styles.SubtitleText}>Select Time</h5>
               <Row className={styles.SelectionTimeRow}>
-                {statictimelist.map((v, i) => (
+                {timesloatsata.map((v, i) => (
                   <Col
                     xs={6}
                     xl={4}
@@ -217,15 +265,30 @@ export default function CheckoutPopup({ show, onHide }) {
                     className={`${styles.TimeCardCol}`}
                   >
                     <div
-                      onClick={() => {
-                        setShowTimeError(false);
-                        setSelectedTime(i);
-                      }}
+                      onClick={() =>
+                        !new Date().getDate() == selectedDate &&
+                        completedSloat.includes(v.title)
+                          ? null
+                          : timeselectedHandler(i)
+                      }
                       className={`${styles.TimeCard} ${
                         selectedTime === i && styles.SelectedCard
                       }`}
+                      style={
+                        !new Date().getDate() == selectedDate &&
+                        completedSloat.includes(v.title)
+                          ? {
+                              backgroundColor: "grey",
+                              cursor: "not-allowed",
+                              opacity: "0.8",
+                              userSelect: "none",
+                            }
+                          : null
+                      }
                     >
-                      <p className={styles.TimeText}>{v}</p>
+                      <p className={styles.TimeText}>
+                        {v.title.replace("TO", "-")}
+                      </p>
                     </div>
                   </Col>
                 ))}
@@ -316,14 +379,16 @@ export default function CheckoutPopup({ show, onHide }) {
           secondProcessShow &&
           confirmLocationSession ? (
           <Row className={styles.ColReverse}>
-            <NavigationHandler
-              navtitle={"Confirm Location"}
-              backhandler={() => {
-                setSecondProcessShow(true);
-                setSelectedAddress("");
-              }}
-              unique
-            />
+            <div className={styles.HideNavigationBar}>
+              <NavigationHandler
+                navtitle={"Confirm Location"}
+                backhandler={() => {
+                  setSecondProcessShow(true);
+                  setSelectedAddress("");
+                }}
+                unique
+              />
+            </div>
             {/* <Col xs={2} md={2} lg={2} xl={2}>
               <BiArrowBack
                 className={styles.LocationBackArrow}
@@ -366,7 +431,11 @@ export default function CheckoutPopup({ show, onHide }) {
                   onClick={() => getLocation()}
                 >
                   <Image
-                    src="/assets/icons/dark-icon-location.svg"
+                    src={
+                      mobileView
+                        ? "/assets/icons/blue-location.svg"
+                        : "/assets/icons/dark-icon-location.svg"
+                    }
                     alt="location-icon"
                     loading="lazy"
                   />
@@ -374,6 +443,7 @@ export default function CheckoutPopup({ show, onHide }) {
                     Use my current location
                   </span>
                 </div>
+
                 <div className={styles.ConfirmButtonDiv}>
                   <PrimaryButton
                     clickHandler={() => {
@@ -399,7 +469,7 @@ export default function CheckoutPopup({ show, onHide }) {
               className={`${styles.ConfirmLocationSpace}`}
             >
               <Gmaps
-                height={"300px"}
+                height={mobileView ? "500px" : "300px"}
                 lat={currentLocation.latitude}
                 lng={currentLocation.longitude}
                 zoom={12}

@@ -231,6 +231,13 @@
 /*  */
 @media (min-width: 320px) and (max-width: 450px) {
 
+  .HideNavigationBar {
+    display: none;
+  }
+
+  .ConfirmLocationSpace {
+    padding-top: 0rem;
+  }
 
   .CalenderWrraper {
     margin-top: 1rem;
@@ -286,6 +293,28 @@
 
   .FinalGmap {
     display: none;
+  }
+
+  .DetectDirectLabel {
+    font-weight: 700;
+    font-size: 14px;
+    color: #0E62CB;
+  }
+
+  .CurrentLocationDiv {
+    padding: 0.2rem 0.6rem;
+    border: 2px solid #0E62CB;
+    border-radius: 5px;
+    width: fit-content;
+    position: fixed;
+    bottom: 11rem;
+    z-index: 1;
+    left: 6rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .ConfirmButtonDiv {
+    margin-top: 0%;
   }
 }
 

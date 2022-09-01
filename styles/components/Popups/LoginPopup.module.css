@@ -19,7 +19,7 @@
 }
 
 .InputDefaultLabel {
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.6rem;
   padding-right: 0.5rem;
   font-weight: 600;
   border-bottom: 1px solid #000000;
@@ -63,6 +63,15 @@
 
 .RegModalText {
   font-size: 20px;
+}
+
+.PopupLoginImageWrraper {
+  height: 20rem;
+}
+
+.PopupLoginImage {
+  width: 100%;
+  height: inherit;
 }
 
 @media (min-width: 320px) and (max-width: 450px) {

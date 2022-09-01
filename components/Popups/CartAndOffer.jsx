@@ -8,10 +8,15 @@ import Coupons from "./Coupons";
 import { useEffect, useState } from "react";
 import CouponsCard from "./CouponsCard";
 import CheckoutPopup from "./CheckoutPopup";
+import { CouponsByCC } from "pages/api/api";
+
 export default function CartAndOffer({ show, onHide }) {
   const [active, setActive] = useState(0);
   const [total, setTotal] = useState(0);
   const [showCheckout, setShowCheckout] = useState(false);
+  const [couponsdata, setCouponsdata] = useState([]);
+  const [selectedCoupons, setSelectedCoupons] = useState({});
+  const [couponShow, setCouponShow] = useState(false);
   const cartlist = [
     {
       name: "Lorem Ipsum ABC issues X",
@@ -34,6 +39,14 @@ export default function CartAndOffer({ show, onHide }) {
       ans = ans + cartlist[i].price;
     }
     setTotal(ans);
+
+    CouponsByCC()
+      .then((response) => {
+        if (response.data.success) {
+          setCouponsdata(response.data.data);
+        }
+      })
+      .catch((e) => console.log("coupons error" + e));
   }, []);
 
   return (
@@ -103,10 +116,20 @@ export default function CartAndOffer({ show, onHide }) {
                 xl={12}
                 className={styles.CouponsCol}
               >
-                <Coupons
-                  offer={"-- ₹100 (25% OFF)"}
-                  clickHandler={() => alert("25% off")}
-                />
+                {couponShow && (
+                  <Coupons
+                    title={selectedCoupons.coupon_title}
+                    offer={`-- ₹${selectedCoupons.coupon_amount} ${
+                      selectedCoupons.coupon_is_percentage
+                        ? "(" + selectedCoupons.coupon_percentage + "OFF)"
+                        : ""
+                    }`}
+                    clickHandler={() => {
+                      setCouponShow(false);
+                      setSelectedCoupons({});
+                    }}
+                  />
+                )}
               </Col>
             </Row>
 
@@ -119,7 +142,9 @@ export default function CartAndOffer({ show, onHide }) {
               </Col>
               <Col xs={6} md={6} lg={6} xl={6} className={styles.TextRight}>
                 <lable className={styles.CartAndOfferSubMainTitleUni}>
-                  ₹100
+                  {selectedCoupons.coupon_amount
+                    ? "₹" + selectedCoupons.coupon_amount
+                    : "none"}
                 </lable>
               </Col>
               <Col xs={6} md={6} lg={6} xl={6}>
@@ -177,9 +202,17 @@ export default function CartAndOffer({ show, onHide }) {
                 xl={12}
                 className={styles.CouponsView}
               >
-                <CouponsCard />
-                <CouponsCard />
-                <CouponsCard />
+                {couponsdata.map((v, i) => (
+                  <CouponsCard
+                    code={v.coupon_code}
+                    detail={v.coupon_title}
+                    applyaction={() => {
+                      setCouponShow(true);
+                      setSelectedCoupons(v);
+                      setActive(0);
+                    }}
+                  />
+                ))}
               </Col>
             </Row>
           </Modal.Body>
