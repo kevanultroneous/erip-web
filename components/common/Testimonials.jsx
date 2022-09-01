@@ -6,7 +6,8 @@ import Slider from "react-slick";
 import { TestimonialData } from "utils/data";
 import styles from "@/styles/components/common/Testimonial.module.css";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-export default function Testimonials({ data = TestimonialData }) {
+import { useEffect, useState } from "react";
+export default function Testimonials({ data = TestimonialData, limit }) {
   const settings = {
     dots: false,
     infinite: true,
@@ -45,7 +46,11 @@ export default function Testimonials({ data = TestimonialData }) {
       },
     ],
   };
+  const [mobileView, setMobileView] = useState(true);
 
+  useEffect(() => {
+    window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
+  }, []);
   return (
     <Container>
       <div className={styles.TestimonialHeadingWrraper}>

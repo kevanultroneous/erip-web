@@ -124,7 +124,10 @@ export default function CartAndOffer({ show, onHide }) {
                         ? "(" + selectedCoupons.coupon_percentage + "OFF)"
                         : ""
                     }`}
-                    clickHandler={() => setCouponShow(false)}
+                    clickHandler={() => {
+                      setCouponShow(false);
+                      setSelectedCoupons({});
+                    }}
                   />
                 )}
               </Col>
@@ -139,7 +142,9 @@ export default function CartAndOffer({ show, onHide }) {
               </Col>
               <Col xs={6} md={6} lg={6} xl={6} className={styles.TextRight}>
                 <lable className={styles.CartAndOfferSubMainTitleUni}>
-                  ₹{selectedCoupons.coupon_amount}
+                  {selectedCoupons.coupon_amount
+                    ? "₹" + selectedCoupons.coupon_amount
+                    : "none"}
                 </lable>
               </Col>
               <Col xs={6} md={6} lg={6} xl={6}>

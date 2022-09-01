@@ -24,10 +24,21 @@ export function Header() {
   const [currentCity, setCurrentCity] = useState("");
   const [selectedAddress, setSelectedAddress] = useState("");
   const [cityData, setCityData] = useState([]);
-
+  const [token, setToken] = useState(false);
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
   }, []);
+  useEffect(() => {
+    if (
+      localStorage.getItem("token") !== null ||
+      localStorage.getItem("token") !== ""
+    ) {
+      setToken(true);
+      setLoginPopup(false);
+    } else {
+      setToken(false);
+    }
+  });
 
   useEffect(() => {
     setLocationPopupShow(false);
@@ -154,13 +165,16 @@ export function Header() {
             </div>
             <Navbar.Collapse id="basic-navbar-nav" ref={menuCollapse}>
               <Nav className="me-auto">
-                <Nav.Link
-                  href="#home"
-                  className={styles.mobileMenuLink}
-                  onClick={() => setLoginPopup(true)}
-                >
-                  Login
-                </Nav.Link>
+                {!token && (
+                  <Nav.Link
+                    href="#home"
+                    className={styles.mobileMenuLink}
+                    onClick={() => setLoginPopup(true)}
+                  >
+                    Login
+                  </Nav.Link>
+                )}
+
                 <Nav.Link href="#link" className={styles.mobileMenuLink}>
                   My Bookings
                 </Nav.Link>
@@ -222,11 +236,13 @@ export function Header() {
                 className={styles.navHeaderCart}
                 onClick={() => setCartAndOfferPopup(true)}
               />
-              <PrimaryButton
-                title="Login"
-                className={styles.headerLoginBtn}
-                clickHandler={() => setLoginPopup(true)}
-              />
+              {!token && (
+                <PrimaryButton
+                  title="Login"
+                  className={styles.headerLoginBtn}
+                  clickHandler={() => setLoginPopup(true)}
+                />
+              )}
             </Navbar.Collapse>
           </Container>
           <Container fluid className="navBarBottomHeader">

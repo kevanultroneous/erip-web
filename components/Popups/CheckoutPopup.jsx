@@ -49,8 +49,6 @@ export default function CheckoutPopup({ show, onHide }) {
     let overdata = [];
     let newDate = new Date();
     let hours = newDate.getHours();
-    let minutes = newDate.getMinutes();
-    let seconds = newDate.getSeconds();
 
     for (let t = 0; t < timesloatsata.length; t++) {
       for (let l = 0; l < timesofsloats.length; l++) {

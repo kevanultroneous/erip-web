@@ -42,7 +42,7 @@ export default function Home({ data }) {
         imgsrc={"/assets/images/offer-big-banner.png"}
         imgalt={"offer-big-banner"}
       />
-      <Testimonials data={data.hometestimonial.data} />
+      <Testimonials data={data.hometestimonial.data} limit={data.hometestimonial.data_count} />
       <NewsAndUpdate data={data.blogdata.data} />
       {mobileView ? <Footer /> : <MobileFooter />}
     </Layout>

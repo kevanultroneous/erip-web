@@ -162,7 +162,7 @@ export default function LoginPopup({ show, onHide }) {
           setOtp("");
           setContactNumber("");
           setCheckBoxStatus(false);
-          show = false;
+          localStorage.setItem("token", login_user.data.authorisation.token);
         } else {
           alert(login_user.data.message);
         }
