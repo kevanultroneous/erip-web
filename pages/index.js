@@ -26,10 +26,9 @@ import {
 
 export default function Home({ data }) {
   const [mobileView, setMobileView] = useState(true);
-  const location = geoLocationDetect({ getAddressByLocation: false, getCityByLatlngbool: false })
+
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
-    console.log(location)
   }, []);
   return (
     <Layout title={"Home"}>
