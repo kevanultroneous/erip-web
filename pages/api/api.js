@@ -41,25 +41,25 @@ export const TimeSloatAPI = () => {
   return axios.get(`${API_URL}api/v1/timeslots`)
 }
 export const PincodeByCity = (cityid) => {
-  return axios.get(`http://43.204.87.153/api/v1/pincodes_by_city`, {
+  return axios.get(`${API_URL}api/v1/pincodes_by_city`, {
     params: {
       city: cityid,
     },
   })
 }
 export const AddressTypes = () => {
-  return axios.get(`http://43.204.87.153/api/v1/address_types`)
+  return axios.get(`${API_URL}api/v1/address_types`)
 }
 
 // logout
 export const UserLogout = (token) => {
-  return axios.get(`http://43.204.87.153/api/v1/users/logout`, {
+  return axios.get(`${API_URL}api/v1/users/logout`, {
     headers: { Authorization: `Bearer ${token}` }
   })
 }
 // 
 export const CouponsByCC = (city = 1, category = 1) => {
-  return axios.get("http://43.204.87.153/api/v1/cms/coupons_by_cc?city=1&category=1", {
+  return axios.get(`${API_URL}api/v1/cms/coupons_by_cc?city=1&category=1`, {
     params: {
       city: city,
       category: category
@@ -69,12 +69,12 @@ export const CouponsByCC = (city = 1, category = 1) => {
 // addresssave
 
 export const MyAddress = (token) => {
-  return axios.get("http://43.204.87.153/api/v1/users/my_addresses", {
+  return axios.get(`${API_URL}api/v1/users/my_addresses`, {
     headers: { Authorization: `Bearer ${token}` }
   })
 }
 export const SaveAddress = (token, type, no, add1, add2, landmark, pincode) => {
-  return axios.post("http://43.204.87.153/api/v1/users/my_addresses", {
+  return axios.post(`${API_URL}api/v1/users/my_addresses`, {
     "addressType": "H",
     "addressNo": "9039-jdu",
     "addressOne": "kdksj jsdhhjdhhsjdf",
@@ -84,4 +84,17 @@ export const SaveAddress = (token, type, no, add1, add2, landmark, pincode) => {
   }, {
     headers: { Authorization: `Bearer ${token}` }
   })
+}
+// cart
+export const MyCart = (token, city) => {
+  return axios.get(`${API_URL}api/v1/users/my_cart`, {
+    params: {
+      city: city
+    }
+  }, {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+}
+export const AddToCart = (token, issueId) => {
+  return axios.post(`${API_URL}api/v1/users/my_cart`, { issueId: issueId }, { headers: { Authorization: `Bearer ${token}` } })
 }
