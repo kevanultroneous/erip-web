@@ -3,8 +3,14 @@ import Link from "next/link";
 import { Col, Row } from "react-bootstrap";
 import PrimaryButton from "../common/PrimaryButton";
 import styles from "@/styles/components/IssuePage/IssueTotalBill.module.css";
+import { useEffect, useState } from "react";
 
-function IssueTotalBill() {
+function IssueTotalBill({ totalPrice }) {
+  const [mobileView, setMobileView] = useState(true);
+
+  useEffect(() => {
+    window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
+  }, []);
   return (
     <div className={styles.totalBillContainer}>
       <Row className={styles.totalBillRow}>
@@ -31,8 +37,13 @@ function IssueTotalBill() {
         </Col>
         <Col xl={4}>
           <div>
-            <p>Total: ₹ 1000</p>
-            <PrimaryButton title={`Book Now`} variant="primary" />
+            <p>Total: ₹ {totalPrice}</p>
+            <PrimaryButton
+              title={
+                mobileView ? `Book Now` : `Total: ₹${totalPrice} - Book Now`
+              }
+              variant="primary"
+            />
           </div>
         </Col>
       </Row>

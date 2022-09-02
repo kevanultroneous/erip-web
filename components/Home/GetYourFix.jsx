@@ -13,9 +13,10 @@ export default function GetYourFix({ data = GetYourFixCard }) {
         </div>
         {data.map((value, index) => (
           <Link
+            key={index}
             href={{
               pathname: "issue-page",
-              query: { issue: value.category_title },
+              query: { issue: value.category_id },
             }}
           >
             <Col xl={2} lg={2} xs={4} key={index}>
