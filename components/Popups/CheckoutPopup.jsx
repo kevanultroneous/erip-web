@@ -12,15 +12,23 @@ import {
   statictimelist,
   timesofsloats,
 } from "utils/data";
-import { FiSearch } from "react-icons/fi";
+import { FiEdit2, FiSearch } from "react-icons/fi";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
 import { Gmaps, Marker } from "react-gmaps";
 import { enddate, getDatesInRange, startdate } from "utils/calenderPackage";
 import { calenderslidersettings } from "utils/sliderSettings";
 import { StatusProcess } from "./StatusProcess";
 import NavigationHandler from "./NavigationHandler";
-import { CityDetactionAPI, TimeSloatAPI } from "pages/api/api";
+import {
+  CityDetactionAPI,
+  MyAddress,
+  SaveAddress,
+  TimeSloatAPI,
+} from "pages/api/api";
 import { MatchCity, TimeSloatOver } from "utils/utilsfunctions";
+import { GrEdit } from "react-icons/gr";
+import { MdDelete } from "react-icons/md";
+import { RiAddFill } from "react-icons/ri";
 
 export default function CheckoutPopup({ show, onHide }) {
   const [selectedTime, setSelectedTime] = useState(null);
@@ -46,7 +54,10 @@ export default function CheckoutPopup({ show, onHide }) {
   const [completedSloat, setCompletedSloat] = useState([]);
   const [cityData, setCityData] = useState([]);
   const [locationcityError, setLocationcityError] = useState(true);
-
+  const [selectedAddressStatus, setSelectedAddressStatus] = useState(false);
+  const [myaddress, setMyaddress] = useState([]);
+  const [myselectedaddress, setMyselectedAddress] = useState({});
+  const [deleteShow, setDeleteShow] = useState(false);
   const TimeIsOver = (timesloatsata, timesofsloats) => {
     let overdata = [];
     let newDate = new Date();
@@ -55,7 +66,7 @@ export default function CheckoutPopup({ show, onHide }) {
     for (let t = 0; t < timesloatsata.length; t++) {
       for (let l = 0; l < timesofsloats.length; l++) {
         if (timesloatsata[t].title == timesofsloats[l].time) {
-          if (hours > timesofsloats[l].over) {
+          if (hours >= timesofsloats[l].over) {
             overdata.push(timesloatsata[t].title);
           }
         }
@@ -75,7 +86,21 @@ export default function CheckoutPopup({ show, onHide }) {
         }
       })
       .catch((e) => console.log("time sloat api" + e));
+
+    MyAddress(localStorage.getItem("token"))
+      .then((response) => {
+        if (response.data.success) {
+          setMyaddress(response.data.data);
+        }
+      })
+      .catch((e) => console.log("myaddress fetching " + e));
   }, []);
+
+  useEffect(() => {
+    if (myaddress.length > 0) {
+      setMyselectedAddress({ id: 0, address: myaddress[0].address_line_1 });
+    }
+  }, [myaddress]);
 
   useEffect(
     () => setCompletedSloat(TimeIsOver(timesloatsata, timesofsloats)),
@@ -169,7 +194,17 @@ export default function CheckoutPopup({ show, onHide }) {
   }, [show]);
 
   const [datelist, setDateList] = useState(getDatesInRange(startdate, enddate));
-
+  useEffect(() => {
+    if (selectedAddressStatus) {
+      MyAddress(localStorage.getItem("token"))
+        .then((response) => {
+          if (response.data.success) {
+            setMyaddress(response.data.data);
+          }
+        })
+        .catch((e) => console.log("myaddress fetching " + e));
+    }
+  }, [selectedAddressStatus]);
   //  save and proceed Handle
   const SaveAndProceedHandle = () => {
     if (houseInput.length <= 0) {
@@ -185,7 +220,16 @@ export default function CheckoutPopup({ show, onHide }) {
         landmark: landmarkInput,
         name: nameInput,
       });
-      alert("process saved");
+      SaveAddress(localStorage.getItem("token"))
+        .then((r) => {
+          if (r.data.success) {
+            alert("address saved");
+            setSelectedAddressStatus(true);
+            setProcessStatus(processStatus.concat(1));
+            setFinalLocationStep(false);
+          }
+        })
+        .catch((e) => console.log(e));
     }
   };
   const OnPlaceSelect = async (place) => {
@@ -506,7 +550,7 @@ export default function CheckoutPopup({ show, onHide }) {
             </Col>
           </Row>
         ) : // address & location popup 2
-        secondProcessShow && setFinalLocationStep ? (
+        secondProcessShow && finalLocationStep ? (
           <Row>
             <NavigationHandler backhandler={onHide} navtitle="Checkout" />
             <StatusProcess processStatus={processStatus} />
@@ -627,6 +671,115 @@ export default function CheckoutPopup({ show, onHide }) {
               </Gmaps>
             </Col>
           </Row>
+        ) : secondProcessShow && selectedAddress ? (
+          <>
+            <Modal
+              show={deleteShow}
+              onHide={() => setDeleteShow(false)}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+              className="CartandOfferPopup"
+            >
+              <Modal.Body className="ps-4 pe-3">
+                <NavigationHandler
+                  backhandler={() => setDeleteShow(false)}
+                  navtitle="Delete Address"
+                />
+                <Row className="pt-5">
+                  <Col xs={12} md={12} lg={12} xl={12}>
+                    <p className="text-center pt-5 pb-5">
+                      Are you sure you want to delete this address?
+                    </p>
+                  </Col>
+                  <Col xs={12} md={12} lg={12} xl={12}>
+                    <Row className="pe-5 ps-5 pb-5 pt-5 justify-content-center">
+                      <Col xs={4} md={4} lg={4} xl={4}>
+                        <PrimaryButton
+                          title="No ,go back"
+                          clickHandler={() => setDeleteShow(false)}
+                        />
+                      </Col>
+                      <Col xs={4} md={4} lg={4} xl={4}>
+                        <PrimaryButton
+                          buttonStyle={{
+                            backgroundColor: "#0E62CB",
+                            color: "#fff",
+                          }}
+                          title="Yes,delete it"
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </Modal.Body>
+            </Modal>
+            <NavigationHandler
+              backhandler={() => {
+                setFinalLocationStep(true);
+                setSelectedAddressStatus(false);
+              }}
+              navtitle="Checkout"
+            />
+            <StatusProcess processStatus={processStatus} />
+            <Row className={styles.ConfirmSelectedAddress}>
+              <Col xs={12} md={12} lg={12} xl={12}>
+                {myaddress.map((v, i) => (
+                  <Row className={styles.AddressDiv} key={i}>
+                    <Col
+                      xs={10}
+                      md={10}
+                      lg={10}
+                      xl={10}
+                      className={styles.AddressInput}
+                    >
+                      <input
+                        type="radio"
+                        name={"address"}
+                        onChange={(e) =>
+                          setMyselectedAddress({
+                            id: i,
+                            address: v.address_line_1,
+                          })
+                        }
+                        defaultChecked={i == 0 ? true : false}
+                      />{" "}
+                      <span className={styles.AddressLine}>
+                        {v.address_line_1}
+                      </span>
+                    </Col>
+                    <Col xs={1} md={1} lg={1} xl={1}>
+                      <div className="d-flex justify-content-end">
+                        <FiEdit2
+                          color="#0E62CB"
+                          style={{ marginRight: "1rem" }}
+                        />
+                        <MdDelete
+                          color="red"
+                          onClick={() => setDeleteShow(true)}
+                        />
+                      </div>
+                    </Col>
+                    <hr />
+                  </Row>
+                ))}
+                <div className={styles.AddNewWrraper}>
+                  <p>
+                    <RiAddFill color="#0E62CB" />
+                    Add New Address
+                  </p>
+                </div>
+                <PrimaryButton
+                  buttonStyle={{
+                    width: "100%",
+                    backgroundColor: "#0E62CB",
+                    color: "#fff",
+                  }}
+                  title="Continue with this Address"
+                />
+              </Col>
+            </Row>
+          </>
         ) : null}
       </Modal.Body>
     </Modal>

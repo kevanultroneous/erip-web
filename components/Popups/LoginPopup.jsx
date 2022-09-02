@@ -12,6 +12,7 @@ import {
   SendLoginOtpAPI,
   SendRegistrationOtpAPI,
 } from "pages/api/api";
+import { useRouter } from "next/router";
 export default function LoginPopup({ show, onHide }) {
   /* Note :  3 validation state 
       1.ValidationNumberHideError
@@ -32,7 +33,7 @@ export default function LoginPopup({ show, onHide }) {
   const [CheckboxStatus, setCheckBoxStatus] = useState(false);
   const [mobileView, setMobileView] = useState(true);
   const [regOtpModal, setRegOtpModal] = useState(false);
-
+  const router = useRouter();
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
   }, []);
@@ -163,6 +164,7 @@ export default function LoginPopup({ show, onHide }) {
           setContactNumber("");
           setCheckBoxStatus(false);
           localStorage.setItem("token", login_user.data.authorisation.token);
+          router.reload(window.location.pathname);
         } else {
           alert(login_user.data.message);
         }

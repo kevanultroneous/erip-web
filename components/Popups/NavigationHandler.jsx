@@ -1,4 +1,4 @@
-import { Col } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import styles from "@/styles/components/Popups/NavigationHandler.module.css";
 import { BiArrowBack } from "react-icons/bi";
@@ -9,7 +9,7 @@ export default function NavigationHandler({
   hide = false,
 }) {
   return (
-    <>
+    <Row>
       <Col xs={2} md={2} lg={2} xl={2}>
         <BiArrowBack className={styles.BackArrow} onClick={backhandler} />
       </Col>
@@ -20,6 +20,6 @@ export default function NavigationHandler({
           {navtitle}
         </h4>
       </Col>
-    </>
+    </Row>
   );
 }

@@ -4,7 +4,7 @@ export const MatchCity = (cityData, currentCity) => {
             cityData[k1].loc_city_title.toLowerCase() ==
             currentCity.replace(/\s/g, "").toLowerCase()
         ) {
-            alert("yes we are available in" + currentCity);
+            localStorage.setItem("CITYDATA", { id: cityData.loc_city_id, city: currentCity })
             return true
         } else {
             alert("we are not availble in other location");

@@ -228,6 +228,28 @@
   margin: 0%;
 }
 
+.ConfirmSelectedAddress {
+  padding: 2rem 2rem 0 2rem;
+}
+
+.AddressDiv {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.AddressInput {
+  padding-bottom: 1rem;
+}
+
+.AddressLine {
+  color: #676767;
+}
+
+.AddNewWrraper {
+  padding-top: 2rem;
+  cursor: pointer;
+}
+
 /*  */
 @media (min-width: 320px) and (max-width: 450px) {
 

@@ -66,3 +66,22 @@ export const CouponsByCC = (city = 1, category = 1) => {
     },
   })
 }
+// addresssave
+
+export const MyAddress = (token) => {
+  return axios.get("http://43.204.87.153/api/v1/users/my_addresses", {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+}
+export const SaveAddress = (token, type, no, add1, add2, landmark, pincode) => {
+  return axios.post("http://43.204.87.153/api/v1/users/my_addresses", {
+    "addressType": "H",
+    "addressNo": "9039-jdu",
+    "addressOne": "kdksj jsdhhjdhhsjdf",
+    "addressTwo": "dsdsfdsdsd",
+    "landmark": "ssksdj sdnjk",
+    "pincode": "001"
+  }, {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+}
