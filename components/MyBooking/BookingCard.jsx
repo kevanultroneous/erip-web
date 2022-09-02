@@ -5,10 +5,10 @@ function BookingCard() {
   return (
     <div className={styles.bookingCardContainer}>
       <Row className={styles.bookingCardHead}>
-        <Col xl={2} className={styles.bookingOrder}>
+        <Col xl={6} className={styles.bookingOrder}>
           <p>Order ID: #5555</p>
         </Col>
-        <Col xl={4}>
+        <Col xl={6}>
           <div className={styles.bookingCardStatus}>
             <p>Assigning Professional</p>
           </div>

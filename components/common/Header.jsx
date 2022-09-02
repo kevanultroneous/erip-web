@@ -13,7 +13,7 @@ import LoginPopup from "../Popups/LoginPopup";
 import CartAndOffer from "../Popups/CartAndOffer";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
 import { GMAP_API } from "utils/data";
-import { CityDetactionAPI, UserLogout } from "pages/api/api";
+import { CityDetactionAPI, PincodeByCity, UserLogout } from "pages/api/api";
 import { MatchCity } from "utils/utilsfunctions";
 import Logout from "../Popups/Logout";
 
@@ -53,6 +53,12 @@ export function Header() {
     if (MatchCity(cityData, currentCity)) {
     } else {
       setSelectedAddress("");
+    }
+
+    if (localStorage.getItem("cityid")) {
+      // PincodeByCity(1)
+      //   .then((r) => console.log(r))
+      //   .catch((e) => console.log(e));
     }
   }, [currentCity]);
 
@@ -111,7 +117,6 @@ export function Header() {
     reverseMap(position.coords.latitude, position.coords.longitude);
     displayLocation(position.coords.latitude, position.coords.longitude);
   }
-
   function reverseMap(lat, lng) {
     var latlng = new google.maps.LatLng(lat, lng);
     var geocoder = (geocoder = new google.maps.Geocoder());

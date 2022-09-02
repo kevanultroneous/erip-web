@@ -1,8 +1,17 @@
+import Footer from "@/components/common/Footer";
+import { Header } from "@/components/common/Header";
+import Layout from "@/components/common/Layout";
 import AllBookings from "@/components/MyBooking/AllBookings";
 import React from "react";
 
 function myBookings() {
-  return <AllBookings />;
+  return (
+    <Layout>
+      <Header />
+      <AllBookings />
+      <Footer />
+    </Layout>
+  )
 }
 
 export default myBookings;

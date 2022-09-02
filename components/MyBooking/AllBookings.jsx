@@ -9,7 +9,20 @@ function AllBookings() {
     <section className={styles.allBookingContainer}>
       <Row className={styles.allBookingRow}>
         <Col xl={9}>
-          <BookingCard />
+          <Row>
+            <Col xl={6}>
+              <BookingCard />
+            </Col>
+            <Col xl={6}>
+              <BookingCard />
+            </Col>
+            <Col xl={6}>
+              <BookingCard />
+            </Col>
+            <Col xl={6}>
+              <BookingCard />
+            </Col>
+          </Row>
         </Col>
         <Col xl={3} className={styles.allBookingsLeftCont}>
           <LeftMenu
