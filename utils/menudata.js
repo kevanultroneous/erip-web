@@ -40,7 +40,11 @@ export const footerMenuList = [
                 link: "/",
             },
             {
-                name: "Refrigerator & More",
+                name: "Refrigerator",
+                link: "/",
+            },
+            {
+                name: "& more",
                 link: "/",
             },
         ],

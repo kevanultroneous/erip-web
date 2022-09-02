@@ -6,7 +6,8 @@ import Slider from "react-slick";
 import { TestimonialData } from "utils/data";
 import styles from "@/styles/components/common/Testimonial.module.css";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-export default function Testimonials({ data = TestimonialData }) {
+import { useEffect, useState } from "react";
+export default function Testimonials({ data = TestimonialData, limit }) {
   const settings = {
     dots: false,
     infinite: true,
@@ -45,8 +46,11 @@ export default function Testimonials({ data = TestimonialData }) {
       },
     ],
   };
+  const [mobileView, setMobileView] = useState(false);
 
-  console.log(data);
+  useEffect(() => {
+    window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
+  }, []);
 
   return (
     <Container>
@@ -56,43 +60,81 @@ export default function Testimonials({ data = TestimonialData }) {
       <Row>
         <Col xl={12}>
           <Slider {...settings}>
-            {data.slice(0, 3).map((value, index) => (
-              <Col>
-                <div className={styles.TestimonialCard}>
-                  <div className={styles.TestimonialAvatar}>
-                    <Image
-                      src={value.testimonial_image_url}
-                      loading="lazy"
-                      fluid
-                      alt={value.testimonial_name}
-                    />
-                  </div>
-                  <p className={styles.TestimonialName}>
-                    {value.testimonial_name}
-                  </p>
-                  <p className={styles.TestimonialBrand}>
-                    {value.testimonial_brand}
-                  </p>
-                  <p className={styles.TestimonialDetail}>
-                    {value.testimonial_content}
-                  </p>
-                  <div className={styles.RatingWrraper}>
-                    <Image
-                      src={"/assets/images/rating-star.png"}
-                      alt="rating-star"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className={styles.TestimonialIcon}>
-                    <Image
-                      src={"/assets/images/testimonial-icon.png"}
-                      alt="testimonial-icon"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-              </Col>
-            ))}
+            {mobileView
+              ? data.slice(0, 3).map((value, index) => (
+                  <Col>
+                    <div className={styles.TestimonialCard}>
+                      <div className={styles.TestimonialAvatar}>
+                        <Image
+                          src={value.testimonial_image_url}
+                          loading="lazy"
+                          fluid
+                          alt={value.testimonial_name}
+                        />
+                      </div>
+                      <p className={styles.TestimonialName}>
+                        {value.testimonial_name}
+                      </p>
+                      <p className={styles.TestimonialBrand}>
+                        {value.testimonial_brand}
+                      </p>
+                      <p className={styles.TestimonialDetail}>
+                        {value.testimonial_content}
+                      </p>
+                      <div className={styles.RatingWrraper}>
+                        <Image
+                          src={"/assets/images/rating-star.png"}
+                          alt="rating-star"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className={styles.TestimonialIcon}>
+                        <Image
+                          src={"/assets/images/testimonial-icon.png"}
+                          alt="testimonial-icon"
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+                  </Col>
+                ))
+              : data.map((value, index) => (
+                  <Col>
+                    <div className={styles.TestimonialCard}>
+                      <div className={styles.TestimonialAvatar}>
+                        <Image
+                          src={value.testimonial_image_url}
+                          loading="lazy"
+                          fluid
+                          alt={value.testimonial_name}
+                        />
+                      </div>
+                      <p className={styles.TestimonialName}>
+                        {value.testimonial_name}
+                      </p>
+                      <p className={styles.TestimonialBrand}>
+                        {value.testimonial_brand}
+                      </p>
+                      <p className={styles.TestimonialDetail}>
+                        {value.testimonial_content}
+                      </p>
+                      <div className={styles.RatingWrraper}>
+                        <Image
+                          src={"/assets/images/rating-star.png"}
+                          alt="rating-star"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className={styles.TestimonialIcon}>
+                        <Image
+                          src={"/assets/images/testimonial-icon.png"}
+                          alt="testimonial-icon"
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+                  </Col>
+                ))}
           </Slider>
         </Col>
       </Row>

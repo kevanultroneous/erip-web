@@ -23,6 +23,10 @@
 }
 
 @media (min-width:320px) and (max-width: 450px) {
+    .MainTitleErip {
+        font-size: var(--mobileHeading)
+    }
+
     .MobileImage {
         height: 3rem;
     }
@@ -32,7 +36,7 @@
     }
 
     .ImageTitle {
-        font-size: 14px;
+        font-size: 17px;
     }
 }
 

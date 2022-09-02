@@ -162,7 +162,7 @@ export default function LoginPopup({ show, onHide }) {
           setOtp("");
           setContactNumber("");
           setCheckBoxStatus(false);
-          show = false;
+          localStorage.setItem("token", login_user.data.authorisation.token);
         } else {
           alert(login_user.data.message);
         }
@@ -242,6 +242,7 @@ export default function LoginPopup({ show, onHide }) {
                 </div>
                 <div className={styles.CloseIconWrraper}>
                   <Image
+                    onClick={onHide}
                     src="/assets/icons/cross-close.svg"
                     alt="cross-close"
                     loading="lazy"
@@ -260,6 +261,7 @@ export default function LoginPopup({ show, onHide }) {
                 </div>
                 <div className={styles.CloseIconWrraper}>
                   <Image
+                    onClick={onHide}
                     src="/assets/icons/cross-close.svg"
                     alt="cross-close"
                     loading="lazy"
@@ -270,13 +272,14 @@ export default function LoginPopup({ show, onHide }) {
 
             {/* center image */}
             <Col xl={12} lg={12} xs={12} md={12} className={styles.CenterImage}>
-              <Image
-                src="/assets/images/login-image.png"
-                alt={"login-image"}
-                loading="lazy"
-                fluid
-                className={styles.PopupMobileImage}
-              />
+              <div className={styles.PopupLoginImageWrraper}>
+                <Image
+                  src="/assets/images/login-image.png"
+                  alt={"login-image"}
+                  loading="lazy"
+                  className={`${styles.PopupMobileImage} ${styles.PopupLoginImage}`}
+                />
+              </div>
             </Col>
             {/* Number Input */}
             <Col xl={12} lg={12} xs={12} md={12}>

@@ -13,21 +13,46 @@ import LoginPopup from "../Popups/LoginPopup";
 import CartAndOffer from "../Popups/CartAndOffer";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
 import { GMAP_API } from "utils/data";
+import { CityDetactionAPI, UserLogout } from "pages/api/api";
+import { MatchCity } from "utils/utilsfunctions";
+import Logout from "../Popups/Logout";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
   const [loginPopup, setLoginPopup] = useState(false);
   const [cartandOfferPopup, setCartAndOfferPopup] = useState(false);
   const [locationPopupShow, setLocationPopupShow] = useState(false);
-
+  const [currentCity, setCurrentCity] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState("");
+  const [cityData, setCityData] = useState([]);
+  const [token, setToken] = useState(false);
+  const [logoutpopup, setLogoutPopup] = useState(false);
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
-    // window.onclick = function (event) {
-    //   if (event.target.id != "dropdown_location") {
-    //     setLocationPopupShow(false);
-    //   }
-    // };
+    var modal = document.getElementById("dropdown_location");
   }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setToken(true);
+      setLoginPopup(false);
+    } else {
+      setToken(false);
+    }
+  });
+
+  useEffect(() => {
+    setLocationPopupShow(false);
+
+    CityDetactionAPI()
+      .then((r) => setCityData(r.data.data))
+      .catch((e) => console.log(e));
+
+    if (MatchCity(cityData, currentCity)) {
+    } else {
+      setSelectedAddress("");
+    }
+  }, [currentCity]);
 
   function getLocation() {
     if (navigator.geolocation) {
@@ -65,8 +90,22 @@ export function Header() {
     };
   }, []);
 
+  function LogoutUser() {
+    setLogoutPopup(true);
+  }
+  function LogoutAction() {
+    UserLogout(localStorage.getItem("token"))
+      .then((response) => {
+        if (response.data.success) {
+          alert(response.data.message);
+          localStorage.removeItem("token");
+          setLogoutPopup(false);
+        }
+        console.log(response);
+      })
+      .catch((e) => console.log("logout" + e));
+  }
   function showPosition(position) {
-    alert(position.coords);
     reverseMap(position.coords.latitude, position.coords.longitude);
     displayLocation(position.coords.latitude, position.coords.longitude);
   }
@@ -76,10 +115,9 @@ export function Header() {
     var geocoder = (geocoder = new google.maps.Geocoder());
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        // results.map((v) => console.log(v));
         if (results[1]) {
           setLocationPopupShow(false);
-          alert(results[1].formatted_address);
+          setSelectedAddress(results[1].formatted_address);
         }
       }
     });
@@ -109,7 +147,7 @@ export function Header() {
           country = value[count - 1];
           state = value[count - 2];
           city = value[count - 3];
-          alert("city name is: " + city);
+          setCurrentCity(city);
         } else {
           alert("address not found");
         }
@@ -149,10 +187,11 @@ export function Header() {
                 <Nav.Link
                   href="#home"
                   className={styles.mobileMenuLink}
-                  onClick={() => setLoginPopup(true)}
+                  onClick={() => (token ? LogoutUser() : setLoginPopup(true))}
                 >
-                  Login
+                  {token ? "Logout" : "Login"}
                 </Nav.Link>
+
                 <Nav.Link href="#link" className={styles.mobileMenuLink}>
                   My Bookings
                 </Nav.Link>
@@ -168,6 +207,11 @@ export function Header() {
             <CartAndOffer
               show={cartandOfferPopup}
               onHide={() => setCartAndOfferPopup(false)}
+            />
+            <Logout
+              show={logoutpopup}
+              yesaction={() => LogoutAction()}
+              noaction={() => setLogoutPopup(false)}
             />
           </Container>
         </Navbar>
@@ -214,10 +258,13 @@ export function Header() {
                 className={styles.navHeaderCart}
                 onClick={() => setCartAndOfferPopup(true)}
               />
+
               <PrimaryButton
-                title="Login"
+                title={token ? "Logout" : "Login"}
                 className={styles.headerLoginBtn}
-                clickHandler={() => setLoginPopup(true)}
+                clickHandler={() =>
+                  token ? LogoutUser() : setLoginPopup(true)
+                }
               />
             </Navbar.Collapse>
           </Container>
@@ -294,6 +341,11 @@ export function Header() {
               show={cartandOfferPopup}
               onHide={() => setCartAndOfferPopup(false)}
             />
+            <Logout
+              show={logoutpopup}
+              yesaction={() => LogoutAction()}
+              noaction={() => setLogoutPopup(false)}
+            />
           </Container>
           <div
             className={`${styles.LocationSmallModal} ${
@@ -317,6 +369,7 @@ export function Header() {
             <div className={styles.InputGroup}>
               <p className={styles.InputOrText}>or</p>
               <ReactGoogleAutocomplete
+                defaultValue={selectedAddress}
                 placeholder="Search city, area, pincode"
                 apiKey={GMAP_API}
                 onPlaceSelected={(place) =>

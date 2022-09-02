@@ -5,7 +5,13 @@ import Slider from "react-slick";
 import PrimaryButton from "../common/PrimaryButton";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { daysforcal, GMAP_API, monthsforcal, statictimelist } from "utils/data";
+import {
+  daysforcal,
+  GMAP_API,
+  monthsforcal,
+  statictimelist,
+  timesofsloats,
+} from "utils/data";
 import { FiSearch } from "react-icons/fi";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
 import { Gmaps, Marker } from "react-gmaps";
@@ -13,10 +19,12 @@ import { enddate, getDatesInRange, startdate } from "utils/calenderPackage";
 import { calenderslidersettings } from "utils/sliderSettings";
 import { StatusProcess } from "./StatusProcess";
 import NavigationHandler from "./NavigationHandler";
+import { CityDetactionAPI, TimeSloatAPI } from "pages/api/api";
+import { MatchCity, TimeSloatOver } from "utils/utilsfunctions";
 
 export default function CheckoutPopup({ show, onHide }) {
   const [selectedTime, setSelectedTime] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(0);
   const [showDateError, setShowDateError] = useState(false);
   const [showTimeError, setShowTimeError] = useState(false);
   const [processStatus, setProcessStatus] = useState([0]);
@@ -31,15 +39,54 @@ export default function CheckoutPopup({ show, onHide }) {
   const [nameInput, setNameInput] = useState("");
   const [changeModalSize, setChangeModalSize] = useState(true);
   const [LocationInputError, setLocationError] = useState(0);
-
+  const [timesloatsata, setTimeSloatData] = useState([]);
   const [addressdata, setAddressData] = useState({});
+  const [currentCity, setCurrentCity] = useState("");
+  const [mobileView, setMobileView] = useState(false);
+  const [completedSloat, setCompletedSloat] = useState([]);
+  const [cityData, setCityData] = useState([]);
+  const [locationcityError, setLocationcityError] = useState(true);
+
+  const TimeIsOver = (timesloatsata, timesofsloats) => {
+    let overdata = [];
+    let newDate = new Date();
+    let hours = newDate.getHours();
+
+    for (let t = 0; t < timesloatsata.length; t++) {
+      for (let l = 0; l < timesofsloats.length; l++) {
+        if (timesloatsata[t].title == timesofsloats[l].time) {
+          if (hours > timesofsloats[l].over) {
+            overdata.push(timesloatsata[t].title);
+          }
+        }
+      }
+    }
+    return overdata;
+  };
+
+  useEffect(() => {
+    window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
+    TimeSloatAPI()
+      .then((time_sloat) => {
+        if (time_sloat.data.success) {
+          setTimeSloatData(time_sloat.data.data);
+        } else {
+          console.log("time sloat says" + time_sloat.data.message);
+        }
+      })
+      .catch((e) => console.log("time sloat api" + e));
+  }, []);
+
+  useEffect(
+    () => setCompletedSloat(TimeIsOver(timesloatsata, timesofsloats)),
+    [timesloatsata]
+  );
 
   useEffect(() => {
     getLatandLongByAddress(selectedAddress);
     setConfirmLocationSession(true);
   }, [selectedAddress]);
 
-  useEffect(() => {});
   const ConfirmProcessed = () => {
     selectedTime === null ? setShowTimeError(true) : setShowTimeError(false);
     selectedDate === null ? setShowDateError(true) : setShowDateError(false);
@@ -78,11 +125,13 @@ export default function CheckoutPopup({ show, onHide }) {
   function showPosition(position) {
     setCurrentLocation(position.coords);
     reverseMap(position.coords.latitude, position.coords.longitude);
+    displayLocation(position.coords.latitude, position.coords.longitude);
   }
 
   function reverseMap(lat, lng) {
     var latlng = new google.maps.LatLng(lat, lng);
     var geocoder = (geocoder = new google.maps.Geocoder());
+
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         // results.map((v) => console.log(v));
@@ -101,6 +150,7 @@ export default function CheckoutPopup({ show, onHide }) {
         var longitude = results[0].geometry.location.lng();
 
         setCurrentLocation({ latitude, longitude });
+        displayLocation(latitude, longitude);
       }
     });
   }
@@ -138,12 +188,50 @@ export default function CheckoutPopup({ show, onHide }) {
       alert("process saved");
     }
   };
-
   const OnPlaceSelect = async (place) => {
     if (!(place == undefined)) {
       setSelectedAddress(place.formatted_address);
     }
   };
+  function displayLocation(latitude, longitude) {
+    var geocoder;
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(latitude, longitude);
+    var count, country, state, city;
+    geocoder.geocode({ latLng: latlng }, function (results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        if (results[0]) {
+          var add = results[0].formatted_address;
+          var value = add.split(",");
+
+          count = value.length;
+          country = value[count - 1];
+          state = value[count - 2];
+          city = value[count - 3];
+          setCurrentCity(city);
+        } else {
+          alert("address not found");
+        }
+      } else {
+        alert("Geocoder failed due to: " + status);
+      }
+    });
+  }
+  useEffect(() => {
+    CityDetactionAPI()
+      .then((r) => setCityData(r.data.data))
+      .catch((e) => console.log(e));
+
+    if (MatchCity(cityData, currentCity)) {
+    } else {
+      setSelectedAddress("");
+    }
+  }, [currentCity]);
+  const timeselectedHandler = (index) => {
+    setShowTimeError(false);
+    setSelectedTime(index);
+  };
+
   return (
     <Modal
       show={show}
@@ -209,7 +297,7 @@ export default function CheckoutPopup({ show, onHide }) {
             <Col xs={12} md={12} lg={12} xl={12}>
               <h5 className={styles.SubtitleText}>Select Time</h5>
               <Row className={styles.SelectionTimeRow}>
-                {statictimelist.map((v, i) => (
+                {timesloatsata.map((v, i) => (
                   <Col
                     xs={6}
                     xl={4}
@@ -217,15 +305,30 @@ export default function CheckoutPopup({ show, onHide }) {
                     className={`${styles.TimeCardCol}`}
                   >
                     <div
-                      onClick={() => {
-                        setShowTimeError(false);
-                        setSelectedTime(i);
-                      }}
+                      onClick={() =>
+                        !new Date().getDate() == selectedDate &&
+                        completedSloat.includes(v.title)
+                          ? null
+                          : timeselectedHandler(i)
+                      }
                       className={`${styles.TimeCard} ${
                         selectedTime === i && styles.SelectedCard
                       }`}
+                      style={
+                        !new Date().getDate() == selectedDate &&
+                        completedSloat.includes(v.title)
+                          ? {
+                              backgroundColor: "grey",
+                              cursor: "not-allowed",
+                              opacity: "0.8",
+                              userSelect: "none",
+                            }
+                          : null
+                      }
                     >
-                      <p className={styles.TimeText}>{v}</p>
+                      <p className={styles.TimeText}>
+                        {v.title.replace("TO", "-")}
+                      </p>
                     </div>
                   </Col>
                 ))}
@@ -260,15 +363,7 @@ export default function CheckoutPopup({ show, onHide }) {
               }}
               unique
             />
-            {/* <Col xs={2} md={2} lg={2} xl={2}>
-              <BiArrowBack
-                className={styles.LocationBackArrow}
-                onClick={() => setSecondProcessShow(false)}
-              />
-            </Col>
-            <Col xs={8} md={8} lg={8} xl={8}>
-              <h4 className={styles.LocationText}>Select Location</h4>
-            </Col> */}
+
             <Col xs={12} md={12} lg={12} xl={12}>
               <div className={styles.LocationHeadLine}>
                 <p className={styles.HeadLine}>
@@ -312,34 +407,24 @@ export default function CheckoutPopup({ show, onHide }) {
             </Col>
           </Row>
         ) : //address & location popup 1
+
         !(selectedAddress === "" || selectedAddress === null) &&
           secondProcessShow &&
           confirmLocationSession ? (
           <Row className={styles.ColReverse}>
-            <NavigationHandler
-              navtitle={"Confirm Location"}
-              backhandler={() => {
-                setSecondProcessShow(true);
-                setSelectedAddress("");
-              }}
-              unique
-            />
-            {/* <Col xs={2} md={2} lg={2} xl={2}>
-              <BiArrowBack
-                className={styles.LocationBackArrow}
-                onClick={() => {
+            <div className={styles.HideNavigationBar}>
+              <NavigationHandler
+                navtitle={"Confirm Location"}
+                backhandler={() => {
                   setSecondProcessShow(true);
                   setSelectedAddress("");
                 }}
+                unique
               />
-            </Col>
-            <Col xs={8} md={8} lg={8} xl={8}>
-              <h4 className={styles.LocationText}>Confirm Location</h4>
-            </Col> */}
-
+            </div>
             <Col
               xs={12}
-              md={6}
+              md={12}
               lg={6}
               xl={5}
               className={styles.ConfirmLocationSpace}
@@ -366,7 +451,11 @@ export default function CheckoutPopup({ show, onHide }) {
                   onClick={() => getLocation()}
                 >
                   <Image
-                    src="/assets/icons/dark-icon-location.svg"
+                    src={
+                      mobileView
+                        ? "/assets/icons/blue-location.svg"
+                        : "/assets/icons/dark-icon-location.svg"
+                    }
                     alt="location-icon"
                     loading="lazy"
                   />
@@ -374,6 +463,7 @@ export default function CheckoutPopup({ show, onHide }) {
                     Use my current location
                   </span>
                 </div>
+
                 <div className={styles.ConfirmButtonDiv}>
                   <PrimaryButton
                     clickHandler={() => {
@@ -399,7 +489,7 @@ export default function CheckoutPopup({ show, onHide }) {
               className={`${styles.ConfirmLocationSpace}`}
             >
               <Gmaps
-                height={"300px"}
+                height={mobileView ? "500px" : "300px"}
                 lat={currentLocation.latitude}
                 lng={currentLocation.longitude}
                 zoom={12}

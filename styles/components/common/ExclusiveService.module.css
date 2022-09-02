@@ -61,11 +61,11 @@
     }
 
     .OnlyShowOnMobile {
-        display: block;
+        display: none;
     }
 
     .MainTitle {
-        display: none;
+        display: block;
     }
 }
 
