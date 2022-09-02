@@ -13,8 +13,15 @@ import style from "@/styles/components/IssuePage/issuepage.module.css";
 import styles from "@/styles/components/SearchByModel/SelectDeviceHero.module.css";
 import MobileModels from "./MobileModels";
 import { API_URL } from "utils/data";
+import IssueTotalBill from "../IssuePage/IssueTotalBill";
 
-function SelectDeviceHero({ headClass, modelSection, quoteaction, token }) {
+function SelectDeviceHero({
+  headClass,
+  modelSection,
+  quoteaction,
+  token,
+  homeQuery,
+}) {
   const [categories, setcategories] = useState([]);
   const [brandData, setbrandData] = useState([{}]);
   const [models, setmodels] = useState([{}]);
@@ -29,24 +36,42 @@ function SelectDeviceHero({ headClass, modelSection, quoteaction, token }) {
   const [disableModel, setDisableModel] = useState(true);
   const [brandId, setBrandId] = useState(0);
   const [issues, setIssues] = useState([]);
+  const [cartIssues, setCartIssues] = useState([]);
+  const [displayIssues, setDisplayIssues] = useState(false);
 
-  const getIssues = async (eventKey) => {
-    await axios
-      .get(`${API_URL}api/v1/issues_by_models_detail?model=${eventKey}&city=1`)
-      .then((data) => {
-        if (data.data.data !== undefined) {
-          setIssues(data.data.data);
-        } else {
-          setIssues([]);
-        }
-      });
+  useEffect(() => {
+    window.innerWidth < 662 ? setMobileView(true) : setMobileView(false);
+  }, []);
+
+  const selectDrop = useRef();
+  const categoryModel = useRef();
+
+  const disableDrop = () => {
+    console.log(selectDrop.current.classList);
+    selectDrop.current.classList.remove("show");
+  };
+
+  const getIssues = async (eventKey, key) => {
+    const issueURL = !token
+      ? `${API_URL}api/v1/issues_by_models?model=${key.target.accessKey}`
+      : mobileView
+      ? `${API_URL}api/v1/issues_by_models_detail?model=${eventKey}&city=1`
+      : `${API_URL}api/v1/issues_by_models_detail?model=${key.target.accessKey}&city=1`;
+    await axios.get(issueURL).then((data) => {
+      if (data.data.data !== undefined) {
+        setDisplayIssues(true);
+        setIssues(data.data.data);
+      } else {
+        setIssues([]);
+      }
+    });
     await axios
       .get(`${API_URL}api/v1/models_by_brand?brand=${brandId}`)
       .then((data) => {
         const selectedModel = data.data.data;
         if (selectedModel) {
           selectedModel.forEach((model) => {
-            if (model.model_id == eventKey) {
+            if (model.model_id == key.target.accessKey) {
               setModelName(model.model_title);
             }
           });
@@ -55,24 +80,23 @@ function SelectDeviceHero({ headClass, modelSection, quoteaction, token }) {
   };
 
   useEffect(() => {
-    window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
-  }, []);
-
-  useEffect(() => {
     getCategory();
   }, []);
 
   const getCategory = async () => {
-    const categoryData = await axios
+    await axios
       .get(`${API_URL}api/v1/categories_by_cities?city=1`)
       .then((data) => {
         setcategories(data.data.data);
         setMobileCat(data.data.data);
       })
       .catch(() => setcategories([]));
+    if (homeQuery) {
+      getBrands(homeQuery);
+    }
   };
 
-  const getBrands = async (eventKey) => {
+  const getBrands = async (eventKey, key) => {
     await axios
       .get(`${API_URL}api/v1/brands_by_category?category=${eventKey}`)
       .then((data) => {
@@ -81,7 +105,7 @@ function SelectDeviceHero({ headClass, modelSection, quoteaction, token }) {
           setbrandData(data.data.data);
         } else {
           setDisableBrands(true);
-          console.log("No data found");
+          alert("No data found");
           setbrandData([]);
         }
       });
@@ -101,26 +125,26 @@ function SelectDeviceHero({ headClass, modelSection, quoteaction, token }) {
     setModelName("Models");
   };
 
-  const getModels = async (eventKey) => {
+  const getModels = async (eventKey, key) => {
     const modelData = await axios
-      .get(`${API_URL}api/v1/models_by_brand?brand=${eventKey}`)
+      .get(`${API_URL}api/v1/models_by_brand?brand=${key.target.accessKey}`)
       .then((data) => {
         if (data.data.data !== undefined) {
           setDisableModel(false);
           setmodels(data.data.data);
         } else {
-          console.log("no data");
+          alert("no data");
           setDisableModel(true);
           setmodels([]);
         }
       });
-    setBrandId(eventKey);
+    setBrandId(key.target.accessKey);
     await axios
       .get(`${API_URL}api/v1/brands_by_category?category=1`)
       .then((data) => {
         const model = data.data.data;
         model.forEach((element) => {
-          if (element.brand_id == eventKey) {
+          if (element.brand_id == key.target.accessKey) {
             setBrandName(element.brand_title);
           }
         });
@@ -137,13 +161,12 @@ function SelectDeviceHero({ headClass, modelSection, quoteaction, token }) {
       });
   };
 
-  const selectDrop = useRef();
-  const categoryModel = useRef();
-
-  const disableDrop = () => {
-    console.log(selectDrop.current.classList);
-    selectDrop.current.classList.remove("show");
-  };
+  const totalprice =
+    cartIssues.length <= 0
+      ? 0
+      : cartIssues
+          .map((issueMap) => Number(issueMap.discounted_price))
+          .reduce((a, b) => a + b);
 
   return (
     <>
@@ -170,7 +193,7 @@ function SelectDeviceHero({ headClass, modelSection, quoteaction, token }) {
           <Row className={styles.selectDevice}>
             <Nav className={styles.selectDeviceNav}>
               <Row className={styles.selectDeviceFirstRow}>
-                <Col xl={6} xs={6}>
+                <Col xl={4} xs={6}>
                   <div className={`${styles.selectButton} selectButton`}>
                     <p>Step 1</p>
                     <NavDropdown
@@ -185,6 +208,7 @@ function SelectDeviceHero({ headClass, modelSection, quoteaction, token }) {
                             eventKey={categories.category_id}
                             key={ind}
                             className={styles.navdropdown}
+                            accessKey={categories.category_id}
                           >
                             <div className={styles.categoryImages}>
                               <Image
@@ -200,7 +224,7 @@ function SelectDeviceHero({ headClass, modelSection, quoteaction, token }) {
                     </NavDropdown>
                   </div>
                 </Col>
-                <Col xl={6} xs={6}>
+                <Col xl={4} xs={6}>
                   <div
                     className={`${styles.selectButton} selectButton getBrands`}
                   >
@@ -215,13 +239,15 @@ function SelectDeviceHero({ headClass, modelSection, quoteaction, token }) {
                       <Row>
                         {brandData.map((brands, ind) => {
                           return (
-                            <Col key={ind} xl={2}>
+                            <Col key={ind} xl={2} md={6}>
                               <NavDropdown.Item
-                                eventKey={brands.brand_id}
+                                // eventKey={brands.brand_id}
                                 className={styles.navdropdown}
+                                accessKey={brands.brand_id}
                               >
                                 <div className={styles.brandLogoBox}>
                                   <Image
+                                    accessKey={brands.brand_id}
                                     fluid
                                     src={brands.brand_icon_url}
                                     alt={brands.brand_title}
@@ -235,9 +261,7 @@ function SelectDeviceHero({ headClass, modelSection, quoteaction, token }) {
                     </NavDropdown>
                   </div>
                 </Col>
-              </Row>
-              <Row className={styles.modelDropRow}>
-                <Col xl={12} className={styles.modelDrop}>
+                <Col xl={4} className={styles.modelDrop}>
                   <div
                     className={`${styles.selectButton} selectButton getModels`}
                   >
@@ -252,14 +276,15 @@ function SelectDeviceHero({ headClass, modelSection, quoteaction, token }) {
                       <Row>
                         {models.map((models, ind) => {
                           return (
-                            <Col key={ind} xl={2}>
+                            <Col key={ind} xl={2} md={4}>
                               <NavDropdown.Item
-                                eventKey={models.model_id}
+                                // eventKey={models.model_id}
                                 key={ind}
                                 className={styles.navdropdown}
                               >
                                 <div className={styles.navDropBox}>
                                   <Image
+                                    accessKey={models.model_id}
                                     fluid
                                     src={models.model_image_url}
                                     alt={models.model_title}
@@ -279,27 +304,39 @@ function SelectDeviceHero({ headClass, modelSection, quoteaction, token }) {
           </Row>
         )}
       </section>
-      <h3 className={style.issuePageTitle}>Select your Repair Services</h3>
-      <Row className={style.issuePageRow}>
-        {issues.map((issues, index) => {
-          return (
-            <Col key={index} xl={4} md={6} className={style.issueColumn}>
-              <IssueComponent
-                issueName={issues.issue_title}
-                issueOfferPrice={issues.discounted_price}
-                issueOriginalPrice={issues.display_price}
-                discountedPercentage={issues.discount_percentage}
-                serviceTime={issues.repair_duration}
-                warranty={issues.warranty_period}
-                serviceType={issues.repair_type}
-                href={"#"}
-                addToCart={() => (token ? null : quoteaction())}
-                buttonName={token ? "Add to cart" : "Get Quote"}
-              />
-            </Col>
-          );
-        })}
-      </Row>
+      {displayIssues && (
+        <h3 className={style.issuePageTitle}>Select your Repair Services</h3>
+      )}
+      {displayIssues && (
+        <Row className={style.issuePageRow}>
+          {issues.map((issues, index) => {
+            return (
+              <Col key={index} xl={4} md={6} className={style.issueColumn}>
+                <IssueComponent
+                  issueImage={"/assets/images/issue-images.png"}
+                  issueName={issues.issue_title}
+                  loggedIn={token}
+                  issueOfferPrice={issues.discounted_price}
+                  issueOriginalPrice={issues.display_price}
+                  discountedPercentage={issues.discount_percentage}
+                  serviceTime={issues.repair_duration}
+                  warranty={issues.warranty_period}
+                  serviceType={issues.repair_type}
+                  href={"#"}
+                  addToCart={() => {
+                    setCartIssues((previssues) => [...previssues, issues]);
+                    token ? null : quoteaction();
+                  }}
+                  buttonName={token ? "Add to cart" : "Get Quote"}
+                />
+              </Col>
+            );
+          })}
+        </Row>
+      )}
+      {token && cartIssues.length > 0 && (
+        <IssueTotalBill totalPrice={totalprice} />
+      )}
     </>
   );
 }

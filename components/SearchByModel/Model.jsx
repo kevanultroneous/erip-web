@@ -21,6 +21,7 @@ function Models({ heading, modelsArray, overlayHandling, clickHandler }) {
                 <div className={styles.categoryBox}>
                   <div className={styles.modelIcons}>
                     <Image
+                      accessKey={models.model_id}
                       src={models.model_image_url}
                       alt={models.model_slug_01}
                       fluid

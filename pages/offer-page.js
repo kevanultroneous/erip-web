@@ -3,19 +3,25 @@ import Footer from "@/components/common/Footer";
 import { Header } from "@/components/common/Header";
 import Layout from "@/components/common/Layout";
 import Offers from "@/components/OfferPage/Offers";
-import React from "react";
+import { useEffect, useState } from "react";
+import MobileFooter from "@/components/common/MobileFooter";
 import styles from "@/styles/components/OfferPage/Offers.module.css";
 
-function offerPage() {
+function OfferPage() {
+  const [mobileView, setMobileView] = useState(true);
+
+  useEffect(() => {
+    window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
+  }, []);
   return (
     <>
       <Layout title={"Offer Page"}>
         <Header />
         <Offers />
-        <Footer />
+        {mobileView ? <Footer /> : <MobileFooter />}
       </Layout>
     </>
   );
 }
 
-export default offerPage;
+export default OfferPage;
