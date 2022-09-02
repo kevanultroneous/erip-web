@@ -119,6 +119,7 @@ function SelectDeviceHero({
           }
         });
       });
+    setDisplayIssues(false);
     setIssues([]);
     setDisableModel(true);
     setBrandName("Brands");
@@ -149,6 +150,7 @@ function SelectDeviceHero({
           }
         });
       });
+    setDisplayIssues(false);
     setIssues([]);
     setModelName("Models");
   };
@@ -194,7 +196,9 @@ function SelectDeviceHero({
             <Nav className={styles.selectDeviceNav}>
               <Row className={styles.selectDeviceFirstRow}>
                 <Col xl={4} xs={6}>
-                  <div className={`${styles.selectButton} selectButton`}>
+                  <div
+                    className={`${styles.selectButton} selectButton getCategory`}
+                  >
                     <p>Step 1</p>
                     <NavDropdown
                       title={categoryName}

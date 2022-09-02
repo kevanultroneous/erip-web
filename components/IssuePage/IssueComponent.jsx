@@ -71,12 +71,12 @@ function IssueComponent({
   return (
     <div className={styles.issueContainer}>
       <div className={styles.issueRow}>
-        <Col xl={4} className={styles.issueImageBox}>
+        <Col xl={3} className={styles.issueImageBox}>
           <div className={styles.issueImage}>
             <Image fluid src={issueImage} alt={issueAlt} />
           </div>
         </Col>
-        <Col xl={8}>
+        <Col xl={9}>
           <div className={styles.issueCopy}>
             <h5 className={styles.issueName}>{issueName}</h5>
             {loggedIn && (
