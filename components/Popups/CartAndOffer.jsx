@@ -144,7 +144,7 @@ export default function CartAndOffer({ show, onHide }) {
                 <lable className={styles.CartAndOfferSubMainTitleUni}>
                   {selectedCoupons.coupon_amount
                     ? "₹" + selectedCoupons.coupon_amount
-                    : "none"}
+                    : ""}
                 </lable>
               </Col>
               <Col xs={6} md={6} lg={6} xl={6}>

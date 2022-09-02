@@ -322,6 +322,11 @@ input[type="number"] {
   box-shadow: none !important;
 }
 
+.blogslider .slick-prev,
+.slick-next {
+  top: 35% !important;
+}
+
 /*  */
 @media (min-width: 320px) and (max-width: 450px) {
   .modal {
@@ -468,6 +473,7 @@ input[type="number"] {
     left: 0 !important;
     padding: 0rem 1rem;
   }
+
 }
 
 @media (min-width: 768px) and (max-width: 1080px) {
@@ -516,6 +522,19 @@ input[type="number"] {
   .slick-dots.slick-thumb li.slick-active {
     background-color: #0e62cb;
     width: 22.45px;
+  }
+
+  .offerbanner .slick-prev,
+  .slick-next {
+    top: 50% !important;
+  }
+
+  .blogslider .slick-next {
+    top: 35% !important;
+  }
+
+  .blogslider .slick-prev {
+    top: 35%;
   }
 }
 
