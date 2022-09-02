@@ -328,6 +328,11 @@ input[type="number"] {
     top: 0px !important;
   }
 
+  .logoutmodal .modal {
+    top: -50% !important;
+    left: 8% !important;
+  }
+
   .slick-prev {
     left: -11px !important;
   }

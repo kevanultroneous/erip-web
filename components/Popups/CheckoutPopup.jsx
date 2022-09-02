@@ -58,6 +58,7 @@ export default function CheckoutPopup({ show, onHide }) {
   const [myaddress, setMyaddress] = useState([]);
   const [myselectedaddress, setMyselectedAddress] = useState({});
   const [deleteShow, setDeleteShow] = useState(false);
+  const [tabletView, setTabletView] = useState(false);
   const TimeIsOver = (timesloatsata, timesofsloats) => {
     let overdata = [];
     let newDate = new Date();
@@ -77,6 +78,11 @@ export default function CheckoutPopup({ show, onHide }) {
 
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
+    window.innerWidth < 768 && window.innerWidth > 992
+      ? setTabletView(true)
+      : setTabletView(false)
+      ? setMobileView(true)
+      : setMobileView(false);
     TimeSloatAPI()
       .then((time_sloat) => {
         if (time_sloat.data.success) {
@@ -220,16 +226,21 @@ export default function CheckoutPopup({ show, onHide }) {
         landmark: landmarkInput,
         name: nameInput,
       });
-      SaveAddress(localStorage.getItem("token"))
-        .then((r) => {
-          if (r.data.success) {
-            alert("address saved");
-            setSelectedAddressStatus(true);
-            setProcessStatus(processStatus.concat(1));
-            setFinalLocationStep(false);
-          }
-        })
-        .catch((e) => console.log(e));
+      if (!localStorage.getItem("token")) {
+        alert("Please Login Now");
+      } else {
+        SaveAddress(localStorage.getItem("token"))
+          .then((r) => {
+            console.log(r);
+            if (r.data.success) {
+              alert("address saved");
+              setSelectedAddressStatus(true);
+              setProcessStatus(processStatus.concat(1));
+              setFinalLocationStep(false);
+            }
+          })
+          .catch((e) => console.log(e));
+      }
     }
   };
   const OnPlaceSelect = async (place) => {
@@ -527,7 +538,7 @@ export default function CheckoutPopup({ show, onHide }) {
             </Col>
             <Col
               xs={12}
-              md={6}
+              md={12}
               lg={6}
               xl={7}
               className={`${styles.ConfirmLocationSpace}`}
@@ -566,7 +577,7 @@ export default function CheckoutPopup({ show, onHide }) {
             </Col>
             <Col
               xs={12}
-              md={6}
+              md={12}
               lg={6}
               xl={5}
               className={`${styles.ConfirmLocationSpace} ${styles.finalLocationStep}`}
@@ -649,7 +660,7 @@ export default function CheckoutPopup({ show, onHide }) {
             </Col>
             <Col
               xs={12}
-              md={6}
+              md={12}
               lg={6}
               xl={7}
               className={`${styles.ConfirmLocationSpace}  ${styles.FinalGmap}`}
