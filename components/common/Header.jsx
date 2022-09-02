@@ -45,7 +45,9 @@ export function Header() {
     setLocationPopupShow(false);
 
     CityDetactionAPI()
-      .then((r) => setCityData(r.data.data))
+      .then((r) => {
+        setCityData(r.data.data);
+      })
       .catch((e) => console.log(e));
 
     if (MatchCity(cityData, currentCity)) {
