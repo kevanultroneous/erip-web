@@ -17,6 +17,7 @@ function IssueComponent({
   addToCart,
   buttonName,
   discountedPercentage,
+  loggedIn,
 }) {
   const [mobileView, setMobileView] = useState(false);
   useEffect(() => {
@@ -28,7 +29,7 @@ function IssueComponent({
         <Row>
           <Col xs={2}>
             <div className={styles.issueImage}>
-              <Image fluid src={issueImage} alt={issueAlt} />
+              <Image fluid src={issueImage} alt={issueName} />
             </div>
           </Col>
           <Col xs={6}>
@@ -78,16 +79,20 @@ function IssueComponent({
         <Col xl={8}>
           <div className={styles.issueCopy}>
             <h5 className={styles.issueName}>{issueName}</h5>
-            <p>
-              <span className={styles.issueOfferPrice}>₹{issueOfferPrice}</span>
-              <span className={styles.issueOriginalPrice}>
-                {" "}
-                ₹{issueOriginalPrice}{" "}
-              </span>
-              <span className={styles.issueOffer}>
-                ({discountedPercentage}% OFF)
-              </span>
-            </p>
+            {loggedIn && (
+              <p>
+                <span className={styles.issueOfferPrice}>
+                  ₹{issueOfferPrice}
+                </span>
+                <span className={styles.issueOriginalPrice}>
+                  {" "}
+                  ₹{issueOriginalPrice}{" "}
+                </span>
+                <span className={styles.issueOffer}>
+                  ({discountedPercentage}% OFF)
+                </span>
+              </p>
+            )}
             <div>
               <p className={styles.issueDetails}>Service Time: {serviceTime}</p>
               <p className={styles.issueDetails}>Warranty: {warranty}</p>

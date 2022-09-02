@@ -45,6 +45,7 @@ function MobileModels({ getIssuesFromMobile, issues, setissues }) {
         if (data.data.data !== undefined) {
           setBrands(data.data.data);
         } else {
+          alert("no data");
           setBrands([]);
           setModels([]);
           setDisableModelsClick(false);
@@ -78,6 +79,7 @@ function MobileModels({ getIssuesFromMobile, issues, setissues }) {
         if (data.data.data !== undefined) {
           setModels(data.data.data);
         } else {
+          alert("no data");
           setDisableModelsClick(false);
           setModels([]);
           setDisplayModels(false);

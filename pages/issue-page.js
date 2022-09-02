@@ -7,8 +7,9 @@ import SelectDeviceHero from "@/components/SearchByModel/SelectDeviceHero";
 import axios from "axios";
 import WhyErip from "@/components/common/WhyErip";
 import Testimonials from "@/components/common/Testimonials";
-import { TestimonialData } from "utils/data";
+import { API_URL, TestimonialData } from "utils/data";
 import Footer from "@/components/common/Footer";
+import MobileFooter from "@/components/common/MobileFooter";
 import styles from "@/styles/components/IssuePage/issuepage.module.css";
 
 import { useRouter } from "next/router";
@@ -16,16 +17,24 @@ import { useRouter } from "next/router";
 import Layout from "@/components/common/Layout";
 import { useEffect, useState } from "react";
 import LoginPopup from "@/components/Popups/LoginPopup";
+import HowItWork from "@/components/common/HowItWork";
 
 function IssuePage({ data }) {
-  const router = useRouter()
-  const [popupLogin, setPopupLogin] = useState(false)
-  { console.log(router.query.issue) }
+  const [mobileView, setMobileView] = useState(true);
+
+  useEffect(() => {
+    window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
+  }, []);
+  const router = useRouter();
+  const [popupLogin, setPopupLogin] = useState(false);
+  {
+    console.log(router.query.issue);
+  }
   const [token, setToken] = useState(false);
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setToken(true);
-      setPopupLogin(false)
+      setPopupLogin(false);
     } else {
       setToken(false);
     }
@@ -38,20 +47,21 @@ function IssuePage({ data }) {
       <SelectDeviceHero
         token={token}
         quoteaction={() => setPopupLogin(true)}
-        headClass={styles.selectDeviceHero}
+        // headClass={styles.selectDeviceHero}
         modelSection={styles.selectDeviceSection}
+        homeQuery={router.query.issue}
       />
+      <HowItWork />
       <WhyErip />
       <Testimonials data={data.hometestimonial} />
-      <Footer />
+      {mobileView ? <Footer /> : <MobileFooter />}
     </Layout>
-
   );
 }
 
 export async function getServerSideProps() {
   let home_testimonial = await axios
-    .get(`http://43.204.87.153/api/v1/cms/testimonials`, {
+    .get(`${API_URL}api/v1/cms/testimonials`, {
       params: {
         page: "home",
       },
