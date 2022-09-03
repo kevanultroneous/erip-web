@@ -42,7 +42,10 @@ export default function Home({ data }) {
         imgsrc={"/assets/images/offer-big-banner.png"}
         imgalt={"offer-big-banner"}
       />
-      <Testimonials data={data.hometestimonial.data} limit={data.hometestimonial.data_count} />
+      <Testimonials
+        data={data.hometestimonial.data}
+        limit={data.hometestimonial.data_count}
+      />
       <NewsAndUpdate data={data.blogdata.data} />
       {mobileView ? <Footer /> : <MobileFooter />}
     </Layout>
@@ -89,28 +92,28 @@ export async function getServerSideProps() {
         herosection: !hero_section_home
           ? HomeHerodata
           : hero_section_home.data.length > 0
-            ? hero_section_home
-            : HomeHerodata,
+          ? hero_section_home
+          : HomeHerodata,
         blogdata: !blog_response
           ? NewsandUpdateData
           : blog_response.data.length > 0
-            ? blog_response
-            : NewsandUpdateData,
+          ? blog_response
+          : NewsandUpdateData,
         hometestimonial: !home_testimonial
           ? TestimonialData
           : home_testimonial.data.length > 0
-            ? home_testimonial
-            : TestimonialData,
+          ? home_testimonial
+          : TestimonialData,
         offersection: !offersection_home
           ? OfferBannerhomedata
           : offersection_home.data.length > 0
-            ? offersection_home
-            : OfferBannerhomedata,
+          ? offersection_home
+          : OfferBannerhomedata,
         getyourfix: !getyour_fix
           ? GetYourFixCard
           : getyour_fix.data.length > 0
-            ? getyour_fix
-            : GetYourFixCard,
+          ? getyour_fix
+          : GetYourFixCard,
       },
     },
   };

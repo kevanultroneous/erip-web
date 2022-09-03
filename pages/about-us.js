@@ -4,9 +4,16 @@ import AboutTeam from "@/components/About-Us/AboutTeam";
 import AboutFeature from "@/components/About-Us/AboutFeature";
 import { Header } from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import { useEffect, useState } from "react";
+import MobileFooter from "@/components/common/MobileFooter";
 import Layout from "@/components/common/Layout";
 
-function aboutUs() {
+function AboutUs() {
+  const [mobileView, setMobileView] = useState(true);
+
+  useEffect(() => {
+    window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
+  }, []);
   return (
     <>
       <Layout title={"About Us"}>
@@ -15,10 +22,10 @@ function aboutUs() {
         <AboutTeam />
         <AboutFeature />
         <GreenEndevour />
-        <Footer />
+        {mobileView ? <Footer /> : <MobileFooter />}
       </Layout>
     </>
   );
 }
 
-export default aboutUs;
+export default AboutUs;

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Col, Image, Modal, Row } from "react-bootstrap";
 import PrimaryButton from "../common/PrimaryButton";
-import styles from "@/styles/components/Popups/CartAndOffer.module.css";
 import { CgCloseO } from "react-icons/cg";
 import CartProductList from "./CartProductList";
 import Coupons from "./Coupons";
@@ -9,6 +8,7 @@ import { useEffect, useState } from "react";
 import CouponsCard from "./CouponsCard";
 import CheckoutPopup from "./CheckoutPopup";
 import { CouponsByCC } from "pages/api/api";
+import styles from "@/styles/components/Popups/CartAndOffer.module.css";
 
 export default function CartAndOffer({ show, onHide }) {
   const [active, setActive] = useState(0);
@@ -57,7 +57,7 @@ export default function CartAndOffer({ show, onHide }) {
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
-        className="CartandOfferPopup"
+        className={`${styles.CartandOfferPopup} CartandOfferPopup`}
         // make for dynamic opacity
         style={showCheckout && { opacity: "0" }}
       >
@@ -144,7 +144,7 @@ export default function CartAndOffer({ show, onHide }) {
                 <lable className={styles.CartAndOfferSubMainTitleUni}>
                   {selectedCoupons.coupon_amount
                     ? "₹" + selectedCoupons.coupon_amount
-                    : "none"}
+                    : ""}
                 </lable>
               </Col>
               <Col xs={6} md={6} lg={6} xl={6}>
@@ -206,6 +206,7 @@ export default function CartAndOffer({ show, onHide }) {
                   <CouponsCard
                     code={v.coupon_code}
                     detail={v.coupon_title}
+                    key={i}
                     applyaction={() => {
                       setCouponShow(true);
                       setSelectedCoupons(v);

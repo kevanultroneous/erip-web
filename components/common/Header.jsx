@@ -3,8 +3,8 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import PrimaryButton from "./PrimaryButton";
-import { Image } from "react-bootstrap";
-import { allProducts } from "utils/dropMenuDataApple";
+import { Col, Image, Row } from "react-bootstrap";
+import { moreMenu } from "utils/moreMenu";
 import { useEffect, useRef, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -12,10 +12,12 @@ import styles from "@/styles/components/common/Header.module.css";
 import LoginPopup from "../Popups/LoginPopup";
 import CartAndOffer from "../Popups/CartAndOffer";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
-import { GMAP_API } from "utils/data";
+import { API_URL, GMAP_API } from "utils/data";
 import { CityDetactionAPI, PincodeByCity, UserLogout } from "pages/api/api";
 import { MatchCity } from "utils/utilsfunctions";
 import Logout from "../Popups/Logout";
+import axios from "axios";
+import { FiSearch } from "react-icons/fi";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
@@ -27,10 +29,50 @@ export function Header() {
   const [cityData, setCityData] = useState([]);
   const [token, setToken] = useState(false);
   const [logoutpopup, setLogoutPopup] = useState(false);
+  const [appleHeaderData, setAppleHeaderData] = useState([]);
+  const [topBrandsHeaderData, setTopBrandsHeaderData] = useState([]);
+  const [mobileRepairHeaderData, setmobileRepairHeaderData] = useState([]);
+  const [topIssuesHeaderData, settopIssuesHeaderData] = useState([]);
+
+  const [showMobloc, setShowMobloc] = useState(false);
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
     var modal = document.getElementById("dropdown_location");
   }, []);
+
+  // getting header menus from api
+  useEffect(() => {
+    getHeaderDataFromAPI();
+  }, []);
+
+  const getHeaderDataFromAPI = async () => {
+    await axios
+      .get(`${API_URL}api/v1/cms/top_apple_products`)
+      .then((data) =>
+        data.data.data !== undefined
+          ? setAppleHeaderData(data.data.data)
+          : setAppleHeaderData([])
+      );
+    await axios.get(`${API_URL}api/v1/cms/top_brands`).then((data) => {
+      data.data.data !== undefined
+        ? setTopBrandsHeaderData(data.data.data)
+        : setTopBrandsHeaderData([]);
+    });
+    await axios
+      .get(`${API_URL}api/v1/cms/top_models`)
+      .then((data) =>
+        data.data.data !== undefined
+          ? setmobileRepairHeaderData(data.data.data)
+          : setmobileRepairHeaderData([])
+      );
+    await axios
+      .get(`${API_URL}api/v1/cms/top_issues`)
+      .then((data) =>
+        data.data.data !== undefined
+          ? settopIssuesHeaderData(data.data.data)
+          : settopIssuesHeaderData([])
+      );
+  };
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -189,6 +231,7 @@ export function Header() {
                 className={styles.mobileToggleButton}
               />
             </div>
+
             <Navbar.Collapse id="basic-navbar-nav" ref={menuCollapse}>
               <Nav className="me-auto">
                 <Nav.Link
@@ -221,13 +264,73 @@ export function Header() {
               noaction={() => setLogoutPopup(false)}
             />
           </Container>
+          <Row>
+            <Col xs={6} className={styles.LocationmobWrraper}>
+              <div
+                className={styles.LocationmobSub}
+                onClick={() => setShowMobloc(!showMobloc)}
+              >
+                <Image src="/assets/icons/mobile-loc.png" alt="mob-loc" />
+                <p className={styles.LocationText}>Banglore</p>
+                <Image
+                  src="/assets/icons/mobile-dropdown.png"
+                  alt="mob-loc"
+                  style={
+                    showMobloc
+                      ? { transform: "rotate(182deg)", transition: "0.5s ease" }
+                      : null
+                  }
+                  className={styles.dropdownicons}
+                />
+              </div>
+            </Col>
+            <Col xs={12}>
+              <div
+                style={
+                  showMobloc
+                    ? { display: "block", transition: "0.5s ease" }
+                    : { display: "none", transition: "0.5s ease" }
+                }
+              >
+                <div className={`${styles.SearchLocMob}`}>
+                  <FiSearch className={styles.SearchIcon} />
+                  <ReactGoogleAutocomplete
+                    defaultValue={selectedAddress}
+                    placeholder="Search city, area, pincode"
+                    apiKey={GMAP_API}
+                    onPlaceSelected={(place) =>
+                      getLatandLongByAddress(place.formatted_address)
+                    }
+                    options={{
+                      types: ["establishment"],
+                      componentRestrictions: { country: "in" },
+                    }}
+                    className={styles.SearchBoxMob}
+                  />
+                </div>
+                <p className={styles.InputOrText}>or</p>
+                <div
+                  className={styles.ModalHeadDetect}
+                  onClick={() => getLocation()}
+                >
+                  <Image
+                    src="/assets/icons/location-color.svg"
+                    loading="lazy"
+                  />
+                  <p className={styles.LocationDetectText}>
+                    Detect My Location
+                  </p>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </Navbar>
       );
     } else {
       return (
         <Navbar expand="lg" className={styles.navHeader}>
           <Container fluid className={styles.navBarTopHeader}>
-            <Navbar.Brand href="#">
+            <Navbar.Brand href="/">
               <div className={styles.brandLogo}>
                 <Image
                   fluid
@@ -282,66 +385,98 @@ export function Header() {
               className={styles.navDropMain}
               ref={menuCollapse}
             >
-              {allProducts.map((products, ind) => {
-                return (
-                  <DropdownButton
-                    title={products.menuName}
-                    className="dropDownMenuHead"
-                    key={products.direction}
-                    drop={products.direction}
-                  >
-                    <div className="dropMenuDiv">
-                      {products.menus.map((menu, menuIndex) => {
-                        return (
-                          <div key={menuIndex}>
-                            <Dropdown.Item
-                              eventKey="4.1"
-                              className={styles.listedItemHead}
-                            >
-                              {menu.dropHead}
-                            </Dropdown.Item>
-                            {menu.models.map((model, index) => {
-                              return (
-                                <Dropdown.Item eventKey="4.2" key={index}>
-                                  {model.modelName}
-                                </Dropdown.Item>
-                              );
-                            })}
-                          </div>
-                        );
-                      })}
-                    </div>
-                    <div>
-                      {products.dualMenus.length > 0 &&
-                        products.dualMenus.map((menu, menuIndex) => {
+              <DropdownButton
+                title={"Apple Products"}
+                className="dropDownMenuHead"
+                key={"Apple"}
+                drop={"down"}
+              >
+                <div className="dropMenuDiv">
+                  {appleHeaderData.map((menu, menuIndex) => {
+                    return (
+                      <div key={menuIndex}>
+                        <Dropdown.Item
+                          eventKey="4.1"
+                          className={styles.listedItemHead}
+                        >
+                          {menu.submenu}
+                        </Dropdown.Item>
+                        {menu.submenuItems.map((model, index) => {
                           return (
-                            <div key={menuIndex}>
-                              <Dropdown.Item
-                                eventKey="4.1"
-                                className={styles.listedItemHead}
-                                style={
-                                  menu.dropHead === undefined
-                                    ? { display: "none" }
-                                    : null
-                                }
-                              >
-                                {menu.dropHead}
-                              </Dropdown.Item>
-
-                              {menu.models.map((model, index) => {
-                                return (
-                                  <Dropdown.Item eventKey="4.2" key={index}>
-                                    {model.modelName}
-                                  </Dropdown.Item>
-                                );
-                              })}
-                            </div>
+                            <Dropdown.Item eventKey="4.2" key={index}>
+                              {model.model_title}
+                            </Dropdown.Item>
                           );
                         })}
+                      </div>
+                    );
+                  })}
+                </div>
+              </DropdownButton>
+              <DropdownButton
+                title={"Top Brands"}
+                className="dropDownMenuHead"
+                key={"topbrands"}
+                drop={"down"}
+              >
+                {topBrandsHeaderData.map((menu, menuIndex) => {
+                  return (
+                    <div key={menuIndex}>
+                      <Dropdown.Item eventKey="4.2" key={menuIndex}>
+                        {menu.brand_title}
+                      </Dropdown.Item>
                     </div>
-                  </DropdownButton>
-                );
-              })}
+                  );
+                })}
+              </DropdownButton>
+              <DropdownButton
+                title={"Mobile Repairs"}
+                className="dropDownMenuHead"
+                key={"mobileRepair"}
+                drop={"down"}
+              >
+                {mobileRepairHeaderData.map((menu, menuIndex) => {
+                  return (
+                    <div key={menuIndex}>
+                      <Dropdown.Item eventKey="4.2" key={menuIndex}>
+                        {menu.model_title}
+                      </Dropdown.Item>
+                    </div>
+                  );
+                })}
+              </DropdownButton>
+              <DropdownButton
+                title={"Top Issues"}
+                className="dropDownMenuHead"
+                key={"topIssues"}
+                drop={"start"}
+              >
+                {topIssuesHeaderData.map((menu, menuIndex) => {
+                  return (
+                    <div key={menuIndex}>
+                      <Dropdown.Item eventKey="4.2" key={menuIndex}>
+                        {menu.length <= 0 ? "" : menu.model_title}
+                      </Dropdown.Item>
+                    </div>
+                  );
+                })}
+              </DropdownButton>
+              <DropdownButton
+                title={"More"}
+                className="dropDownMenuHead"
+                key={"more"}
+                drop={"start"}
+              >
+                {moreMenu.map((menu, menuIndex) => {
+                  return (
+                    <div key={menuIndex}>
+                      <Dropdown.Item eventKey="4.2" key={menuIndex}>
+                        {menu.length <= 0 ? "" : menu.menuName}
+                      </Dropdown.Item>
+                    </div>
+                  );
+                })}
+              </DropdownButton>
             </Nav>
             <LoginPopup show={loginPopup} onHide={() => setLoginPopup(false)} />
             <CartAndOffer

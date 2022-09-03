@@ -173,6 +173,11 @@ a {
   padding: 0 !important;
 }
 
+.offerSections .slick-arrow::before,
+.aboutTeamBoxes .slick-arrow::before {
+  color: #0e62cb;
+}
+
 /* carousel */
 .carousel-control-prev {
   left: -60px;
@@ -187,8 +192,14 @@ a {
   height: 1.4rem !important;
 }
 
+.getCategory .dropdown-menu.show {
+  top: 40% !important;
+  left: -15px !important;
+  width: 100%;
+}
+
 .getBrands .dropdown-menu.show {
-  width: 80vw;
+  width: 88vw;
   left: 50% !important;
   transform: translateX(-50%) !important;
   top: 130% !important;
@@ -196,9 +207,9 @@ a {
 }
 
 .getModels .dropdown-menu.show {
-  width: 80vw;
+  width: 88vw;
   left: 80% !important;
-  transform: translateX(-90%) !important;
+  transform: translateX(-94%) !important;
   top: 140% !important;
   padding: 1.5rem;
 }
@@ -320,6 +331,11 @@ input[type="number"] {
 
 .btn-close:focus {
   box-shadow: none !important;
+}
+
+.blogslider .slick-prev,
+.slick-next {
+  top: 35% !important;
 }
 
 /*  */
@@ -468,6 +484,19 @@ input[type="number"] {
     left: 0 !important;
     padding: 0rem 1rem;
   }
+
+  .offerbanner .slick-prev,
+  .slick-next {
+    top: 50% !important;
+  }
+
+  .blogslider .slick-next {
+    top: 25% !important;
+  }
+
+  .blogslider .slick-prev {
+    top: 25% !important;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1080px) {
@@ -516,6 +545,19 @@ input[type="number"] {
   .slick-dots.slick-thumb li.slick-active {
     background-color: #0e62cb;
     width: 22.45px;
+  }
+
+  .offerbanner .slick-prev,
+  .slick-next {
+    top: 50% !important;
+  }
+
+  .blogslider .slick-next {
+    top: 35% !important;
+  }
+
+  .blogslider .slick-prev {
+    top: 35%;
   }
 }
 

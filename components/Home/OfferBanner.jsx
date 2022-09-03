@@ -40,7 +40,7 @@ export default function OfferBanner({ data = OfferBannerhomedata }) {
   return (
     <Container userdefinedclass={styles.MobileSpacing}>
       <Row className="justify-content-center m-0 OfferBannerImageSlide">
-        <Slider {...settings}>
+        <Slider {...settings} className="offerbanner">
           {data.map((value, index) => (
             <Col xl={4} key={index}>
               <Link href={value.osection_click_url} target={"_blank"}>
