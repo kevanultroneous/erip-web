@@ -180,13 +180,15 @@ export default function LoginPopup({ show, onHide }) {
     }
   };
   return (
-    <>
+    <div>
       <Modal
         show={regOtpModal}
+        onHide={() => setRegOtpModal(false)}
         size="md"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
+        <Modal.Header closeButton></Modal.Header>
         <Modal.Body className={styles.RegModalBody}>
           <h4 className={styles.RegModalText}>Registration OTP</h4>
           <div className={styles.InputWrraper}>
@@ -343,6 +345,6 @@ export default function LoginPopup({ show, onHide }) {
           </Row>
         </Modal.Body>
       </Modal>
-    </>
+    </div>
   );
 }

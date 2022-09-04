@@ -366,7 +366,11 @@ export function Header() {
                 src="assets/icons/header-cart.svg"
                 alt="header cart"
                 className={styles.navHeaderCart}
-                onClick={() => setCartAndOfferPopup(true)}
+                onClick={() => {
+                  !localStorage.getItem("token")
+                    ? setLoginPopup(true)
+                    : setCartAndOfferPopup(true);
+                }}
               />
 
               <PrimaryButton
