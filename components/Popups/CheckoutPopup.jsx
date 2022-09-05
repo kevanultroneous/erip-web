@@ -24,7 +24,7 @@ import {
   MyAddress,
   SaveAddress,
   TimeSloatAPI,
-} from "pages/api/api ";
+} from "pages/api/api";
 import { MatchCity, TimeSloatOver } from "utils/utilsfunctions";
 import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";

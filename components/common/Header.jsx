@@ -13,7 +13,7 @@ import LoginPopup from "../Popups/LoginPopup";
 import CartAndOffer from "../Popups/CartAndOffer";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
 import { API_URL, GMAP_API } from "utils/data";
-import { CityDetactionAPI, PincodeByCity, UserLogout } from "pages/api/api ";
+import { CityDetactionAPI, PincodeByCity, UserLogout } from "pages/api/api";
 import { MatchCity } from "utils/utilsfunctions";
 import Logout from "../Popups/Logout";
 import axios from "axios";
