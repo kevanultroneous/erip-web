@@ -17,7 +17,7 @@
   text-align: center;
 }
 
-.profileDetails > * {
+.profileDetails>* {
   margin: 0 0 0.5rem;
 }
 
@@ -39,6 +39,7 @@
   font-weight: 400;
   color: #333946;
 }
+
 .bookingMenuText hr {
   color: #343434;
   margin: 0 0 1.5rem;
@@ -48,4 +49,10 @@
   text-align: center;
   color: #0e62cb;
   text-decoration: underline;
+  cursor: pointer;
+  user-select: none;
+}
+
+.AlternativeButtons {
+  cursor: pointer;
 }
