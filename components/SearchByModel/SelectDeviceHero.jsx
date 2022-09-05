@@ -53,7 +53,9 @@ function SelectDeviceHero({
 
   const getIssues = async (eventKey, key) => {
     const issueURL = !token
-      ? `${API_URL}api/v1/issues_by_models?model=${key.target.accessKey}`
+      ? mobileView
+        ? `${API_URL}api/v1/issues_by_models_detail?model=${eventKey}&city=1`
+        : `${API_URL}api/v1/issues_by_models?model=${key.target.accessKey}`
       : mobileView
       ? `${API_URL}api/v1/issues_by_models_detail?model=${eventKey}&city=1`
       : `${API_URL}api/v1/issues_by_models_detail?model=${key.target.accessKey}&city=1`;
@@ -187,6 +189,7 @@ function SelectDeviceHero({
         </Row>
         {mobileView ? (
           <MobileModels
+            homeQuery={homeQuery}
             getIssuesFromMobile={getIssues}
             issues={issues}
             setissues={setIssues}

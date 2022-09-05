@@ -201,7 +201,7 @@ export function Header() {
       return (
         <Navbar expand="lg" className={`${styles.mobileNavBar} mobileNavBar`}>
           <Container>
-            <Navbar.Brand href="#">
+            <Navbar.Brand href="/">
               <div className={styles.brandLogo}>
                 <Image
                   fluid
