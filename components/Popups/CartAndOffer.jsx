@@ -20,11 +20,20 @@ export default function CartAndOffer({ show, onHide }) {
   const [cartNetworkData, setCartNetworkData] = useState({});
   const [cartItems, setCartItems] = useState([]);
   const [finalAmount, setFinalAmount] = useState(0);
+
+  const BillAmount = () => {
+    var ans = 0;
+    for (let i = 0; i < cartItems.length; i++) {
+      ans = parseInt(cartItems[i].issue_price) + ans;
+    }
+    setTotal(ans);
+  };
   useEffect(() => {
     if (!show) {
       setActive(0);
       setShowCheckout(false);
     }
+
     MyCart(localStorage.getItem("token"), localStorage.getItem("cityid"))
       .then((response) => {
         if (response) {
@@ -35,18 +44,10 @@ export default function CartAndOffer({ show, onHide }) {
         }
       })
       .catch((e) => console.log("my cart " + e));
+    BillAmount();
   }, [show]);
 
-  const BillAmount = () => {
-    var ans = 0;
-    for (let i = 0; i < cartItems.length; i++) {
-      ans = parseInt(cartItems[i].issue_price) + ans;
-    }
-    setTotal(ans);
-  };
   useEffect(() => {
-    BillAmount();
-
     CouponsByCC()
       .then((response) => {
         if (response.data.success) {

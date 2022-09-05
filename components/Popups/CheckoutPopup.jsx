@@ -59,6 +59,8 @@ export default function CheckoutPopup({ show, onHide }) {
   const [myselectedaddress, setMyselectedAddress] = useState({});
   const [deleteShow, setDeleteShow] = useState(false);
   const [tabletView, setTabletView] = useState(false);
+  const [finalPayment, setFinalPayment] = useState(false);
+
   const TimeIsOver = (timesloatsata, timesofsloats) => {
     let overdata = [];
     let newDate = new Date();
@@ -781,6 +783,9 @@ export default function CheckoutPopup({ show, onHide }) {
                   </p>
                 </div>
                 <PrimaryButton
+                  clickHandler={() => {
+                    setFinalPayment(true);
+                  }}
                   buttonStyle={{
                     width: "100%",
                     backgroundColor: "#0E62CB",
