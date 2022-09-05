@@ -147,7 +147,7 @@ export function Header() {
     UserLogout(localStorage.getItem("token"))
       .then((response) => {
         if (response.data.success) {
-          alert(response.data.message);
+          // alert(response.data.message);
           localStorage.removeItem("token");
           setLogoutPopup(false);
         }

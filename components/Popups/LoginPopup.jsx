@@ -158,7 +158,7 @@ export default function LoginPopup({ show, onHide }) {
     FinalLoginAPI(ContactNumber, Otp)
       .then((login_user) => {
         if (login_user.data.success) {
-          alert(login_user.data.message);
+          // alert(login_user.data.message);
           setOtpSending(false);
           setOtp("");
           setContactNumber("");
