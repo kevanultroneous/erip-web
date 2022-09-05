@@ -7,7 +7,7 @@ import Coupons from "./Coupons";
 import { useEffect, useState } from "react";
 import CouponsCard from "./CouponsCard";
 import CheckoutPopup from "./CheckoutPopup";
-import { CouponsByCC, MyCart } from "api/api";
+import { CouponsByCC, MyCart } from "pages/api/api ";
 import styles from "@/styles/components/Popups/CartAndOffer.module.css";
 
 export default function CartAndOffer({ show, onHide }) {

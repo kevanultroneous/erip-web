@@ -11,7 +11,7 @@ import {
   RegisterUserAPI,
   SendLoginOtpAPI,
   SendRegistrationOtpAPI,
-} from "api/api";
+} from "pages/api/api ";
 import { useRouter } from "next/router";
 export default function LoginPopup({ show, onHide }) {
   /* Note :  3 validation state 
