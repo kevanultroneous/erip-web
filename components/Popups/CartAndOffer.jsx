@@ -166,10 +166,9 @@ export default function CartAndOffer({ show, onHide }) {
                 </Col>
                 <Col xs={6} md={6} lg={6} xl={6} className={styles.TextRight}>
                   <lable className={styles.CartAndOfferSubMainTitleBold}>
-                    ₹
                     {selectedCoupons.coupon_amount
-                      ? total - parseInt(selectedCoupons.coupon_amount)
-                      : total}
+                      ? `₹${total - parseInt(selectedCoupons.coupon_amount)}`
+                      : `₹${total}`}
                   </lable>
                 </Col>
                 <Col
