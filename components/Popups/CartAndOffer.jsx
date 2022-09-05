@@ -19,6 +19,7 @@ export default function CartAndOffer({ show, onHide }) {
   const [couponShow, setCouponShow] = useState(false);
   const [cartNetworkData, setCartNetworkData] = useState({});
   const [cartItems, setCartItems] = useState([]);
+
   const cartlist = [
     {
       name: "Lorem Ipsum ABC issues X",
