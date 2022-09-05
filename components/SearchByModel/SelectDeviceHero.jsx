@@ -14,7 +14,7 @@ import styles from "@/styles/components/SearchByModel/SelectDeviceHero.module.cs
 import MobileModels from "./MobileModels";
 import { API_URL } from "utils/data";
 import IssueTotalBill from "../IssuePage/IssueTotalBill";
-import { AddToCart } from "pages/api/api ";
+import { AddToCart } from "pages/api/api";
 
 function SelectDeviceHero({
   headClass,
