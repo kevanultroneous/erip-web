@@ -8,7 +8,7 @@ import Models from "./Model";
 import { API_URL } from "utils/data";
 import styles from "@/styles/components/SearchByModel/selectMobile.module.css";
 
-function MobileModels({ getIssuesFromMobile, issues, setissues }) {
+function MobileModels({ getIssuesFromMobile, issues, setissues, homeQuery }) {
   const [categoryName, setCategoryName] = useState("Device");
   const [brandName, setBrandName] = useState("Brands");
   const [modelName, setModelName] = useState("Models");
@@ -33,6 +33,9 @@ function MobileModels({ getIssuesFromMobile, issues, setissues }) {
         setCategories(data.data.data);
       })
       .catch(() => setCategories([]));
+    if (homeQuery) {
+      getBrands(homeQuery);
+    }
   };
 
   const getBrands = async (categoryId) => {
