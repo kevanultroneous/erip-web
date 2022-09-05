@@ -62,7 +62,7 @@ export default function Testimonials({ data = TestimonialData, limit }) {
           <Slider {...settings}>
             {mobileView
               ? data.slice(0, 3).map((value, index) => (
-                  <Col>
+                  <Col key={index}>
                     <div className={styles.TestimonialCard}>
                       <div className={styles.TestimonialAvatar}>
                         <Image
@@ -99,7 +99,7 @@ export default function Testimonials({ data = TestimonialData, limit }) {
                   </Col>
                 ))
               : data.map((value, index) => (
-                  <Col>
+                  <Col key={index}>
                     <div className={styles.TestimonialCard}>
                       <div className={styles.TestimonialAvatar}>
                         <Image

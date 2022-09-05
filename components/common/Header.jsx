@@ -151,7 +151,6 @@ export function Header() {
           localStorage.removeItem("token");
           setLogoutPopup(false);
         }
-        console.log(response);
       })
       .catch((e) => console.log("logout" + e));
   }

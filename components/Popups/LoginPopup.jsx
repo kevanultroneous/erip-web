@@ -193,7 +193,7 @@ export default function LoginPopup({ show, onHide }) {
           <h4 className={styles.RegModalText}>Registration OTP</h4>
           <div className={styles.InputWrraper}>
             <input
-              maxlength={6}
+              // maxlength={"6"}
               className={styles.InputNumber}
               type={"number"}
               value={RegOtp}
@@ -291,7 +291,7 @@ export default function LoginPopup({ show, onHide }) {
                 <div className={styles.InputWrraper}>
                   <label className={styles.InputDefaultLabel}>+91</label>
                   <input
-                    maxlength={10}
+                    // maxlength={"10"}
                     className={styles.InputNumber}
                     type="number"
                     value={ContactNumber}
@@ -304,7 +304,7 @@ export default function LoginPopup({ show, onHide }) {
               {OtpSending && (
                 <div className={styles.InputWrraper}>
                   <input
-                    maxlength={6}
+                    // maxlength={"6"}
                     className={styles.InputNumber}
                     type={"number"}
                     value={Otp}

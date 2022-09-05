@@ -19,18 +19,7 @@ export default function CartAndOffer({ show, onHide }) {
   const [couponShow, setCouponShow] = useState(false);
   const [cartNetworkData, setCartNetworkData] = useState({});
   const [cartItems, setCartItems] = useState([]);
-
-  const cartlist = [
-    {
-      name: "Lorem Ipsum ABC issues X",
-      price: 200,
-    },
-    {
-      name: "Lorem Ipsum ABC issues X",
-      price: 100,
-    },
-  ];
-
+  const [finalAmount, setFinalAmount] = useState(0);
   useEffect(() => {
     if (!show) {
       setActive(0);
@@ -177,7 +166,10 @@ export default function CartAndOffer({ show, onHide }) {
                 </Col>
                 <Col xs={6} md={6} lg={6} xl={6} className={styles.TextRight}>
                   <lable className={styles.CartAndOfferSubMainTitleBold}>
-                    ₹{total - 100}
+                    ₹
+                    {selectedCoupons.coupon_amount
+                      ? total - parseInt(selectedCoupons.coupon_amount)
+                      : total}
                   </lable>
                 </Col>
                 <Col
