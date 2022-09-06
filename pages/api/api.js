@@ -38,7 +38,7 @@ export const CityDetactionAPI = () => {
 
 // mix
 export const TimeSloatAPI = () => {
-  return axios.get(`${API_URL}api/v1/timeslots`);
+  return axios.get(`http://43.204.87.153/api/v1/timeslots`);
 };
 export const PincodeByCity = (cityid) => {
   return axios.get(`${API_URL}api/v1/pincodes_by_city`, {

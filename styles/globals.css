@@ -491,11 +491,27 @@ input[type="number"] {
   }
 
   .blogslider .slick-next {
-    top: 25% !important;
+    top: 28% !important;
   }
 
   .blogslider .slick-prev {
-    top: 25% !important;
+    top: 28% !important;
+  }
+
+  .CancelOrder .modal-dialog {
+    margin: 0%;
+  }
+
+  .CancelOrder .modal-dialog-centered {
+    align-items: flex-end;
+  }
+
+  .CancelOrder .modal-content {
+    border-radius: 10px 10px 0px 0px;
+  }
+
+  .blogslider .slick-list {
+    height: 24rem;
   }
 }
 

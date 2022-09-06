@@ -1,0 +1,45 @@
+.AlternateNumText {
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+    margin: 0%;
+}
+
+.ImageClose {
+    display: flex !important;
+    justify-content: right;
+    align-items: center;
+    cursor: pointer;
+}
+
+.InputWrraper {
+    display: flex;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+}
+
+.InputNum {
+    border: none;
+    outline: none;
+    width: 100%;
+    border-bottom: 1px solid #C4C4C4;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.DefaultText {
+    font-weight: 400;
+    font-size: 20px;
+    border-bottom: 1px solid #C4C4C4;
+}
+
+.AlternateRow {
+    padding: 1rem 0.5rem;
+}
+
+@media (min-width:320px) and (max-width: 450px) {
+    .AlternateNumText {
+        font-size: 16px;
+        text-align: right;
+    }
+}

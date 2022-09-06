@@ -59,6 +59,8 @@ export default function CheckoutPopup({ show, onHide }) {
   const [myselectedaddress, setMyselectedAddress] = useState({});
   const [deleteShow, setDeleteShow] = useState(false);
   const [tabletView, setTabletView] = useState(false);
+  const [finalPayment, setFinalPayment] = useState(false);
+
   const TimeIsOver = (timesloatsata, timesofsloats) => {
     let overdata = [];
     let newDate = new Date();
@@ -301,7 +303,7 @@ export default function CheckoutPopup({ show, onHide }) {
           secondProcessShow && styles.LocationModalBody
         }`}
       >
-        {!secondProcessShow ? (
+        {!secondProcessShow && !finalPayment ? (
           <Row>
             <NavigationHandler backhandler={onHide} navtitle="Checkout" />
             <Col xs={12} md={12} lg={12} xl={12}>
@@ -781,6 +783,10 @@ export default function CheckoutPopup({ show, onHide }) {
                   </p>
                 </div>
                 <PrimaryButton
+                  clickHandler={() => {
+                    setSecondProcessShow(false);
+                    setFinalPayment(true);
+                  }}
                   buttonStyle={{
                     width: "100%",
                     backgroundColor: "#0E62CB",
@@ -792,6 +798,37 @@ export default function CheckoutPopup({ show, onHide }) {
             </Row>
           </>
         ) : null}
+        {finalPayment && (
+          <div>
+            <NavigationHandler navtitle={"Checkout"} />
+            <StatusProcess processStatus={processStatus} />
+            <Row>
+              <Col xs={6} md={6} lg={6} xl={6}>
+                <h4 className={styles.CartAndOfferSubMainTitle}>
+                  Available coupons
+                </h4>
+              </Col>
+              <Col xs={6} md={6} lg={6} xl={6} className={styles.TextRight}>
+                <lable
+                  className={`${styles.CartAndOfferSubMainTitle} ${styles.LinkType}`}
+                  onClick={() => setActive(1)}
+                >
+                  See All
+                </lable>
+              </Col>
+              <Col xs={12} md={12} lg={12} xl={12}>
+                <h4 className={styles.CartAndOfferSubMainTitle}>Your Cart</h4>
+                <hr />
+              </Col>
+              <Col xs={12} md={12} lg={12} xl={12}>
+                <h4 className={styles.CartAndOfferSubMainTitle}>
+                  Payment Options
+                </h4>
+                <hr />
+              </Col>
+            </Row>
+          </div>
+        )}
       </Modal.Body>
     </Modal>
   );
