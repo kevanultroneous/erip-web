@@ -321,9 +321,6 @@ input[type="number"] {
   background: #6666;
 }
 
-.modal {
-  top: 90px !important;
-}
 
 .form-check-input:focus {
   box-shadow: none !important;
