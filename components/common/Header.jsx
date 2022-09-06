@@ -23,7 +23,7 @@ export function Header() {
   const [mobileView, setMobileView] = useState(false);
   const [loginPopup, setLoginPopup] = useState(false);
   const [cartandOfferPopup, setCartAndOfferPopup] = useState(false);
-  const [locationPopupShow, setLocationPopupShow] = useState(false);
+  const [locationPopupShow, setLocationPopupShow] = useState(true);
   const [currentCity, setCurrentCity] = useState("");
   const [selectedAddress, setSelectedAddress] = useState("");
   const [cityData, setCityData] = useState([]);
@@ -35,14 +35,13 @@ export function Header() {
   const [topIssuesHeaderData, settopIssuesHeaderData] = useState([]);
 
   const [showMobloc, setShowMobloc] = useState(false);
-  useEffect(() => {
-    window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
-    var modal = document.getElementById("dropdown_location");
-  }, []);
 
   // getting header menus from api
   useEffect(() => {
+    window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
+    var modal = document.getElementById("dropdown_location");
     getHeaderDataFromAPI();
+    getLocation();
   }, []);
 
   const getHeaderDataFromAPI = async () => {
@@ -84,7 +83,7 @@ export function Header() {
   });
 
   useEffect(() => {
-    setLocationPopupShow(false);
+    // setLocationPopupShow(false);
 
     CityDetactionAPI()
       .then((r) => {
@@ -93,6 +92,7 @@ export function Header() {
       .catch((e) => console.log(e));
 
     if (MatchCity(cityData, currentCity)) {
+      setLocationPopupShow(false);
     } else {
       setSelectedAddress("");
     }
@@ -135,6 +135,7 @@ export function Header() {
       setLocationPopupShow(false);
       setShowMobloc(false);
     };
+
     window.addEventListener("scroll", handleScroll);
 
     return () => {
@@ -167,7 +168,7 @@ export function Header() {
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[1]) {
-          setLocationPopupShow(false);
+          // setLocationPopupShow(false);
           setSelectedAddress(results[1].formatted_address);
         }
       }
@@ -385,7 +386,7 @@ export function Header() {
                 title={token ? "Logout" : "Login"}
                 className={styles.headerLoginBtn}
                 clickHandler={() =>
-                  token ? LogoutUser() : setLoginPopup(true)
+                  token ? LogoutAction() : setLoginPopup(true)
                 }
               />
             </Navbar.Collapse>

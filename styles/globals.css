@@ -321,9 +321,6 @@ input[type="number"] {
   background: #6666;
 }
 
-.modal {
-  top: 90px !important;
-}
 
 .form-check-input:focus {
   box-shadow: none !important;
@@ -512,6 +509,18 @@ input[type="number"] {
 
   .blogslider .slick-list {
     height: 24rem;
+  }
+
+  .OfferPopup .modal-dialog {
+    margin: 0%;
+  }
+
+  .OfferPopup .modal-dialog-centered {
+    align-items: flex-end;
+  }
+
+  .OfferPopup .modal-content {
+    border-radius: 10px 10px 0px 0px;
   }
 }
 
