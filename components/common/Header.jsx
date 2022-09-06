@@ -132,6 +132,8 @@ export function Header() {
           menuCollapse.current.classList.remove("show");
         }
       }
+      setLocationPopupShow(false);
+      setShowMobloc(false);
     };
     window.addEventListener("scroll", handleScroll);
 
