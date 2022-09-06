@@ -152,6 +152,24 @@
 }
 
 @media (max-width: 600px) {
+  .CartSection {
+    position: relative;
+    left: 5rem;
+  }
+
+  .ContainerNavmob {
+    display: block !important;
+  }
+
+  .MobNavCol {
+    display: flex;
+  }
+
+  .SubWrraper {
+    display: flex;
+    justify-content: end;
+  }
+
   .brandLogo {
     width: 20vw;
   }
@@ -198,5 +216,54 @@
 
   .dropdownicons {
     transition: 0.5s;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {
+  .ContainerNavmob {
+    display: block !important;
+  }
+
+  .MobNavCol {
+    display: flex;
+  }
+
+  .SubMainWrraper {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .LocationmobSub {
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+    margin-top: 1rem;
+  }
+
+  .LocationText {
+    margin: 0 1rem;
+  }
+
+  .LocationmobWrraper {
+    margin-left: 1.5rem;
+  }
+
+  .SearchIcon {
+    color: #024b78;
+    font-size: 20px;
+    margin-left: 0.5rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .SearchLocMob {
+    border: 1px solid #676767;
+    border-radius: 3px;
+    margin: 1rem 2rem 1rem 2rem;
+  }
+
+  .SearchBoxMob {
+    padding: 0.5rem;
+    border: none;
+    outline: none;
   }
 }

@@ -146,6 +146,7 @@ export function Header() {
   function LogoutAction() {
     UserLogout(localStorage.getItem("token"))
       .then((response) => {
+        console.log(response);
         if (response.data.success) {
           // alert(response.data.message);
           localStorage.removeItem("token");
@@ -208,35 +209,41 @@ export function Header() {
     if (mobileView) {
       return (
         <Navbar expand="lg" className={`${styles.mobileNavBar} mobileNavBar`}>
-          <Container>
-            <Navbar.Brand href="/">
-              <div className={styles.brandLogo}>
-                <Image
-                  fluid
-                  src="/assets/icons/erip-logo-blue.png"
-                  alt="Erip Logo"
-                />
-              </div>
-            </Navbar.Brand>
-            <div>
-              <Image
-                src="assets/icons/mobile-header-cart.svg"
-                alt="header cart"
-                className={styles.CartSpace}
-                onClick={() => setCartAndOfferPopup(true)}
-              />
-              <Navbar.Toggle
-                aria-controls="basic-navbar-nav"
-                className={styles.mobileToggleButton}
-              />
-            </div>
+          <Container className={styles.ContainerNavmob}>
+            <Row>
+              <Col xs={6} sm={6} md={6} className={styles.MobNavCol}>
+                <Navbar.Brand href="/">
+                  <div className={styles.brandLogo}>
+                    <Image
+                      fluid
+                      src="/assets/icons/erip-logo-blue.png"
+                      alt="Erip Logo"
+                    />
+                  </div>
+                </Navbar.Brand>
+              </Col>
+              <Col xs={6} sm={6} md={6} className={styles.SubMainWrraper}>
+                <div className={styles.SubWrraper}>
+                  <Image
+                    src="assets/icons/mobile-header-cart.svg"
+                    alt="header cart"
+                    className={styles.CartSpace}
+                    onClick={() => setCartAndOfferPopup(true)}
+                  />
+                  <Navbar.Toggle
+                    aria-controls="basic-navbar-nav"
+                    className={styles.mobileToggleButton}
+                  />
+                </div>
+              </Col>
+            </Row>
 
             <Navbar.Collapse id="basic-navbar-nav" ref={menuCollapse}>
               <Nav className="me-auto">
                 <Nav.Link
                   href="#home"
                   className={styles.mobileMenuLink}
-                  onClick={() => (token ? LogoutUser() : setLoginPopup(true))}
+                  onClick={() => (token ? LogoutAction() : setLoginPopup(true))}
                 >
                   {token ? "Logout" : "Login"}
                 </Nav.Link>
@@ -486,11 +493,11 @@ export function Header() {
               show={cartandOfferPopup}
               onHide={() => setCartAndOfferPopup(false)}
             />
-            <Logout
+            {/* <Logout
               show={logoutpopup}
               yesaction={() => LogoutAction()}
               noaction={() => setLogoutPopup(false)}
-            />
+            /> */}
           </Container>
           <div
             className={`${styles.LocationSmallModal} ${

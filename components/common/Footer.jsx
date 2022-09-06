@@ -108,22 +108,22 @@ export default function Footer() {
             <p className={styles.PaymentSmallTitle}>Secure Payment</p>
             <div>
               <Image
-                src="/assets/images/visa.png"
+                src="/assets/icons/py-1.png"
                 alt="visa"
                 className={styles.PaymentImage}
               />
               <Image
-                src="/assets/images/master-card.png"
+                src="/assets/icons/py-2.png"
                 alt="master-card"
                 className={styles.PaymentImage}
               />
               <Image
-                src="/assets/images/maestro.png"
+                src="/assets/icons/py-3.png"
                 alt="maestro"
                 className={styles.PaymentImage}
               />
               <Image
-                src="/assets/images/american-express.png"
+                src="/assets/icons/py-4.png"
                 alt="american-express"
                 className={styles.PaymentImage}
               />
