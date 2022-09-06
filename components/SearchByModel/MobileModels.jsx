@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import CategoryModels from "./CategoryModels";
 import { BsChevronDown } from "react-icons/bs";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Image } from "react-bootstrap";
 import BrandModels from "./BrandModels";
 import Models from "./Model";
 import { API_URL } from "utils/data";
@@ -21,6 +21,9 @@ function MobileModels({ getIssuesFromMobile, issues, setissues, homeQuery }) {
   const [disableBrandsClick, setDisableBrandsClick] = useState(false);
   const [disableModelsClick, setDisableModelsClick] = useState(false);
   const [brandId, setBrandId] = useState(0);
+  const [topBrands, setTopBrands] = useState(true);
+  const [totalBrands, setTotalBrands] = useState(3);
+  const [showBrands, setShowBrands] = useState(true);
 
   useEffect(() => {
     getCategory();
@@ -35,6 +38,7 @@ function MobileModels({ getIssuesFromMobile, issues, setissues, homeQuery }) {
       .catch(() => setCategories([]));
     if (homeQuery) {
       getBrands(homeQuery);
+      setTopBrands(true);
     }
   };
 
@@ -68,6 +72,7 @@ function MobileModels({ getIssuesFromMobile, issues, setissues, homeQuery }) {
         });
       });
     setissues([]);
+    setTopBrands(true);
     setBrandName("Brands");
     setModelName("Models");
   };
@@ -99,6 +104,7 @@ function MobileModels({ getIssuesFromMobile, issues, setissues, homeQuery }) {
           }
         });
       });
+    setTopBrands(false);
     setissues([]);
     setModelName("Models");
   };
@@ -118,6 +124,15 @@ function MobileModels({ getIssuesFromMobile, issues, setissues, homeQuery }) {
       });
     getIssuesFromMobile(issueID);
     setDisplayModels(false);
+  };
+  const showMoreBrands = () => {
+    setTotalBrands(brands.length);
+    setShowBrands(false);
+  };
+
+  const showLessBrands = () => {
+    setTotalBrands(3);
+    setShowBrands(true);
   };
 
   return (
@@ -193,6 +208,35 @@ function MobileModels({ getIssuesFromMobile, issues, setissues, homeQuery }) {
           </Col>
         </Row>
       </div>
+      {brands.length > 1 && topBrands && (
+        <section className={styles.topBrands}>
+          <h3>Top Brands</h3>
+          <Row className={styles.topBrandsRow}>
+            {brands.slice(0, totalBrands).map((brands) => {
+              return (
+                <Col
+                  xl={2}
+                  xs={4}
+                  key={brands.brand_id}
+                  onClick={() => getModels(brands.brand_id)}
+                >
+                  <Image
+                    fluid
+                    accessKey={brands.brand_id}
+                    src={brands.brand_icon_url}
+                    alt={brands.brand_title}
+                  />
+                </Col>
+              );
+            })}
+          </Row>
+          {brands.length > 3 && (
+            <button onClick={showBrands ? showMoreBrands : showLessBrands}>
+              {showBrands ? "View All" : "Show Less"}
+            </button>
+          )}
+        </section>
+      )}
     </>
   );
 }
