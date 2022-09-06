@@ -3,7 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import PrimaryButton from "./PrimaryButton";
-import { Image } from "react-bootstrap";
+import { Col, Image, Row } from "react-bootstrap";
 import { moreMenu } from "utils/moreMenu";
 import { useEffect, useRef, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -13,10 +13,11 @@ import LoginPopup from "../Popups/LoginPopup";
 import CartAndOffer from "../Popups/CartAndOffer";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
 import { API_URL, GMAP_API } from "utils/data";
-import { CityDetactionAPI, UserLogout } from "pages/api/api";
+import { CityDetactionAPI, PincodeByCity, UserLogout } from "pages/api/api";
 import { MatchCity } from "utils/utilsfunctions";
 import Logout from "../Popups/Logout";
 import axios from "axios";
+import { FiSearch } from "react-icons/fi";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
@@ -33,6 +34,7 @@ export function Header() {
   const [mobileRepairHeaderData, setmobileRepairHeaderData] = useState([]);
   const [topIssuesHeaderData, settopIssuesHeaderData] = useState([]);
 
+  const [showMobloc, setShowMobloc] = useState(false);
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
     var modal = document.getElementById("dropdown_location");
@@ -85,12 +87,20 @@ export function Header() {
     setLocationPopupShow(false);
 
     CityDetactionAPI()
-      .then((r) => setCityData(r.data.data))
+      .then((r) => {
+        setCityData(r.data.data);
+      })
       .catch((e) => console.log(e));
 
     if (MatchCity(cityData, currentCity)) {
     } else {
       setSelectedAddress("");
+    }
+
+    if (localStorage.getItem("cityid")) {
+      // PincodeByCity(1)
+      //   .then((r) => console.log(r))
+      //   .catch((e) => console.log(e));
     }
   }, [currentCity]);
 
@@ -137,11 +147,10 @@ export function Header() {
     UserLogout(localStorage.getItem("token"))
       .then((response) => {
         if (response.data.success) {
-          alert(response.data.message);
+          // alert(response.data.message);
           localStorage.removeItem("token");
           setLogoutPopup(false);
         }
-        console.log(response);
       })
       .catch((e) => console.log("logout" + e));
   }
@@ -149,7 +158,6 @@ export function Header() {
     reverseMap(position.coords.latitude, position.coords.longitude);
     displayLocation(position.coords.latitude, position.coords.longitude);
   }
-
   function reverseMap(lat, lng) {
     var latlng = new google.maps.LatLng(lat, lng);
     var geocoder = (geocoder = new google.maps.Geocoder());
@@ -222,6 +230,7 @@ export function Header() {
                 className={styles.mobileToggleButton}
               />
             </div>
+
             <Navbar.Collapse id="basic-navbar-nav" ref={menuCollapse}>
               <Nav className="me-auto">
                 <Nav.Link
@@ -254,6 +263,66 @@ export function Header() {
               noaction={() => setLogoutPopup(false)}
             />
           </Container>
+          <Row>
+            <Col xs={6} className={styles.LocationmobWrraper}>
+              <div
+                className={styles.LocationmobSub}
+                onClick={() => setShowMobloc(!showMobloc)}
+              >
+                <Image src="/assets/icons/mobile-loc.png" alt="mob-loc" />
+                <p className={styles.LocationText}>Banglore</p>
+                <Image
+                  src="/assets/icons/mobile-dropdown.png"
+                  alt="mob-loc"
+                  style={
+                    showMobloc
+                      ? { transform: "rotate(182deg)", transition: "0.5s ease" }
+                      : null
+                  }
+                  className={styles.dropdownicons}
+                />
+              </div>
+            </Col>
+            <Col xs={12}>
+              <div
+                style={
+                  showMobloc
+                    ? { display: "block", transition: "0.5s ease" }
+                    : { display: "none", transition: "0.5s ease" }
+                }
+              >
+                <div className={`${styles.SearchLocMob}`}>
+                  <FiSearch className={styles.SearchIcon} />
+                  <ReactGoogleAutocomplete
+                    defaultValue={selectedAddress}
+                    placeholder="Search city, area, pincode"
+                    apiKey={GMAP_API}
+                    onPlaceSelected={(place) =>
+                      getLatandLongByAddress(place.formatted_address)
+                    }
+                    options={{
+                      types: ["establishment"],
+                      componentRestrictions: { country: "in" },
+                    }}
+                    className={styles.SearchBoxMob}
+                  />
+                </div>
+                <p className={styles.InputOrText}>or</p>
+                <div
+                  className={styles.ModalHeadDetect}
+                  onClick={() => getLocation()}
+                >
+                  <Image
+                    src="/assets/icons/location-color.svg"
+                    loading="lazy"
+                  />
+                  <p className={styles.LocationDetectText}>
+                    Detect My Location
+                  </p>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </Navbar>
       );
     } else {
@@ -296,7 +365,11 @@ export function Header() {
                 src="assets/icons/header-cart.svg"
                 alt="header cart"
                 className={styles.navHeaderCart}
-                onClick={() => setCartAndOfferPopup(true)}
+                onClick={() => {
+                  !localStorage.getItem("token")
+                    ? setLoginPopup(true)
+                    : setCartAndOfferPopup(true);
+                }}
               />
 
               <PrimaryButton

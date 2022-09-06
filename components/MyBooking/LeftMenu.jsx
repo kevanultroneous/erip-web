@@ -2,7 +2,15 @@ import React from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import styles from "@/styles/components/MyBooking/LeftMenu.module.css";
 
-function LeftMenu({ profileImage, profileName, profileNumber, menus }) {
+function LeftMenu({
+  profileImage,
+  profileName,
+  profileNumber,
+  menus,
+  alternativenumberaction,
+  addemailaction,
+  logout,
+}) {
   return (
     <div className={styles.leftMenuCont}>
       <div>
@@ -14,8 +22,15 @@ function LeftMenu({ profileImage, profileName, profileNumber, menus }) {
             <div className={styles.profileDetails}>
               <h5>{profileName}</h5>
               <p>{profileNumber}</p>
-              <p>add alternative number</p>
-              <p>add email</p>
+              <p
+                onClick={alternativenumberaction}
+                className={styles.AlternativeButtons}
+              >
+                add alternative number
+              </p>
+              <p onClick={addemailaction} className={styles.AlternativeButtons}>
+                add email
+              </p>
             </div>
           </Col>
         </div>
@@ -31,7 +46,7 @@ function LeftMenu({ profileImage, profileName, profileNumber, menus }) {
         </div>
       </div>
       <div className={styles.profileDetailsLogOut}>
-        <h6>Log Out</h6>
+        <h6 onClick={logout}>Log Out</h6>
       </div>
     </div>
   );

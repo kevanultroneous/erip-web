@@ -14,6 +14,7 @@ import styles from "@/styles/components/SearchByModel/SelectDeviceHero.module.cs
 import MobileModels from "./MobileModels";
 import { API_URL } from "utils/data";
 import IssueTotalBill from "../IssuePage/IssueTotalBill";
+import { AddToCart } from "pages/api/api";
 
 function SelectDeviceHero({
   headClass,
@@ -86,6 +87,17 @@ function SelectDeviceHero({
     getCategory();
   }, []);
 
+  const AddTOcartAction = (issueid) => {
+    AddToCart(localStorage.getItem("token"), issueid)
+      .then((r) => {
+        if (r.data.success) {
+          alert(r.data.message);
+        } else {
+          alert(r.data.message);
+        }
+      })
+      .catch((e) => console.log(e));
+  };
   const getCategory = async () => {
     await axios
       .get(`${API_URL}api/v1/categories_by_cities?city=1`)
@@ -334,7 +346,7 @@ function SelectDeviceHero({
                   href={"#"}
                   addToCart={() => {
                     setCartIssues((previssues) => [...previssues, issues]);
-                    token ? null : quoteaction();
+                    token ? AddTOcartAction(issues.issue_id) : quoteaction();
                   }}
                   buttonName={token ? "Add to cart" : "Get Quote"}
                 />

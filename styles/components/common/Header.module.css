@@ -159,4 +159,44 @@
   .CartSpace {
     margin-right: 1rem;
   }
+
+  .SearchBoxMob {
+    padding: 0.3rem;
+    border: none;
+    outline: none;
+  }
+
+  .SearchIcon {
+    color: #024b78;
+    font-size: 20px;
+    margin-left: 0.5rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .SearchLocMob {
+    border: 1px solid #676767;
+    border-radius: 3px;
+    margin: 1rem;
+
+  }
+
+  .LocationText {
+    margin: 0 0.5rem;
+  }
+
+  .LocationmobWrraper {
+    display: flex;
+    align-items: center;
+  }
+
+  .LocationmobSub {
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+    margin-top: 1rem;
+  }
+
+  .dropdownicons {
+    transition: 0.5s;
+  }
 }

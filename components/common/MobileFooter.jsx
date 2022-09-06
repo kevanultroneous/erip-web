@@ -49,13 +49,14 @@ export default function MobileFooter() {
             <Accordion className={"AccordionMobileFooter"}>
               {footerMenuList.map((value, index) => (
                 <Accordion.Item
+                  key={index}
                   eventKey={index}
                   className={styles.AccordionBorder}
                 >
                   <Accordion.Header>{value.title}</Accordion.Header>
                   <Accordion.Body>
                     {value.menu.map((v, i) => (
-                      <Link href={v.link} target="_blank">
+                      <Link href={v.link} target="_blank" key={i}>
                         <p>{v.name}</p>
                       </Link>
                     ))}
@@ -73,6 +74,7 @@ export default function MobileFooter() {
           <div className={styles.BottomNavbar}>
             {dataOfBottombar.map((value, index) => (
               <div
+                key={index}
                 className={styles.BottomMenu}
                 onClick={() => setSelectedMenu(index)}
               >

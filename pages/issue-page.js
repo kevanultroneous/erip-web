@@ -38,7 +38,7 @@ function IssuePage({ data }) {
     } else {
       setToken(false);
     }
-  });
+  }, []);
 
   return (
     <Layout title={"Issue Page"}>
@@ -67,7 +67,6 @@ export async function getServerSideProps() {
       },
     })
     .then((res) => {
-      console.log(res);
       res.data;
     })
     .catch((e) => console.log("testimonial error" + e));
