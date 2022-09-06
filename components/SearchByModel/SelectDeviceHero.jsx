@@ -38,6 +38,7 @@ function SelectDeviceHero({
   const [issues, setIssues] = useState([]);
   const [cartIssues, setCartIssues] = useState([]);
   const [displayIssues, setDisplayIssues] = useState(false);
+  const [activeCat, setActiveCat] = useState(0);
 
   useEffect(() => {
     window.innerWidth < 662 ? setMobileView(true) : setMobileView(false);
@@ -121,6 +122,7 @@ function SelectDeviceHero({
           }
         });
       });
+    setActiveCat(eventKey);
     setDisplayIssues(false);
     setIssues([]);
     setDisableModel(true);

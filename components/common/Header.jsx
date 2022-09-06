@@ -113,7 +113,7 @@ export function Header() {
       for (let i = 0; i < childs.length; i++) {
         const element = childs[i];
         if (element.classList.contains("show")) {
-          element.classList.remove("show");
+          element.children[1].classList.remove("show");
         }
       }
 
