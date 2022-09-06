@@ -42,6 +42,7 @@ function AllBookings() {
                 </Col>
               );
             })}
+
             <Col xl={6}>{/* <BookingCard /> */}</Col>
           </Row>
         </Col>
