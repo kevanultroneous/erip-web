@@ -12,6 +12,10 @@ export default function Layout({ title, keywords, description, children }) {
           content={description}
           key="erip-key-description"
         />
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        ></meta>
         <meta name="keywords" content={keywords} key="erip-key-keywords" />
         <link rel="erip icon" href="" />
       </Head>
