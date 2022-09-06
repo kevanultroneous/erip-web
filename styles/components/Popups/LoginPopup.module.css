@@ -6,7 +6,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  margin-top: 3rem;
+  /* margin-top: 3rem; */
   margin-bottom: 1rem;
 }
 
@@ -119,6 +119,10 @@
 
   .InputDefaultLabel {
     padding-bottom: 0.6rem;
+  }
+
+  .PopupLoginImageWrraper {
+    height: auto;
   }
 }
 

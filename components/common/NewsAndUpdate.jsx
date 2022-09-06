@@ -51,7 +51,7 @@ export default function NewsAndUpdate({ data = NewsandUpdateData }) {
       </div>
       <Row>
         <Col xl={12}>
-          <Slider {...settings}>
+          <Slider {...settings} className="blogslider">
             {data.map((value, index) => (
               <Col key={index}>
                 <div className={styles.NewsandUpdateCard}>

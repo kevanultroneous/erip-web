@@ -8,7 +8,7 @@ export default function Logout({ show, noaction, yesaction }) {
       size="sm"
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      className="CartandOfferPopup"
+      className="logoutmodal"
     >
       <Modal.Body className="ps-4 pe-3">
         <h5>Are you sure you want to logout?</h5>
