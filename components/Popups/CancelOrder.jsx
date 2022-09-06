@@ -38,7 +38,7 @@ export default function CancelOrder({ show, onHide }) {
           </Col>
           <Col xs={12} md={12} lg={12} xl={12}>
             {checkboxdata.map((value, index) => (
-              <div className={styles.CheckBox}>
+              <div className={styles.CheckBox} key={index}>
                 <input type={"checkbox"} key={index} />
                 <label className={styles.CheckBoxLabel}>{value}</label>
               </div>
