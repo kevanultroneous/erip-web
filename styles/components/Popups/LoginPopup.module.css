@@ -19,10 +19,10 @@
 }
 
 .InputDefaultLabel {
-  padding-bottom: 0.6rem;
+  padding-bottom: 0.5rem;
   padding-right: 0.5rem;
   font-weight: 600;
-  border-bottom: 1px solid #000000;
+  border-bottom: 1.5px solid #000000;
 }
 
 .InputCheckBox {

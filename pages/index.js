@@ -11,6 +11,7 @@ import WhyErip from "@/components/common/WhyErip";
 import GetYourFix from "@/components/Home/GetYourFix";
 import HomeHero from "@/components/Home/Hero";
 import OfferBanner from "@/components/Home/OfferBanner";
+import OfferadPopup from "@/components/Popups/OfferadPopup";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {
@@ -25,13 +26,17 @@ import {
 
 export default function Home({ data }) {
   const [mobileView, setMobileView] = useState(true);
-
+  const [offerPopup, setOfferPopup] = useState(false)
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
+    setTimeout(() => {
+      setOfferPopup(true)
+    }, 4000)
   }, []);
   return (
     <Layout title={"Home"}>
       <Header />
+      <OfferadPopup show={offerPopup} onHide={() => setOfferPopup(false)} />
       <HomeHero data={data.herosection.data} />
       <GetYourFix data={data.getyourfix.data} />
       <OfferBanner data={data.offersection.data} />
