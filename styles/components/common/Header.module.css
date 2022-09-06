@@ -4,7 +4,7 @@
   position: sticky;
   top: 0;
   background: #fff;
-  z-index: 9999;
+  z-index: 1000;
 }
 
 .brandLogo {
@@ -95,7 +95,6 @@
 .ModalHeadDir {
   display: flex;
   align-items: flex-start;
-
 }
 
 .LocationText {
@@ -117,7 +116,7 @@
   padding-left: 1rem;
   font-weight: 400;
   font-size: 20px;
-  color: #0E62CB;
+  color: #0e62cb;
 }
 
 .InputGroup {}
@@ -195,7 +194,6 @@
     border: 1px solid #676767;
     border-radius: 3px;
     margin: 1rem;
-
   }
 
   .LocationText {
