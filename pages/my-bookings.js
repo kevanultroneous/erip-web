@@ -6,12 +6,12 @@ import React from "react";
 
 function myBookings() {
   return (
-    <Layout>
+    <Layout title={"My Bookings"}>
       <Header />
       <AllBookings />
       <Footer />
     </Layout>
-  )
+  );
 }
 
 export default myBookings;

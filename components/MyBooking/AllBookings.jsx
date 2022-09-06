@@ -3,6 +3,7 @@ import LeftMenu from "./LeftMenu";
 import { leftMenuName } from "utils/bookingSideMenu";
 import styles from "@/styles/components/MyBooking/AllBooking.module.css";
 import BookingCard from "./BookingCard";
+import { bookingData } from "utils/bookingData";
 import AlternatePopups from "../Popups/AlternatePopups";
 import { useState } from "react";
 import AddEmail from "../Popups/AddEMail";
@@ -24,6 +25,24 @@ function AllBookings() {
       <Row className={styles.allBookingRow}>
         <Col xl={9}>
           <Row>
+            {bookingData.map((bookings) => {
+              return (
+                <Col key={bookings.orderNumber} xl={6}>
+                  <BookingCard
+                    orderNumber={bookings.orderNumber}
+                    partnerStatusAssigned={bookings.partnerStatusAssigned}
+                    partnerImage={bookings.partnerImage}
+                    partnerName={bookings.partnerName}
+                    bookingDateAndTime={bookings.bookingDateAndTime}
+                    issueDevice={bookings.issueDevice}
+                    issueType={bookings.issueType}
+                    partnerAssigningStatus={bookings.partnerAssigningOTP}
+                    OTP={bookings.OTP}
+                  />
+                </Col>
+              );
+            })}
+
             <Col xl={6}>{/* <BookingCard /> */}</Col>
           </Row>
         </Col>

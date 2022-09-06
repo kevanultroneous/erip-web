@@ -28,7 +28,7 @@ function IssuePage({ data }) {
   const router = useRouter();
   const [popupLogin, setPopupLogin] = useState(false);
   {
-    console.log(router.query.issue);
+    // console.log(router.query.issue);
   }
   const [token, setToken] = useState(false);
   useEffect(() => {

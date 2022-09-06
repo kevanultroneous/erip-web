@@ -1,16 +1,27 @@
 .bookingCardContainer {
   background: white;
-  margin: 1rem;
+  margin: 0.7rem 0;
   border-radius: 5px;
   padding: 1rem;
 }
 
 .bookingCardHead {
   justify-content: space-between;
+  margin: 0 0 1rem;
+}
+
+.bookingCardHead > div {
+  padding: 0;
 }
 
 .bookingOrder {
   color: #646464;
+  display: flex;
+  align-items: center;
+}
+
+.bookingOrder p {
+  margin: 0;
 }
 
 .bookingCardStatus {
@@ -21,8 +32,39 @@
   align-items: center;
   padding: 0.5rem;
   border-radius: 20px;
+  box-shadow: 1px 3px 4px rgba(0, 0, 0, 0.08);
 }
 
 .bookingCardStatus * {
   margin: 0;
+}
+
+.bookingCardProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bookingCardProfile p {
+  margin: 0.5rem 0 0;
+}
+
+.bookingCardBody {
+  display: flex;
+  justify-content: space-between;
+}
+
+.customMessage {
+  color: #646464;
+  margin: 0.5rem 0 0;
+}
+
+.actionBtn {
+  font-size: 18px;
+}
+
+.actionButtons > div {
+  padding: 0;
+  display: flex;
+  justify-content: center;
 }

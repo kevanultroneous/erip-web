@@ -123,7 +123,7 @@ export function Header() {
       for (let i = 0; i < childs.length; i++) {
         const element = childs[i];
         if (element.classList.contains("show")) {
-          element.classList.remove("show");
+          element.children[1].classList.remove("show");
         }
       }
 
@@ -132,6 +132,8 @@ export function Header() {
           menuCollapse.current.classList.remove("show");
         }
       }
+      setLocationPopupShow(false);
+      setShowMobloc(false);
     };
     window.addEventListener("scroll", handleScroll);
 
