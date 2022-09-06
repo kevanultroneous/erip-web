@@ -23,7 +23,7 @@ export function Header() {
   const [mobileView, setMobileView] = useState(false);
   const [loginPopup, setLoginPopup] = useState(false);
   const [cartandOfferPopup, setCartAndOfferPopup] = useState(false);
-  const [locationPopupShow, setLocationPopupShow] = useState(false);
+  const [locationPopupShow, setLocationPopupShow] = useState(true);
   const [currentCity, setCurrentCity] = useState("");
   const [selectedAddress, setSelectedAddress] = useState("");
   const [cityData, setCityData] = useState([]);
@@ -35,14 +35,13 @@ export function Header() {
   const [topIssuesHeaderData, settopIssuesHeaderData] = useState([]);
 
   const [showMobloc, setShowMobloc] = useState(false);
-  useEffect(() => {
-    window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
-    var modal = document.getElementById("dropdown_location");
-  }, []);
 
   // getting header menus from api
   useEffect(() => {
+    window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
+    var modal = document.getElementById("dropdown_location");
     getHeaderDataFromAPI();
+    getLocation();
   }, []);
 
   const getHeaderDataFromAPI = async () => {
