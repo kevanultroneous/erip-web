@@ -1,8 +1,15 @@
+// react hooks
 import React, { useEffect, useState } from "react";
+
+// bootstrap components
 import { Col, Image, Row } from "react-bootstrap";
+
+// Components
 import Link from "next/link";
-import styles from "@/styles/components/IssuePage/IssueComponent.module.css";
 import PrimaryButton from "../common/PrimaryButton";
+
+// Styles
+import styles from "@/styles/components/personalGadgets/IssueComponent.module.css";
 
 function IssueComponent({
   issueImage,

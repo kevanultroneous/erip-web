@@ -51,7 +51,7 @@ a {
 }
 
 /* /===================Accordion===================/ /===================Header===================/  */
-.navBarBottomHeader .nav-pills .show>.nav-link {
+.navBarBottomHeader .nav-pills .show > .nav-link {
   background-color: white !important;
 }
 
@@ -68,12 +68,18 @@ a {
   top: 110% !important;
 }
 
-.navbar-expand-lg .navbar-nav .dropDownMenuHead:nth-child(5) .dropdown-menu.show,
-.navbar-expand-lg .navbar-nav .dropDownMenuHead:nth-child(4) .dropdown-menu.show {
+.navbar-expand-lg
+  .navbar-nav
+  .dropDownMenuHead:nth-child(5)
+  .dropdown-menu.show,
+.navbar-expand-lg
+  .navbar-nav
+  .dropDownMenuHead:nth-child(4)
+  .dropdown-menu.show {
   right: -10% !important;
 }
 
-.navBarBottomHeader .dropdown-menu.show>div {
+.navBarBottomHeader .dropdown-menu.show > div {
   display: flex !important;
 }
 
@@ -230,7 +236,7 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.btn-check:focus+.btn,
+.btn-check:focus + .btn,
 .btn:focus {
   box-shadow: none !important;
 }
@@ -300,7 +306,8 @@ input[type="number"] {
   color: #000;
 }
 
-.pac-matched {}
+.pac-matched {
+}
 
 .pac-icon {
   background: url("/assets/icons/gmap-location.svg") !important;
@@ -404,7 +411,8 @@ input[type="number"] {
   .AccordionMobileFooter .accordion-button:not(.collapsed) {
     color: #000;
     background-color: transparent !important;
-    box-shadow: inset 0 calc(var(--bs-accordion-border-width) * -1) 0 var(--bs-accordion-border-color);
+    box-shadow: inset 0 calc(var(--bs-accordion-border-width) * -1) 0
+      var(--bs-accordion-border-color);
   }
 
   .AccordionMobileFooter .accordion-button::after {
@@ -575,7 +583,8 @@ input[type="number"] {
   .AccordionMobileFooter .accordion-button:not(.collapsed) {
     color: #000;
     background-color: transparent !important;
-    box-shadow: inset 0 calc(var(--bs-accordion-border-width) * -1) 0 var(--bs-accordion-border-color);
+    box-shadow: inset 0 calc(var(--bs-accordion-border-width) * -1) 0
+      var(--bs-accordion-border-color);
   }
 
   .AccordionMobileFooter .accordion-button::after {
@@ -622,6 +631,8 @@ input[type="number"] {
   }
 }
 
-@media (min-width: 1200px) and (max-width: 1730px) {}
+@media (min-width: 1200px) and (max-width: 1730px) {
+}
 
-@media (min-width: 650px) and (max-width: 740px) {}
+@media (min-width: 650px) and (max-width: 740px) {
+}
