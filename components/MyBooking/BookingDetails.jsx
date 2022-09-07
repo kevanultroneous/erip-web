@@ -7,9 +7,10 @@ export default function BookingDetails({
   deliveryAndJobcard,
   showinnercallsupport,
   hidereschedulebuttons,
+  raiseticketshow,
 }) {
   return (
-    <Col xs={12} md={6} lg={6} xl={6}>
+    <div>
       <Row className={styles.BookingBox}>
         <Col xs={12} md={6} lg={6} xl={6}>
           <label className={styles.BoxTitle}>Booking Details</label>
@@ -97,7 +98,7 @@ export default function BookingDetails({
         </Row>
       )}
       {deliveryAndJobcard && (
-        <>
+        <div>
           <Row className={styles.MiniCard}>
             <Col xs={6} md={6} lg={6} xl={6}>
               <p className={styles.ItemTitle}>Estimated to deliver on</p>
@@ -114,9 +115,9 @@ export default function BookingDetails({
               <BsChevronRight className={styles.ItemArrow} />
             </Col>
           </Row>
-        </>
+        </div>
       )}
-      {deliveryAndJobcard && (
+      {raiseticketshow ? (
         <Row className={styles.MiniCard}>
           <Col xs={12} md={12} lg={12} xl={12}>
             <div className={styles.CoverOfReceipt}>
@@ -152,7 +153,7 @@ export default function BookingDetails({
             />
           </Col>
         </Row>
-      )}
-    </Col>
+      ) : null}
+    </div>
   );
 }
