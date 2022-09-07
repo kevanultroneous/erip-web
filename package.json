@@ -20,7 +20,9 @@
     "react-google-autocomplete": "^2.7.0",
     "react-google-maps": "^9.4.5",
     "react-icons": "^4.4.0",
+    "react-redux": "^8.0.2",
     "react-slick": "^0.29.0",
+    "redux": "^4.2.0",
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {

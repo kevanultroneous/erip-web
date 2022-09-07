@@ -26,16 +26,25 @@ function SelectDeviceHero({
   const [categories, setcategories] = useState([]);
   const [brandData, setbrandData] = useState([{}]);
   const [models, setmodels] = useState([{}]);
+
   const [categoryName, setCategoryName] = useState("Device");
   const [brandName, setBrandName] = useState("Brands");
   const [modelName, setModelName] = useState("Models");
+
   const [mobileView, setMobileView] = useState(false);
+
   const [disableBrands, setDisableBrands] = useState(true);
   const [disableModel, setDisableModel] = useState(true);
+
   const [brandId, setBrandId] = useState(0);
+
   const [issues, setIssues] = useState([]);
+
   const [cartIssues, setCartIssues] = useState([]);
   const [displayIssues, setDisplayIssues] = useState(false);
+
+  const [activeCat, setActiveCat] = useState(0);
+
   const [topBrands, setTopBrands] = useState(true);
   const [totalBrands, setTotalBrands] = useState(6);
   const [displayBrands, setDisplayBrands] = useState(true);
