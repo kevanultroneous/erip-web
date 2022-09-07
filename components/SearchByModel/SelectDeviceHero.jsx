@@ -105,7 +105,9 @@ function SelectDeviceHero({
     await axios
       .get(`${API_URL}api/v1/categories_by_cities?city=1`)
       .then((data) => {
-        setcategories(data.data.data);
+        setcategories(
+          data.data.data.filter((category) => category.group_id == 1)
+        );
         setMobileCat(data.data.data);
       })
       .catch(() => setcategories([]));

@@ -15,7 +15,7 @@ export default function GetYourFix({ data = GetYourFixCard }) {
           <Link
             key={index}
             href={{
-              pathname: "issue-page",
+              pathname: "personal-gadgets",
               query: { issue: value.category_id },
             }}
           >

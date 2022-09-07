@@ -41,7 +41,7 @@ function IssuePage({ data }) {
   }, []);
 
   return (
-    <Layout title={"Issue Page"}>
+    <Layout title={"Personal Gadgets"}>
       <Header />
       <LoginPopup show={popupLogin} onHide={() => setPopupLogin(false)} />
       <SelectDeviceHero

@@ -33,7 +33,9 @@ function MobileModels({ getIssuesFromMobile, issues, setissues, homeQuery }) {
     await axios
       .get(`${API_URL}api/v1/categories_by_cities?city=1`)
       .then((data) => {
-        setCategories(data.data.data);
+        setCategories(
+          data.data.data.filter((category) => category.group_id == 1)
+        );
       })
       .catch(() => setCategories([]));
     if (homeQuery) {
