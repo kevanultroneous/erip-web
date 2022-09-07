@@ -12,6 +12,7 @@ import Footer from "@/components/common/Footer";
 import Layout from "@/components/common/Layout";
 import LoginPopup from "@/components/Popups/LoginPopup";
 import HowItWork from "@/components/common/HowItWork";
+import ContactFAQ from "@/components/ContactUs/ContactFAQ";
 
 // data
 import { API_URL, TestimonialData } from "utils/data";
@@ -57,6 +58,7 @@ function IssuePage({ data }) {
       />
       <HowItWork />
       <WhyErip />
+      <ContactFAQ />
       <Testimonials data={data.hometestimonial} />
       {mobileView ? <Footer /> : <MobileFooter />}
     </Layout>
