@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Col, Row } from "react-bootstrap";
 import PrimaryButton from "../common/PrimaryButton";
-import styles from "@/styles/components/IssuePage/IssueTotalBill.module.css";
+import styles from "@/styles/components/personalGadgets/IssueTotalBill.module.css";
 import { useEffect, useState } from "react";
 
 function IssueTotalBill({ totalPrice }) {
