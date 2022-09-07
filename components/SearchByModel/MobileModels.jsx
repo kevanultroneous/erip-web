@@ -9,18 +9,23 @@ import { API_URL } from "utils/data";
 import styles from "@/styles/components/SearchByModel/selectMobile.module.css";
 
 function MobileModels({ getIssuesFromMobile, issues, setissues, homeQuery }) {
-  const [categoryName, setCategoryName] = useState("Device");
-  const [brandName, setBrandName] = useState("Brands");
-  const [modelName, setModelName] = useState("Models");
-  const [displayCategory, setDisplayCategory] = useState(false);
-  const [displayBrands, setdisplayBrands] = useState(false);
-  const [displayModels, setDisplayModels] = useState(false);
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
+
+  const [categoryName, setCategoryName] = useState("Device");
+  const [brandName, setBrandName] = useState("Brands");
+  const [modelName, setModelName] = useState("Models");
+
+  const [displayCategory, setDisplayCategory] = useState(false);
+  const [displayBrands, setdisplayBrands] = useState(false);
+  const [displayModels, setDisplayModels] = useState(false);
+
   const [disableBrandsClick, setDisableBrandsClick] = useState(false);
   const [disableModelsClick, setDisableModelsClick] = useState(false);
+
   const [brandId, setBrandId] = useState(0);
+
   const [topBrands, setTopBrands] = useState(true);
   const [totalBrands, setTotalBrands] = useState(3);
   const [showBrands, setShowBrands] = useState(true);
