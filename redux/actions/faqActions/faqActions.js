@@ -2,7 +2,7 @@ import * as faqs from "../actionTypes";
 
 export const getFaqsByCategory = (data) => {
   return {
-    type: faqs.GET_FAQ_BY_CATEGORY,
+    type: faqs.GET_FAQ_BY_CATEGORY_SUCCESS,
     payload: data,
   };
 };
@@ -16,7 +16,7 @@ export const getFaqsByCategoryFail = (err) => {
 
 export const getFaqsByBrands = (data) => {
   return {
-    type: faqs.GET_FAQ_BY_BRANDS,
+    type: faqs.GET_FAQ_BY_BRANDS_SUCCESS,
     payload: data,
   };
 };
@@ -30,7 +30,7 @@ export const getFaqsByBrandsFail = (err) => {
 
 export const getFaqsByModels = (data) => {
   return {
-    type: faqs.GET_FAQ_BY_MODELS,
+    type: faqs.GET_FAQ_BY_MODELS_SUCCESS,
     payload: data,
   };
 };

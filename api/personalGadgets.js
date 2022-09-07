@@ -1,9 +1,9 @@
 import axios from "axios";
 import { API_URL } from "utils/data";
 
-export const homeHeroSection = async () => {
+export const getBrandsByCategory = async (categoryID) => {
   return await axios
-    .get(`${API_URL}api/v1/cms/hero_section_home`)
+    .get(`${API_URL}api/v1/brands_by_category?category=${categoryID}`)
     .then((data) => {
       if (data.status === 200) {
         return data.data.data;
@@ -14,9 +14,9 @@ export const homeHeroSection = async () => {
     });
 };
 
-export const categoryHeroSection = async (categoryID) => {
+export const getModelsByBrand = async (brandID) => {
   return await axios
-    .get(`${API_URL}api/v1/cms/hero_section_by_category?category=${categoryID}`)
+    .get(`${API_URL}api/v1/models_by_brand?brand=${brandID}`)
     .then((data) => {
       if (data.status === 200) {
         return data.data.data;
@@ -27,9 +27,9 @@ export const categoryHeroSection = async (categoryID) => {
     });
 };
 
-export const brandHeroSection = async (brandID) => {
+export const getIssuesByModel = async (modelID) => {
   return await axios
-    .get(`${API_URL}api/v1/cms/hero_section_by_brand?brand=${brandID}`)
+    .get(`${API_URL}api/v1/issues_by_models?model=${modelID}`)
     .then((data) => {
       if (data.status === 200) {
         return data.data.data;
@@ -40,9 +40,11 @@ export const brandHeroSection = async (brandID) => {
     });
 };
 
-export const modelHeroSection = async (modelID) => {
+export const getIssuesByModelDetails = async (modelID, cityID) => {
   return await axios
-    .get(`${API_URL}api/v1/cms/hero_section_by_model?model=${modelID}`)
+    .get(
+      `${API_URL}api/v1/issues_by_models_detail?model=${modelID}&city=${cityID}`
+    )
     .then((data) => {
       if (data.status === 200) {
         return data.data.data;

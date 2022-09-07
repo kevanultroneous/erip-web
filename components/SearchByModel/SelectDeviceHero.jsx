@@ -15,6 +15,13 @@ import MobileModels from "./MobileModels";
 import { API_URL } from "utils/data";
 import IssueTotalBill from "../IssuePage/IssueTotalBill";
 import { AddToCart } from "pages/api/api";
+import { getFaqsbyCategoryAxios } from "api/faqAPI";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectBrands,
+  selectCategory,
+  selectModels,
+} from "redux/actions/issuePageActions/issuePageActions";
 
 function SelectDeviceHero({
   headClass,
@@ -49,9 +56,20 @@ function SelectDeviceHero({
   const [totalBrands, setTotalBrands] = useState(6);
   const [displayBrands, setDisplayBrands] = useState(true);
 
+  const categoryID = useSelector((state) => state.issuePage.categoryID);
+  const getBrandID = useSelector((state) => state.issuePage.brandID);
+  const getModelID = useSelector((state) => state.issuePage.modelID);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     window.innerWidth < 662 ? setMobileView(true) : setMobileView(false);
   }, []);
+
+  useEffect(() => {
+    console.log("categoryID", categoryID);
+    console.log("brandID", getBrandID);
+    console.log("modelID", getModelID);
+  }, [categoryID, getBrandID, getModelID]);
 
   const selectDrop = useRef();
   const categoryModel = useRef();
@@ -62,13 +80,13 @@ function SelectDeviceHero({
   };
 
   const getIssues = async (eventKey, key) => {
+    const modelID = eventKey || key.target.accessKey;
+    dispatch(selectModels(modelID));
+
     const issueURL = !token
-      ? mobileView
-        ? `${API_URL}api/v1/issues_by_models_detail?model=${eventKey}&city=1`
-        : `${API_URL}api/v1/issues_by_models?model=${key.target.accessKey}`
-      : mobileView
-      ? `${API_URL}api/v1/issues_by_models_detail?model=${eventKey}&city=1`
-      : `${API_URL}api/v1/issues_by_models_detail?model=${key.target.accessKey}&city=1`;
+      ? `${API_URL}api/v1/issues_by_models?model=${modelID}`
+      : `${API_URL}api/v1/issues_by_models_detail?model=${modelID}&city=1`;
+
     await axios.get(issueURL).then((data) => {
       if (data.data.data !== undefined) {
         setDisplayIssues(true);
@@ -121,6 +139,10 @@ function SelectDeviceHero({
   };
 
   const getBrands = async (eventKey, key) => {
+    dispatch(selectCategory(eventKey));
+    dispatch(selectBrands(0));
+    dispatch(selectModels(0));
+
     await axios
       .get(`${API_URL}api/v1/brands_by_category?category=${eventKey}`)
       .then((data) => {
@@ -152,6 +174,8 @@ function SelectDeviceHero({
   };
 
   const getModels = async (eventKey, key) => {
+    dispatch(selectBrands(key.target.accessKey));
+    dispatch(selectModels(0));
     const modelData = await axios
       .get(`${API_URL}api/v1/models_by_brand?brand=${key.target.accessKey}`)
       .then((data) => {

@@ -1,4 +1,4 @@
-import * as faqs from "../actionTypes";
+import * as faqs from "../../actions/actionTypes";
 
 const faqInitialState = {
   data: [],
