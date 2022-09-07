@@ -1,10 +1,34 @@
-import { Col, Image, Row } from "react-bootstrap";
+import { Accordion, Col, Image, Row } from "react-bootstrap";
 import styles from "@/styles/components/MyBooking/ProcessStatus.module.css";
 import { BiArrowBack } from "react-icons/bi";
 import Container from "../common/Container";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import PrimaryButton from "../common/PrimaryButton";
+import PartnerStatusProgress from "./PartnerStatusProgress";
+import BookingDetails from "./BookingDetails";
+import NeedHelp from "./NeedHelp";
+import PartnerDetails from "./PartnerDetails";
+import Quotation from "./Quotation";
+import { useState } from "react";
 export default function ViewBooking() {
+  const checkProcess = [
+    {
+      f1: 0,
+    },
+    {
+      f2: null,
+    },
+    {
+      f3: null,
+    },
+    {
+      f4: null,
+    },
+    {
+      f5: null,
+    },
+  ];
+  const [status, setStatus] = useState(checkProcess);
   return (
     <Row className={styles.ViewBookingRow}>
       <Col xs={2} md={2} lg={2} xl={2}>
@@ -13,107 +37,25 @@ export default function ViewBooking() {
       <Col xs={10} md={10} lg={10} xl={10}>
         <p className={styles.MainTitle}>LG-Air Conditioner</p>
       </Col>
-      <Col xs={12} md={12} lg={12} xl={12}>
-        <div className={styles.ProgressWrraper}>
-          <div className={styles.container}>
-            <div className={styles.wrapper}>
-              <div className={`${styles.arrowsteps} ${styles.clearfix}`}>
-                <div className={`${styles.step} ${styles.current}`}>
-                  <span>Assigning Professional</span>
-                </div>
-                <div className={styles.step}>
-                  <span>Partner Assigned</span>
-                </div>
-                <div className={styles.step}>
-                  <span>Men At Work</span>
-                </div>
-                <div className={styles.step}>
-                  <span>Payment </span>
-                </div>
-                <div className={`${styles.step} ${styles.Laststep}`}>
-                  Review & Rating
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className={styles.InfoWrraper}>
-          <AiOutlineInfoCircle className={styles.InfoIcon} />{" "}
-          <p className={styles.InfoText}>Partner assignment in progress</p>
-        </div>
-      </Col>
+
+      <PartnerStatusProgress
+        f1={status[0].f1}
+        f2={status[1].f2}
+        f3={status[2].f3}
+        f4={status[3].f4}
+        f5={status[4].f5}
+      />
+
       <Col xs={12} md={12} lg={12} xl={12}>
         <Row>
-          <Col xs={6} md={6} lg={6} xl={6}>
-            <Row className={styles.BookingBox}>
-              <Col xs={6} md={6} lg={6} xl={6}>
-                <label className={styles.BoxTitle}>Booking Details</label>
-              </Col>
-              <Col xs={6} md={6} lg={6} xl={6}>
-                <label className={styles.BoxOrder}>Order # - 0007</label>
-              </Col>
-              <Col
-                xs={6}
-                md={6}
-                lg={6}
-                xl={6}
-                className={styles.ProductWrraper}
-              >
-                <Image
-                  src="/assets/icons/box-product.png"
-                  alt="box-icons"
-                  className={styles.BoxImg}
-                />
-                <label className={styles.BoxProduct}>
-                  Air Conditioner
-                  <br />
-                  No cooling/Less cooling
-                </label>
-              </Col>
-              <Col xs={6} md={6} lg={6} xl={6}>
-                <Image src="/assets/icons/box-bil.png" alt="box-icons" />
-                <label className={styles.BoxAmount}>
-                  Amount to be paid: ₹200
-                </label>
-              </Col>
-              <Col xs={12} md={12} lg={12} xl={12}>
-                <Image src="/assets/icons/box-loc.png" alt="box-icons" />
-                <label className={styles.BoxAddress}>
-                  Lorem ipsum cotor bajolt valom
-                </label>
-              </Col>
-              <Col xs={6} md={6} lg={6} xl={6}>
-                <Image src="/assets/icons/box-time.png" alt="box-icons" />
-                <label className={styles.BoxDateTime}>
-                  20th April, 9-11 AM
-                </label>
-              </Col>
-              <Col xs={12} md={12} lg={12} xl={12}>
-                <Row>
-                  <Col xs={6} md={6} lg={6} xl={6}>
-                    <PrimaryButton
-                      title="Reschedule"
-                      buttonStyle={{ width: "100%" }}
-                    />
-                  </Col>
-                  <Col xs={6} md={6} lg={6} xl={6}>
-                    <PrimaryButton
-                      title="Cancel"
-                      buttonStyle={{
-                        width: "100%",
-                        border: "2px solid #dc3545",
-                      }}
-                      variant="outline-danger"
-                    />
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-            <Row>
-              <PrimaryButton title="Call Us For Support" />
-            </Row>
-          </Col>
-          <Col xs={6} md={6} lg={6} xl={6}></Col>
+          <BookingDetails
+            deliveryAndJobcard={false}
+            hideoutcallsupport={true}
+            showinnercallsupport={false}
+          />
+          <Quotation rejectaccept={true} showpaybutton={false} hide />
+          <NeedHelp />
+          <PartnerDetails off={false} otphide={false} otp="2121" />
         </Row>
       </Col>
     </Row>

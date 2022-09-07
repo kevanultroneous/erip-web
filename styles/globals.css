@@ -335,6 +335,42 @@ input[type="number"] {
   top: 35% !important;
 }
 
+.Needhelpaccordian .accordion-button {
+  padding-top: 1rem;
+  padding-bottom: 0.8rem;
+  padding-left: 0%;
+  padding-right: 0%;
+}
+
+.Needhelpaccordian .accordion-item {
+  border: none;
+  border-bottom: 0.5px solid #C4C4C4;
+}
+
+.Needhelpaccordian .accordion-item:last-of-type .accordion-button.collapsed {
+  border-radius: 0%;
+
+}
+
+.Needhelpaccordian .accordion-button:not(.collapsed) {
+  color: #000;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.Needhelpaccordian .accordion-body {
+  padding-left: 0%;
+  padding-top: 0%;
+}
+
+.Needhelpaccordian .accordion {
+  border-radius: 0% !important;
+}
+
+.Needhelpaccordian .accordion-button:focus {
+  box-shadow: none;
+}
+
 /*  */
 @media (min-width: 320px) and (max-width: 450px) {
   .modal {

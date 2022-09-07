@@ -1,0 +1,20 @@
+.NeedHelpWrraper {
+    margin-top: 2rem;
+    margin-left: 1rem;
+    background: #FFFFFF;
+    box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.08);
+    border-radius: 5px;
+    padding: 2.3rem 1rem;
+}
+
+.MainLabel {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 0.5rem;
+}
+
+@media (min-width:320px) and (max-width: 450px) {
+    .NeedHelpWrraper {
+        margin-left: 0%;
+    }
+}

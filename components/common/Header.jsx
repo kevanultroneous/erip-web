@@ -41,7 +41,7 @@ export function Header() {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
     var modal = document.getElementById("dropdown_location");
     getHeaderDataFromAPI();
-    getLocation();
+    // getLocation();
   }, []);
 
   const getHeaderDataFromAPI = async () => {
