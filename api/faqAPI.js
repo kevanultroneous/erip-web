@@ -6,11 +6,15 @@ export const getFaqsbyCategoryAxios = async (categoryID) => {
     .get(`${API_URL}api/v1/cms/faqs_section_by_category?category=${categoryID}`)
     .then((faqData) => {
       if (faqData.status === 200) {
-        return faqData.data.data;
+        if (faqData.data.data !== undefined) {
+          return faqData.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
-      return [];
+      return err;
     });
 };
 

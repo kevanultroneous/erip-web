@@ -22,6 +22,7 @@ import {
   selectCategory,
   selectModels,
 } from "redux/actions/issuePageActions/issuePageActions";
+import { callFaqByCategory } from "redux/actions/faqActions/faqActions";
 
 function SelectDeviceHero({
   headClass,
@@ -57,6 +58,7 @@ function SelectDeviceHero({
   const [displayBrands, setDisplayBrands] = useState(true);
 
   const categoryID = useSelector((state) => state.issuePage.categoryID);
+  const categoryFaq = useSelector((state) => state.faqCategory.data);
   const getBrandID = useSelector((state) => state.issuePage.brandID);
   const getModelID = useSelector((state) => state.issuePage.modelID);
   const dispatch = useDispatch();
@@ -67,9 +69,10 @@ function SelectDeviceHero({
 
   useEffect(() => {
     console.log("categoryID", categoryID);
-    console.log("brandID", getBrandID);
-    console.log("modelID", getModelID);
-  }, [categoryID, getBrandID, getModelID]);
+    dispatch(callFaqByCategory(categoryID));
+  }, [categoryID]);
+
+  useEffect(() => {}, [categoryFaq]);
 
   const selectDrop = useRef();
   const categoryModel = useRef();
@@ -140,8 +143,6 @@ function SelectDeviceHero({
 
   const getBrands = async (eventKey, key) => {
     dispatch(selectCategory(eventKey));
-    dispatch(selectBrands(0));
-    dispatch(selectModels(0));
 
     await axios
       .get(`${API_URL}api/v1/brands_by_category?category=${eventKey}`)
@@ -175,7 +176,7 @@ function SelectDeviceHero({
 
   const getModels = async (eventKey, key) => {
     dispatch(selectBrands(key.target.accessKey));
-    dispatch(selectModels(0));
+
     const modelData = await axios
       .get(`${API_URL}api/v1/models_by_brand?brand=${key.target.accessKey}`)
       .then((data) => {
@@ -221,6 +222,8 @@ function SelectDeviceHero({
     setTotalBrands(6);
     setDisplayBrands(true);
   };
+
+  console.log({ categoryFaq });
 
   return (
     <>

@@ -3,6 +3,7 @@ import * as faqs from "../../actions/actionTypes";
 const faqInitialState = {
   data: [],
   error: "",
+  loading: false,
 };
 
 export const faqByCategoryReducer = (
@@ -10,15 +11,22 @@ export const faqByCategoryReducer = (
   { type, payload }
 ) => {
   switch (type) {
-    case faqs.GET_FAQ_BY_CATEGORY:
+    case faqs.GET_FAQ_BY_CATEGORY_START:
       return {
         ...state,
+        loading: true,
+      };
+    case faqs.GET_FAQ_BY_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
         data: payload,
         error: "",
       };
-    case faqs.SELECT_FAQ_BY_CATEGORY_FAIL:
+    case faqs.GET_FAQ_BY_CATEGORY_FAIL:
       return {
         ...state,
+        loading: false,
         data: [],
         error: payload,
       };
@@ -33,7 +41,7 @@ export const faqByBrandReducer = (
   { type, payload }
 ) => {
   switch (type) {
-    case faqs.GET_FAQ_BY_BRANDS:
+    case faqs.GET_FAQ_BY_BRANDS_SUCCESS:
       return {
         ...state,
         data: payload,
@@ -56,7 +64,7 @@ export const faqByModelReducer = (
   { type, payload }
 ) => {
   switch (type) {
-    case faqs.GET_FAQ_BY_MODELS:
+    case faqs.GET_FAQ_BY_MODELS_SUCCESS:
       return {
         ...state,
         data: payload,
