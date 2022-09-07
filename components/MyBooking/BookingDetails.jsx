@@ -55,7 +55,7 @@ export default function BookingDetails({
           />
           <label className={styles.BoxDateTime}>20th April, 9-11 AM</label>
         </Col>
-        {hidereschedulebuttons && (
+        {!hidereschedulebuttons && (
           <Col xs={12} md={12} lg={12} xl={12}>
             <Row>
               <Col xs={6} md={6} lg={6} xl={6}>
@@ -115,6 +115,43 @@ export default function BookingDetails({
             </Col>
           </Row>
         </>
+      )}
+      {deliveryAndJobcard && (
+        <Row className={styles.MiniCard}>
+          <Col xs={12} md={12} lg={12} xl={12}>
+            <div className={styles.CoverOfReceipt}>
+              <Image
+                src="/assets/icons/shield.svg"
+                alt="shield"
+                style={{ marginRight: "1rem" }}
+              />
+              <p style={{ margin: "0%" }}>
+                <span
+                  style={{
+                    color: "#00B67F",
+                    marginRight: "0.2rem",
+                    fontWeight: "600",
+                  }}
+                >
+                  90 days
+                </span>{" "}
+                of warranty period remaining
+              </p>
+            </div>
+          </Col>
+          <Col xs={8} md={8} lg={8} xl={8}>
+            <p className={styles.ItemTitleJob}>View Receipt</p>
+          </Col>
+          <Col xs={4} md={4} lg={4} xl={4}>
+            <BsChevronRight className={styles.ItemArrow} />
+          </Col>
+          <Col xs={12} md={12} lg={12} xl={12} className="mt-3">
+            <PrimaryButton
+              title="Raise ticket to get help"
+              buttonStyle={{ width: "100%" }}
+            />
+          </Col>
+        </Row>
       )}
     </Col>
   );

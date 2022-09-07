@@ -49,13 +49,14 @@ export default function ViewBooking() {
       <Col xs={12} md={12} lg={12} xl={12}>
         <Row>
           <BookingDetails
-            deliveryAndJobcard={false}
-            hideoutcallsupport={true}
+            hidereschedulebuttons={false}
+            deliveryAndJobcard={true}
+            hideoutcallsupport={false}
             showinnercallsupport={false}
           />
           <Quotation rejectaccept={true} showpaybutton={false} hide />
           <NeedHelp />
-          <PartnerDetails off={false} otphide={false} otp="2121" />
+          <PartnerDetails off={true} otphide={false} otp="2121" />
         </Row>
       </Col>
     </Row>

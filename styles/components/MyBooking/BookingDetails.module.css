@@ -98,6 +98,13 @@
     float: right;
 }
 
+.CoverOfReceipt {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 1rem;
+}
+
 @media (min-width:320px) and (max-width: 450px) {
     .BookingBox {
         margin-left: -4%;
