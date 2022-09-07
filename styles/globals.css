@@ -328,7 +328,6 @@ input[type="number"] {
   background: #6666;
 }
 
-
 .form-check-input:focus {
   box-shadow: none !important;
 }
@@ -351,12 +350,11 @@ input[type="number"] {
 
 .Needhelpaccordian .accordion-item {
   border: none;
-  border-bottom: 0.5px solid #C4C4C4;
+  border-bottom: 0.5px solid #c4c4c4;
 }
 
 .Needhelpaccordian .accordion-item:last-of-type .accordion-button.collapsed {
   border-radius: 0%;
-
 }
 
 .Needhelpaccordian .accordion-button:not(.collapsed) {
@@ -377,7 +375,13 @@ input[type="number"] {
 .Needhelpaccordian .accordion-button:focus {
   box-shadow: none;
 }
-
+.react-stars span {
+  margin-right: 2rem;
+}
+.RatingTitle {
+  font-weight: 400;
+  font-size: 20px;
+}
 /*  */
 @media (min-width: 320px) and (max-width: 450px) {
   .modal {

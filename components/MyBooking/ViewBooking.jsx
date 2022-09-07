@@ -11,11 +11,12 @@ import PartnerDetails from "./PartnerDetails";
 import Quotation from "./Quotation";
 import { useState } from "react";
 import FeedbackQue from "./FeedbackQue";
+import Ratingbar from "./Ratingbar";
 export default function ViewBooking() {
-  const [f1, setF1] = useState(1);
-  const [f2, setF2] = useState(1);
-  const [f3, setF3] = useState(1);
-  const [f4, setF4] = useState(1);
+  const [f1, setF1] = useState(0);
+  const [f2, setF2] = useState(null);
+  const [f3, setF3] = useState(null);
+  const [f4, setF4] = useState(null);
   const [f5, setF5] = useState(null);
 
   return (
@@ -106,6 +107,7 @@ export default function ViewBooking() {
           </Col>
           <Col xs={12} md={6} lg={6} xl={6}>
             <PartnerDetails off={false} otphide={true} otp="2121" />
+            <Ratingbar />
             <FeedbackQue />
           </Col>
         </Row>
