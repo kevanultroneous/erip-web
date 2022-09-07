@@ -1,37 +1,40 @@
+// react hooks
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+
+// components
 import { Header } from "@/components/common/Header";
-import IssueComponent from "@/components/IssuePage/IssueComponent";
-import { issueData } from "utils/issueData";
-import { Col, Row } from "react-bootstrap";
-import IssueTotalBill from "@/components/IssuePage/IssueTotalBill";
 import SelectDeviceHero from "@/components/SearchByModel/SelectDeviceHero";
-import axios from "axios";
 import WhyErip from "@/components/common/WhyErip";
 import Testimonials from "@/components/common/Testimonials";
-import { API_URL, TestimonialData } from "utils/data";
-import Footer from "@/components/common/Footer";
 import MobileFooter from "@/components/common/MobileFooter";
-import styles from "@/styles/components/IssuePage/issuepage.module.css";
-
-import { useRouter } from "next/router";
-
+import Footer from "@/components/common/Footer";
 import Layout from "@/components/common/Layout";
-import { useEffect, useState } from "react";
 import LoginPopup from "@/components/Popups/LoginPopup";
 import HowItWork from "@/components/common/HowItWork";
 
-function IssuePage({ data }) {
-  const [mobileView, setMobileView] = useState(true);
+// data
+import { API_URL, TestimonialData } from "utils/data";
 
+// external library
+import axios from "axios";
+
+// styles
+import styles from "@/styles/components/personalGadgets/issuepage.module.css";
+
+function IssuePage({ data }) {
+  // states
+  const [mobileView, setMobileView] = useState(true);
+  const [popupLogin, setPopupLogin] = useState(false);
+  const [token, setToken] = useState(false);
+
+  // declaration
+  const router = useRouter();
+
+  // useEffects
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
-  }, []);
-  const router = useRouter();
-  const [popupLogin, setPopupLogin] = useState(false);
-  {
-    // console.log(router.query.issue);
-  }
-  const [token, setToken] = useState(false);
-  useEffect(() => {
+
     if (localStorage.getItem("token")) {
       setToken(true);
       setPopupLogin(false);
@@ -40,6 +43,7 @@ function IssuePage({ data }) {
     }
   }, []);
 
+  // returned components
   return (
     <Layout title={"Personal Gadgets"}>
       <Header />
@@ -59,6 +63,7 @@ function IssuePage({ data }) {
   );
 }
 
+// Testimonial API Calling
 export async function getServerSideProps() {
   let home_testimonial = await axios
     .get(`${API_URL}api/v1/cms/testimonials`, {

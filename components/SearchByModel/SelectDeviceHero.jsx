@@ -9,7 +9,7 @@ import CategoryModels from "./CategoryModels";
 import IssueComponent from "@/components/IssuePage/IssueComponent";
 import { issueData } from "utils/issueData";
 
-import style from "@/styles/components/IssuePage/issuepage.module.css";
+import style from "@/styles/components/personalGadgets/issuepage.module.css";
 import styles from "@/styles/components/SearchByModel/SelectDeviceHero.module.css";
 import MobileModels from "./MobileModels";
 import { API_URL } from "utils/data";
@@ -26,9 +26,6 @@ function SelectDeviceHero({
   const [categories, setcategories] = useState([]);
   const [brandData, setbrandData] = useState([{}]);
   const [models, setmodels] = useState([{}]);
-  const [mobileCat, setMobileCat] = useState([]);
-  const [mobileBrands, setMobileBrands] = useState([]);
-  const [mobileModels, setMobileModels] = useState([]);
   const [categoryName, setCategoryName] = useState("Device");
   const [brandName, setBrandName] = useState("Brands");
   const [modelName, setModelName] = useState("Models");
@@ -39,7 +36,6 @@ function SelectDeviceHero({
   const [issues, setIssues] = useState([]);
   const [cartIssues, setCartIssues] = useState([]);
   const [displayIssues, setDisplayIssues] = useState(false);
-  const [activeCat, setActiveCat] = useState(0);
   const [topBrands, setTopBrands] = useState(true);
   const [totalBrands, setTotalBrands] = useState(6);
   const [displayBrands, setDisplayBrands] = useState(true);
@@ -108,7 +104,6 @@ function SelectDeviceHero({
         setcategories(
           data.data.data.filter((category) => category.group_id == 1)
         );
-        setMobileCat(data.data.data);
       })
       .catch(() => setcategories([]));
     if (homeQuery) {
@@ -140,7 +135,6 @@ function SelectDeviceHero({
         });
       });
     setTopBrands(true);
-    setActiveCat(eventKey);
     setDisplayIssues(false);
     setIssues([]);
     setDisableModel(true);
@@ -176,14 +170,6 @@ function SelectDeviceHero({
     setDisplayIssues(false);
     setIssues([]);
     setModelName("Models");
-  };
-
-  const findBrands = async (id) => {
-    await axios
-      .get(`${API_URL}api/v1/brands_by_category?category=${id}`)
-      .then((data) => {
-        setMobileBrands(data.data.data);
-      });
   };
 
   const totalprice =
