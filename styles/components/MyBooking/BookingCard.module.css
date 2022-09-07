@@ -10,7 +10,7 @@
   margin: 0 0 1rem;
 }
 
-.bookingCardHead > div {
+.bookingCardHead>div {
   padding: 0;
 }
 
@@ -37,6 +37,7 @@
 
 .bookingCardStatus * {
   margin: 0;
+  color: #00B67F;
 }
 
 .bookingCardProfile {
@@ -63,8 +64,13 @@
   font-size: 18px;
 }
 
-.actionButtons > div {
+.actionButtons>div {
   padding: 0;
   display: flex;
   justify-content: center;
+}
+
+.SmallDetails {
+  font-weight: 400;
+  font-size: 20px;
 }

@@ -8,6 +8,7 @@ import AlternatePopups from "../Popups/AlternatePopups";
 import { useState } from "react";
 import AddEmail from "../Popups/AddEMail";
 import CancelOrder from "../Popups/CancelOrder";
+import ViewBooking from "./ViewBooking";
 
 function AllBookings() {
   const [alternatePopup, setAlternatePopup] = useState(false);
@@ -24,7 +25,8 @@ function AllBookings() {
       <CancelOrder show={cancelOrder} onHide={() => setCancelOrder(false)} />
       <Row className={styles.allBookingRow}>
         <Col xl={9}>
-          <Row>
+          <ViewBooking />
+          {/* <Row>
             {bookingData.map((bookings) => {
               return (
                 <Col key={bookings.orderNumber} xl={6}>
@@ -42,9 +44,7 @@ function AllBookings() {
                 </Col>
               );
             })}
-
-            <Col xl={6}>{/* <BookingCard /> */}</Col>
-          </Row>
+          </Row> */}
         </Col>
         <Col xl={3} className={styles.allBookingsLeftCont}>
           <LeftMenu
@@ -56,7 +56,6 @@ function AllBookings() {
             alternativenumberaction={() => setAlternatePopup(true)}
             logout={() => {}}
           />
-          {/* profileImage, profileName, profileNumber, menus */}
         </Col>
       </Row>
     </section>

@@ -33,9 +33,9 @@ function BookingCard({
           </div>
         </Col>
         <Col xl={8}>
-          <h6>{bookingDateAndTime}</h6>
-          <h6>{issueDevice}</h6>
-          <h6>{issueType}</h6>
+          <h6 className={styles.SmallDetails}>{bookingDateAndTime}</h6>
+          <h6 className={styles.SmallDetails}>{issueDevice}</h6>
+          <h6 className={styles.SmallDetails}>{issueType}</h6>
         </Col>
       </Row>
       <div className={styles.customMessage}>
