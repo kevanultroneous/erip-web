@@ -16,6 +16,7 @@ function AllBookings() {
   const [addEmail, setaddEmail] = useState(false);
   const [cancelOrder, setCancelOrder] = useState(false);
   const [viewdetail, setViewDetail] = useState(false);
+
   return (
     <section className={styles.allBookingContainer}>
       <AlternatePopups
@@ -27,7 +28,7 @@ function AllBookings() {
       <CancelOrder show={cancelOrder} onHide={() => setCancelOrder(false)} />
       <Row className={styles.allBookingRow}>
         <Col xs={12} md={9} lg={9} xl={9}>
-          <Support />
+          <Support backaction={() => null} />
           {/* {viewdetail ? (
             <ViewBooking backhandler={() => setViewDetail(false)} />
           ) : null} */}
