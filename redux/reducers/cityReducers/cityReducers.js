@@ -2,7 +2,8 @@ import * as city from "../../actions/actionTypes";
 
 const initialCityState = {
   city: 1,
-  error: "",
+  err: "",
+  name: "Bengaluru",
   loading: false,
 };
 
@@ -17,7 +18,8 @@ export const cityReducer = (state = initialCityState, { type, payload }) => {
       return {
         ...state,
         err: "",
-        city: payload,
+        city: payload.city,
+        name: payload.name,
         loading: false,
       };
     case city.GET_CITY_FAIL:
@@ -25,6 +27,7 @@ export const cityReducer = (state = initialCityState, { type, payload }) => {
         ...state,
         err: payload,
         city: 1,
+        name: "",
         loading: false,
       };
     default:

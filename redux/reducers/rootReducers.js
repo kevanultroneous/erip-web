@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { cityReducer } from "./cityReducers/cityReducers";
 import faqReducer, {
   faqByBrandReducer,
   faqByCategoryReducer,
@@ -11,4 +12,5 @@ export const rootReducer = combineReducers({
   faqBrand: faqByBrandReducer,
   faqModel: faqByModelReducer,
   issuePage: issueReducer,
+  locationdata: cityReducer
 });

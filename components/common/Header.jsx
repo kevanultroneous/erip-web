@@ -19,6 +19,12 @@ import Logout from "../Popups/Logout";
 import axios from "axios";
 import { FiSearch } from "react-icons/fi";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import {
+  getCityFail,
+  getCityStart,
+  getCitySuccess,
+} from "redux/actions/cityActions/cityAction";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
@@ -37,12 +43,25 @@ export function Header() {
 
   const [showMobloc, setShowMobloc] = useState(false);
 
+  const dispatch = useDispatch();
   // getting header menus from api
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
     var modal = document.getElementById("dropdown_location");
     getHeaderDataFromAPI();
     // getLocation();
+
+    dispatch(getCityStart());
+    if (!localStorage.getItem("city") || !localStorage.getItem("cityid")) {
+      dispatch(getCityFail("we are not available in this current location"));
+    } else {
+      dispatch(
+        getCitySuccess({
+          city: parseInt(localStorage.getItem("cityid")),
+          name: localStorage.getItem("city"),
+        })
+      );
+    }
   }, []);
 
   const getHeaderDataFromAPI = async () => {

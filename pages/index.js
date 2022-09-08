@@ -15,6 +15,7 @@ import OfferadPopup from "@/components/Popups/OfferadPopup";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   API_URL,
   GetYourFixCard,
@@ -31,7 +32,7 @@ export default function Home({ data }) {
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
   }, []);
-
+  const selector = useSelector((state) => console.log(state.locationdata))
   return (
     <Layout title={"Home"}>
       <Header />
