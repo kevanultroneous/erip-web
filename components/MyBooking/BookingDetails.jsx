@@ -99,7 +99,7 @@ export default function BookingDetails({
             <Col xs={12} md={12} lg={12} xl={12}>
               <PrimaryButton
                 title="Call Us For Support"
-                buttonStyle={{ width: "100%" }}
+                buttonStyle={{ width: "100%", marginBottom: "4rem" }}
               />
             </Col>
           </Row>

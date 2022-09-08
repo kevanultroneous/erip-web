@@ -14,10 +14,10 @@ import FeedbackQue from "./FeedbackQue";
 import Ratingbar from "./Ratingbar";
 import { useEffect } from "react";
 export default function ViewBooking() {
-  const [f1, setF1] = useState(1);
-  const [f2, setF2] = useState(1);
-  const [f3, setF3] = useState(1);
-  const [f4, setF4] = useState(1);
+  const [f1, setF1] = useState(0);
+  const [f2, setF2] = useState(null);
+  const [f3, setF3] = useState(null);
+  const [f4, setF4] = useState(null);
   const [f5, setF5] = useState(null);
   const [mobileView, setMobileView] = useState(false);
   useEffect(() => {
