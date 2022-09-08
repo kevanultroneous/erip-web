@@ -52,9 +52,11 @@ export default function ViewBooking({ backhandler }) {
                 raiseticketshow={false}
               />
             </Col>
-            <Col xs={12} md={6} lg={6} xl={6}>
-              <MobileProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
-            </Col>
+            {mobileView ? (
+              <Col xs={12} md={6} lg={6} xl={6}>
+                <MobileProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
+              </Col>
+            ) : null}
             <Col xs={12} md={6} lg={6} xl={6}>
               <NeedHelp />
             </Col>
@@ -91,9 +93,11 @@ export default function ViewBooking({ backhandler }) {
             <Col xs={12} md={6} lg={6} xl={6}>
               <PartnerDetails off={false} otphide={false} otp="2121" />
             </Col>
-            <Col xs={12} md={6} lg={6} xl={6}>
-              <MobileProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
-            </Col>
+            {mobileView ? (
+              <Col xs={12} md={6} lg={6} xl={6}>
+                <MobileProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
+              </Col>
+            ) : null}
             <Col xs={12} md={6} lg={6} xl={6}>
               <NeedHelp />
             </Col>
@@ -135,9 +139,11 @@ export default function ViewBooking({ backhandler }) {
                   rejectaccept={f4 == 0 ? false : true}
                   showpaybutton={f4 == 0 && true}
                 />
-                <Col xs={12} md={6} lg={6} xl={6}>
-                  <MobileProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
-                </Col>
+                {mobileView ? (
+                  <Col xs={12} md={6} lg={6} xl={6}>
+                    <MobileProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
+                  </Col>
+                ) : null}
                 <NeedHelp />
               </div>
             ) : (

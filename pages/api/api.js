@@ -105,7 +105,7 @@ export const MyCart = (token, city) => {
 };
 export const AddToCart = (token, issueId) => {
   return axios.post(
-    "http://43.204.87.153/api/v1/users/my_cart",
+    `${API_URL}api/v1/users/my_cart`,
     { issueId: issueId },
     {
       headers: { Authorization: `Bearer ${token}` },
