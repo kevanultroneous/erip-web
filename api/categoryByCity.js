@@ -6,7 +6,11 @@ export const getCategoriesByCity = async (cityID) => {
     .get(`${API_URL}api/v1/categories_by_cities?city=${cityID}`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (data.data.data !== undefined) {
+          return data.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {

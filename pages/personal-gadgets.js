@@ -1,6 +1,7 @@
 // react hooks
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 // components
 import { Header } from "@/components/common/Header";
@@ -29,8 +30,54 @@ function IssuePage({ data }) {
   const [popupLogin, setPopupLogin] = useState(false);
   const [token, setToken] = useState(false);
 
+  // useSelector
+
+  // category brand model IDs
+  const categoryID = useSelector((state) => state.issuePage.categoryID);
+  const getBrandID = useSelector((state) => state.issuePage.brandID);
+  const getModelID = useSelector((state) => state.issuePage.modelID);
+
+  // Arrays of category testimonial hero Offers
+  const categoryFaq = useSelector((state) => state.faqCategory.data);
+  const brandsFaq = useSelector((state) => state.faqBrand.data);
+  const modelsFaq = useSelector((state) => state.faqModel.data);
+
+  // Arrays of category testimonial hero Offers
+  const categoryTestimonial = useSelector(
+    (state) => state.testimonialCategory.data
+  );
+  const brandsTestimonial = useSelector(
+    (state) => state.testimonialBrands.data
+  );
+  const modelTestimonial = useSelector((state) => state.testimonialModels.data);
+
+  // Arrays of category testimonial hero Offers
+  const categoryHero = useSelector((state) => state.heroCategory.data);
+  const brandsHero = useSelector((state) => state.heroBrands.data);
+  const modelHero = useSelector((state) => state.heroModels.data);
+
+  // Arrays of category testimonial hero Offers
+  const categoryInfo = useSelector((state) => state.informationCategory.data);
+  const brandsInfo = useSelector((state) => state.informationBrands.data);
+  const modelInfo = useSelector((state) => state.informationModels.data);
+
+  // Arrays of category testimonial hero Offers
+  const categoryOffer = useSelector((state) => state.offerCategory.data);
+  const brandsOffer = useSelector((state) => state.offerBrands.data);
+  const modelOffer = useSelector((state) => state.offerModels.data);
+
   // declaration
   const router = useRouter();
+
+  useEffect(() => {}, [categoryID]);
+
+  console.log(
+    { categoryFaq },
+    { categoryTestimonial },
+    { categoryHero },
+    { categoryInfo },
+    { categoryOffer }
+  );
 
   // useEffects
   useEffect(() => {
