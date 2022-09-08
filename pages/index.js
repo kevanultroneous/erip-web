@@ -28,11 +28,11 @@ import {
 
 export default function Home({ data }) {
   const [mobileView, setMobileView] = useState(true);
-  const router = useRouter()
+
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
   }, []);
-  const selector = useSelector((state) => console.log(state.locationdata))
+
   return (
     <Layout title={"Home"}>
       <Header />
