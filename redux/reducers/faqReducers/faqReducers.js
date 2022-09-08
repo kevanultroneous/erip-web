@@ -41,17 +41,24 @@ export const faqByBrandReducer = (
   { type, payload }
 ) => {
   switch (type) {
+    case faqs.GET_FAQ_BY_BRANDS_START:
+      return {
+        ...state,
+        loading: true,
+      };
     case faqs.GET_FAQ_BY_BRANDS_SUCCESS:
       return {
         ...state,
         data: payload,
         error: "",
+        loading: false,
       };
     case faqs.GET_FAQ_BY_BRANDS_FAIL:
       return {
         ...state,
         data: [],
         error: payload,
+        loading: false,
       };
 
     default:
@@ -64,17 +71,24 @@ export const faqByModelReducer = (
   { type, payload }
 ) => {
   switch (type) {
+    case faqs.GET_FAQ_BY_MODELS_START:
+      return {
+        ...state,
+        loading: true,
+      };
     case faqs.GET_FAQ_BY_MODELS_SUCCESS:
       return {
         ...state,
         data: payload,
         error: "",
+        loading: false,
       };
     case faqs.GET_FAQ_BY_MODELS_FAIL:
       return {
         ...state,
         data: [],
         error: payload,
+        loading: false,
       };
 
     default:

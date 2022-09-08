@@ -1,4 +1,8 @@
-import { getFaqsbyCategoryAxios } from "api/faqAPI";
+import {
+  getFaqsBYBrandAxios,
+  getFaqsbyCategoryAxios,
+  getFaqsBYModelAxios,
+} from "api/faqAPI";
 import * as faqs from "../actionTypes";
 
 export const getFaqsByCategoryStart = () => {
@@ -75,11 +79,36 @@ export const callFaqByCategory = (data) => {
     getFaqsByCategoryStart();
     await getFaqsbyCategoryAxios(data)
       .then((response) => {
-        console.log(response);
         dispatch(getFaqsByCategorySuccess(response));
       })
       .catch((err) => {
         dispatch(getFaqsByCategoryFail(err));
+      });
+  };
+};
+
+export const callFaqByBrands = (data) => {
+  return async function (dispatch) {
+    getFaqsByBrandsStart();
+    await getFaqsBYBrandAxios(data)
+      .then((response) => {
+        dispatch(getFaqsByBrandsSuccess(response));
+      })
+      .catch((err) => {
+        dispatch(getFaqsByBrandsFail(err));
+      });
+  };
+};
+
+export const callFaqByModels = (data) => {
+  return async function (dispatch) {
+    getFaqsByModelsStart();
+    await getFaqsBYModelAxios(data)
+      .then((response) => {
+        dispatch(getFaqsByModelsSuccess(response));
+      })
+      .catch((err) => {
+        dispatch(getFaqsByModelsFail(err));
       });
   };
 };
