@@ -164,3 +164,8 @@
     display: none;
   }
 }
+@media only screen and (min-width: 768px) {
+  .arrowsteps .step {
+    min-width: 123px;
+  }
+}
