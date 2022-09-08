@@ -9,6 +9,7 @@ import { useState } from "react";
 import AddEmail from "../Popups/AddEMail";
 import CancelOrder from "../Popups/CancelOrder";
 import ViewBooking from "./ViewBooking";
+import Support from "./Support";
 
 function AllBookings() {
   const [alternatePopup, setAlternatePopup] = useState(false);
@@ -25,11 +26,12 @@ function AllBookings() {
       {/* cancel order */}
       <CancelOrder show={cancelOrder} onHide={() => setCancelOrder(false)} />
       <Row className={styles.allBookingRow}>
-        <Col xs={12} xl={9}>
-          {viewdetail ? (
+        <Col xs={12} md={9} lg={9} xl={9}>
+          <Support />
+          {/* {viewdetail ? (
             <ViewBooking backhandler={() => setViewDetail(false)} />
-          ) : null}
-          {!viewdetail && (
+          ) : null} */}
+          {/* {!viewdetail && (
             <Row>
               {bookingData.map((bookings) => {
                 return (
@@ -50,7 +52,7 @@ function AllBookings() {
                 );
               })}
             </Row>
-          )}
+          )} */}
         </Col>
         <Col xl={3} className={styles.allBookingsLeftCont}>
           <LeftMenu

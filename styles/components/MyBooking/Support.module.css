@@ -1,0 +1,56 @@
+.UserInput {
+    background: #FFFFFF;
+    border-radius: 2px;
+    border: none;
+    outline: none;
+    padding: 0.6rem;
+    width: 100%;
+}
+
+.AddressInput {
+    border-radius: 2px;
+    border: none;
+    outline: none;
+    padding: 1rem 1rem;
+    width: 100%;
+}
+
+.IconWrraper {
+    display: flex;
+    justify-content: end;
+}
+
+.PartnerDetailsInp {
+    background: #FFFFFF;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    padding: 0.6rem;
+    margin-left: 0.1rem;
+    margin-right: 0.1rem;
+}
+
+.PartnerDetailsInp p {
+    margin: 0%;
+}
+
+.InputLabels {
+    margin: 0%;
+    font-weight: 400;
+    font-size: 16px;
+    color: #676767;
+}
+
+.InputgroupSpace {
+    margin-top: 1rem;
+}
+
+.Mendatory {
+    color: #EC1D27;
+}
+
+.SubmitWrraper {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 3rem;
+}

@@ -13,6 +13,7 @@ import HomeHero from "@/components/Home/Hero";
 import OfferBanner from "@/components/Home/OfferBanner";
 import OfferadPopup from "@/components/Popups/OfferadPopup";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
   API_URL,
@@ -26,9 +27,11 @@ import {
 
 export default function Home({ data }) {
   const [mobileView, setMobileView] = useState(true);
+  const router = useRouter()
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
   }, []);
+
   return (
     <Layout title={"Home"}>
       <Header />
@@ -92,28 +95,28 @@ export async function getServerSideProps() {
         herosection: !hero_section_home
           ? HomeHerodata
           : hero_section_home.data.length > 0
-          ? hero_section_home
-          : HomeHerodata,
+            ? hero_section_home
+            : HomeHerodata,
         blogdata: !blog_response
           ? NewsandUpdateData
           : blog_response.data.length > 0
-          ? blog_response
-          : NewsandUpdateData,
+            ? blog_response
+            : NewsandUpdateData,
         hometestimonial: !home_testimonial
           ? TestimonialData
           : home_testimonial.data.length > 0
-          ? home_testimonial
-          : TestimonialData,
+            ? home_testimonial
+            : TestimonialData,
         offersection: !offersection_home
           ? OfferBannerhomedata
           : offersection_home.data.length > 0
-          ? offersection_home
-          : OfferBannerhomedata,
+            ? offersection_home
+            : OfferBannerhomedata,
         getyourfix: !getyour_fix
           ? GetYourFixCard
           : getyour_fix.data.length > 0
-          ? getyour_fix
-          : GetYourFixCard,
+            ? getyour_fix
+            : GetYourFixCard,
       },
     },
   };

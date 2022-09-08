@@ -18,6 +18,7 @@ import { MatchCity } from "utils/utilsfunctions";
 import Logout from "../Popups/Logout";
 import axios from "axios";
 import { FiSearch } from "react-icons/fi";
+import Link from "next/link";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
@@ -215,15 +216,17 @@ export function Header() {
           <Container className={styles.ContainerNavmob}>
             <Row>
               <Col xs={6} sm={6} md={6} className={styles.MobNavCol}>
-                <Navbar.Brand href="/">
-                  <div className={styles.brandLogo}>
-                    <Image
-                      fluid
-                      src="/assets/icons/erip-logo-blue.png"
-                      alt="Erip Logo"
-                    />
-                  </div>
-                </Navbar.Brand>
+                <Link href={"/"}>
+                  <Navbar.Brand>
+                    <div className={styles.brandLogo}>
+                      <Image
+                        fluid
+                        src="/assets/icons/erip-logo-blue.png"
+                        alt="Erip Logo"
+                      />
+                    </div>
+                  </Navbar.Brand>
+                </Link>
               </Col>
               <Col xs={6} sm={6} md={6} className={styles.SubMainWrraper}>
                 <div className={styles.SubWrraper}>
@@ -339,14 +342,16 @@ export function Header() {
       return (
         <Navbar expand="lg" className={styles.navHeader}>
           <Container fluid className={styles.navBarTopHeader}>
-            <Navbar.Brand href="/">
-              <div className={styles.brandLogo}>
-                <Image
-                  fluid
-                  src="/assets/icons/erip-logo-blue.png"
-                  alt="Erip Logo"
-                />
-              </div>
+            <Navbar.Brand>
+              <Link href={"/"}>
+                <div className={styles.brandLogo}>
+                  <Image
+                    fluid
+                    src="/assets/icons/erip-logo-blue.png"
+                    alt="Erip Logo"
+                  />
+                </div>
+              </Link>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll" className={styles.navBarcolor}>
