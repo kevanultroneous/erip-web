@@ -12,6 +12,7 @@ function BookingCard({
   issueType,
   partnerAssigningStatus,
   OTP,
+  viewdetails,
 }) {
   return (
     <div className={styles.bookingCardContainer}>
@@ -54,7 +55,11 @@ function BookingCard({
           <PrimaryButton title="Call Support" customClass={styles.actionBtn} />
         </Col>
         <Col xl={6}>
-          <PrimaryButton title="View Details" customClass={styles.actionBtn} />
+          <PrimaryButton
+            title="View Details"
+            customClass={styles.actionBtn}
+            clickHandler={viewdetails}
+          />
         </Col>
       </Row>
     </div>

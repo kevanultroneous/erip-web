@@ -14,6 +14,7 @@ function AllBookings() {
   const [alternatePopup, setAlternatePopup] = useState(false);
   const [addEmail, setaddEmail] = useState(false);
   const [cancelOrder, setCancelOrder] = useState(false);
+  const [viewdetail, setViewDetail] = useState(false);
   return (
     <section className={styles.allBookingContainer}>
       <AlternatePopups
@@ -25,26 +26,31 @@ function AllBookings() {
       <CancelOrder show={cancelOrder} onHide={() => setCancelOrder(false)} />
       <Row className={styles.allBookingRow}>
         <Col xs={12} xl={9}>
-          <ViewBooking />
-          {/* <Row>
-            {bookingData.map((bookings) => {
-              return (
-                <Col key={bookings.orderNumber} xl={6}>
-                  <BookingCard
-                    orderNumber={bookings.orderNumber}
-                    partnerStatusAssigned={bookings.partnerStatusAssigned}
-                    partnerImage={bookings.partnerImage}
-                    partnerName={bookings.partnerName}
-                    bookingDateAndTime={bookings.bookingDateAndTime}
-                    issueDevice={bookings.issueDevice}
-                    issueType={bookings.issueType}
-                    partnerAssigningStatus={bookings.partnerAssigningOTP}
-                    OTP={bookings.OTP}
-                  />
-                </Col>
-              );
-            })}
-          </Row> */}
+          {viewdetail ? (
+            <ViewBooking backhandler={() => setViewDetail(false)} />
+          ) : null}
+          {!viewdetail && (
+            <Row>
+              {bookingData.map((bookings) => {
+                return (
+                  <Col key={bookings.orderNumber} xl={6}>
+                    <BookingCard
+                      viewdetails={() => setViewDetail(true)}
+                      orderNumber={bookings.orderNumber}
+                      partnerStatusAssigned={bookings.partnerStatusAssigned}
+                      partnerImage={bookings.partnerImage}
+                      partnerName={bookings.partnerName}
+                      bookingDateAndTime={bookings.bookingDateAndTime}
+                      issueDevice={bookings.issueDevice}
+                      issueType={bookings.issueType}
+                      partnerAssigningStatus={bookings.partnerAssigningOTP}
+                      OTP={bookings.OTP}
+                    />
+                  </Col>
+                );
+              })}
+            </Row>
+          )}
         </Col>
         <Col xl={3} className={styles.allBookingsLeftCont}>
           <LeftMenu

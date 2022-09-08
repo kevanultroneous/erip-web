@@ -13,7 +13,7 @@ import { useState } from "react";
 import FeedbackQue from "./FeedbackQue";
 import Ratingbar from "./Ratingbar";
 import { useEffect } from "react";
-export default function ViewBooking() {
+export default function ViewBooking({ backhandler }) {
   const [f1, setF1] = useState(0);
   const [f2, setF2] = useState(null);
   const [f3, setF3] = useState(null);
@@ -27,7 +27,7 @@ export default function ViewBooking() {
     <div>
       <Row className={styles.ViewBookingRow}>
         <Col xs={2} md={2} lg={2} xl={2}>
-          <BiArrowBack className={styles.BackArrow} />
+          <BiArrowBack className={styles.BackArrow} onClick={backhandler} />
         </Col>
         <Col xs={10} md={10} lg={10} xl={10}>
           <p className={styles.MainTitle}>LG-Air Conditioner</p>
