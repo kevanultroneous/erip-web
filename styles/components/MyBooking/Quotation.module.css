@@ -1,0 +1,63 @@
+.QuotationCard {
+  background: #ffffff;
+  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.08);
+  border-radius: 5px;
+  padding: 1.5rem 1rem;
+  margin-top: 2rem;
+  margin-left: 0.5rem;
+}
+
+.MainTitle {
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.SubLabels {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 1rem;
+}
+
+.AdditionalPart {
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.TotalAmount {
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.BigAmount {
+  font-weight: 700;
+  font-size: 18px;
+  text-align: right;
+}
+
+.AdditionalAmount {
+  text-align: right;
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.AcceptText {
+  font-weight: 400;
+  font-size: 18px;
+  color: #646464;
+}
+
+.ButtonSpace {
+  margin: 1rem 0;
+}
+@media (min-width: 320px) and (max-width: 450px) {
+  .QuotationCard {
+    margin-left: 0%;
+    margin-right: 0%;
+  }
+}
+@media (min-width: 768px) and (max-width: 1080px) {
+}
+@media (min-width: 1200px) and (max-width: 1730px) {
+}
+@media (min-width: 650px) and (max-width: 740px) {
+}

@@ -12,6 +12,7 @@ function BookingCard({
   issueType,
   partnerAssigningStatus,
   OTP,
+  viewdetails,
 }) {
   return (
     <div className={styles.bookingCardContainer}>
@@ -33,9 +34,9 @@ function BookingCard({
           </div>
         </Col>
         <Col xl={8}>
-          <h6>{bookingDateAndTime}</h6>
-          <h6>{issueDevice}</h6>
-          <h6>{issueType}</h6>
+          <h6 className={styles.SmallDetails}>{bookingDateAndTime}</h6>
+          <h6 className={styles.SmallDetails}>{issueDevice}</h6>
+          <h6 className={styles.SmallDetails}>{issueType}</h6>
         </Col>
       </Row>
       <div className={styles.customMessage}>
@@ -54,7 +55,11 @@ function BookingCard({
           <PrimaryButton title="Call Support" customClass={styles.actionBtn} />
         </Col>
         <Col xl={6}>
-          <PrimaryButton title="View Details" customClass={styles.actionBtn} />
+          <PrimaryButton
+            title="View Details"
+            customClass={styles.actionBtn}
+            clickHandler={viewdetails}
+          />
         </Col>
       </Row>
     </div>

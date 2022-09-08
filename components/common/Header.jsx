@@ -41,7 +41,7 @@ export function Header() {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
     var modal = document.getElementById("dropdown_location");
     getHeaderDataFromAPI();
-    getLocation();
+    // getLocation();
   }, []);
 
   const getHeaderDataFromAPI = async () => {
@@ -83,7 +83,7 @@ export function Header() {
   });
 
   useEffect(() => {
-    setLocationPopupShow(false);
+    // setLocationPopupShow(false);
 
     CityDetactionAPI()
       .then((r) => {
@@ -92,6 +92,7 @@ export function Header() {
       .catch((e) => console.log(e));
 
     if (MatchCity(cityData, currentCity)) {
+      setLocationPopupShow(false);
     } else {
       setSelectedAddress("");
     }
@@ -134,6 +135,7 @@ export function Header() {
       setLocationPopupShow(false);
       setShowMobloc(false);
     };
+
     window.addEventListener("scroll", handleScroll);
 
     return () => {
@@ -166,7 +168,7 @@ export function Header() {
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[1]) {
-          setLocationPopupShow(false);
+          // setLocationPopupShow(false);
           setSelectedAddress(results[1].formatted_address);
         }
       }
@@ -384,7 +386,7 @@ export function Header() {
                 title={token ? "Logout" : "Login"}
                 className={styles.headerLoginBtn}
                 clickHandler={() =>
-                  token ? LogoutUser() : setLoginPopup(true)
+                  token ? LogoutAction() : setLoginPopup(true)
                 }
               />
             </Navbar.Collapse>

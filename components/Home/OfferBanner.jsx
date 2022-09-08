@@ -7,6 +7,8 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import styles from "@/styles/components/Home/OfferBanner.module.css";
 import { OfferBannerhomedata } from "utils/data";
+import { useState } from "react";
+import OfferadPopup from "../Popups/OfferadPopup";
 export default function OfferBanner({ data = OfferBannerhomedata }) {
   const settings = {
     dots: false,
@@ -36,9 +38,11 @@ export default function OfferBanner({ data = OfferBannerhomedata }) {
       },
     ],
   };
+  const [offerPopup, setOfferPopup] = useState(false);
 
   return (
     <Container userdefinedclass={styles.MobileSpacing}>
+      <OfferadPopup show={offerPopup} onHide={() => setOfferPopup(false)} />
       <Row className="justify-content-center m-0 OfferBannerImageSlide">
         <Slider {...settings} className="offerbanner">
           {data.map((value, index) => (

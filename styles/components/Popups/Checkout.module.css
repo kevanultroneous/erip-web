@@ -172,17 +172,18 @@
 }
 
 .SearchInp {
-  border: none;
-  outline: none;
+  border: none !important;
+  outline: none !important;
   font-size: 12px;
   width: 100%;
+  background: transparent !important;
 }
 
 .ChangeLable {
   font-weight: 700;
   font-size: 14px;
   color: #0e62cb;
-  cursor: pointer;
+  /* cursor: pointer; */
   float: right;
   margin: 0%;
   margin-right: 0.2rem;
