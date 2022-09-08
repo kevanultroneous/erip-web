@@ -13,6 +13,7 @@ import { useState } from "react";
 import FeedbackQue from "./FeedbackQue";
 import Ratingbar from "./Ratingbar";
 import { useEffect } from "react";
+import MobileProgress from "./MobileProgress";
 export default function ViewBooking({ backhandler }) {
   const [f1, setF1] = useState(0);
   const [f2, setF2] = useState(null);
@@ -20,9 +21,11 @@ export default function ViewBooking({ backhandler }) {
   const [f4, setF4] = useState(null);
   const [f5, setF5] = useState(null);
   const [mobileView, setMobileView] = useState(false);
+
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
   }, []);
+
   return (
     <div>
       <Row className={styles.ViewBookingRow}>
@@ -50,8 +53,12 @@ export default function ViewBooking({ backhandler }) {
               />
             </Col>
             <Col xs={12} md={6} lg={6} xl={6}>
+              <MobileProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
+            </Col>
+            <Col xs={12} md={6} lg={6} xl={6}>
               <NeedHelp />
             </Col>
+
             <Quotation rejectaccept={true} showpaybutton={false} hide />
             <PartnerDetails off={true} otphide={false} otp="2121" />
           </Row>
@@ -70,7 +77,7 @@ export default function ViewBooking({ backhandler }) {
         f4 == null &&
         f5 == null) ? (
         <Col xs={12} md={12} lg={12} xl={12}>
-          //{" "}
+          {" "}
           <Row>
             <Col xs={12} md={6} lg={6} xl={6}>
               <BookingDetails
@@ -85,12 +92,14 @@ export default function ViewBooking({ backhandler }) {
               <PartnerDetails off={false} otphide={false} otp="2121" />
             </Col>
             <Col xs={12} md={6} lg={6} xl={6}>
+              <MobileProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
+            </Col>
+            <Col xs={12} md={6} lg={6} xl={6}>
               <NeedHelp />
             </Col>
             <Col xs={12} md={6} lg={6} xl={6}>
               <Quotation rejectaccept={true} showpaybutton={false} hide />
             </Col>
-            //
           </Row>
           {mobileView ? (
             <Col xs={12} className="d-flex justify-content-center pt-3 pb-5">
@@ -126,6 +135,9 @@ export default function ViewBooking({ backhandler }) {
                   rejectaccept={f4 == 0 ? false : true}
                   showpaybutton={f4 == 0 && true}
                 />
+                <Col xs={12} md={6} lg={6} xl={6}>
+                  <MobileProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
+                </Col>
                 <NeedHelp />
               </div>
             ) : (

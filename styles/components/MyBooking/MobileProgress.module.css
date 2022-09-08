@@ -1,0 +1,115 @@
+.NextStepTitle {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.UpDownLogo {
+    color: #0E62CB;
+    transform: rotate(180deg);
+    transition: 0.5s all ease;
+}
+
+.UpDownLogoWrraper {
+    display: flex;
+    justify-content: right;
+}
+
+.NextStepRow {
+    background: #FFFFFF;
+    box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.08);
+    border-radius: 5px;
+    padding: 1.5rem 0.5rem;
+    height: 4.2rem;
+    overflow: hidden;
+    transition: 0.5s all ease;
+}
+
+.NextStepMain {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    margin-top: 1.5rem;
+    display: none;
+}
+
+.StepsCover {
+    display: flex;
+    align-items: center;
+}
+
+.StepsCover p {
+    margin: 0%;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.NumorCheck {
+    background: #DBDBDB;
+    margin-right: 1rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 100%;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.GapeLine {
+    border: 0.2px solid #B8B8B8;
+    transform: rotate(180deg);
+    float: left;
+    height: 1rem;
+    margin-left: 1rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.completestep {
+    color: #00B67F;
+    user-select: none;
+}
+
+.completenumber {
+    padding: 0.3rem 0.7rem;
+    border-radius: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid #00B67F;
+    font-weight: 400;
+    font-size: 14px;
+    user-select: none;
+}
+
+.currentstep {
+    color: #DD5600;
+    user-select: none;
+}
+
+.currentnumber {
+    padding: 0.3rem 0.7rem;
+    border-radius: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid #DD5600;
+    font-weight: 400;
+    font-size: 14px;
+    color: #DD5600;
+    user-select: none;
+}
+
+.delayedstep {
+    color: #EC1D27;
+    user-select: none;
+}
+
+.delayednumber {
+    padding: 0.3rem 0.7rem;
+    border-radius: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid #EC1D27;
+    font-weight: 400;
+    font-size: 14px;
+    color: #EC1D27;
+    user-select: none;
+}
+
+@media (min-width:320px) and (max-width: 450px) {
+    .NextStepMain {
+        display: block;
+    }
+}
