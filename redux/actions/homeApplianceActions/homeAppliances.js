@@ -1,3 +1,5 @@
+import { getCategoriesByCity } from "api/categoryByCity";
+import { getIssuesBySegments, getSegmentByCategory } from "api/homeAppliances";
 import * as homeAppliances from "../actionTypes";
 
 export const getHomeAppliancesStart = () => {
@@ -45,30 +47,6 @@ export const getHomeApplianceModelFail = (err) => {
     loading: false,
   };
 };
-
-export const selectHomeApplianceModelStart = () => {
-  return {
-    type: homeAppliances.SELECT_HOME_APPLIANCES_MODELS_START,
-    loading: true,
-  };
-};
-
-export const selectHomeApplianceModelSuccess = (data) => {
-  return {
-    type: homeAppliances.SELECT_HOME_APPLIANCES_MODELS_SUCCESS,
-    payload: data,
-    loading: false,
-  };
-};
-
-export const selectHomeApplianceModelFail = (err) => {
-  return {
-    type: homeAppliances.SELECT_HOME_APPLIANCES_MODELS_FAIL,
-    payload: data,
-    loading: false,
-  };
-};
-
 export const getHomeApplianceIssueStart = () => {
   return {
     type: homeAppliances.GET_HOME_APPLIANCES_ISSUES_START,
@@ -92,25 +70,41 @@ export const getHomeAppliancesIssueFail = (err) => {
   };
 };
 
-export const selectHomeApplianceIssueStart = () => {
-  return {
-    type: homeAppliances.SELECT_HOME_APPLIANCES_ISSUES_SUCCESS,
-    loading: true,
+export const getHomeAppliance = (data) => {
+  return async function (dispatch) {
+    getHomeAppliancesStart();
+    getCategoriesByCity(data)
+      .then((response) => {
+        dispatch(getHomeAppliancesSuccess(response));
+      })
+      .catch((err) => {
+        dispatch(getHomeAppliancesFail(err));
+      });
   };
 };
 
-export const selectHomeApplianceIssueSucces = (data) => {
-  return {
-    type: homeAppliances.SELECT_HOME_APPLIANCES_ISSUES_SUCCESS,
-    payload: data,
-    loading: false,
+export const getHomeApplianceModel = (data) => {
+  return async function (dispatch) {
+    getHomeApplianceModelStart();
+    await getSegmentByCategory(data)
+      .then((response) => {
+        dispatch(getHomeApplianceModelSuccess(response));
+      })
+      .catch((err) => {
+        dispatch(getHomeApplianceModelFail(err));
+      });
   };
 };
 
-export const selectHomeApplianceIssueFail = (data) => {
-  return {
-    type: homeAppliances.SELECT_HOME_APPLIANCES_ISSUES_FAIL,
-    payload: data,
-    loading: false,
+export const getHomeApplianceIssue = (data) => {
+  return async function (dispatch) {
+    getHomeApplianceIssueStart();
+    await getIssuesBySegments(data)
+      .then((response) => {
+        dispatch(getHomeApplianceIssueSuccess(response));
+      })
+      .catch((err) => {
+        dispatch(getHomeAppliancesIssueFail(err));
+      });
   };
 };

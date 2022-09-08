@@ -6,7 +6,11 @@ export const homeHeroSection = async () => {
     .get(`${API_URL}api/v1/cms/hero_section_home`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (faqData.data.data !== undefined) {
+          return faqData.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
@@ -19,7 +23,11 @@ export const categoryHeroSection = async (categoryID) => {
     .get(`${API_URL}api/v1/cms/hero_section_by_category?category=${categoryID}`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (faqData.data.data !== undefined) {
+          return faqData.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
@@ -32,7 +40,11 @@ export const brandHeroSection = async (brandID) => {
     .get(`${API_URL}api/v1/cms/hero_section_by_brand?brand=${brandID}`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (faqData.data.data !== undefined) {
+          return faqData.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
@@ -45,7 +57,11 @@ export const modelHeroSection = async (modelID) => {
     .get(`${API_URL}api/v1/cms/hero_section_by_model?model=${modelID}`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (faqData.data.data !== undefined) {
+          return faqData.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
