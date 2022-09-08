@@ -223,8 +223,6 @@ function SelectDeviceHero({
     setDisplayBrands(true);
   };
 
-  console.log({ categoryFaq });
-
   return (
     <>
       <section className={`${styles.modelHeroContainer} ${modelSection}`}>

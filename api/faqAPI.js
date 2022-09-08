@@ -23,7 +23,11 @@ export const getFaqsBYBrandAxios = async (brandID) => {
     .get(`${API_URL}api/v1/cms/faqs_section_by_brand?brand=${brandID}`)
     .then((faqData) => {
       if (faqData.status === 200) {
-        return faqData.data.data;
+        if (faqData.data.data !== undefined) {
+          return faqData.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
@@ -36,7 +40,11 @@ export const getFaqsBYModelAxios = async (modelID) => {
     .get(`${API_URL}api/v1/cms/faqs_section_by_model?model=${modelID}`)
     .then((faqData) => {
       if (faqData.status === 200) {
-        return faqData.data.data;
+        if (faqData.data.data !== undefined) {
+          return faqData.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
