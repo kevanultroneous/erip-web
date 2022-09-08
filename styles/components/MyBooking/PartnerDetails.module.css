@@ -72,3 +72,21 @@
 .ButtonWrraper {
   margin: 1rem 0;
 }
+
+@media (min-width: 320px) and (max-width: 450px) {
+  .PartnetDetailCard {
+    margin-left: 0%;
+    margin-right: 0%;
+    margin-top: 1rem;
+    padding-right: 0%;
+  }
+  .ShareOtpText {
+    font-size: 14px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1080px) {
+}
+@media (min-width: 1200px) and (max-width: 1730px) {
+}
+@media (min-width: 650px) and (max-width: 740px) {
+}

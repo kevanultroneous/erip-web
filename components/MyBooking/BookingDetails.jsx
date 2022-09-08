@@ -1,4 +1,6 @@
 import styles from "@/styles/components/MyBooking/BookingDetails.module.css";
+import { useEffect } from "react";
+import { useState } from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import { BsChevronRight } from "react-icons/bs";
 import PrimaryButton from "../common/PrimaryButton";
@@ -9,6 +11,10 @@ export default function BookingDetails({
   hidereschedulebuttons,
   raiseticketshow,
 }) {
+  const [mobileView, setMobileView] = useState(false);
+  useEffect(() => {
+    window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
+  }, []);
   return (
     <div>
       <Row className={styles.BookingBox}>
@@ -87,16 +93,17 @@ export default function BookingDetails({
           </Col>
         )}
       </Row>
-      {!hideoutcallsupport && (
-        <Row className={styles.CallUsForSupport}>
-          <Col xs={12} md={12} lg={12} xl={12}>
-            <PrimaryButton
-              title="Call Us For Support"
-              buttonStyle={{ width: "100%" }}
-            />
-          </Col>
-        </Row>
-      )}
+      {!hideoutcallsupport &&
+        (mobileView ? null : (
+          <Row className={styles.CallUsForSupport}>
+            <Col xs={12} md={12} lg={12} xl={12}>
+              <PrimaryButton
+                title="Call Us For Support"
+                buttonStyle={{ width: "100%" }}
+              />
+            </Col>
+          </Row>
+        ))}
       {deliveryAndJobcard && (
         <div>
           <Row className={styles.MiniCard}>

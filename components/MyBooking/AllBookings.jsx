@@ -24,7 +24,7 @@ function AllBookings() {
       {/* cancel order */}
       <CancelOrder show={cancelOrder} onHide={() => setCancelOrder(false)} />
       <Row className={styles.allBookingRow}>
-        <Col xl={9}>
+        <Col xs={12} xl={9}>
           <ViewBooking />
           {/* <Row>
             {bookingData.map((bookings) => {

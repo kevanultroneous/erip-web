@@ -12,25 +12,32 @@ import Quotation from "./Quotation";
 import { useState } from "react";
 import FeedbackQue from "./FeedbackQue";
 import Ratingbar from "./Ratingbar";
+import { useEffect } from "react";
 export default function ViewBooking() {
-  const [f1, setF1] = useState(0);
-  const [f2, setF2] = useState(null);
-  const [f3, setF3] = useState(null);
-  const [f4, setF4] = useState(null);
+  const [f1, setF1] = useState(1);
+  const [f2, setF2] = useState(1);
+  const [f3, setF3] = useState(1);
+  const [f4, setF4] = useState(1);
   const [f5, setF5] = useState(null);
-
+  const [mobileView, setMobileView] = useState(false);
+  useEffect(() => {
+    window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
+  }, []);
   return (
-    <Row className={styles.ViewBookingRow}>
-      <Col xs={2} md={2} lg={2} xl={2}>
-        <BiArrowBack className={styles.BackArrow} />
-      </Col>
-      <Col xs={10} md={10} lg={10} xl={10}>
-        <p className={styles.MainTitle}>LG-Air Conditioner</p>
-      </Col>
+    <div>
+      <Row className={styles.ViewBookingRow}>
+        <Col xs={2} md={2} lg={2} xl={2}>
+          <BiArrowBack className={styles.BackArrow} />
+        </Col>
+        <Col xs={10} md={10} lg={10} xl={10}>
+          <p className={styles.MainTitle}>LG-Air Conditioner</p>
+        </Col>
+      </Row>
+      <Row>
+        <PartnerStatusProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
+      </Row>
 
-      <PartnerStatusProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
-
-      {f1 == 0 ? (
+      {f1 == 0 && f2 == null && f3 == null && f4 == null && f5 == null ? (
         <Col xs={12} md={12} lg={12} xl={12}>
           <Row>
             <Col xs={12} md={6} lg={6} xl={6}>
@@ -48,10 +55,22 @@ export default function ViewBooking() {
             <Quotation rejectaccept={true} showpaybutton={false} hide />
             <PartnerDetails off={true} otphide={false} otp="2121" />
           </Row>
+          {mobileView ? (
+            <Col xs={12} className="d-flex justify-content-center  pt-3 pb-5">
+              <PrimaryButton title="Call Us For Support" />
+            </Col>
+          ) : null}
         </Col>
-      ) : (f1 == 1 && f2 == 0) ||
-        (f1 == 1 && f2 == 1 && (f3 == 0 || f3 == 2)) ? (
+      ) : null}
+
+      {(f1 == 1 && f2 == 0 && f3 == null && f4 == null && f5 == null) ||
+      (f1 == 1 &&
+        f2 == 1 &&
+        (f3 == 0 || f3 == 2) &&
+        f4 == null &&
+        f5 == null) ? (
         <Col xs={12} md={12} lg={12} xl={12}>
+          //{" "}
           <Row>
             <Col xs={12} md={6} lg={6} xl={6}>
               <BookingDetails
@@ -71,9 +90,18 @@ export default function ViewBooking() {
             <Col xs={12} md={6} lg={6} xl={6}>
               <Quotation rejectaccept={true} showpaybutton={false} hide />
             </Col>
+            //
           </Row>
+          {mobileView ? (
+            <Col xs={12} className="d-flex justify-content-center pt-3 pb-5">
+              <PrimaryButton title="Call Us For Support" />
+            </Col>
+          ) : null}
         </Col>
-      ) : f1 == 1 && f2 == 1 && f3 == 1 && f4 == 0 ? (
+      ) : null}
+
+      {(f1 == 1 && f2 == 1 && f3 == 1 && f4 == 0 && f5 == null) ||
+      (f1 == 1 && f2 == 1 && f3 == 1 && f4 == null && f5 == null) ? (
         <Row>
           <Col xs={12} md={6} lg={6} xl={6}>
             <BookingDetails
@@ -83,17 +111,41 @@ export default function ViewBooking() {
               showinnercallsupport={true}
               raiseticketshow={false}
             />
-            <NeedHelp />
+            {mobileView ? null : <NeedHelp />}
           </Col>
           <Col xs={12} md={6} lg={6} xl={6}>
-            <Quotation
-              rejectaccept={f4 == 0 ? false : true}
-              showpaybutton={f4 == 0 && true}
-            />
-            <PartnerDetails off={false} otphide={false} otp="2121" />
+            {mobileView ? (
+              <div>
+                <PartnerDetails
+                  off={false}
+                  otphide={true}
+                  otp="2121"
+                  callpartnerhide={true}
+                />
+                <Quotation
+                  rejectaccept={f4 == 0 ? false : true}
+                  showpaybutton={f4 == 0 && true}
+                />
+                <NeedHelp />
+              </div>
+            ) : (
+              <div>
+                <Quotation
+                  rejectaccept={f4 == 0 ? false : true}
+                  showpaybutton={f4 == 0 && true}
+                />
+                <PartnerDetails off={false} otphide={false} otp="2121" />
+              </div>
+            )}
           </Col>
+          {mobileView ? (
+            <Col xs={12} className="d-flex justify-content-center  pt-3 pb-5">
+              <PrimaryButton title="Call Us For Support" />
+            </Col>
+          ) : null}
         </Row>
-      ) : f1 == 1 && f2 == 1 && f3 == 1 && f4 == 1 ? (
+      ) : null}
+      {f1 == 1 && f2 == 1 && f3 == 1 && f4 == 1 && f5 == null ? (
         <Row>
           <Col xs={12} md={6} lg={6} xl={6}>
             <BookingDetails
@@ -103,15 +155,26 @@ export default function ViewBooking() {
               showinnercallsupport={true}
               raiseticketshow={true}
             />
-            <NeedHelp />
+            {mobileView ? null : <NeedHelp />}
           </Col>
           <Col xs={12} md={6} lg={6} xl={6}>
-            <PartnerDetails off={false} otphide={true} otp="2121" />
+            <PartnerDetails
+              off={false}
+              otphide={true}
+              otp="2121"
+              callpartnerhide={true}
+            />
             <Ratingbar />
             <FeedbackQue />
+            {mobileView ? <NeedHelp /> : null}
           </Col>
+          {mobileView ? (
+            <Col xs={12} className="d-flex justify-content-center  pt-3 pb-5">
+              <PrimaryButton title="Call Us For Support" />
+            </Col>
+          ) : null}
         </Row>
       ) : null}
-    </Row>
+    </div>
   );
 }

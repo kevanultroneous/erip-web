@@ -570,6 +570,16 @@ input[type="number"] {
   .OfferPopup .modal-content {
     border-radius: 10px 10px 0px 0px;
   }
+  .Needhelpaccordian .accordion-button {
+    background: #f5f6fa !important;
+  }
+
+  .Needhelpaccordian .accordion-body {
+    background: #f5f6fa !important;
+  }
+  .react-stars span {
+    margin-right: 0.9rem;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1080px) {

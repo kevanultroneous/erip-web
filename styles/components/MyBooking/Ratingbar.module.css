@@ -5,3 +5,10 @@
   border-radius: 5px;
   padding: 1rem;
 }
+
+@media (min-width: 320px) and (max-width: 450px) {
+  .RatingCard {
+    margin-left: 0%;
+    margin-right: 0%;
+  }
+}

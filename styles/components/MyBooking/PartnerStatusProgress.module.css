@@ -1,166 +1,166 @@
 /*  */
 .clearfix:after {
-    clear: both;
-    content: "";
-    display: block;
-    height: 0;
+  clear: both;
+  content: "";
+  display: block;
+  height: 0;
 }
 
 .container {
-    width: 1000px;
-    margin: 0 auto;
+  width: 1000px;
+  margin: 0 auto;
 }
 
 .wrapper {
-    display: table-cell;
-    vertical-align: middle;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .nav {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 
 .pull-right {
-    float: right;
+  float: right;
 }
-
-
 
 /* Breadcrups CSS */
 
 .arrowsteps .step {
-    text-align: center;
-    color: #666;
-    font-weight: 400;
-    font-size: 16px;
-    cursor: default;
-    margin: 0 3px;
-    padding: 10px 10px 10px 20px;
-    min-width: 180px;
-    float: left;
-    position: relative;
-    background-color: #E3E3E3;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    transition: background-color 0.2s ease;
+  text-align: center;
+  color: #666;
+  font-weight: 400;
+  font-size: 16px;
+  cursor: default;
+  margin: 0 3px;
+  padding: 10px 10px 10px 20px;
+  min-width: 180px;
+  float: left;
+  position: relative;
+  background-color: #e3e3e3;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  transition: background-color 0.2s ease;
 }
 
 .arrowsteps .step:after,
 .arrowsteps .step:before {
-    content: " ";
-    position: absolute;
-    top: 0;
-    right: -17px;
-    width: 0;
-    height: 0;
-    border-top: 23px solid transparent;
-    border-bottom: 19px solid transparent;
-    border-left: 17px solid #E3E3E3;
-    z-index: 2;
-    transition: border-color 0.2s ease;
+  content: " ";
+  position: absolute;
+  top: 0;
+  right: -17px;
+  width: 0;
+  height: 0;
+  border-top: 23px solid transparent;
+  border-bottom: 19px solid transparent;
+  border-left: 17px solid #e3e3e3;
+  z-index: 2;
+  transition: border-color 0.2s ease;
 }
 
 .arrowsteps .step:before {
-    right: auto;
-    left: 0;
-    border-left: 17px solid #fff;
-    z-index: 0;
+  right: auto;
+  left: 0;
+  border-left: 17px solid #fff;
+  z-index: 0;
 }
 
 .arrowsteps .step:first-child:before {
-    border: none;
+  border: none;
 }
 
 .arrowsteps .step:first-child {
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
 
 .arrowsteps .step span {
-    position: relative;
+  position: relative;
 }
 
 .arrowsteps .step span:before {
-    opacity: 0;
-    content: "✔";
-    position: absolute;
-    top: -2px;
-    left: -20px;
+  opacity: 0;
+  content: "✔";
+  position: absolute;
+  top: -2px;
+  left: -20px;
 }
 
 .arrowsteps .step.done span:before {
-    opacity: 1;
-    -webkit-transition: opacity 0.3s ease 0.5s;
-    -moz-transition: opacity 0.3s ease 0.5s;
-    -ms-transition: opacity 0.3s ease 0.5s;
-    transition: opacity 0.3s ease 0.5s;
+  opacity: 1;
+  -webkit-transition: opacity 0.3s ease 0.5s;
+  -moz-transition: opacity 0.3s ease 0.5s;
+  -ms-transition: opacity 0.3s ease 0.5s;
+  transition: opacity 0.3s ease 0.5s;
 }
 
-
 .arrowsteps .step.current {
-    color: #DD5600;
-    background-color: #FFD7BD;
-    font-weight: 700;
-    font-size: 16px;
+  color: #dd5600;
+  background-color: #ffd7bd;
+  font-weight: 700;
+  font-size: 16px;
 }
 
 .arrowsteps .step.current:after {
-    border-left: 17px solid #FFD7BD;
+  border-left: 17px solid #ffd7bd;
 }
 
 .arrowsteps .step.complete {
-    color: #00B67F;
-    background-color: #CCFFF0;
-    font-weight: 700;
-    font-size: 16px;
+  color: #00b67f;
+  background-color: #ccfff0;
+  font-weight: 700;
+  font-size: 16px;
 }
 
 .arrowsteps .step.complete:after {
-    border-left: 17px solid #CCFFF0;
+  border-left: 17px solid #ccfff0;
 }
 
 .arrowsteps .step.delayed {
-    color: #EC1D27;
-    background-color: #F58D92;
-    font-weight: 700;
-    font-size: 16px;
+  color: #ec1d27;
+  background-color: #f58d92;
+  font-weight: 700;
+  font-size: 16px;
 }
 
 .arrowsteps .step.delayed:after {
-    border-left: 17px solid #F58D92;
+  border-left: 17px solid #f58d92;
 }
 
 .ProgressWrraper {
-    width: 58rem;
-    overflow: hidden;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
+  width: 58rem;
+  overflow: hidden;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
 .InfoWrraper {
-    margin-top: 1rem;
-    display: flex;
+  margin-top: 1rem;
+  display: flex;
 }
 
 .InfoWrraper p {
-    margin: 0%;
+  margin: 0%;
 }
 
 .InfoIcon {
-    font-size: 25px;
-    margin-right: 0.5rem;
-    color: #0E62CB;
+  font-size: 25px;
+  margin-right: 0.5rem;
+  color: #0e62cb;
 }
 
 .InfoText {
-    font-weight: 400;
-    font-size: 16px;
+  font-weight: 400;
+  font-size: 16px;
 }
 
-@media (min-width:320px) and (max-width: 450px) {
-    .ProgressWrraper {
-        display: none;
-    }
+@media (min-width: 320px) and (max-width: 450px) {
+  .ProgressWrraper {
+    display: none;
+  }
+  .InfoWrraper {
+    display: none;
+  }
 }
