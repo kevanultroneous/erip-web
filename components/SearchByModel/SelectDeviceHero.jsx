@@ -23,6 +23,10 @@ import {
   selectModels,
 } from "redux/actions/issuePageActions/issuePageActions";
 import { callFaqByCategory } from "redux/actions/faqActions/faqActions";
+import { getCategoryHero } from "redux/actions/heroActions/heroActions";
+import { getInformationByCategory } from "redux/actions/informationActions/informationActions";
+import { getCategoryOffer } from "redux/actions/offersActions/offerActions";
+import { getTestimonialsByCategory } from "redux/actions/testimonialActions/testimonialAction";
 
 function SelectDeviceHero({
   headClass,
@@ -57,10 +61,15 @@ function SelectDeviceHero({
   const [totalBrands, setTotalBrands] = useState(6);
   const [displayBrands, setDisplayBrands] = useState(true);
 
+  // Use Selector
+  // City ID
+  const cityID = useSelector((state) => state.locationdata.city);
+
+  // category brand model IDs
   const categoryID = useSelector((state) => state.issuePage.categoryID);
-  const categoryFaq = useSelector((state) => state.faqCategory.data);
   const getBrandID = useSelector((state) => state.issuePage.brandID);
   const getModelID = useSelector((state) => state.issuePage.modelID);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -68,11 +77,12 @@ function SelectDeviceHero({
   }, []);
 
   useEffect(() => {
-    console.log("categoryID", categoryID);
+    dispatch(getCategoryHero(categoryID));
     dispatch(callFaqByCategory(categoryID));
+    dispatch(getInformationByCategory(categoryID));
+    dispatch(getCategoryOffer(categoryID));
+    dispatch(getTestimonialsByCategory(categoryID));
   }, [categoryID]);
-
-  useEffect(() => {}, [categoryFaq]);
 
   const selectDrop = useRef();
   const categoryModel = useRef();
@@ -129,7 +139,7 @@ function SelectDeviceHero({
   };
   const getCategory = async () => {
     await axios
-      .get(`${API_URL}api/v1/categories_by_cities?city=1`)
+      .get(`${API_URL}api/v1/categories_by_cities?city=${cityID}`)
       .then((data) => {
         setcategories(
           data.data.data.filter((category) => category.group_id == 1)

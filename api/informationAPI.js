@@ -6,7 +6,11 @@ export const infoByCategory = async (categoryID) => {
     .get(`${API_URL}api/v1/cms/info_section_by_category?category=${categoryID}`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (data.data.data !== undefined) {
+          return data.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {

@@ -6,7 +6,11 @@ export const offerHome = async () => {
     .get(`${API_URL}api/v1/cms/offers_section_home`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (data.data.data !== undefined) {
+          return data.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
@@ -21,7 +25,11 @@ export const offerByCategory = async (categoryID) => {
     )
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (data.data.data !== undefined) {
+          return data.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
@@ -34,7 +42,11 @@ export const offerByBrands = async (brandID) => {
     .get(`${API_URL}api/v1/cms/offers_section_by_brand?brand=${brandID}`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (data.data.data !== undefined) {
+          return data.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
@@ -47,7 +59,11 @@ export const offerByModels = async (modelID) => {
     .get(`${API_URL}api/v1/cms/offers_section_by_model?model=${modelID}`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (data.data.data !== undefined) {
+          return data.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {

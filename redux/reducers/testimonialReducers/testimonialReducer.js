@@ -6,7 +6,7 @@ const testimonialsInitialState = {
   loading: false,
 };
 
-export const testimonialByCategory = (
+export const testimonialByCategoryReducer = (
   state = testimonialsInitialState,
   { type, payload }
 ) => {
@@ -36,7 +36,7 @@ export const testimonialByCategory = (
   }
 };
 
-export const testimonialByBrands = (
+export const testimonialByBrandsReducer = (
   state = testimonialsInitialState,
   { type, payload }
 ) => {
@@ -66,7 +66,7 @@ export const testimonialByBrands = (
   }
 };
 
-export const testimonialByModels = (
+export const testimonialByModelsReducer = (
   state = testimonialsInitialState,
   { type, payload }
 ) => {
