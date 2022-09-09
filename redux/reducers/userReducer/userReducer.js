@@ -14,12 +14,14 @@ export const userAuthenticationReducer = (state = initialstate, { type, payload 
             return {
                 ...state,
                 data: payload,
+                process: 0,
                 loading: false,
             };
         case userauth.REG_CHECK_FAIL:
             return {
                 ...state,
                 data: payload,
+                process: 0,
                 loading: false,
             };
         case userauth.REG_OTP_START:
@@ -31,12 +33,14 @@ export const userAuthenticationReducer = (state = initialstate, { type, payload 
             return {
                 ...state,
                 data: payload,
+                process: 1,
                 loading: false,
             };
         case userauth.REG_OTP_FAIL:
             return {
                 ...state,
                 data: payload,
+                process: 1,
                 loading: false,
             };
         case userauth.REG_USER_START:
@@ -48,12 +52,14 @@ export const userAuthenticationReducer = (state = initialstate, { type, payload 
             return {
                 ...state,
                 data: payload,
+                process: 2,
                 loading: false,
             };
         case userauth.REG_USER_FAIL:
             return {
                 ...state,
                 data: payload,
+                process: 2,
                 loading: false,
             };
         case userauth.LOGIN_OTP_START:
@@ -65,13 +71,14 @@ export const userAuthenticationReducer = (state = initialstate, { type, payload 
             return {
                 ...state,
                 data: payload,
-                msg: "for login",
+                process: 3,
                 loading: false,
             };
         case userauth.LOGIN_OTP_FAIL:
             return {
                 ...state,
                 data: payload,
+                process: 3,
                 loading: false,
             };
         case userauth.LOGIN_USER_START:
@@ -83,12 +90,14 @@ export const userAuthenticationReducer = (state = initialstate, { type, payload 
             return {
                 ...state,
                 data: payload,
+                process: 4,
                 loading: false,
             };
         case userauth.LOGIN_USER_FAIL:
             return {
                 ...state,
                 data: payload,
+                process: 4,
                 loading: false,
             };
         case userauth.USER_CLEAR:

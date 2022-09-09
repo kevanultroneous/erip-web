@@ -194,6 +194,7 @@ export default function LoginPopup({ show, onHide }) {
       })
       .catch((e) => console.log(e));
   };
+
   const LoginButtonHandler = () => {
     if (Otp.length < 6) {
       setErrorMsgHide(false);
@@ -202,6 +203,7 @@ export default function LoginPopup({ show, onHide }) {
       LoginStage();
     }
   };
+
   return (
     <div>
       <Modal
