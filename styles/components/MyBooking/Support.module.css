@@ -173,6 +173,14 @@
     .ColClass {
         padding: 0%;
     }
+
+    .Heading {
+        font-size: 30px;
+    }
+
+    .BackArrow {
+        font-size: 30px;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1080px) {}

@@ -13,10 +13,10 @@ export default function Support({ backaction }) {
   return (
     <Container userdefinedclass={styles.containermob}>
       <Row>
-        <Col xs={6} md={6} lg={6} xl={6}>
+        <Col xs={4} md={6} lg={6} xl={6}>
           <BiArrowBack className={styles.BackArrow} onClick={backaction} />
         </Col>
-        <Col xs={6} md={6} lg={6} xl={6}>
+        <Col xs={8} md={6} lg={6} xl={6}>
           <h3 className={styles.Heading}>Support</h3>
         </Col>
         <Col xs={6} md={6} lg={6} xl={6}>

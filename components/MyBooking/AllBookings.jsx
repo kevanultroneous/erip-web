@@ -16,6 +16,7 @@ function AllBookings() {
   const [addEmail, setaddEmail] = useState(false);
   const [cancelOrder, setCancelOrder] = useState(false);
   const [viewdetail, setViewDetail] = useState(false);
+  const [viewSupport, setViewSupport] = useState(false);
 
   return (
     <section className={styles.allBookingContainer}>
@@ -28,16 +29,17 @@ function AllBookings() {
       <CancelOrder show={cancelOrder} onHide={() => setCancelOrder(false)} />
       <Row className={styles.allBookingRow}>
         <Col xs={12} md={9} lg={9} xl={9}>
-          <Support backaction={() => null} />
-          {/* {viewdetail ? (
+          {viewSupport && <Support backaction={() => setViewSupport(false)} />}
+          {viewdetail ? (
             <ViewBooking backhandler={() => setViewDetail(false)} />
-          ) : null} */}
-          {/* {!viewdetail && (
+          ) : null}
+          {!viewdetail && !viewSupport && (
             <Row>
               {bookingData.map((bookings) => {
                 return (
                   <Col key={bookings.orderNumber} xl={6}>
                     <BookingCard
+                      callsupport={() => setViewSupport(true)}
                       viewdetails={() => setViewDetail(true)}
                       orderNumber={bookings.orderNumber}
                       partnerStatusAssigned={bookings.partnerStatusAssigned}
@@ -53,7 +55,7 @@ function AllBookings() {
                 );
               })}
             </Row>
-          )} */}
+          )}
         </Col>
         <Col xl={3} className={styles.allBookingsLeftCont}>
           <LeftMenu
