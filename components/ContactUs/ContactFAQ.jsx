@@ -12,15 +12,17 @@ function ContactFAQ({ faqArray }) {
 
   return (
     <section className={styles.faqContainer}>
-      <Container userdefinedclass={styles.faqMainContainer}>
-        <div className={styles.faqHeading}>
-          <h2>Frequently Asked Questions</h2>
-        </div>
-        <AccordionComponent
-          arr={faqArray || AccordionFAQ}
-          customTitleStyle={styles.faqTitleStyles}
-        />
-      </Container>
+      {faqArray.length > 0 && (
+        <Container userdefinedclass={styles.faqMainContainer}>
+          <div className={styles.faqHeading}>
+            <h2>Frequently Asked Questions</h2>
+          </div>
+          <AccordionComponent
+            arr={faqArray || AccordionFAQ}
+            customTitleStyle={styles.faqTitleStyles}
+          />
+        </Container>
+      )}
     </section>
   );
 }

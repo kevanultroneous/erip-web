@@ -23,6 +23,9 @@ import axios from "axios";
 
 // styles
 import styles from "@/styles/components/personalGadgets/issuepage.module.css";
+import OfferBanner from "@/components/Home/OfferBanner";
+import InformationSection from "@/components/PersonalGadgets/informationSection";
+import HomeHero from "@/components/Home/Hero";
 
 function IssuePage({ data }) {
   // states
@@ -66,21 +69,8 @@ function IssuePage({ data }) {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(
-      { categoryFaq },
-      { categoryTestimonial },
-      { categoryHero },
-      { categoryInfo },
-      { categoryOffer }
-    );
-    // console.log(
-    //   { brandsFaq },
-    //   { brandsTestimonial },
-    //   { brandsHero },
-    //   { brandsInfo },
-    //   { brandsOffer }
-    // );
-  }, [categoryFaq]);
+    console.log(categoryTestimonial.data, "offer");
+  }, [categoryTestimonial.data]);
 
   useEffect(() => {}, []);
 
@@ -108,8 +98,10 @@ function IssuePage({ data }) {
         modelSection={styles.selectDeviceSection}
         homeQuery={router.query.issue}
       />
+      <HomeHero offers={categoryOffer.data} />
       <HowItWork />
       <WhyErip />
+      <InformationSection paragraph={categoryInfo.data} />
       <ContactFAQ faqArray={categoryFaq.data} />
       <Testimonials data={categoryTestimonial.data} />
       {mobileView ? <Footer /> : <MobileFooter />}
