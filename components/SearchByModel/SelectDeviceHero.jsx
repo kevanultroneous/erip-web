@@ -23,6 +23,7 @@ import {
   selectModels,
 } from "redux/actions/issuePageActions/issuePageActions";
 import { callFaqByCategory } from "redux/actions/faqActions/faqActions";
+import { callAddorRemoveCart } from "redux/actions/cartActions/cartActions";
 
 function SelectDeviceHero({
   headClass,
@@ -116,17 +117,6 @@ function SelectDeviceHero({
     getCategory();
   }, []);
 
-  const AddTOcartAction = (issueid) => {
-    AddToCart(localStorage.getItem("token"), issueid)
-      .then((r) => {
-        if (r.data.success) {
-          alert(r.data.message);
-        } else {
-          alert(r.data.message);
-        }
-      })
-      .catch((e) => console.log(e));
-  };
   const getCategory = async () => {
     await axios
       .get(`${API_URL}api/v1/categories_by_cities?city=1`)
@@ -417,7 +407,14 @@ function SelectDeviceHero({
                   href={"#"}
                   addToCart={() => {
                     setCartIssues((previssues) => [...previssues, issues]);
-                    token ? AddTOcartAction(issues.issue_id) : quoteaction();
+                    token
+                      ? dispatch(
+                          callAddorRemoveCart(
+                            localStorage.getItem("token"),
+                            issues.issue_id
+                          )
+                        )
+                      : quoteaction();
                   }}
                   buttonName={token ? "Add to cart" : "Get Quote"}
                 />

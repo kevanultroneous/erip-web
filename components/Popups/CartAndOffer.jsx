@@ -27,7 +27,8 @@ export default function CartAndOffer({ show, onHide }) {
   const [finalAmount, setFinalAmount] = useState(0);
 
   const cartSelector = useSelector((state) => state.cartdata);
-  const statusdelete = useSelector((state) => console.log(state));
+  const statusdelete = useSelector((state) => state.cartaddremove);
+
   const dispatch = useDispatch();
   useEffect(() => {}, [cartSelector]);
 
@@ -50,10 +51,12 @@ export default function CartAndOffer({ show, onHide }) {
     }
     setTotal(ans);
   };
+
   const RemoveFromCart = (id) => {
     dispatch(callAddorRemoveCart(localStorage.getItem("token"), id));
     dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
   };
+
   useEffect(() => {
     CouponsByCC()
       .then((response) => {
