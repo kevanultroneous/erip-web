@@ -1,4 +1,4 @@
-import { CheckRegistrationAPI, FinalLoginAPI, SendLoginOtpAPI } from "pages/api/api";
+import { CheckRegistrationAPI, FinalLoginAPI, SendLoginOtpAPI, SendRegistrationOtpAPI } from "pages/api/api";
 import * as user from "../../actions/actionTypes"
 
 // check reg
@@ -8,15 +8,17 @@ export const CheckRegActionStart = () => {
         loading: true,
     }
 }
-export const CheckRegActionSuccess = () => {
+export const CheckRegActionSuccess = (data) => {
     return {
         type: user.REG_CHECK_SUCCESS,
+        payload: data,
         loading: false,
     }
 }
-export const CheckRegActionFail = () => {
+export const CheckRegActionFail = (msg) => {
     return {
         type: user.REG_CHECK_FAIL,
+        payload: msg,
         loading: false,
     }
 }
@@ -28,15 +30,17 @@ export const RegotpStart = () => {
         loading: true,
     }
 }
-export const RegotpSuccess = () => {
+export const RegotpSuccess = (data) => {
     return {
         type: user.REG_OTP_SUCCESS,
+        payload: data,
         loading: false,
     }
 }
-export const RegotpFail = () => {
+export const RegotpFail = (msg) => {
     return {
         type: user.REG_OTP_FAIL,
+        payload: msg,
         loading: false,
     }
 }
@@ -48,15 +52,17 @@ export const UserRegStart = () => {
         loading: true,
     }
 }
-export const UserRegSuccess = () => {
+export const UserRegSuccess = (data) => {
     return {
         type: user.REG_USER_SUCCESS,
+        payload: data,
         loading: true,
     }
 }
-export const UserRegFail = () => {
+export const UserRegFail = (msg) => {
     return {
         type: user.REG_USER_FAIL,
+        payload: msg,
         loading: true,
     }
 }
@@ -68,15 +74,17 @@ export const LoginotpStart = () => {
         loading: true,
     }
 }
-export const LoginotpSuccess = () => {
+export const LoginotpSuccess = (msg) => {
     return {
         type: user.LOGIN_OTP_SUCCESS,
+        payload: msg,
         loading: false,
     }
 }
-export const LoginotpFail = () => {
+export const LoginotpFail = (msg) => {
     return {
         type: user.LOGIN_OTP_FAIL,
+        payload: msg,
         loading: false,
     }
 }
@@ -89,15 +97,17 @@ export const UserLoginStart = () => {
         loading: true,
     }
 }
-export const UserLoginSuccess = () => {
+export const UserLoginSuccess = (data) => {
     return {
         type: user.LOGIN_USER_SUCCESS,
+        payload: data,
         loading: true,
     }
 }
-export const UserLoginFail = () => {
+export const UserLoginFail = (msg) => {
     return {
         type: user.LOGIN_USER_FAIL,
+        payload: msg,
         loading: true,
     }
 }
@@ -109,47 +119,69 @@ export const UserActionSuggestions = (msg) => {
         payload: msg
     }
 }
+export const ClearUserdata = () => {
+    return {
+        type: user.USER_CLEAR,
+        payload: null
+    }
+}
 //apis 
 
-
-export const callRegistrationAPI = (ContactNumber) => {
+export const callUserclear = () => {
+    return async function (dispatch) {
+        dispatch(ClearUserdata())
+    }
+}
+export const callCheckRegistrationAPI = (ContactNumber) => {
     return async function (dispatch) {
         CheckRegActionStart()
         CheckRegistrationAPI(ContactNumber)
             .then((r) => {
                 if (r.data) {
-                    CheckRegActionSuccess()
+                    dispatch(CheckRegActionSuccess(r.data))
                     if (r.data.success) {
                         if (r.data.mobile_registered) {
-                            // login otp send
-                            UserActionSuggestions()
+                            dispatch(UserActionSuggestions(r.data))
                         } else {
-                            RegotpStart()
+                            dispatch(RegotpStart())
                             SendRegistrationOtpAPI(ContactNumber)
                                 .then((response_reg_otp) => {
                                     if (response_reg_otp.data.success) {
-                                        alert(response_reg_otp.data.message);
-                                        RegotpSuccess()
+                                        dispatch(RegotpSuccess(response_reg_otp.data))
                                     } else {
-                                        alert(response_reg_otp.data.message);
-                                        RegotpFail()
+                                        dispatch(RegotpFail(response_reg_otp.data))
                                     }
                                 })
                                 .catch((e) => {
-                                    RegotpFail()
-                                    console.log("send reg otp " + e)
+                                    dispatch(RegotpFail(e))
                                 });
                         }
                     } else {
-                        CheckRegActionFail()
-                        alert(r.data.message);
+                        dispatch(CheckRegActionFail(r.data))
                     }
                 }
             })
             .catch((e) => {
-                CheckRegActionFail()
-                console.log("check registration " + e)
+                dispatch(CheckRegActionFail(e))
             });
+    }
+}
+
+export const callRegistrationUser = (ContactNumber, RegOtp) => {
+    return async function (dispatch) {
+        UserRegStart()
+        RegisterUserAPI(ContactNumber, RegOtp)
+            .then((reg_user) => {
+                if (reg_user.data.success) {
+                    dispatch(UserRegSuccess(reg_user.data))
+                    setRegOtpModal(false);
+                } else {
+                    dispatch(UserRegFail(reg_user.data))
+                }
+            })
+            .catch((e) =>
+                dispatch(UserRegFail(e))
+            );
     }
 }
 
@@ -160,41 +192,32 @@ export const callSendLoginOTPApi = (ContactNumber) => {
             .then((otpresponse) => {
                 if (otpresponse.data) {
                     if (otpresponse.data.success) {
-                        LoginotpSuccess()
-                        alert(otpresponse.data.message);
+                        dispatch(LoginotpSuccess(otpresponse.data))
                     } else {
-                        LoginotpFail()
-                        alert(otpresponse.data.message);
+                        dispatch(LoginotpFail(otpresponse.data))
                     }
                 }
             })
             .catch((e) => {
-                LoginotpFail()
-                console.log("otp send " + e)
+                dispatch(LoginotpFail(e))
             });
     }
 }
-export const callLoginapi = () => {
+
+export const callLoginapi = (ContactNumber, Otp) => {
     return async function (dispatch) {
         UserLoginStart()
         FinalLoginAPI(ContactNumber, Otp)
             .then((login_user) => {
                 if (login_user.data.success) {
-                    // alert(login_user.data.message);
-                    UserLoginSuccess()
-                    setOtpSending(false);
-                    setOtp("");
-                    setContactNumber("");
-                    setCheckBoxStatus(false);
+                    dispatch(UserLoginSuccess(login_user.data))
                     localStorage.setItem("token", login_user.data.authorisation.token);
                 } else {
-                    UserLoginFail()
-                    alert(login_user.data.message);
+                    dispatch(UserLoginFail(login_user.data.message))
                 }
             })
             .catch((e) => {
-                UserLoginFail()
-                console.log(e)
+                dispatch(UserLoginFail(e))
             });
     }
 }

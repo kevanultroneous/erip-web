@@ -8,6 +8,7 @@ import faqReducer, {
   faqByModelReducer,
 } from "./faqReducers/faqReducers";
 import { issueReducer } from "./issueReducers/issueReducer";
+import { userAuthenticationReducer } from "./userReducer/userReducer";
 
 export const rootReducer = combineReducers({
   faqCategory: faqByCategoryReducer,
@@ -16,5 +17,6 @@ export const rootReducer = combineReducers({
   issuePage: issueReducer,
   locationdata: cityReducer,
   cartdata: fetchMycartdataByCityReducer,
-  cartaddremove: addtoCartorRemoveReducer
+  cartaddremove: addtoCartorRemoveReducer,
+  userdata: userAuthenticationReducer
 });

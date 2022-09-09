@@ -13,6 +13,14 @@ import {
   SendRegistrationOtpAPI,
 } from "pages/api/api";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  callCheckRegistrationAPI,
+  callRegistrationUser,
+  callSendLoginOTPApi,
+  callUserclear,
+  ClearUserdata,
+} from "redux/actions/userActions/userActions";
 export default function LoginPopup({ show, onHide }) {
   /* Note :  3 validation state 
       1.ValidationNumberHideError
@@ -34,10 +42,13 @@ export default function LoginPopup({ show, onHide }) {
   const [mobileView, setMobileView] = useState(true);
   const [regOtpModal, setRegOtpModal] = useState(false);
   const router = useRouter();
+
+  const userselector = useSelector((state) => state.userdata);
+  const dispatch = useDispatch();
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
   }, []);
-
+  console.log(userselector);
   useEffect(() => {
     if (CheckboxStatus) {
       setErrorMsgHide(true);
@@ -137,6 +148,18 @@ export default function LoginPopup({ show, onHide }) {
       setErrorMsgHide(false);
     } else {
       RegistrationStageApis();
+      // dispatch(callUserclear(null));
+      // dispatch(callCheckRegistrationAPI(ContactNumber));
+      // if (userselector.data.mobile_registered) {
+      //   alert("do it");
+      //   dispatch(callSendLoginOTPApi(ContactNumber));
+      // }
+      // if (userselector.data.message == "Mobile OTP sent successfully") {
+      //   if (!userselector.data.mobile_registered) {
+      //     alert(userselector.data.message);
+      //     setRegOtpModal(true);
+      //   }
+      // }
     }
   };
 

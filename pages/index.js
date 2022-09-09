@@ -28,7 +28,7 @@ import {
 
 export default function Home({ data }) {
   const [mobileView, setMobileView] = useState(true);
-
+  const [offerad, setOfferAd] = useState(false)
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
   }, []);
@@ -36,13 +36,15 @@ export default function Home({ data }) {
   return (
     <Layout title={"Home"}>
       <Header />
+      <OfferadPopup show={offerad} onHide={() => setOfferAd(false)} />
       <HomeHero data={data.herosection.data} />
       <GetYourFix data={data.getyourfix.data} />
-      <OfferBanner data={data.offersection.data} />
+      <OfferBanner data={data.offersection.data} clickhandler={() => setOfferAd(true)} />
       <HowItWork />
       <WhyErip />
       <ExclusiveService />
       <BrowseOffer
+        href={"offer-page"}
         imgsrc={"/assets/images/offer-big-banner.png"}
         imgalt={"offer-big-banner"}
       />
