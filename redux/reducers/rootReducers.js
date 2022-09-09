@@ -1,4 +1,6 @@
 import { combineReducers } from "redux";
+import { addtoCartorRemoveReducer } from "./cartReducers/cartaddremoveReducers";
+import { fetchMycartdataByCityReducer } from "./cartReducers/cartReducers";
 import { cityReducer } from "./cityReducers/cityReducers";
 import faqReducer, {
   faqByBrandReducer,
@@ -12,5 +14,7 @@ export const rootReducer = combineReducers({
   faqBrand: faqByBrandReducer,
   faqModel: faqByModelReducer,
   issuePage: issueReducer,
-  locationdata: cityReducer
+  locationdata: cityReducer,
+  cartdata: fetchMycartdataByCityReducer,
+  cartaddremove: addtoCartorRemoveReducer
 });

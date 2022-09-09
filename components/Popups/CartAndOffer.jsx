@@ -9,6 +9,11 @@ import CouponsCard from "./CouponsCard";
 import CheckoutPopup from "./CheckoutPopup";
 import { CouponsByCC, MyCart } from "pages/api/api";
 import styles from "@/styles/components/Popups/CartAndOffer.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  callAddorRemoveCart,
+  callMyCartBycity,
+} from "redux/actions/cartActions/cartActions";
 
 export default function CartAndOffer({ show, onHide }) {
   const [active, setActive] = useState(0);
@@ -21,30 +26,33 @@ export default function CartAndOffer({ show, onHide }) {
   const [cartItems, setCartItems] = useState([]);
   const [finalAmount, setFinalAmount] = useState(0);
 
+  const cartSelector = useSelector((state) => state.cartdata);
+  const statusdelete = useSelector((state) => console.log(state));
+  const dispatch = useDispatch();
+  useEffect(() => {}, [cartSelector]);
+
+  const cartDetailList =
+    cartSelector.data.data !== undefined ? cartSelector.data.data : [];
+
   useEffect(() => {
     if (!show) {
       setActive(0);
       setShowCheckout(false);
     }
-
-    MyCart(localStorage.getItem("token"), localStorage.getItem("cityid"))
-      .then((response) => {
-        if (response) {
-          setCartNetworkData(response.data);
-          if (response.data.success) {
-            setCartItems(response.data.data);
-          }
-        }
-      })
-      .catch((e) => console.log("my cart " + e));
+    dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
     BillAmount();
   }, [show]);
+
   const BillAmount = () => {
     var ans = 0;
-    for (let i = 0; i < cartItems.length; i++) {
-      ans = parseInt(cartItems[i].issue_price) + ans;
+    for (let i = 0; i < cartDetailList.length; i++) {
+      ans = parseInt(cartDetailList[i].issue_price) + ans;
     }
     setTotal(ans);
+  };
+  const RemoveFromCart = (id) => {
+    dispatch(callAddorRemoveCart(localStorage.getItem("token"), id));
+    dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
   };
   useEffect(() => {
     CouponsByCC()
@@ -54,6 +62,7 @@ export default function CartAndOffer({ show, onHide }) {
         }
       })
       .catch((e) => console.log("coupons error" + e));
+    dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
   }, []);
 
   return (
@@ -90,21 +99,21 @@ export default function CartAndOffer({ show, onHide }) {
                 xl={12}
                 className={styles.ProductListWrraper}
               >
-                {cartNetworkData.success == false ? (
-                  <h4 className="text-center">{cartNetworkData.message}</h4>
+                {cartSelector.data.success == false ? (
+                  <h4 className="text-center">{cartSelector.data.message}</h4>
                 ) : (
-                  cartItems.map((v, i) => (
+                  cartDetailList.map((v, i) => (
                     <CartProductList
                       key={i}
                       productname={v.issue_title}
                       price={v.issue_price}
-                      clickHandler={() => alert(index)}
+                      clickHandler={() => RemoveFromCart(v.issue_id)}
                     />
                   ))
                 )}
               </Col>
             </Row>
-            {cartNetworkData.success == false ? null : (
+            {cartSelector.data.success == false ? null : (
               <Row className={styles.AvailableCoupons}>
                 <Col xs={6} md={6} lg={6} xl={6}>
                   <h4 className={styles.CartAndOfferSubMainTitle}>
@@ -144,7 +153,7 @@ export default function CartAndOffer({ show, onHide }) {
                 </Col>
               </Row>
             )}
-            {cartNetworkData.success == false ? null : (
+            {cartSelector.data.success == false ? null : (
               <Row>
                 <Col xs={12} md={12} lg={12} xl={12}>
                   <hr />
