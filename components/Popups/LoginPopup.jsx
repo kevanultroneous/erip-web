@@ -100,6 +100,7 @@ export default function LoginPopup({ show, onHide }) {
     if (RegOtp.length < 6) {
       alert("Enter valid otp");
     } else {
+      // dispatch(callRegistrationUser(ContactNumber, RegOtp));
       RegisterUserAPI(ContactNumber, RegOtp)
         .then((reg_user) => {
           if (reg_user.data.success) {
@@ -150,15 +151,30 @@ export default function LoginPopup({ show, onHide }) {
       RegistrationStageApis();
       // dispatch(callUserclear(null));
       // dispatch(callCheckRegistrationAPI(ContactNumber));
+
       // if (userselector.data.mobile_registered) {
-      //   alert("do it");
       //   dispatch(callSendLoginOTPApi(ContactNumber));
+      //   alert(userselector.data.message);
       // }
-      // if (userselector.data.message == "Mobile OTP sent successfully") {
-      //   if (!userselector.data.mobile_registered) {
+      // if (userselector.process == 0.1) {
+      //   alert(useSelector.data.message);
+      // } else if (userselector.process == 0.2) {
+      //   alert(userselector.data.message);
+      // } else if (userselector.process == 1.1) {
+      //   alert(userselector.data.message);
+      //   setRegOtpModal(true);
+      // } else if (userselector.process == 1.2) {
+      //   if (userselector.data.message == "Mobile OTP already sent") {
       //     alert(userselector.data.message);
       //     setRegOtpModal(true);
       //   }
+      // } else if (userselector.process == 2.1) {
+      //   alert(userselector.data.message);
+      // } else if (userselector.process == 2.2) {
+      //   alert(userselector.data.message);
+      // }
+      // if (userselector.process == 3.1) {
+      //   alert(userselector.data.message);
       // }
     }
   };

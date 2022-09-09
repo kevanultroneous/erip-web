@@ -14,14 +14,16 @@ export const userAuthenticationReducer = (state = initialstate, { type, payload 
             return {
                 ...state,
                 data: payload,
-                process: 0,
+                process: 0.1,
+                msg: "on reg check success",
                 loading: false,
             };
         case userauth.REG_CHECK_FAIL:
             return {
                 ...state,
                 data: payload,
-                process: 0,
+                process: 0.2,
+                msg: "on reg check fail",
                 loading: false,
             };
         case userauth.REG_OTP_START:
@@ -33,14 +35,16 @@ export const userAuthenticationReducer = (state = initialstate, { type, payload 
             return {
                 ...state,
                 data: payload,
-                process: 1,
+                msg: "on reg otp success",
+                process: 1.1,
                 loading: false,
             };
         case userauth.REG_OTP_FAIL:
             return {
                 ...state,
                 data: payload,
-                process: 1,
+                msg: "on reg otp fail",
+                process: 1.2,
                 loading: false,
             };
         case userauth.REG_USER_START:
@@ -52,14 +56,16 @@ export const userAuthenticationReducer = (state = initialstate, { type, payload 
             return {
                 ...state,
                 data: payload,
-                process: 2,
+                process: 2.1,
+                msg: "on reg user success",
                 loading: false,
             };
         case userauth.REG_USER_FAIL:
             return {
                 ...state,
                 data: payload,
-                process: 2,
+                process: 2.2,
+                msg: "on reg user fail",
                 loading: false,
             };
         case userauth.LOGIN_OTP_START:
@@ -71,14 +77,16 @@ export const userAuthenticationReducer = (state = initialstate, { type, payload 
             return {
                 ...state,
                 data: payload,
-                process: 3,
+                process: 3.1,
+                msg: "on login otp success",
                 loading: false,
             };
         case userauth.LOGIN_OTP_FAIL:
             return {
                 ...state,
                 data: payload,
-                process: 3,
+                process: 3.2,
+                msg: "on login otp fail",
                 loading: false,
             };
         case userauth.LOGIN_USER_START:
@@ -90,14 +98,16 @@ export const userAuthenticationReducer = (state = initialstate, { type, payload 
             return {
                 ...state,
                 data: payload,
-                process: 4,
+                process: 4.1,
+                msg: "on login user success",
                 loading: false,
             };
         case userauth.LOGIN_USER_FAIL:
             return {
                 ...state,
                 data: payload,
-                process: 4,
+                process: 4.2,
+                msg: "on login user fail",
                 loading: false,
             };
         case userauth.USER_CLEAR:
