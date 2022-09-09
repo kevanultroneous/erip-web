@@ -23,7 +23,11 @@ export const infoByBrands = async (brandID) => {
     .get(`${API_URL}api/v1/cms/info_section_by_brand?brand=${brandID}`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (data.data.data !== undefined) {
+          return data.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
@@ -36,7 +40,11 @@ export const infoByModels = async (modelID) => {
     .get(`${API_URL}api/v1/cms/info_section_by_model?model=${modelID}`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (data.data.data !== undefined) {
+          return data.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {

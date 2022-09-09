@@ -10,6 +10,7 @@ export const faqByCategoryReducer = (
   state = faqInitialState,
   { type, payload }
 ) => {
+  console.log(payload, "faqByCategoryReducer");
   switch (type) {
     case faqs.GET_FAQ_BY_CATEGORY_START:
       return {

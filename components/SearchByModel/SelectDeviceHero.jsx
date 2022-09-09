@@ -22,11 +22,27 @@ import {
   selectCategory,
   selectModels,
 } from "redux/actions/issuePageActions/issuePageActions";
-import { callFaqByCategory } from "redux/actions/faqActions/faqActions";
-import { getCategoryHero } from "redux/actions/heroActions/heroActions";
-import { getInformationByCategory } from "redux/actions/informationActions/informationActions";
-import { getCategoryOffer } from "redux/actions/offersActions/offerActions";
-import { getTestimonialsByCategory } from "redux/actions/testimonialActions/testimonialAction";
+import {
+  callFaqByBrands,
+  callFaqByCategory,
+} from "redux/actions/faqActions/faqActions";
+import {
+  getBrandsHero,
+  getCategoryHero,
+  getModelHero,
+} from "redux/actions/heroActions/heroActions";
+import {
+  getInformationByBrands,
+  getInformationByCategory,
+} from "redux/actions/informationActions/informationActions";
+import {
+  getBrandsOffer,
+  getCategoryOffer,
+} from "redux/actions/offersActions/offerActions";
+import {
+  getTestimonialsByBrand,
+  getTestimonialsByCategory,
+} from "redux/actions/testimonialActions/testimonialAction";
 
 function SelectDeviceHero({
   headClass,
@@ -77,12 +93,30 @@ function SelectDeviceHero({
   }, []);
 
   useEffect(() => {
+    console.log({ categoryID });
     dispatch(getCategoryHero(categoryID));
     dispatch(callFaqByCategory(categoryID));
     dispatch(getInformationByCategory(categoryID));
     dispatch(getCategoryOffer(categoryID));
     dispatch(getTestimonialsByCategory(categoryID));
   }, [categoryID]);
+
+  useEffect(() => {
+    console.log({ getBrandID });
+    dispatch(getBrandsHero(getBrandID));
+    dispatch(callFaqByBrands(getBrandID));
+    dispatch(getInformationByBrands(getBrandID));
+    dispatch(getBrandsOffer(getBrandID));
+    dispatch(getTestimonialsByBrand(getBrandID));
+  }, [getBrandID]);
+
+  useEffect(() => {
+    dispatch(getModelHero(getModelID));
+    dispatch(callFaqByBrands(getModelID));
+    dispatch(getInformationByBrands(getModelID));
+    dispatch(getBrandsOffer(getModelID));
+    dispatch(getTestimonialsByBrand(getModelID));
+  }, [getModelID]);
 
   const selectDrop = useRef();
   const categoryModel = useRef();

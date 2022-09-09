@@ -4,7 +4,7 @@ import AccordionComponent from "../common/AccordionComponent";
 import Container from "../common/Container";
 import styles from "@/styles/components/ContactUs/ContactFAQ.module.css";
 
-function ContactFAQ() {
+function ContactFAQ({ faqArray }) {
   const [mobileView, setMobileView] = useState(true);
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(false) : setMobileView(true);
@@ -17,7 +17,7 @@ function ContactFAQ() {
           <h2>Frequently Asked Questions</h2>
         </div>
         <AccordionComponent
-          arr={AccordionFAQ}
+          arr={faqArray || AccordionFAQ}
           customTitleStyle={styles.faqTitleStyles}
         />
       </Container>
