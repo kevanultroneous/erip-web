@@ -23,6 +23,9 @@ import axios from "axios";
 
 // styles
 import styles from "@/styles/components/personalGadgets/issuepage.module.css";
+import OfferBanner from "@/components/Home/OfferBanner";
+import InformationSection from "@/components/PersonalGadgets/informationSection";
+import HomeHero from "@/components/Home/Hero";
 
 function IssuePage({ data }) {
   // states
@@ -38,46 +41,38 @@ function IssuePage({ data }) {
   const getModelID = useSelector((state) => state.issuePage.modelID);
 
   // Arrays of category testimonial hero Offers
-  const categoryFaq = useSelector((state) => state.faqCategory.data);
-  const brandsFaq = useSelector((state) => state.faqBrand.data);
-  const modelsFaq = useSelector((state) => state.faqModel.data);
+  const categoryFaq = useSelector((state) => state.faqCategory);
+  const brandsFaq = useSelector((state) => state.faqBrand);
+  const modelsFaq = useSelector((state) => state.faqModel);
 
   // Arrays of category testimonial hero Offers
-  const categoryTestimonial = useSelector(
-    (state) => state.testimonialCategory.data
-  );
-  const brandsTestimonial = useSelector(
-    (state) => state.testimonialBrands.data
-  );
-  const modelTestimonial = useSelector((state) => state.testimonialModels.data);
+  const categoryTestimonial = useSelector((state) => state.testimonialCategory);
+  const brandsTestimonial = useSelector((state) => state.testimonialBrands);
+  const modelTestimonial = useSelector((state) => state.testimonialModels);
 
   // Arrays of category testimonial hero Offers
-  const categoryHero = useSelector((state) => state.heroCategory.data);
-  const brandsHero = useSelector((state) => state.heroBrands.data);
-  const modelHero = useSelector((state) => state.heroModels.data);
+  const categoryHero = useSelector((state) => state.heroCategory);
+  const brandsHero = useSelector((state) => state.heroBrands);
+  const modelHero = useSelector((state) => state.heroModels);
 
   // Arrays of category testimonial hero Offers
-  const categoryInfo = useSelector((state) => state.informationCategory.data);
-  const brandsInfo = useSelector((state) => state.informationBrands.data);
-  const modelInfo = useSelector((state) => state.informationModels.data);
+  const categoryInfo = useSelector((state) => state.informationCategory);
+  const brandsInfo = useSelector((state) => state.informationBrands);
+  const modelInfo = useSelector((state) => state.informationModels);
 
   // Arrays of category testimonial hero Offers
-  const categoryOffer = useSelector((state) => state.offerCategory.data);
-  const brandsOffer = useSelector((state) => state.offerBrands.data);
-  const modelOffer = useSelector((state) => state.offerModels.data);
+  const categoryOffer = useSelector((state) => state.offerCategory);
+  const brandsOffer = useSelector((state) => state.offerBrands);
+  const modelOffer = useSelector((state) => state.offerModels);
 
   // declaration
   const router = useRouter();
 
-  useEffect(() => {}, [categoryID]);
+  useEffect(() => {
+    console.log(categoryTestimonial.data, "offer");
+  }, [categoryTestimonial.data]);
 
-  console.log(
-    { categoryFaq },
-    { categoryTestimonial },
-    { categoryHero },
-    { categoryInfo },
-    { categoryOffer }
-  );
+  useEffect(() => {}, []);
 
   // useEffects
   useEffect(() => {
@@ -103,10 +98,12 @@ function IssuePage({ data }) {
         modelSection={styles.selectDeviceSection}
         homeQuery={router.query.issue}
       />
+      <HomeHero offers={categoryOffer.data} />
       <HowItWork />
       <WhyErip />
-      <ContactFAQ />
-      <Testimonials data={data.hometestimonial} />
+      <InformationSection paragraph={categoryInfo.data} />
+      <ContactFAQ faqArray={categoryFaq.data} />
+      <Testimonials data={categoryTestimonial.data} />
       {mobileView ? <Footer /> : <MobileFooter />}
     </Layout>
   );

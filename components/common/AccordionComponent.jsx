@@ -10,10 +10,10 @@ const AccordionComponent = ({ arr, customTitleStyle }) => {
             <Accordion.Header
               className={`${styles.AccordionHeader} ${customTitleStyle}`}
             >
-              {el.title}
+              {el.title || el.faqsection_question}
             </Accordion.Header>
             <Accordion.Body className={styles.AccordionBody}>
-              {el.description}
+              {el.description || el.faqsection_answer}
             </Accordion.Body>
           </Accordion.Item>
         ))}

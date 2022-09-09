@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@redux-devtools/extension": "^3.2.3",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0",
     "geocoder": "^0.2.3",

@@ -73,7 +73,7 @@ export const getHomeAppliancesIssueFail = (err) => {
 export const getHomeAppliance = (data) => {
   return async function (dispatch) {
     getHomeAppliancesStart();
-    getCategoriesByCity(data)
+    await getCategoriesByCity(data)
       .then((response) => {
         dispatch(getHomeAppliancesSuccess(response));
       })
