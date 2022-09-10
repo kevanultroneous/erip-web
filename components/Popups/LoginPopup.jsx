@@ -141,6 +141,21 @@ export default function LoginPopup({ show, onHide }) {
       })
       .catch((e) => console.log("check registration " + e));
   };
+
+  useEffect(() => {
+    if (userselector.data) {
+      if (userselector.data.mobile_registered) {
+        dispatch(callSendLoginOTPApi(ContactNumber));
+        setOtpSending(true);
+      }
+      if (userselector.process == 3.1) {
+        alert(userselector.data.message);
+      } else if (userselector.process == 3.2) {
+        alert(userselector.data.message);
+      }
+    }
+  }, [userselector]);
+
   const ContinueButtonHandler = () => {
     if (ContactNumber.length < 10) {
       setErrorMsgHide(false);
@@ -148,34 +163,39 @@ export default function LoginPopup({ show, onHide }) {
     } else if (!CheckboxStatus) {
       setErrorMsgHide(false);
     } else {
-      RegistrationStageApis();
-      // dispatch(callUserclear(null));
-      // dispatch(callCheckRegistrationAPI(ContactNumber));
-
-      // if (userselector.data.mobile_registered) {
-      //   dispatch(callSendLoginOTPApi(ContactNumber));
-      //   alert(userselector.data.message);
-      // }
-      // if (userselector.process == 0.1) {
-      //   alert(useSelector.data.message);
-      // } else if (userselector.process == 0.2) {
-      //   alert(userselector.data.message);
-      // } else if (userselector.process == 1.1) {
-      //   alert(userselector.data.message);
-      //   setRegOtpModal(true);
-      // } else if (userselector.process == 1.2) {
-      //   if (userselector.data.message == "Mobile OTP already sent") {
-      //     alert(userselector.data.message);
-      //     setRegOtpModal(true);
-      //   }
-      // } else if (userselector.process == 2.1) {
-      //   alert(userselector.data.message);
-      // } else if (userselector.process == 2.2) {
-      //   alert(userselector.data.message);
-      // }
-      // if (userselector.process == 3.1) {
-      //   alert(userselector.data.message);
-      // }
+      // RegistrationStageApis();
+      dispatch(callUserclear(null));
+      dispatch(callCheckRegistrationAPI(ContactNumber));
+      if (userselector.process == 0.1) {
+        alert(userselector.data.message);
+      }
+      if (userselector.process == 0.2) {
+        alert(userselector.data.message);
+      }
+      if (userselector.process == 1.1) {
+        alert(userselector.data.message);
+      }
+      if (userselector.process == 1.2) {
+        alert(userselector.data.message);
+      }
+      if (userselector.process == 2.1) {
+        alert(userselector.data.message);
+      }
+      if (userselector.process == 2.2) {
+        alert(userselector.data.message);
+      }
+      if (userselector.process == 3.1) {
+        alert(userselector.data.message);
+      }
+      if (userselector.process == 3.2) {
+        alert(userselector.data.message);
+      }
+      if (userselector.process == 4.1) {
+        alert(userselector.data.message);
+      }
+      if (userselector.process == 4.2) {
+        alert(userselector.data.message);
+      }
     }
   };
 
