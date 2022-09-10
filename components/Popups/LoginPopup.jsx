@@ -1,18 +1,8 @@
 import Link from "next/link";
-import { Alert, Button, Col, Form, Image, Modal, Row } from "react-bootstrap";
+import { Alert, Col, Form, Image, Modal, Row } from "react-bootstrap";
 import PrimaryButton from "../common/PrimaryButton";
 import styles from "@/styles/components/Popups/LoginPopup.module.css";
 import { useEffect, useState } from "react";
-import { CgCloseO } from "react-icons/cg";
-import axios from "axios";
-import {
-  CheckRegistrationAPI,
-  FinalLoginAPI,
-  RegisterUserAPI,
-  SendLoginOtpAPI,
-  SendRegistrationOtpAPI,
-} from "pages/api/api";
-import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import {
   callCheckRegistrationAPI,
@@ -20,17 +10,9 @@ import {
   callRegistrationUser,
   callSendLoginOTPApi,
   callUserclear,
-  ClearUserdata,
 } from "redux/actions/userActions/userActions";
-export default function LoginPopup({ show, onHide }) {
-  /* Note :  3 validation state 
-      1.ValidationNumberHideError
-      2.Otpsending
-      3.ValidationOtpHideError
-      first run number validation 
-      second run after number validation is done  , otp sending
-      third one is otp validation */
 
+export default function LoginPopup({ show, onHide }) {
   const [ContactNumber, setContactNumber] = useState("");
   const [Otp, setOtp] = useState("");
   const [RegOtp, setRegOtp] = useState("");
@@ -42,14 +24,15 @@ export default function LoginPopup({ show, onHide }) {
   const [CheckboxStatus, setCheckBoxStatus] = useState(false);
   const [mobileView, setMobileView] = useState(true);
   const [regOtpModal, setRegOtpModal] = useState(false);
-  const router = useRouter();
 
   const userselector = useSelector((state) => state.userdata);
+
   const dispatch = useDispatch();
+
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
   }, []);
-  console.log(userselector);
+
   useEffect(() => {
     if (CheckboxStatus) {
       setErrorMsgHide(true);
@@ -97,69 +80,63 @@ export default function LoginPopup({ show, onHide }) {
       alert("Not valid OTP");
     }
   };
+
   const RegOtpVerify = () => {
     if (RegOtp.length < 6) {
       alert("Enter valid otp");
     } else {
-      // dispatch(callRegistrationUser(ContactNumber, RegOtp));
-      RegisterUserAPI(ContactNumber, RegOtp)
-        .then((reg_user) => {
-          if (reg_user.data.success) {
-            alert(reg_user.data.message);
-            setRegOtpModal(false);
-          } else {
-            alert(reg_user.data.message);
-          }
-        })
-        .catch((e) => console.log("Reg user " + e));
+      dispatch(callRegistrationUser(ContactNumber, RegOtp));
     }
-  };
-  const RegistrationStageApis = () => {
-    CheckRegistrationAPI(ContactNumber)
-      .then((r) => {
-        if (r.data) {
-          console.log(r.data.mobile_registered);
-          if (r.data.success) {
-            if (r.data.mobile_registered) {
-              LoginOtpsendStage();
-              setOtpSending(true);
-            } else {
-              SendRegistrationOtpAPI(ContactNumber)
-                .then((response_reg_otp) => {
-                  if (response_reg_otp.data.success) {
-                    alert(response_reg_otp.data.message);
-                    setRegOtpModal(true);
-                  } else {
-                    alert(response_reg_otp.data.message);
-                  }
-                })
-                .catch((e) => console.log("send reg otp " + e));
-            }
-          } else {
-            alert(r.data.message);
-          }
-        }
-      })
-      .catch((e) => console.log("check registration " + e));
   };
 
   useEffect(() => {
-    if (userselector.data) {
-      if (userselector.data.mobile_registered) {
-        dispatch(callSendLoginOTPApi(ContactNumber));
-        setOtpSending(true);
-      }
+    if (!(userselector.data == 0) && userselector.blank == false) {
+      if (userselector.data) {
+        // mobile already registerd
+        if (userselector.data.mobile_registered) {
+          dispatch(callSendLoginOTPApi(ContactNumber));
+          setOtpSending(true);
+        }
+        // user authentication process handling with personal process code
+        if (userselector.process == 0.1) {
+          if (userselector.data.mobile_registered == false) {
+          }
+          // reg check success
+        } else if (userselector.process == 0.2) {
+          alert(userselector.data.message);
+          //reg check fail
+        } else if (userselector.process == 1.1) {
+          setRegOtpModal(true);
+        } else if (userselector.process == 1.2) {
+          if (userselector.data.message == "Mobile OTP already sent") {
+            setRegOtpModal(true);
+          } else {
+          }
+          // reg otp send fail
+        } else if (userselector.process == 2.1) {
+          alert(userselector.data.message);
+          //reg success
+          dispatch(callSendLoginOTPApi());
+        } else if (userselector.process == 2.2) {
+          alert(userselector.data.message);
+          // reg fail
+        }
 
-      if (userselector.process == 3.1) {
-        alert(userselector.data.message);
-      } else if (userselector.process == 3.2) {
-        alert(userselector.data.message);
-      }
+        if (userselector.process == 3.1) {
+          alert(userselector.data.message);
+        } else if (userselector.process == 3.2) {
+          alert(userselector.data.message);
+        }
 
-      if (userselector.process == 4.1) {
-        alert(userselector.data.message);
-      } else if (userselector.process == 4.2) {
-        alert(userselector.data.message);
+        if (userselector.process == 4.1) {
+          alert(userselector.data.message);
+        } else if (userselector.process == 4.2) {
+          if (userselector.data == "Mobile OTP expired") {
+            dispatch(callSendLoginOTPApi(ContactNumber));
+          } else {
+            alert(userselector.data);
+          }
+        }
       }
     }
   }, [userselector]);
@@ -171,73 +148,9 @@ export default function LoginPopup({ show, onHide }) {
     } else if (!CheckboxStatus) {
       setErrorMsgHide(false);
     } else {
-      // RegistrationStageApis();
-      dispatch(callUserclear(null));
+      dispatch(callUserclear(0));
       dispatch(callCheckRegistrationAPI(ContactNumber));
-      if (userselector.process == 0.1) {
-        alert(userselector.data.message);
-      }
-      if (userselector.process == 0.2) {
-        alert(userselector.data.message);
-      }
-      if (userselector.process == 1.1) {
-        alert(userselector.data.message);
-      }
-      if (userselector.process == 1.2) {
-        alert(userselector.data.message);
-      }
-      if (userselector.process == 2.1) {
-        alert(userselector.data.message);
-      }
-      if (userselector.process == 2.2) {
-        alert(userselector.data.message);
-      }
-      if (userselector.process == 3.1) {
-        alert(userselector.data.message);
-      }
-      if (userselector.process == 3.2) {
-        alert(userselector.data.message);
-      }
-      if (userselector.process == 4.1) {
-        alert(userselector.data.message);
-      }
-      if (userselector.process == 4.2) {
-        alert(userselector.data.message);
-      }
     }
-  };
-
-  const LoginOtpsendStage = () => {
-    SendLoginOtpAPI(ContactNumber)
-      .then((otpresponse) => {
-        if (otpresponse.data) {
-          if (otpresponse.data.success) {
-            alert(otpresponse.data.message);
-          } else {
-            alert(otpresponse.data.message);
-          }
-        }
-      })
-      .catch((e) => console.log("otp send " + e));
-  };
-
-  const LoginStage = () => {
-    dispatch(callLoginapi(ContactNumber, Otp));
-    // FinalLoginAPI(ContactNumber, Otp)
-    //   .then((login_user) => {
-    //     if (login_user.data.success) {
-    //       // alert(login_user.data.message);
-    //       setOtpSending(false);
-    //       setOtp("");
-    //       setContactNumber("");
-    //       setCheckBoxStatus(false);
-    //       localStorage.setItem("token", login_user.data.authorisation.token);
-    //       router.reload(window.location.pathname);
-    //     } else {
-    //       alert(login_user.data.message);
-    //     }
-    //   })
-    //   .catch((e) => console.log(e));
   };
 
   const LoginButtonHandler = () => {
@@ -245,7 +158,7 @@ export default function LoginPopup({ show, onHide }) {
       setErrorMsgHide(false);
       setValidationOtpHideError(false);
     } else {
-      LoginStage();
+      dispatch(callLoginapi(ContactNumber, Otp));
     }
   };
 
