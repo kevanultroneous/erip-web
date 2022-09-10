@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import {
   callCheckRegistrationAPI,
+  callLoginapi,
   callRegistrationUser,
   callSendLoginOTPApi,
   callUserclear,
@@ -148,9 +149,16 @@ export default function LoginPopup({ show, onHide }) {
         dispatch(callSendLoginOTPApi(ContactNumber));
         setOtpSending(true);
       }
+
       if (userselector.process == 3.1) {
         alert(userselector.data.message);
       } else if (userselector.process == 3.2) {
+        alert(userselector.data.message);
+      }
+
+      if (userselector.process == 4.1) {
+        alert(userselector.data.message);
+      } else if (userselector.process == 4.2) {
         alert(userselector.data.message);
       }
     }
@@ -214,21 +222,22 @@ export default function LoginPopup({ show, onHide }) {
   };
 
   const LoginStage = () => {
-    FinalLoginAPI(ContactNumber, Otp)
-      .then((login_user) => {
-        if (login_user.data.success) {
-          // alert(login_user.data.message);
-          setOtpSending(false);
-          setOtp("");
-          setContactNumber("");
-          setCheckBoxStatus(false);
-          localStorage.setItem("token", login_user.data.authorisation.token);
-          router.reload(window.location.pathname);
-        } else {
-          alert(login_user.data.message);
-        }
-      })
-      .catch((e) => console.log(e));
+    dispatch(callLoginapi(ContactNumber, Otp));
+    // FinalLoginAPI(ContactNumber, Otp)
+    //   .then((login_user) => {
+    //     if (login_user.data.success) {
+    //       // alert(login_user.data.message);
+    //       setOtpSending(false);
+    //       setOtp("");
+    //       setContactNumber("");
+    //       setCheckBoxStatus(false);
+    //       localStorage.setItem("token", login_user.data.authorisation.token);
+    //       router.reload(window.location.pathname);
+    //     } else {
+    //       alert(login_user.data.message);
+    //     }
+    //   })
+    //   .catch((e) => console.log(e));
   };
 
   const LoginButtonHandler = () => {
