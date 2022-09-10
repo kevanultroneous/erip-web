@@ -13,6 +13,7 @@ import {
 } from "redux/actions/userActions/userActions";
 
 export default function LoginPopup({ show, onHide }) {
+  // states for inputs
   const [ContactNumber, setContactNumber] = useState("");
   const [Otp, setOtp] = useState("");
   const [RegOtp, setRegOtp] = useState("");
