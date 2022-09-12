@@ -7,6 +7,7 @@ import Slider from "react-slick";
 import { useRef } from "react";
 import { MdDownload } from "react-icons/md";
 import ReactToPrint from "react-to-print";
+import DownloadComponent from "../common/downloadComponent";
 
 function JobCardPopUp() {
   const [show, setShow] = useState(false);
@@ -67,10 +68,9 @@ function JobCardPopUp() {
         >
           <Modal.Header className={styles.orderNumber}>
             <p>Order Number - 0000007</p>
-            <ReactToPrint
-              trigger={reactToPrintTrigger}
+            <DownloadComponent
+              title={"Order Number - 0000007"}
               content={reactToPrintContent}
-              documentTitle="Order Number - 0000007"
             />
           </Modal.Header>
           <Modal.Body>
