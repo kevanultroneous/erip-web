@@ -12,6 +12,7 @@ import GetYourFix from "@/components/Home/GetYourFix";
 import HomeHero from "@/components/Home/Hero";
 import OfferBanner from "@/components/Home/OfferBanner";
 import OfferadPopup from "@/components/Popups/OfferadPopup";
+import RatingAndReview from "@/components/Popups/RatingAndReview";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -29,19 +30,24 @@ import {
 export default function Home({ data }) {
   const [mobileView, setMobileView] = useState(true);
   const [offerad, setOfferAd] = useState(false)
+
+  const [ratingreview, setRatingReview] = useState(false)
+
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
   }, []);
 
   return (
-    <Layout title={"Home"}>
+    <Layout title={"Home"} >
       <Header />
+      <button onClick={() => setRatingReview(true)}>clk</button>
       <OfferadPopup show={offerad} onHide={() => setOfferAd(false)} />
       <HomeHero data={data.herosection.data} />
       <GetYourFix data={data.getyourfix.data} />
       <OfferBanner data={data.offersection.data} clickhandler={() => setOfferAd(true)} />
       <HowItWork />
       <WhyErip />
+      <RatingAndReview show={ratingreview} onHide={() => setRatingReview(false)} />
       <ExclusiveService />
       <BrowseOffer
         href={"offer-page"}
