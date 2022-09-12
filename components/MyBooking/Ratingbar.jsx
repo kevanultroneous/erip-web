@@ -9,9 +9,10 @@ export default function Ratingbar() {
       <div>
         <ReactStars
           count={5}
-          size={50}
-          activeColor="#ffd700"
-          onChange={(e) => console.log(e)}
+          size={70}
+          isHalf={true}
+          color="#ffffff"
+          activeColor="#feb546"
         />
       </div>
     </div>

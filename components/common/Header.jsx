@@ -3,7 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import PrimaryButton from "./PrimaryButton";
-import { Col, Image, Row } from "react-bootstrap";
+import { Col, Image, Row, Spinner } from "react-bootstrap";
 import { moreMenu } from "utils/moreMenu";
 import { useEffect, useRef, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -19,12 +19,14 @@ import Logout from "../Popups/Logout";
 import axios from "axios";
 import { FiSearch } from "react-icons/fi";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getCityFail,
   getCityStart,
   getCitySuccess,
 } from "redux/actions/cityActions/cityAction";
+import { LOGIN_USER_SUCCESS, USER_CLEAR } from "redux/actions/actionTypes";
+import { GET_CITY_SUCCESS } from "redux/actions/actionTypes";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
@@ -40,10 +42,30 @@ export function Header() {
   const [topBrandsHeaderData, setTopBrandsHeaderData] = useState([]);
   const [mobileRepairHeaderData, setmobileRepairHeaderData] = useState([]);
   const [topIssuesHeaderData, settopIssuesHeaderData] = useState([]);
-
+  const [loactionloader, setLocationLoader] = useState(false);
   const [showMobloc, setShowMobloc] = useState(false);
 
   const dispatch = useDispatch();
+
+  const locationselector = useSelector((selector) => selector.locationdata);
+
+  const userselector = useSelector((selector) =>
+    console.log(selector.userdata)
+  );
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      dispatch({
+        type: LOGIN_USER_SUCCESS,
+        payload: localStorage.getItem("token"),
+      });
+    } else {
+      dispatch({
+        type: USER_CLEAR,
+        payload: 0,
+      });
+    }
+  }, [userselector]);
   // getting header menus from api
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
@@ -125,6 +147,7 @@ export function Header() {
   }, [currentCity]);
 
   function getLocation() {
+    setLocationLoader(true);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
     } else {
@@ -189,6 +212,7 @@ export function Header() {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[1]) {
           // setLocationPopupShow(false);
+          setLocationLoader(false);
           setSelectedAddress(results[1].formatted_address);
         }
       }
@@ -544,6 +568,14 @@ export function Header() {
             >
               <Image src="/assets/icons/location-color.svg" loading="lazy" />
               <p className={styles.LocationDetectText}>Detect My Location</p>
+              {loactionloader && (
+                <Spinner
+                  animation="border"
+                  size="sm"
+                  variant="primary"
+                  className="ms-2"
+                />
+              )}
             </div>
             <div className={styles.InputGroup}>
               <p className={styles.InputOrText}>or</p>
@@ -551,9 +583,15 @@ export function Header() {
                 defaultValue={selectedAddress}
                 placeholder="Search city, area, pincode"
                 apiKey={GMAP_API}
-                onPlaceSelected={(place) =>
-                  getLatandLongByAddress(place.formatted_address)
-                }
+                onPlaceSelected={(place) => {
+                  setLocationLoader(true);
+                  setTimeout(() => {
+                    if (place) {
+                      getLatandLongByAddress(place.formatted_address);
+                      setLocationLoader(false);
+                    }
+                  }, 3000);
+                }}
                 options={{
                   types: ["establishment"],
                   componentRestrictions: { country: "in" },
