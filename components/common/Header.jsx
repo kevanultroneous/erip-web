@@ -19,12 +19,13 @@ import Logout from "../Popups/Logout";
 import axios from "axios";
 import { FiSearch } from "react-icons/fi";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getCityFail,
   getCityStart,
   getCitySuccess,
 } from "redux/actions/cityActions/cityAction";
+import { LOGIN_USER_SUCCESS, USER_CLEAR } from "redux/actions/actionTypes";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
@@ -44,6 +45,23 @@ export function Header() {
   const [showMobloc, setShowMobloc] = useState(false);
 
   const dispatch = useDispatch();
+  const userselector = useSelector((selector) =>
+    console.log(selector.userdata)
+  );
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      dispatch({
+        type: LOGIN_USER_SUCCESS,
+        payload: localStorage.getItem("token"),
+      });
+    } else {
+      dispatch({
+        type: USER_CLEAR,
+        payload: 0,
+      });
+    }
+  }, [userselector]);
   // getting header menus from api
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);

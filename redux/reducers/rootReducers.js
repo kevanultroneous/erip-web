@@ -35,6 +35,7 @@ import {
   testimonialByCategoryReducer,
   testimonialByModelsReducer,
 } from "./testimonialReducers/testimonialReducer";
+import { userAuthenticationReducer } from "./userReducer/userReducer";
 
 export const rootReducer = combineReducers({
   locationdata: cityReducer,
@@ -62,4 +63,5 @@ export const rootReducer = combineReducers({
   locationdata: cityReducer,
   cartdata: fetchMycartdataByCityReducer,
   cartaddremove: addtoCartorRemoveReducer,
+  userdata: userAuthenticationReducer,
 });
