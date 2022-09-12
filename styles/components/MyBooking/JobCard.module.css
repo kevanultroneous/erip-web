@@ -1,0 +1,100 @@
+.popUpButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 20%;
+  background-color: #ffffff;
+  color: #0e62cb;
+  padding: 0.7rem 1rem;
+  font-size: 20px;
+  border: none;
+  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.popUpButton:active,
+.popUpButton:focus,
+.popUpButton:hover {
+  background-color: #ffffff;
+  color: #0e62cb;
+  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.08) !important;
+}
+
+.orderDetailsTitle {
+  padding: 0 0 0 1rem;
+}
+
+.popUpButton p {
+  margin: 0;
+}
+
+.modelWidth {
+  max-width: 80vw !important;
+}
+
+.orderNumber {
+  padding: 1rem 2rem;
+  border: none;
+}
+
+.orderNumber p {
+  margin: 0;
+}
+
+.nameSection {
+  margin: 1rem 0;
+}
+
+.nameSection p {
+  margin: 0;
+}
+
+.nameSection input[type="email"],
+.nameSection input[type="tel"],
+.nameSection input[type="text"] {
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.sliderImages {
+  padding: 1rem;
+}
+
+.jobCardRadio {
+  display: flex;
+  align-items: center;
+}
+
+.jobCardRadio h6 {
+  margin: 0 0 0 0.5rem;
+}
+
+.jobCardRadioSection {
+  margin: 0.5rem 0;
+}
+
+.radioSection {
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .modelWidth {
+    max-width: 100vw !important;
+  }
+  .nameSection > div {
+    margin: 0.3rem 0;
+  }
+  .sliderImages {
+    padding: 0.2rem;
+  }
+  .sliderJobCard {
+    margin: 1rem 0 2.5rem;
+  }
+  .jobCardRadioSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .jobCardRadioSection p {
+    margin: 0 0.8rem 0 0;
+  }
+}
