@@ -11,8 +11,10 @@ import WhyErip from "@/components/common/WhyErip";
 import GetYourFix from "@/components/Home/GetYourFix";
 import HomeHero from "@/components/Home/Hero";
 import OfferBanner from "@/components/Home/OfferBanner";
+import FeedbackQuestions from "@/components/Popups/FeedbackQuestions";
 import OfferadPopup from "@/components/Popups/OfferadPopup";
 import RatingAndReview from "@/components/Popups/RatingAndReview";
+import Thankyou from "@/components/Popups/ThankYou";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -30,6 +32,9 @@ import {
 export default function Home({ data }) {
   const [mobileView, setMobileView] = useState(true);
   const [offerad, setOfferAd] = useState(false)
+  const [feedQue, setFeedQuestions] = useState(false)
+  const [ratingr, setRatingr] = useState(false)
+  const [thankYouShow, setThankYouShow] = useState(false)
 
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
@@ -38,6 +43,7 @@ export default function Home({ data }) {
   return (
     <Layout title={"Home"} >
       <Header />
+      <button onClick={() => setThankYouShow(true)}>Click me</button>
       <OfferadPopup show={offerad} onHide={() => setOfferAd(false)} />
       <HomeHero data={data.herosection.data} />
       <GetYourFix data={data.getyourfix.data} />
@@ -45,6 +51,11 @@ export default function Home({ data }) {
       <HowItWork />
       <WhyErip />
       <ExclusiveService />
+      {/*  */}
+      <FeedbackQuestions show={feedQue} onHide={() => setFeedQuestions(false)} />
+      <RatingAndReview show={ratingr} onHide={() => setRatingr(false)} />
+      <Thankyou show={thankYouShow} onHide={() => setThankYouShow(false)} />
+      {/*  */}
       <BrowseOffer
         href={"offer-page"}
         imgsrc={"/assets/images/offer-big-banner.png"}

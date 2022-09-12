@@ -221,6 +221,8 @@ export default function CheckoutPopup({ show, onHide }) {
       setAddressFlowTwo(false);
       setConfirmSession(false);
       setDateAndTimeSelection(true);
+      setFinalPayment(false);
+      setDirectSelected(false);
     }
   }, [show]);
 
