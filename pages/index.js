@@ -11,6 +11,7 @@ import WhyErip from "@/components/common/WhyErip";
 import GetYourFix from "@/components/Home/GetYourFix";
 import HomeHero from "@/components/Home/Hero";
 import OfferBanner from "@/components/Home/OfferBanner";
+import JobCardPopUp from "@/components/MyBooking/JobCardPopUp";
 import OfferadPopup from "@/components/Popups/OfferadPopup";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -28,7 +29,7 @@ import {
 
 export default function Home({ data }) {
   const [mobileView, setMobileView] = useState(true);
-  const [offerad, setOfferAd] = useState(false)
+  const [offerad, setOfferAd] = useState(false);
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
   }, []);
@@ -39,7 +40,11 @@ export default function Home({ data }) {
       <OfferadPopup show={offerad} onHide={() => setOfferAd(false)} />
       <HomeHero data={data.herosection.data} />
       <GetYourFix data={data.getyourfix.data} />
-      <OfferBanner data={data.offersection.data} clickhandler={() => setOfferAd(true)} />
+      <JobCardPopUp />
+      <OfferBanner
+        data={data.offersection.data}
+        clickhandler={() => setOfferAd(true)}
+      />
       <HowItWork />
       <WhyErip />
       <ExclusiveService />

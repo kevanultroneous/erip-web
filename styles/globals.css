@@ -570,6 +570,17 @@ input[type="number"] {
   .OfferPopup .modal-content {
     border-radius: 10px 10px 0px 0px;
   }
+  .jobCard .modal-dialog {
+    margin: 0%;
+  }
+
+  .jobCard .modal-dialog-centered {
+    align-items: flex-end;
+  }
+
+  .jobCard .modal-content {
+    border-radius: 10px 10px 0px 0px;
+  }
   .Needhelpaccordian .accordion-button {
     background: #f5f6fa !important;
   }
@@ -649,4 +660,12 @@ input[type="number"] {
 }
 
 @media (min-width: 650px) and (max-width: 740px) {
+}
+
+.jobCardRadio input[type="checkbox"]:checked,
+.jobCardRadio input[type="checkbox"]:disabled {
+  accent-color: #000 !important;
+  color: #000 !important;
+  border-color: #000;
+  background-color: #000 !important;
 }
