@@ -32,9 +32,9 @@ import {
 export default function Home({ data }) {
   const [mobileView, setMobileView] = useState(true);
   const [offerad, setOfferAd] = useState(false)
-  const [feedQue, setFeedQuestions] = useState(false)
-  const [ratingr, setRatingr] = useState(false)
-  const [thankYouShow, setThankYouShow] = useState(false)
+  // const [feedQue, setFeedQuestions] = useState(false)
+  // const [ratingr, setRatingr] = useState(false)
+  // const [thankYouShow, setThankYouShow] = useState(false)
 
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
@@ -43,7 +43,7 @@ export default function Home({ data }) {
   return (
     <Layout title={"Home"} >
       <Header />
-      <button onClick={() => setThankYouShow(true)}>Click me</button>
+      {/* <button onClick={() => setThankYouShow(true)}>Click me</button> */}
       <OfferadPopup show={offerad} onHide={() => setOfferAd(false)} />
       <HomeHero data={data.herosection.data} />
       <GetYourFix data={data.getyourfix.data} />
@@ -52,9 +52,9 @@ export default function Home({ data }) {
       <WhyErip />
       <ExclusiveService />
       {/*  */}
-      <FeedbackQuestions show={feedQue} onHide={() => setFeedQuestions(false)} />
+      {/* <FeedbackQuestions show={feedQue} onHide={() => setFeedQuestions(false)} />
       <RatingAndReview show={ratingr} onHide={() => setRatingr(false)} />
-      <Thankyou show={thankYouShow} onHide={() => setThankYouShow(false)} />
+      <Thankyou show={thankYouShow} onHide={() => setThankYouShow(false)} /> */}
       {/*  */}
       <BrowseOffer
         href={"offer-page"}

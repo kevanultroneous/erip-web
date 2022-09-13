@@ -334,6 +334,14 @@
   margin: 3rem 0rem;
 }
 
+.YourCartCol {
+  margin-top: 3rem;
+}
+
+.YourCartInCol {
+  margin-bottom: 1rem;
+}
+
 /*  */
 @media (min-width: 320px) and (max-width: 450px) {
 
@@ -430,6 +438,17 @@
   .AddressDiv {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .PaymentSelection {
+    margin-bottom: 2rem;
+    border: 1px solid #0E62CB;
+    border-radius: 5px;
+  }
+
+  .SelectedPaymentWay {
+    background: #0E62CB;
+    border-radius: 5px;
   }
 }
 
@@ -535,6 +554,8 @@
   .ConfirmSelectedAddress {
     padding: 2rem 1rem 2rem 1rem;
   }
+
+
 }
 
 @media (min-width: 1200px) and (max-width: 1730px) {}

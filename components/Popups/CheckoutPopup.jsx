@@ -31,6 +31,7 @@ import { MdDelete } from "react-icons/md";
 import { RiAddFill } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import Coupons from "./Coupons";
+import PaymentOption from "./PaymentOption";
 
 export default function CheckoutPopup({ show, onHide }) {
   const [selectedTime, setSelectedTime] = useState(null);
@@ -68,6 +69,7 @@ export default function CheckoutPopup({ show, onHide }) {
   const [confirmSession, setConfirmSession] = useState(false);
   const [dateandTimeSelection, setDateAndTimeSelection] = useState(true);
   const [directSelected, setDirectSelected] = useState(false);
+  const [procced, setProcced] = useState(false);
 
   const TimeIsOver = (timesloatsata, timesofsloats) => {
     let overdata = [];
@@ -179,6 +181,7 @@ export default function CheckoutPopup({ show, onHide }) {
   useEffect(() => {
     reverseMap(currentLocation.latitude, currentLocation.longitude);
   }, [currentLocation]);
+
   function reverseMap(lat, lng) {
     var latlng = new google.maps.LatLng(lat, lng);
     var geocoder = (geocoder = new google.maps.Geocoder());
@@ -222,7 +225,6 @@ export default function CheckoutPopup({ show, onHide }) {
       setConfirmSession(false);
       setDateAndTimeSelection(true);
       setFinalPayment(false);
-      setDirectSelected(false);
     }
   }, [show]);
 
@@ -893,39 +895,55 @@ export default function CheckoutPopup({ show, onHide }) {
         {finalPayment && (
           <div>
             <NavigationHandler
-              navtitle={"Checkout"}
+              navtitle={paymentway == 0 ? "Payment" : "Checkout"}
               backhandler={() => finalPaymentBackHandler()}
             />
 
             <Row>
-              <Col xs={6} md={6} lg={6} xl={6}>
-                <h4 className={styles.CartAndOfferSubMainTitle}>
-                  Available coupons
-                </h4>
-              </Col>
+              {paymentway == 0 ? null : (
+                <>
+                  <Col xs={6} md={6} lg={6} xl={6}>
+                    <h4 className={styles.CartAndOfferSubMainTitle}>
+                      Available coupons
+                    </h4>
+                  </Col>
 
-              <Col xs={6} md={6} lg={6} xl={6} className={styles.TextRight}>
-                <lable
-                  className={`${styles.CartAndOfferSubMainTitle} ${styles.LinkType}`}
-                  onClick={() => setActive(1)}
-                >
-                  See All
-                </lable>
-              </Col>
+                  <Col xs={6} md={6} lg={6} xl={6} className={styles.TextRight}>
+                    <lable
+                      className={`${styles.CartAndOfferSubMainTitle} ${styles.LinkType}`}
+                      onClick={() => setActive(1)}
+                    >
+                      See All
+                    </lable>
+                  </Col>
+                  <Col
+                    xs={12}
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    className={styles.CouponsCol}
+                  >
+                    <Coupons title={"TRYNEW"} offer={`-- ₹${100}`} />
+                  </Col>
+                </>
+              )}
               <Col
                 xs={12}
                 md={12}
                 lg={12}
                 xl={12}
-                className={styles.CouponsCol}
+                className={styles.YourCartCol}
               >
-                <Coupons title={"TRYNEW"} offer={`-- ₹${100}`} />
-              </Col>
-              <Col xs={12} md={12} lg={12} xl={12}>
                 <h4 className={styles.CartAndOfferSubMainTitle}>Your Cart</h4>
                 <hr />
               </Col>
-              <Col xs={12} md={6} lg={6} xl={6}>
+              <Col
+                xs={12}
+                md={6}
+                lg={6}
+                xl={6}
+                className={styles.YourCartInCol}
+              >
                 <Row>
                   <Col xs={6} md={6} lg={6} xl={6}>
                     <p className={styles.ProductName}>
@@ -949,7 +967,13 @@ export default function CheckoutPopup({ show, onHide }) {
                   </Col>
                 </Row>
               </Col>
-              <Col xs={12} md={6} lg={6} xl={6}>
+              <Col
+                xs={12}
+                md={6}
+                lg={6}
+                xl={6}
+                className={styles.YourCartInCol}
+              >
                 <Row>
                   <Col xs={6} md={6} lg={6} xl={6}>
                     <p className={styles.TotalAmount}>Total</p>
@@ -966,45 +990,54 @@ export default function CheckoutPopup({ show, onHide }) {
                 </Row>
               </Col>
             </Row>
-            <Row className={styles.PaymentSelectionRow}>
-              {[
-                {
-                  img: "/assets/icons/paynow.png",
-                  title: "Pay Now (Online)",
-                },
-                {
-                  img: "/assets/icons/payafter.png",
-                  title: "Pay After Services",
-                },
-              ].map((v, i) => (
-                <Col xs={12} md={6} lg={6} xl={6}>
-                  <div
-                    key={i}
-                    className={`${styles.PaymentSelection} ${
-                      paymentway == i && styles.SelectedPaymentWay
-                    }`}
-                    onClick={() => setSelectedPaymentWay(i)}
-                  >
-                    <span>
-                      <Image src={v.img} alt="payment" loading="lazy" />
-                    </span>
-                    <p className={styles.PaymentTitle}>{v.title}</p>
-                  </div>
+            {paymentway == null && (
+              <Row className={styles.PaymentSelectionRow}>
+                {[
+                  {
+                    img: "/assets/icons/paynow.png",
+                    title: "Pay Now (Online)",
+                  },
+                  {
+                    img: "/assets/icons/payafter.png",
+                    title: "Pay After Services",
+                  },
+                ].map((v, i) => (
+                  <Col xs={12} md={6} lg={6} xl={6}>
+                    <div
+                      key={i}
+                      className={`${styles.PaymentSelection} ${
+                        paymentway == i && styles.SelectedPaymentWay
+                      }`}
+                      onClick={() => setSelectedPaymentWay(i)}
+                    >
+                      <span>
+                        <Image src={v.img} alt="payment" loading="lazy" />
+                      </span>
+                      <p className={styles.PaymentTitle}>{v.title}</p>
+                    </div>
+                  </Col>
+                ))}
+              </Row>
+            )}
+
+            {paymentway == 0 && <PaymentOption />}
+            {procced == true && (
+              <Row>
+                <Col xs={12} md={12} lg={12} xl={12}>
+                  <PrimaryButton
+                    title="Proceed"
+                    buttonStyle={{
+                      width: "100%",
+                      background: "#0E62CB",
+                      color: "#fff",
+                    }}
+                    clickHandler={() => {
+                      paymentway == null ? null : setProcced(true);
+                    }}
+                  />
                 </Col>
-              ))}
-            </Row>
-            <Row>
-              <Col xs={12} md={12} lg={12} xl={12}>
-                <PrimaryButton
-                  title="Proceed"
-                  buttonStyle={{
-                    width: "100%",
-                    background: "#0E62CB",
-                    color: "#fff",
-                  }}
-                />
-              </Col>
-            </Row>
+              </Row>
+            )}
           </div>
         )}
       </Modal.Body>

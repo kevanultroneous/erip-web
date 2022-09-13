@@ -30,18 +30,19 @@ export default function CartAndOffer({ show, onHide }) {
   const statusdelete = useSelector((state) => state.cartaddremove);
 
   const dispatch = useDispatch();
-  useEffect(() => {}, [cartSelector]);
 
   const cartDetailList =
     cartSelector.data.data !== undefined ? cartSelector.data.data : [];
 
+  useEffect(() => {
+    BillAmount();
+  }, [cartSelector]);
   useEffect(() => {
     if (!show) {
       setActive(0);
       setShowCheckout(false);
     }
     dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
-    BillAmount();
   }, [show]);
 
   const BillAmount = () => {

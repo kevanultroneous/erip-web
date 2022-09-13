@@ -18,6 +18,7 @@ export default function Thankyou({ show, onHide }) {
               src="/assets/icons/close.png"
               alt="thank-you"
               loading="lazy"
+              onClick={onHide}
             />
           </Col>
           <Col xs={12} md={12} lg={12} xl={12}>
