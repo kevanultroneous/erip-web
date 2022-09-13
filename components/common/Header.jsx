@@ -49,9 +49,7 @@ export function Header() {
 
   const locationselector = useSelector((selector) => selector.locationdata);
 
-  const userselector = useSelector((selector) =>
-    console.log(selector.userdata)
-  );
+  const userselector = useSelector((selector) => selector.userdata);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -65,7 +63,7 @@ export function Header() {
         payload: 0,
       });
     }
-  }, [userselector]);
+  }, []);
   // getting header menus from api
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
