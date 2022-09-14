@@ -432,9 +432,9 @@ export function Header() {
                   onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
-              <div className={styles.SearchItems}>
+              {/* <div className={styles.SearchItems}>
                 <ul>{sdata ? sdata.map((v) => v.brands) : null}</ul>
-              </div>
+              </div> */}
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll" className={styles.navBarcolor}>
