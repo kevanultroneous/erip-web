@@ -27,6 +27,7 @@ import {
 } from "redux/actions/cityActions/cityAction";
 import { LOGIN_USER_SUCCESS, USER_CLEAR } from "redux/actions/actionTypes";
 import { GET_CITY_SUCCESS } from "redux/actions/actionTypes";
+import { BiUser } from "react-icons/bi";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
@@ -287,21 +288,27 @@ export function Header() {
 
             <Navbar.Collapse id="basic-navbar-nav" ref={menuCollapse}>
               <Nav className="me-auto">
-                <Nav.Link
-                  href="#home"
-                  className={styles.mobileMenuLink}
-                  onClick={() => (token ? LogoutAction() : setLoginPopup(true))}
-                >
-                  {token ? "Logout" : "Login"}
-                </Nav.Link>
+                {token ? (
+                  <Link href={"/my-bookings"}>
+                    <BiUser size={40} />
+                  </Link>
+                ) : (
+                  <Nav.Link
+                    href="#"
+                    className={styles.mobileMenuLink}
+                    onClick={() => setLoginPopup(true)}
+                  >
+                    Login
+                  </Nav.Link>
+                )}
 
-                <Nav.Link href="#link" className={styles.mobileMenuLink}>
+                <Nav.Link href="#" className={styles.mobileMenuLink}>
                   My Bookings
                 </Nav.Link>
-                <Nav.Link href="#link" className={styles.mobileMenuLink}>
+                <Nav.Link href="#" className={styles.mobileMenuLink}>
                   About Us
                 </Nav.Link>
-                <Nav.Link href="#link" className={styles.mobileMenuLink}>
+                <Nav.Link href="#" className={styles.mobileMenuLink}>
                   Blogs
                 </Nav.Link>
               </Nav>
@@ -427,14 +434,17 @@ export function Header() {
                     : setCartAndOfferPopup(true);
                 }}
               />
-
-              <PrimaryButton
-                title={token ? "Logout" : "Login"}
-                className={styles.headerLoginBtn}
-                clickHandler={() =>
-                  token ? LogoutAction() : setLoginPopup(true)
-                }
-              />
+              {token ? (
+                <Link href={"/my-bookings"}>
+                  <BiUser size={40} />
+                </Link>
+              ) : (
+                <PrimaryButton
+                  title={"Login"}
+                  className={styles.headerLoginBtn}
+                  clickHandler={() => setLoginPopup(true)}
+                />
+              )}
             </Navbar.Collapse>
           </Container>
           <Container fluid className="navBarBottomHeader">

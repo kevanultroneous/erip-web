@@ -1,6 +1,9 @@
 import React from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import styles from "@/styles/components/MyBooking/LeftMenu.module.css";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { callFetchProfile } from "redux/actions/profileActions/profileActions";
 
 function LeftMenu({
   profileImage,
