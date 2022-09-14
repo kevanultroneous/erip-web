@@ -9,6 +9,7 @@ import faqReducer, {
   faqByModelReducer,
 } from "./faqReducers/faqReducers";
 import { issueReducer } from "./issueReducers/issueReducer";
+import { profileReducer } from "./profileReducers/profileReducers";
 import { userAuthenticationReducer } from "./userReducer/userReducer";
 
 export const rootReducer = combineReducers({
@@ -21,4 +22,5 @@ export const rootReducer = combineReducers({
   cartaddremove: addtoCartorRemoveReducer,
   userdata: userAuthenticationReducer,
   couponsdata: couponsReducer,
+  profile: profileReducer
 });

@@ -1,3 +1,4 @@
+import { VerifyCoupons } from "api/couponsApi";
 import axios from "axios";
 import { CouponsByCC } from "pages/api/api";
 import { API_URL } from "utils/data";
@@ -39,11 +40,41 @@ export const setCouponsFail = () => {
   };
 };
 
+export const doVerifyCouponsStart = () => {
+  return {
+    type: coupons.VERIFY_COUPON_START,
+    loading: true,
+  }
+}
+export const doVerifyCouponsSuccess = (data) => {
+  return {
+    type: coupons.VERIFY_COUPON_SUCCESS,
+    payload: data,
+    loading: false,
+  }
+}
+export const doVerifyCouponsFail = (msg) => {
+  return {
+    type: coupons.VERIFY_COUPON_FAIL,
+    payload: msg,
+    loading: false,
+  }
+}
+
 export const callFetchCoupons = (city, category) => {
   return async function (dispatch) {
     dispatch(getCouponsccStart());
     CouponsByCC(city, category)
       .then((response) => dispatch(getCouponsccSuccess(response.data)))
       .catch((e) => getCouponsccFail(e));
+  };
+};
+
+export const callVerifyCoupons = (city, category, coupon, amount) => {
+  return async function (dispatch) {
+    dispatch(doVerifyCouponsStart());
+    VerifyCoupons(city, category, coupon, amount)
+      .then((response) => dispatch(doVerifyCouponsSuccess(response.data)))
+      .catch(e => dispatch(doVerifyCouponsFail(e)))
   };
 };
