@@ -26,7 +26,6 @@ import {
   getCitySuccess,
 } from "redux/actions/cityActions/cityAction";
 import { LOGIN_USER_SUCCESS, USER_CLEAR } from "redux/actions/actionTypes";
-import { GET_CITY_SUCCESS } from "redux/actions/actionTypes";
 import { selectCategory } from "redux/actions/issuePageActions/issuePageActions";
 
 export function Header() {
