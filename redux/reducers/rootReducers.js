@@ -32,6 +32,15 @@ import {
   offerSectionModelReducer,
 } from "./offersReducers/offerReducer";
 import {
+  getPersonalGadgetsBrandsReducer,
+  getPersonalGadgetsIssueReducer,
+  getPersonalGadgetsModelReducer,
+  getPersonalGadgetsReducer,
+  selectPersonalGadgetsBrandsReducer,
+  selectPersonalGadgetsModelReducer,
+  selectPersonalGadgetsReducer,
+} from "./personalGadgetReducers/personalGadgetReducer";
+import {
   testimonialByBrandsReducer,
   testimonialByCategoryReducer,
   testimonialByModelsReducer,
@@ -66,4 +75,11 @@ export const rootReducer = combineReducers({
   cartaddremove: addtoCartorRemoveReducer,
   userdata: userAuthenticationReducer,
   couponsdata: couponsReducer,
+  personalGadget: getPersonalGadgetsReducer,
+  personalGadgetBrands: getPersonalGadgetsBrandsReducer,
+  personalGadgetModels: getPersonalGadgetsModelReducer,
+  personalGadgetIssues: getPersonalGadgetsIssueReducer,
+  categoryName: selectPersonalGadgetsReducer,
+  brandName: selectPersonalGadgetsBrandsReducer,
+  modelName: selectPersonalGadgetsModelReducer,
 });

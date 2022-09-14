@@ -44,6 +44,13 @@ import {
   getTestimonialsByCategory,
 } from "redux/actions/testimonialActions/testimonialAction";
 import { callAddorRemoveCart } from "redux/actions/cartActions/cartActions";
+import {
+  getPersonalGadgetsByBrands,
+  getPersonalGadgetsByCity,
+  getPersonalGadgetsByIssues,
+  getPersonalGadgetsByModels,
+  selectCategoryName,
+} from "redux/actions/personalGadgetActions/personalGadget";
 
 function SelectDeviceHero({
   headClass,
@@ -72,8 +79,6 @@ function SelectDeviceHero({
   const [cartIssues, setCartIssues] = useState([]);
   const [displayIssues, setDisplayIssues] = useState(false);
 
-  const [activeCat, setActiveCat] = useState(0);
-
   const [topBrands, setTopBrands] = useState(true);
   const [totalBrands, setTotalBrands] = useState(6);
   const [displayBrands, setDisplayBrands] = useState(true);
@@ -87,6 +92,25 @@ function SelectDeviceHero({
   const getBrandID = useSelector((state) => state.issuePage.brandID);
   const getModelID = useSelector((state) => state.issuePage.modelID);
 
+  // personalGadgetsArrays
+  const personalGadgetCategory = useSelector((state) => state.personalGadget);
+  const personalGadgetBrands = useSelector(
+    (state) => state.personalGadgetBrands
+  );
+  const personalGadgetModels = useSelector(
+    (state) => state.personalGadgetModels
+  );
+  const personalGadgetIssues = useSelector(
+    (state) => state.personalGadgetIssues
+  );
+
+  // selectgadgets
+  const selectCategoryID = useSelector(
+    (state) => state.categoryName.categoryName
+  );
+  const selectBrandsName = useSelector((state) => state.brandName.brandName);
+  const selectModelsName = useSelector((state) => state.modelName.modelName);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -95,29 +119,37 @@ function SelectDeviceHero({
 
   useEffect(() => {
     console.log({ categoryID });
-    dispatch(getCategoryHero(categoryID));
-    dispatch(callFaqByCategory(categoryID));
-    dispatch(getInformationByCategory(categoryID));
-    dispatch(getCategoryOffer(categoryID));
-    dispatch(getTestimonialsByCategory(categoryID));
+    console.log("category", { selectCategoryID });
+    // dispatch(getPersonalGadgetsByBrands(categoryID));
+    // dispatch(getCategoryHero(categoryID));
+    // dispatch(callFaqByCategory(categoryID));
+    // dispatch(getInformationByCategory(categoryID));
+    // dispatch(getCategoryOffer(categoryID));
+    // dispatch(getTestimonialsByCategory(categoryID));
   }, [categoryID]);
 
   useEffect(() => {
     console.log({ getBrandID });
-    dispatch(getBrandsHero(getBrandID));
-    dispatch(callFaqByBrands(getBrandID));
-    dispatch(getInformationByBrands(getBrandID));
-    dispatch(getBrandsOffer(getBrandID));
-    dispatch(getTestimonialsByBrand(getBrandID));
+    // dispatch(getPersonalGadgetsByModels(getBrandID));
+    // dispatch(getBrandsHero(getBrandID));
+    // dispatch(callFaqByBrands(getBrandID));
+    // dispatch(getInformationByBrands(getBrandID));
+    // dispatch(getBrandsOffer(getBrandID));
+    // dispatch(getTestimonialsByBrand(getBrandID));
   }, [getBrandID]);
 
   useEffect(() => {
-    dispatch(getModelHero(getModelID));
-    dispatch(callFaqByBrands(getModelID));
-    dispatch(getInformationByBrands(getModelID));
-    dispatch(getBrandsOffer(getModelID));
-    dispatch(getTestimonialsByBrand(getModelID));
+    // dispatch(getPersonalGadgetsByIssues(getModelID));
+    // dispatch(getModelHero(getModelID));
+    // dispatch(callFaqByBrands(getModelID));
+    // dispatch(getInformationByBrands(getModelID));
+    // dispatch(getBrandsOffer(getModelID));
+    // dispatch(getTestimonialsByBrand(getModelID));
   }, [getModelID]);
+
+  useEffect(() => {
+    dispatch(getPersonalGadgetsByCity(cityID));
+  }, [cityID]);
 
   const selectDrop = useRef();
   const categoryModel = useRef();
@@ -177,6 +209,7 @@ function SelectDeviceHero({
 
   const getBrands = async (eventKey, key) => {
     dispatch(selectCategory(eventKey));
+    dispatch(selectCategoryName(cityID));
 
     await axios
       .get(`${API_URL}api/v1/brands_by_category?category=${eventKey}`)

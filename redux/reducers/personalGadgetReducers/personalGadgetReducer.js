@@ -6,6 +6,14 @@ const personalGadgetsInitialState = {
   loading: false,
 };
 
+const personalGadgetsNameInitialState = {
+  categoryName: "Device",
+  brandName: "Brands",
+  modelName: "Models",
+  error: "",
+  loading: false,
+};
+
 export const getPersonalGadgetsReducer = (
   state = personalGadgetsInitialState,
   { type, payload }
@@ -37,7 +45,7 @@ export const getPersonalGadgetsReducer = (
 };
 
 export const selectPersonalGadgetsReducer = (
-  state = personalGadgetsInitialState,
+  state = personalGadgetsNameInitialState,
   { type, payload }
 ) => {
   switch (type) {
@@ -50,14 +58,14 @@ export const selectPersonalGadgetsReducer = (
       return {
         ...state,
         loading: false,
-        data: payload,
+        categoryName: payload,
         error: "",
       };
     case personalGadgets.SELECT_PERSONAL_GADGETS_FAIL:
       return {
         ...state,
         loading: false,
-        data: [],
+        categoryName: "Device",
         error: payload,
       };
 
@@ -97,7 +105,7 @@ export const getPersonalGadgetsBrandsReducer = (
 };
 
 export const selectPersonalGadgetsBrandsReducer = (
-  state = personalGadgetsInitialState,
+  state = personalGadgetsNameInitialState,
   { type, payload }
 ) => {
   switch (type) {
@@ -110,14 +118,14 @@ export const selectPersonalGadgetsBrandsReducer = (
       return {
         ...state,
         loading: false,
-        data: payload,
+        brandName: payload,
         error: "",
       };
     case personalGadgets.SELECT_PERSONAL_BRANDS_FAIL:
       return {
         ...state,
         loading: false,
-        data: [],
+        brandName: "Brands",
         error: payload,
       };
 
@@ -157,7 +165,7 @@ export const getPersonalGadgetsModelReducer = (
 };
 
 export const selectPersonalGadgetsModelReducer = (
-  state = personalGadgetsInitialState,
+  state = personalGadgetsNameInitialState,
   { type, payload }
 ) => {
   switch (type) {
@@ -170,14 +178,14 @@ export const selectPersonalGadgetsModelReducer = (
       return {
         ...state,
         loading: false,
-        data: payload,
+        modelName: payload,
         error: "",
       };
     case personalGadgets.SELECT_PERSONAL_MODELS_FAIL:
       return {
         ...state,
         loading: false,
-        data: [],
+        modelName: "Models",
         error: payload,
       };
 
