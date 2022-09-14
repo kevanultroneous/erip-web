@@ -4,6 +4,7 @@ import styles from "@/styles/components/MyBooking/LeftMenu.module.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { callFetchProfile } from "redux/actions/profileActions/profileActions";
+import { useRouter } from "next/router";
 
 function LeftMenu({
   profileImage,
@@ -14,6 +15,8 @@ function LeftMenu({
   addemailaction,
   logout,
 }) {
+  const router = useRouter();
+
   return (
     <div className={styles.leftMenuCont}>
       <div>
@@ -49,7 +52,14 @@ function LeftMenu({
         </div>
       </div>
       <div className={styles.profileDetailsLogOut}>
-        <h6 onClick={logout}>Log Out</h6>
+        <h6
+          onClick={() => {
+            localStorage.removeItem("token");
+            router.push("/");
+          }}
+        >
+          Log Out
+        </h6>
       </div>
     </div>
   );

@@ -28,6 +28,7 @@ import {
 import { LOGIN_USER_SUCCESS, USER_CLEAR } from "redux/actions/actionTypes";
 import { GET_CITY_SUCCESS } from "redux/actions/actionTypes";
 import { BiUser } from "react-icons/bi";
+import { callNavsearch } from "redux/actions/mixActions/mixActions";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
@@ -45,12 +46,30 @@ export function Header() {
   const [topIssuesHeaderData, settopIssuesHeaderData] = useState([]);
   const [loactionloader, setLocationLoader] = useState(false);
   const [showMobloc, setShowMobloc] = useState(false);
-
+  const [search, setSearch] = useState("");
+  const [sdata, setSdata] = useState(null);
   const dispatch = useDispatch();
 
   const locationselector = useSelector((selector) => selector.locationdata);
-
+  const navsearch = useSelector((selector) => selector.mix.navsearch);
   const userselector = useSelector((selector) => selector.userdata);
+  const profileselector = useSelector((selector) => selector.profile.profile);
+  const profiledetail = profileselector
+    ? profileselector.data
+      ? {
+          name: profileselector.data[0].user_fullname,
+          number: profileselector.data[0].user_mobile,
+        }
+      : null
+    : null;
+  const navdata = navsearch ? (navsearch.data ? navsearch.data : null) : null;
+
+  useEffect(() => {
+    dispatch(callNavsearch(1, search));
+  }, [search]);
+  setTimeout(() => {
+    setSdata(navdata);
+  }, 1000);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -144,7 +163,6 @@ export function Header() {
       //   .catch((e) => console.log(e));
     }
   }, [currentCity]);
-
   function getLocation() {
     setLocationLoader(true);
     if (navigator.geolocation) {
@@ -401,6 +419,23 @@ export function Header() {
                 </div>
               </Link>
             </Navbar.Brand>
+            <Navbar.Brand>
+              <div className={styles.Searchbar}>
+                <FiSearch
+                  size={25}
+                  color="#0E62CB"
+                  style={{ marginRight: "1rem" }}
+                />
+                <input
+                  type="text"
+                  placeholder="Search your brand or model"
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
+              <div className={styles.SearchItems}>
+                <ul>{sdata ? sdata.map((v) => v.brands) : null}</ul>
+              </div>
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll" className={styles.navBarcolor}>
               <Nav className="me-auto my-2 my-lg-0"></Nav>
@@ -436,7 +471,20 @@ export function Header() {
               />
               {token ? (
                 <Link href={"/my-bookings"}>
-                  <BiUser size={40} />
+                  <div className="d-flex align-items-end">
+                    <BiUser size={40} />
+                    <span
+                      style={{
+                        color: "#0E62CB",
+                        fontSize: "20px",
+                        fontWeight: "700",
+                        margin: "0%",
+                        marginLeft: "1rem",
+                      }}
+                    >
+                      {profiledetail !== null && profiledetail.name}
+                    </span>
+                  </div>
                 </Link>
               ) : (
                 <PrimaryButton

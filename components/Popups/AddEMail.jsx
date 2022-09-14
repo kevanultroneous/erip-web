@@ -11,6 +11,7 @@ export default function AddEmail({ show, onHide }) {
   const [err, setErr] = useState(false);
   const dispatch = useDispatch();
   const altemailselector = useSelector((selector) => selector.profile);
+
   const addEmail = () => {
     if (validator.isEmail(email)) {
       setErr(false);
@@ -20,6 +21,7 @@ export default function AddEmail({ show, onHide }) {
       setErr(true);
     }
   };
+
   return (
     <Modal
       show={show}
