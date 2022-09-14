@@ -113,6 +113,7 @@ export const getTestimonialsByCategory = (data) => {
 export const getTestimonialsByBrand = (data) => {
   return async function (dispatch) {
     getBrandsTestimonialsStart();
+
     await testimonialsByBrands(data)
       .then((response) => {
         dispatch(getBrandsTestimonialsSuccess(response));

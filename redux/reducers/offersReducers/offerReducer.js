@@ -6,7 +6,7 @@ const offerInitialState = {
   loading: false,
 };
 
-export const offerSectionHome = (
+export const offerSectionHomeReducer = (
   state = offerInitialState,
   { type, payload }
 ) => {
@@ -36,7 +36,7 @@ export const offerSectionHome = (
   }
 };
 
-export const offerSectionCategory = (
+export const offerSectionCategoryReducer = (
   state = offerInitialState,
   { type, payload }
 ) => {
@@ -66,7 +66,7 @@ export const offerSectionCategory = (
   }
 };
 
-export const offerSectionBrand = (
+export const offerSectionBrandReducer = (
   state = offerInitialState,
   { type, payload }
 ) => {
@@ -96,7 +96,7 @@ export const offerSectionBrand = (
   }
 };
 
-export const offerSectionModel = (
+export const offerSectionModelReducer = (
   state = offerInitialState,
   { type, payload }
 ) => {

@@ -13,6 +13,7 @@ export const getFaqsByCategoryStart = () => {
 };
 
 export const getFaqsByCategorySuccess = (data) => {
+  console.log("dataFAQCATEGORY", data);
   return {
     type: faqs.GET_FAQ_BY_CATEGORY_SUCCESS,
     payload: data,
