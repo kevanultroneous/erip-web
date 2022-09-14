@@ -29,6 +29,9 @@ import { MatchCity, TimeSloatOver } from "utils/utilsfunctions";
 import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { RiAddFill } from "react-icons/ri";
+import { useSelector } from "react-redux";
+import Coupons from "./Coupons";
+import PaymentOption from "./PaymentOption";
 
 export default function CheckoutPopup({ show, onHide }) {
   const [selectedTime, setSelectedTime] = useState(null);
@@ -66,6 +69,7 @@ export default function CheckoutPopup({ show, onHide }) {
   const [confirmSession, setConfirmSession] = useState(false);
   const [dateandTimeSelection, setDateAndTimeSelection] = useState(true);
   const [directSelected, setDirectSelected] = useState(false);
+  const [procced, setProcced] = useState(false);
 
   const TimeIsOver = (timesloatsata, timesofsloats) => {
     let overdata = [];
@@ -84,6 +88,7 @@ export default function CheckoutPopup({ show, onHide }) {
     return overdata;
   };
 
+  const cartselector = useSelector((state) => console.log(state.cartdata));
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
     window.innerWidth < 768 && window.innerWidth > 992
@@ -176,6 +181,7 @@ export default function CheckoutPopup({ show, onHide }) {
   useEffect(() => {
     reverseMap(currentLocation.latitude, currentLocation.longitude);
   }, [currentLocation]);
+
   function reverseMap(lat, lng) {
     var latlng = new google.maps.LatLng(lat, lng);
     var geocoder = (geocoder = new google.maps.Geocoder());
@@ -218,6 +224,7 @@ export default function CheckoutPopup({ show, onHide }) {
       setAddressFlowTwo(false);
       setConfirmSession(false);
       setDateAndTimeSelection(true);
+      setFinalPayment(false);
     }
   }, [show]);
 
@@ -309,6 +316,14 @@ export default function CheckoutPopup({ show, onHide }) {
     setSelectedTime(index);
   };
 
+  const finalPaymentBackHandler = () => {
+    if (myaddress.length > 0) {
+      setDirectSelected(true);
+      setFinalPayment(false);
+    }
+  };
+
+  const [paymentway, setSelectedPaymentWay] = useState(null);
   return (
     <Modal
       show={show}
@@ -431,7 +446,7 @@ export default function CheckoutPopup({ show, onHide }) {
 
         {directSelected ? (
           <>
-            <Modal
+            {/* <Modal
               show={deleteShow}
               onHide={() => setDeleteShow(false)}
               size="lg"
@@ -471,7 +486,7 @@ export default function CheckoutPopup({ show, onHide }) {
                   </Col>
                 </Row>
               </Modal.Body>
-            </Modal>
+            </Modal> */}
             <NavigationHandler
               backhandler={() => {
                 setChangeModalSize(true);
@@ -507,7 +522,7 @@ export default function CheckoutPopup({ show, onHide }) {
                         {v.address_line_1}
                       </span>
                     </Col>
-                    <Col xs={1} md={1} lg={1} xl={1}>
+                    {/* <Col xs={1} md={1} lg={1} xl={1}>
                       <div className="d-flex justify-content-end">
                         <FiEdit2
                           color="#0E62CB"
@@ -518,7 +533,7 @@ export default function CheckoutPopup({ show, onHide }) {
                           onClick={() => setDeleteShow(true)}
                         />
                       </div>
-                    </Col>
+                    </Col> */}
                     <hr />
                   </Row>
                 ))}
@@ -532,6 +547,7 @@ export default function CheckoutPopup({ show, onHide }) {
                   clickHandler={() => {
                     setSecondProcessShow(false);
                     setFinalPayment(true);
+                    setDirectSelected(false);
                   }}
                   buttonStyle={{
                     width: "100%",
@@ -878,33 +894,150 @@ export default function CheckoutPopup({ show, onHide }) {
         {/* final payment */}
         {finalPayment && (
           <div>
-            <NavigationHandler navtitle={"Checkout"} />
-            <StatusProcess processStatus={processStatus} />
+            <NavigationHandler
+              navtitle={paymentway == 0 ? "Payment" : "Checkout"}
+              backhandler={() => finalPaymentBackHandler()}
+            />
+
             <Row>
-              <Col xs={6} md={6} lg={6} xl={6}>
-                <h4 className={styles.CartAndOfferSubMainTitle}>
-                  Available coupons
-                </h4>
-              </Col>
-              <Col xs={6} md={6} lg={6} xl={6} className={styles.TextRight}>
-                <lable
-                  className={`${styles.CartAndOfferSubMainTitle} ${styles.LinkType}`}
-                  onClick={() => setActive(1)}
-                >
-                  See All
-                </lable>
-              </Col>
-              <Col xs={12} md={12} lg={12} xl={12}>
+              {paymentway == 0 ? null : (
+                <>
+                  <Col xs={6} md={6} lg={6} xl={6}>
+                    <h4 className={styles.CartAndOfferSubMainTitle}>
+                      Available coupons
+                    </h4>
+                  </Col>
+
+                  <Col xs={6} md={6} lg={6} xl={6} className={styles.TextRight}>
+                    <lable
+                      className={`${styles.CartAndOfferSubMainTitle} ${styles.LinkType}`}
+                      onClick={() => setActive(1)}
+                    >
+                      See All
+                    </lable>
+                  </Col>
+                  <Col
+                    xs={12}
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    className={styles.CouponsCol}
+                  >
+                    <Coupons title={"TRYNEW"} offer={`-- ₹${100}`} />
+                  </Col>
+                </>
+              )}
+              <Col
+                xs={12}
+                md={12}
+                lg={12}
+                xl={12}
+                className={styles.YourCartCol}
+              >
                 <h4 className={styles.CartAndOfferSubMainTitle}>Your Cart</h4>
                 <hr />
               </Col>
-              <Col xs={12} md={12} lg={12} xl={12}>
-                <h4 className={styles.CartAndOfferSubMainTitle}>
-                  Payment Options
-                </h4>
-                <hr />
+              <Col
+                xs={12}
+                md={6}
+                lg={6}
+                xl={6}
+                className={styles.YourCartInCol}
+              >
+                <Row>
+                  <Col xs={6} md={6} lg={6} xl={6}>
+                    <p className={styles.ProductName}>
+                      Lorem Ipsum ABC issues X
+                    </p>
+                  </Col>
+                  <Col
+                    xs={6}
+                    md={6}
+                    lg={6}
+                    xl={6}
+                    className={styles.TextRightPay}
+                  >
+                    <label className={styles.ProductPrice}>₹100</label>
+                    <Image
+                      src="/assets/icons/delete-icon.png"
+                      alt="delete-icon"
+                      loading="lazy"
+                      className={styles.DeleteImg}
+                    />
+                  </Col>
+                </Row>
+              </Col>
+              <Col
+                xs={12}
+                md={6}
+                lg={6}
+                xl={6}
+                className={styles.YourCartInCol}
+              >
+                <Row>
+                  <Col xs={6} md={6} lg={6} xl={6}>
+                    <p className={styles.TotalAmount}>Total</p>
+                  </Col>
+                  <Col
+                    xs={6}
+                    md={6}
+                    lg={6}
+                    xl={6}
+                    className={styles.TextMoneyRight}
+                  >
+                    ₹100
+                  </Col>
+                </Row>
               </Col>
             </Row>
+            {paymentway == null && (
+              <Row className={styles.PaymentSelectionRow}>
+                {[
+                  {
+                    img: "/assets/icons/paynow.png",
+                    title: "Pay Now (Online)",
+                  },
+                  {
+                    img: "/assets/icons/payafter.png",
+                    title: "Pay After Services",
+                  },
+                ].map((v, i) => (
+                  <Col xs={12} md={6} lg={6} xl={6}>
+                    <div
+                      key={i}
+                      className={`${styles.PaymentSelection} ${
+                        paymentway == i && styles.SelectedPaymentWay
+                      }`}
+                      onClick={() => setSelectedPaymentWay(i)}
+                    >
+                      <span>
+                        <Image src={v.img} alt="payment" loading="lazy" />
+                      </span>
+                      <p className={styles.PaymentTitle}>{v.title}</p>
+                    </div>
+                  </Col>
+                ))}
+              </Row>
+            )}
+
+            {paymentway == 0 && <PaymentOption />}
+            {procced == true && (
+              <Row>
+                <Col xs={12} md={12} lg={12} xl={12}>
+                  <PrimaryButton
+                    title="Proceed"
+                    buttonStyle={{
+                      width: "100%",
+                      background: "#0E62CB",
+                      color: "#fff",
+                    }}
+                    clickHandler={() => {
+                      paymentway == null ? null : setProcced(true);
+                    }}
+                  />
+                </Col>
+              </Row>
+            )}
           </div>
         )}
       </Modal.Body>

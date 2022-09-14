@@ -14,11 +14,9 @@ function Offers() {
     await axios
       .get("http://43.204.87.153/api/v1/cms/offers?city=1")
       .then((data) => {
-        console.log(data.data.data);
         setOffer(data.data.data);
       })
       .catch((err) => {
-        console.log(err);
         setOffer([]);
       });
   };

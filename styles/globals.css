@@ -386,6 +386,27 @@ input[type="number"] {
   font-size: 20px;
 }
 
+.slick-dots.slick-thumb {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.slick-dots.slick-thumb li {
+  width: 6px;
+  height: 6px;
+  margin: 0 3px;
+  border-radius: 999px;
+  transition: all 0.5s ease-in-out;
+  will-change: width;
+  border: 1px solid #0e62cb;
+}
+
+.slick-dots.slick-thumb li.slick-active {
+  background-color: #0e62cb;
+  width: 22.45px;
+}
+
 /*  */
 @media (min-width: 320px) and (max-width: 450px) {
   .modal {
@@ -609,6 +630,30 @@ input[type="number"] {
   .RatingAndReview .modal-content {
     border-radius: 10px 10px 0px 0px;
   }
+
+  .FeedbackQuestions .modal-dialog {
+    margin: 0%;
+  }
+
+  .FeedbackQuestions .modal-dialog-centered {
+    align-items: flex-end;
+  }
+
+  .FeedbackQuestions .modal-content {
+    border-radius: 10px 10px 0px 0px;
+  }
+
+  .ThankYou .modal-dialog {
+    margin: 0%;
+  }
+
+  .ThankYou .modal-dialog-centered {
+    align-items: flex-end;
+  }
+
+  .ThankYou .modal-content {
+    border-radius: 10px 10px 0px 0px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1080px) {
@@ -652,11 +697,11 @@ input[type="number"] {
     border-radius: 999px;
     transition: all 0.5s ease-in-out;
     will-change: width;
-    border: 1px solid #0e62cb;
+    border: 1px solid #0e62cb !important;
   }
 
   .slick-dots.slick-thumb li.slick-active {
-    background-color: #0e62cb;
+    background-color: #0e62cb !important;
     width: 22.45px;
   }
 
