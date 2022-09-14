@@ -3,7 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import PrimaryButton from "./PrimaryButton";
-import { Col, Image, Row } from "react-bootstrap";
+import { Col, Image, Row, Spinner } from "react-bootstrap";
 import { moreMenu } from "utils/moreMenu";
 import { useEffect, useRef, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -42,13 +42,14 @@ export function Header() {
   const [topBrandsHeaderData, setTopBrandsHeaderData] = useState([]);
   const [mobileRepairHeaderData, setmobileRepairHeaderData] = useState([]);
   const [topIssuesHeaderData, settopIssuesHeaderData] = useState([]);
-
+  const [loactionloader, setLocationLoader] = useState(false);
   const [showMobloc, setShowMobloc] = useState(false);
 
   const dispatch = useDispatch();
-  const userselector = useSelector((selector) =>
-    console.log(selector.userdata)
-  );
+
+  const locationselector = useSelector((selector) => selector.locationdata);
+
+  const userselector = useSelector((selector) => selector.userdata);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -62,7 +63,7 @@ export function Header() {
         payload: 0,
       });
     }
-  }, [userselector]);
+  }, []);
   // getting header menus from api
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
@@ -144,6 +145,7 @@ export function Header() {
   }, [currentCity]);
 
   function getLocation() {
+    setLocationLoader(true);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
     } else {
@@ -208,6 +210,7 @@ export function Header() {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[1]) {
           // setLocationPopupShow(false);
+          setLocationLoader(false);
           setSelectedAddress(results[1].formatted_address);
         }
       }
@@ -602,6 +605,14 @@ export function Header() {
                 alt="location"
               />
               <p className={styles.LocationDetectText}>Detect My Location</p>
+              {loactionloader && (
+                <Spinner
+                  animation="border"
+                  size="sm"
+                  variant="primary"
+                  className="ms-2"
+                />
+              )}
             </div>
             <div className={styles.InputGroup}>
               <p className={styles.InputOrText}>or</p>
@@ -609,9 +620,15 @@ export function Header() {
                 defaultValue={selectedAddress}
                 placeholder="Search city, area, pincode"
                 apiKey={GMAP_API}
-                onPlaceSelected={(place) =>
-                  getLatandLongByAddress(place.formatted_address)
-                }
+                onPlaceSelected={(place) => {
+                  setLocationLoader(true);
+                  setTimeout(() => {
+                    if (place) {
+                      getLatandLongByAddress(place.formatted_address);
+                      setLocationLoader(false);
+                    }
+                  }, 3000);
+                }}
                 options={{
                   types: ["establishment"],
                   componentRestrictions: { country: "in" },

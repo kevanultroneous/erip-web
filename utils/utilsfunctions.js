@@ -5,6 +5,7 @@ export const MatchCity = (cityData, currentCity) => {
       currentCity.replace(/\s/g, "").toLowerCase()
     ) {
       let id = cityData[k1].loc_city_id;
+
       localStorage.setItem("cityid", parseInt(id));
       localStorage.setItem("city", currentCity);
       return true;

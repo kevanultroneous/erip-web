@@ -59,7 +59,7 @@ export const UserLogout = (token) => {
 };
 //
 export const CouponsByCC = (city = 1, category = 1) => {
-  return axios.get(`${API_URL}api/v1/cms/coupons_by_cc?city=1&category=1`, {
+  return axios.get(`${API_URL}api/v1/cms/coupons_by_cc`, {
     params: {
       city: city,
       category: category,
@@ -115,5 +115,5 @@ export const AddToCart = (token, issueId) => {
 export const MyProfile = (token) => {
   return axios.get(`${API_URL}api/v1/users/my_profile`, {
     headers: { Authorization: `Bearer ${token}` },
-  },)
-}
+  });
+};

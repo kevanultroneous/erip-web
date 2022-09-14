@@ -1,0 +1,49 @@
+.ThankyouMain {
+    text-align: center;
+}
+
+.ThankyouDetails {
+    margin: 3rem 0;
+}
+
+.ThankyouText {
+    font-weight: 400;
+    font-size: 32px;
+}
+
+.ThankyouParagraph {
+    font-weight: 400;
+    font-size: 24px;
+    color: #676767;
+}
+
+.ThankyouBody {
+    padding: 2.5rem 4rem;
+}
+
+.CloseWrraper {
+    display: flex;
+    justify-content: right;
+}
+
+@media (min-width:320px) and (max-width: 450px) {
+    .ThankyouBody {
+        padding: 1.5rem 2rem;
+    }
+
+    .ThankyouText {
+        font-weight: 400;
+        font-size: 24px;
+    }
+
+    .ThankyouParagraph {
+        font-weight: 400;
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {}
+
+@media (min-width: 1200px) and (max-width: 1730px) {}
+
+@media (min-width: 650px) and (max-width: 740px) {}
