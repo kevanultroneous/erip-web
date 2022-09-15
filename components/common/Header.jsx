@@ -464,10 +464,9 @@ export function Header() {
                 alt="header cart"
                 className={styles.navHeaderCart}
                 onClick={() => {
-                  // !localStorage.getItem("token")
-                  //   ? setLoginPopup(true)
-                  //   :
-                  setCartAndOfferPopup(true);
+                  !localStorage.getItem("token")
+                    ? setLoginPopup(true)
+                    : setCartAndOfferPopup(true);
                 }}
               />
               {token ? (
