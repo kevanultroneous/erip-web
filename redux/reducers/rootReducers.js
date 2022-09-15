@@ -36,6 +36,8 @@ import {
   testimonialByCategoryReducer,
   testimonialByModelsReducer,
 } from "./testimonialReducers/testimonialReducer";
+import { mixReducer } from "./mixReducers/mixReducers";
+import { profileReducer } from "./profileReducers/profileReducers";
 import { userAuthenticationReducer } from "./userReducer/userReducer";
 
 export const rootReducer = combineReducers({
@@ -66,4 +68,6 @@ export const rootReducer = combineReducers({
   cartaddremove: addtoCartorRemoveReducer,
   userdata: userAuthenticationReducer,
   couponsdata: couponsReducer,
+  profile: profileReducer,
+  mix: mixReducer
 });

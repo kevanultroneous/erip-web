@@ -45,6 +45,23 @@ export const couponsReducer = (
         loading: false,
         selectedcoupons: null,
       };
+    case coupons.VERIFY_COUPON_START:
+      return {
+        ...state,
+        loading: true,
+      }
+    case coupons.VERIFY_COUPON_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        verifycoupons: payload,
+      }
+    case coupons.VERIFY_COUPON_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
+      }
     default:
       return state;
   }

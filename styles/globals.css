@@ -561,11 +561,11 @@ input[type="number"] {
   }
 
   .blogslider .slick-next {
-    top: 28% !important;
+    top: 40% !important;
   }
 
   .blogslider .slick-prev {
-    top: 28% !important;
+    top: 40% !important;
   }
 
   .CancelOrder .modal-dialog {
@@ -581,7 +581,7 @@ input[type="number"] {
   }
 
   .blogslider .slick-list {
-    height: 24rem;
+    height: 17rem;
   }
 
   .OfferPopup .modal-dialog {

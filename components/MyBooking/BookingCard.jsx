@@ -18,23 +18,23 @@ function BookingCard({
   return (
     <div className={styles.bookingCardContainer}>
       <Row className={styles.bookingCardHead}>
-        <Col xl={4} className={styles.bookingOrder}>
+        <Col xl={4} xs={6} className={styles.bookingOrder}>
           <p>Order ID: {orderNumber}</p>
         </Col>
-        <Col xl={6}>
+        <Col xl={6} xs={6}>
           <div className={styles.bookingCardStatus}>
             <p>{partnerStatusAssigned}</p>
           </div>
         </Col>
       </Row>
       <Row className={styles.bookingCardBody}>
-        <Col xl={3}>
+        <Col xl={3} xs={4}>
           <div className={styles.bookingCardProfile}>
             <Image fluid src={partnerImage} alt={partnerName} />
             <p>{partnerName}</p>
           </div>
         </Col>
-        <Col xl={8}>
+        <Col xl={8} xs={8}>
           <h6 className={styles.SmallDetails}>{bookingDateAndTime}</h6>
           <h6 className={styles.SmallDetails}>{issueDevice}</h6>
           <h6 className={styles.SmallDetails}>{issueType}</h6>
@@ -52,14 +52,14 @@ function BookingCard({
         </p>
       </div>
       <Row className={styles.actionButtons}>
-        <Col xl={6}>
+        <Col xl={6} xs={6}>
           <PrimaryButton
             title="Call Support"
             customClass={styles.actionBtn}
             clickHandler={callsupport}
           />
         </Col>
-        <Col xl={6}>
+        <Col xl={6} xs={6}>
           <PrimaryButton
             title="View Details"
             customClass={styles.actionBtn}

@@ -74,3 +74,23 @@
   font-weight: 400;
   font-size: 20px;
 }
+
+@media (min-width:320px) and (max-width: 450px) {
+  .actionBtn {
+    font-size: 14px;
+  }
+
+  .bookingCardStatus {
+    font-size: 14px;
+  }
+
+  .SmallDetails {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {}
+
+@media (min-width: 1200px) and (max-width: 1730px) {}
+
+@media (min-width: 650px) and (max-width: 740px) {}

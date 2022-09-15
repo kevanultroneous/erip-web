@@ -5,11 +5,13 @@ import styles from "@/styles/components/MyBooking/AllBooking.module.css";
 import BookingCard from "./BookingCard";
 import { bookingData } from "utils/bookingData";
 import AlternatePopups from "../Popups/AlternatePopups";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddEmail from "../Popups/AddEMail";
 import CancelOrder from "../Popups/CancelOrder";
 import ViewBooking from "./ViewBooking";
 import Support from "./Support";
+import { useDispatch, useSelector } from "react-redux";
+import { callFetchProfile } from "redux/actions/profileActions/profileActions";
 
 function AllBookings() {
   const [alternatePopup, setAlternatePopup] = useState(false);
@@ -17,6 +19,21 @@ function AllBookings() {
   const [cancelOrder, setCancelOrder] = useState(false);
   const [viewdetail, setViewDetail] = useState(false);
   const [viewSupport, setViewSupport] = useState(false);
+
+  const dispatch = useDispatch();
+  const profileselector = useSelector((selector) => selector.profile.profile);
+  useEffect(() => {
+    dispatch(callFetchProfile(localStorage.getItem("token")));
+  }, []);
+
+  const profiledetail = profileselector
+    ? profileselector.data
+      ? {
+          name: profileselector.data[0].user_fullname,
+          number: profileselector.data[0].user_mobile,
+        }
+      : null
+    : null;
 
   return (
     <section className={styles.allBookingContainer}>
@@ -60,8 +77,10 @@ function AllBookings() {
         <Col xl={3} className={styles.allBookingsLeftCont}>
           <LeftMenu
             profileImage={"/assets/images/bookings-page-profile.png"}
-            profileName={"Alpha Omega"}
-            profileNumber={"+91 9000 00000"}
+            profileName={profiledetail !== null && profiledetail.name}
+            profileNumber={
+              profiledetail !== null && "+91" + profiledetail.number
+            }
             menus={leftMenuName}
             addemailaction={() => setaddEmail(true)}
             alternativenumberaction={() => setAlternatePopup(true)}

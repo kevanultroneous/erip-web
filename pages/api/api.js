@@ -112,8 +112,3 @@ export const AddToCart = (token, issueId) => {
     }
   );
 };
-export const MyProfile = (token) => {
-  return axios.get(`${API_URL}api/v1/users/my_profile`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-};

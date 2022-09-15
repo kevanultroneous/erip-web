@@ -88,7 +88,6 @@ export default function CheckoutPopup({ show, onHide }) {
     return overdata;
   };
 
-  const cartselector = useSelector((state) => console.log(state.cartdata));
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
     window.innerWidth < 768 && window.innerWidth > 992
@@ -198,15 +197,17 @@ export default function CheckoutPopup({ show, onHide }) {
 
   function getLatandLongByAddress(address) {
     var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ address: address }, function (results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        var latitude = results[0].geometry.location.lat();
-        var longitude = results[0].geometry.location.lng();
+    setTimeout(() => {
+      geocoder.geocode({ address: address }, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          var latitude = results[0].geometry.location.lat();
+          var longitude = results[0].geometry.location.lng();
 
-        setCurrentLocation({ latitude, longitude });
-        displayLocation(latitude, longitude);
-      }
-    });
+          setCurrentLocation({ latitude, longitude });
+          displayLocation(latitude, longitude);
+        }
+      });
+    }, 1200);
   }
   //  observer for close or open modal
   useEffect(() => {
@@ -225,6 +226,8 @@ export default function CheckoutPopup({ show, onHide }) {
       setConfirmSession(false);
       setDateAndTimeSelection(true);
       setFinalPayment(false);
+    } else {
+      setSelectedDate(0);
     }
   }, [show]);
 
@@ -282,6 +285,7 @@ export default function CheckoutPopup({ show, onHide }) {
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(latitude, longitude);
     var count, country, state, city;
+
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[0]) {
@@ -297,7 +301,7 @@ export default function CheckoutPopup({ show, onHide }) {
           alert("address not found");
         }
       } else {
-        alert("Geocoder failed due to: " + status);
+        console.log("Geocoder failed due to: " + status);
       }
     });
   }
@@ -311,6 +315,7 @@ export default function CheckoutPopup({ show, onHide }) {
       setSelectedAddress("");
     }
   }, [currentCity]);
+
   const timeselectedHandler = (index) => {
     setShowTimeError(false);
     setSelectedTime(index);
@@ -338,7 +343,7 @@ export default function CheckoutPopup({ show, onHide }) {
           secondProcessShow && styles.LocationModalBody
         }`}
       >
-        {/* date time selection */}
+        {/*======================================== date time selection ======================================== */}
         {dateandTimeSelection ? (
           <Row>
             <NavigationHandler backhandler={onHide} navtitle="Checkout" />
@@ -445,48 +450,8 @@ export default function CheckoutPopup({ show, onHide }) {
         ) : null}
 
         {directSelected ? (
-          <>
-            {/* <Modal
-              show={deleteShow}
-              onHide={() => setDeleteShow(false)}
-              size="lg"
-              aria-labelledby="contained-modal-title-vcenter"
-              centered
-              className="CartandOfferPopup"
-            >
-              <Modal.Body className="ps-4 pe-3">
-                <NavigationHandler
-                  backhandler={() => setDeleteShow(false)}
-                  navtitle="Delete Address"
-                />
-                <Row className="pt-5">
-                  <Col xs={12} md={12} lg={12} xl={12}>
-                    <p className="text-center pt-5 pb-5">
-                      Are you sure you want to delete this address?
-                    </p>
-                  </Col>
-                  <Col xs={12} md={12} lg={12} xl={12}>
-                    <Row className="pe-5 ps-5 pb-5 pt-5 justify-content-center">
-                      <Col xs={4} md={4} lg={4} xl={4}>
-                        <PrimaryButton
-                          title="No ,go back"
-                          clickHandler={() => setDeleteShow(false)}
-                        />
-                      </Col>
-                      <Col xs={4} md={4} lg={4} xl={4}>
-                        <PrimaryButton
-                          buttonStyle={{
-                            backgroundColor: "#0E62CB",
-                            color: "#fff",
-                          }}
-                          title="Yes,delete it"
-                        />
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
-              </Modal.Body>
-            </Modal> */}
+          <div>
+            {/* if you need to delete model code is already done put here code-backup-no-001 from etc.code.txt*/}
             <NavigationHandler
               backhandler={() => {
                 setChangeModalSize(true);
@@ -510,7 +475,7 @@ export default function CheckoutPopup({ show, onHide }) {
                       <input
                         type="radio"
                         name={"address"}
-                        onChange={(e) =>
+                        onChange={() =>
                           setMyselectedAddress({
                             id: i,
                             address: v.address_line_1,
@@ -522,18 +487,7 @@ export default function CheckoutPopup({ show, onHide }) {
                         {v.address_line_1}
                       </span>
                     </Col>
-                    {/* <Col xs={1} md={1} lg={1} xl={1}>
-                      <div className="d-flex justify-content-end">
-                        <FiEdit2
-                          color="#0E62CB"
-                          style={{ marginRight: "1rem" }}
-                        />
-                        <MdDelete
-                          color="red"
-                          onClick={() => setDeleteShow(true)}
-                        />
-                      </div>
-                    </Col> */}
+                    {/* if you need so put here code-backup-no-002 from etc.code.txt */}
                     <hr />
                   </Row>
                 ))}
@@ -558,10 +512,10 @@ export default function CheckoutPopup({ show, onHide }) {
                 />
               </Col>
             </Row>
-          </>
+          </div>
         ) : (
-          <>
-            {/* Address and Location Flows */}
+          <div>
+            {/*======================================== Address and Location Flows ======================================== */}
             {secondProcessShow ? (
               <Row>
                 <NavigationHandler
@@ -635,7 +589,7 @@ export default function CheckoutPopup({ show, onHide }) {
               </Row>
             ) : null}
 
-            {/* for flow 1  : 1.1 */}
+            {/* ======================================== for flow 1  : 1.1  ========================================*/}
             {confirmSession && (addressFlowOne || addressFlowTwo) ? (
               <Row className={styles.ColReverse}>
                 <div className={styles.HideNavigationBar}>
@@ -760,7 +714,7 @@ export default function CheckoutPopup({ show, onHide }) {
               </Row>
             ) : null}
 
-            {/* location save and procced */}
+            {/*======================================== location save and procced ======================================== */}
             {selectedAddress != "" && finalLocationStep ? (
               <Row>
                 <NavigationHandler backhandler={onHide} navtitle="Checkout" />
@@ -790,8 +744,11 @@ export default function CheckoutPopup({ show, onHide }) {
                         </p>
                         <PrimaryButton
                           clickHandler={() => {
+                            setSecondProcessShow(false);
+                            setChangeModalSize(true);
+                            setAddressFlowOne(true);
+                            setConfirmSession(true);
                             setChangeModalSize(false);
-                            setConfirmLocationSession(true);
                             setFinalLocationStep(false);
                           }}
                           title="Change"
@@ -884,14 +841,10 @@ export default function CheckoutPopup({ show, onHide }) {
                 </Col>
               </Row>
             ) : null}
-
-            {/* choose location  live data
-        {secondProcessShow && selectedAddress ? (
-       
-        ) : null} */}
-          </>
+          </div>
         )}
-        {/* final payment */}
+
+        {/*======================================== final payment ========================================*/}
         {finalPayment && (
           <div>
             <NavigationHandler
@@ -901,7 +854,7 @@ export default function CheckoutPopup({ show, onHide }) {
 
             <Row>
               {paymentway == 0 ? null : (
-                <>
+                <div>
                   <Col xs={6} md={6} lg={6} xl={6}>
                     <h4 className={styles.CartAndOfferSubMainTitle}>
                       Available coupons
@@ -925,7 +878,7 @@ export default function CheckoutPopup({ show, onHide }) {
                   >
                     <Coupons title={"TRYNEW"} offer={`-- ₹${100}`} />
                   </Col>
-                </>
+                </div>
               )}
               <Col
                 xs={12}
