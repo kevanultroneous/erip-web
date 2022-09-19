@@ -1,0 +1,190 @@
+.UserInput {
+    background: #FFFFFF;
+    border-radius: 2px;
+    border: none;
+    outline: none;
+    padding: 0.6rem;
+    width: 100%;
+}
+
+.AddressInput {
+    border-radius: 2px;
+    border: none;
+    outline: none;
+    padding: 1rem 1rem;
+    width: 100%;
+}
+
+.IconWrraper {
+    display: flex;
+    justify-content: end;
+}
+
+.PartnerDetailsInp {
+    background: #FFFFFF;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    padding: 0.6rem;
+    margin-left: 0.1rem;
+    margin-right: 0.1rem;
+}
+
+.PartnerDetailsInp p {
+    margin: 0%;
+}
+
+.InputLabels {
+    margin: 0%;
+    font-weight: 400;
+    font-size: 16px;
+    color: #676767;
+}
+
+.InputgroupSpace {
+    margin-top: 1rem;
+}
+
+.Mendatory {
+    color: #EC1D27;
+}
+
+.SubmitWrraper {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 3rem;
+}
+
+.DropDown {
+    border: none;
+    outline: none;
+    background-color: #FFFFFF;
+    width: 100%;
+    padding: 0.8rem;
+}
+
+.Tabwrapper {
+    margin-top: 2rem;
+}
+
+.Tabs {
+    text-align: center;
+    border-bottom: 2px solid #DAE3FE;
+    cursor: pointer;
+}
+
+.SelectedTabs {
+    border-bottom: 5px solid #0E62CB;
+}
+
+.SelectedTabname {
+    font-weight: 700;
+    font-size: 20px;
+    color: #0E62CB !important;
+}
+
+.TabName {
+    font-weight: 700;
+    font-size: 20px;
+    color: #676767;
+    margin-bottom: 0.5rem;
+}
+
+.SelectIssue {
+    display: flex;
+}
+
+.IssueName {
+    width: 50%;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.IssueName p {
+    margin: 0%;
+
+}
+
+.CheckboxWrraper {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.TabResults {
+    margin-bottom: 2rem;
+}
+
+.SmallTitle {
+    font-weight: 400;
+    font-size: 16px;
+    color: #676767;
+    margin-top: 1rem;
+    padding-left: 0%;
+}
+
+.SelectionCol {
+    padding: 0%;
+}
+
+.checkboxinp {
+    accent-color: #000000;
+}
+
+.OrderNum {
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.JobComp {
+    font-weight: 400;
+    font-size: 18px;
+    float: right;
+}
+
+.BackArrow {
+    font-size: 50px;
+    margin-bottom: 2rem;
+}
+
+.Heading {
+    font-weight: 400;
+    font-size: 32px;
+}
+
+@media (min-width:320px) and (max-width: 450px) {
+    .SubmitWrraper {
+        margin-top: 2rem;
+    }
+
+    .IssueName {
+        width: 80%;
+    }
+
+    .CheckboxWrraper {
+        width: 40%;
+    }
+
+    .containermob {
+        padding: 2rem 1rem;
+    }
+
+    .ColClass {
+        padding: 0%;
+    }
+
+    .Heading {
+        font-size: 30px;
+    }
+
+    .BackArrow {
+        font-size: 30px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {}
+
+@media (min-width: 1200px) and (max-width: 1730px) {}
+
+@media (min-width: 650px) and (max-width: 740px) {}

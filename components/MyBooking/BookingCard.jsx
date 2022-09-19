@@ -1,39 +1,72 @@
 import { Col, Image, Row } from "react-bootstrap";
 import styles from "@/styles/components/MyBooking/BookingCard.module.css";
+import PrimaryButton from "../common/PrimaryButton";
 
-function BookingCard() {
+function BookingCard({
+  orderNumber,
+  partnerStatusAssigned,
+  partnerImage,
+  partnerName,
+  bookingDateAndTime,
+  issueDevice,
+  issueType,
+  partnerAssigningStatus,
+  OTP,
+  viewdetails,
+  callsupport,
+}) {
   return (
     <div className={styles.bookingCardContainer}>
       <Row className={styles.bookingCardHead}>
-        <Col xl={6} className={styles.bookingOrder}>
-          <p>Order ID: #5555</p>
+        <Col xl={4} xs={6} className={styles.bookingOrder}>
+          <p>Order ID: {orderNumber}</p>
         </Col>
-        <Col xl={6}>
+        <Col xl={6} xs={6}>
           <div className={styles.bookingCardStatus}>
-            <p>Assigning Professional</p>
+            <p>{partnerStatusAssigned}</p>
           </div>
         </Col>
       </Row>
       <Row className={styles.bookingCardBody}>
-        <Col xl={4}>
-          <div>
-            <Image
-              fluid
-              src="/assets/images/booking-card-image.png"
-              alt="booking service"
-            />
+        <Col xl={3} xs={4}>
+          <div className={styles.bookingCardProfile}>
+            <Image fluid src={partnerImage} alt={partnerName} />
+            <p>{partnerName}</p>
           </div>
         </Col>
-        <Col xl={6}>
-          <h6> 20th April, 9-11 AM</h6>
-          <h6> Air Conditioner</h6>
-          <h6> Less Cooling/No Cooling</h6>
+        <Col xl={8} xs={8}>
+          <h6 className={styles.SmallDetails}>{bookingDateAndTime}</h6>
+          <h6 className={styles.SmallDetails}>{issueDevice}</h6>
+          <h6 className={styles.SmallDetails}>{issueType}</h6>
         </Col>
       </Row>
       <div className={styles.customMessage}>
-        <p>We are assigning a professional to you</p>
+        <p>
+          {partnerAssigningStatus == 0
+            ? "We are assigning a professional to you"
+            : partnerAssigningStatus == 1
+            ? `Share this OTP to start service ${OTP}`
+            : partnerAssigningStatus == 2
+            ? "Men at Work"
+            : "Please rate the partner"}
+        </p>
       </div>
-      <Row className={styles.actionButtons}></Row>
+      <Row className={styles.actionButtons}>
+        <Col xl={6} xs={6}>
+          <PrimaryButton
+            title="Call Support"
+            customClass={styles.actionBtn}
+            clickHandler={callsupport}
+          />
+        </Col>
+        <Col xl={6} xs={6}>
+          <PrimaryButton
+            title="View Details"
+            customClass={styles.actionBtn}
+            clickHandler={viewdetails}
+          />
+        </Col>
+      </Row>
     </div>
   );
 }

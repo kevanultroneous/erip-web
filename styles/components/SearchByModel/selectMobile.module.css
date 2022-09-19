@@ -1,5 +1,12 @@
 .selectDeviceDependency {
   position: relative;
+  background-color: #ebf3ff;
+  padding: 1rem 0;
+  margin: 0 0 1rem;
+}
+
+.selectDeviceDependency > div {
+  margin: 0;
 }
 
 .selectDrop {
@@ -26,4 +33,31 @@
 .disabledClick {
   color: #6c757d;
   opacity: 0.7;
+}
+
+.topBrands {
+  margin: auto;
+  padding: 0 1rem;
+  text-align: center;
+  background-color: white;
+}
+
+.topBrands button {
+  all: unset;
+  color: #0e62cb;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.topBrandsRow {
+  margin: 2rem 0 0;
+  justify-content: center;
+}
+
+.topBrandsRow > div {
+  display: flex;
+  padding: 0 1rem;
+  cursor: pointer;
 }

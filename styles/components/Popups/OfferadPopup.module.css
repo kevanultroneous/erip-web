@@ -1,0 +1,50 @@
+.CenteredImg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.MainDetails {
+    padding-top: 1rem;
+    text-align: center;
+}
+
+.MainDetailsTitle {
+    font-weight: 700;
+    font-size: 19px;
+    padding-bottom: 2rem;
+}
+
+.MainDetailsDescription {
+    font-weight: 400;
+    font-size: 16px;
+    padding-top: 0.5rem;
+}
+
+.ListWrraper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0.5rem;
+}
+
+.ListItem {
+    font-weight: 400;
+    font-size: 16px;
+    margin-bottom: 1rem;
+}
+
+.OfferHeader {
+    border-bottom: none;
+    padding: 2rem;
+}
+
+.OfferHeadModal {
+    padding: 2rem 1.5rem;
+}
+
+.CouponsImg {}
+
+.CouponsImg img {
+    height: 6rem;
+}

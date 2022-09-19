@@ -1,0 +1,103 @@
+.issueImageBox {
+  display: flex;
+  justify-content: center;
+  margin: 0 1rem 0 0;
+}
+
+.issueContainer {
+  width: 75%;
+}
+
+.issueName {
+  font-size: 18px;
+}
+
+.issueRow {
+  display: flex;
+  margin: 0;
+}
+
+.issueOriginalPrice {
+  color: #676767;
+  text-decoration: line-through;
+  margin: 0 0.2rem;
+}
+
+.issueDetails {
+  color: #676767;
+  margin: 0 0 0.4rem;
+}
+
+.issueLink {
+  color: #0e62cb;
+  font-weight: 600;
+  text-decoration: none;
+  margin: 0 0;
+  padding: 0 0 0.5rem;
+}
+
+.issuePrimaryButton {
+  width: 100%;
+  margin: 1rem 0 0;
+}
+
+@media (max-width: 600px) {
+  .issueContainer {
+    width: 100%;
+  }
+  .issueMobileDiv {
+    width: 100%;
+    padding: 0 0.5rem 0.8rem;
+    border-bottom: 1px solid #dae3fe;
+  }
+
+  .issueMobileButton {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    padding: 0;
+  }
+  .issueMobileDiv > div {
+    margin: 0;
+  }
+  .issueRow {
+    justify-content: space-around;
+  }
+  .issueName {
+    margin: 0;
+  }
+  .mobilePrice {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    padding: 0;
+  }
+  .mobilePrice p {
+    margin: 0;
+  }
+  .issueDetails {
+    font-size: 13px;
+  }
+  .issuePrimaryButton {
+    padding: 0.6rem 1rem;
+    width: 80%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .issueImageBox {
+    margin: 0 0.1rem 0 0;
+  }
+  .issueRow {
+    display: flex;
+    justify-content: space-around;
+  }
+  .issueContainer {
+    width: 100%;
+    margin: auto;
+  }
+  .issuePrimaryButton {
+    width: 100%;
+    padding: 0.6rem 0rem;
+  }
+}

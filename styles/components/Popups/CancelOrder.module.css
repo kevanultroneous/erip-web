@@ -1,0 +1,77 @@
+.CheckBox input[type="checkbox"] {
+    transform: scale(1.5);
+    margin-bottom: 2rem;
+    margin-right: 1rem;
+    margin-left: 0.2rem;
+}
+
+.TextArea {
+    border: 2px solid #000000;
+    border-radius: 5px;
+    padding: 0.5rem;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.TitleOfPopup {
+    text-align: center;
+    margin: 1rem 0 2rem 0;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.MainRow {
+    padding: 1rem 1.5rem;
+}
+
+.CheckBoxLabel {
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.BlueClose {
+    display: none;
+}
+
+@media (min-width:320px) and (max-width: 450px) {
+    .CheckBoxLabel {
+        font-weight: 400;
+        font-size: 12px;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .CheckBox {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .CheckBox input[type="checkbox"] {
+        transform: scale(1.4);
+        margin: 0.5rem 1rem 0rem 0rem;
+    }
+
+    .MainRow {
+        padding: 0.5rem;
+    }
+
+    .TextArea {
+        margin-top: 0rem;
+    }
+
+    .TitleOfPopup {
+        font-size: 16px;
+    }
+
+    .MobileHide {
+        display: none;
+    }
+
+    .BlueClose {
+        display: block;
+    }
+
+    .TitleInMob {
+        margin-left: 4rem;
+    }
+}

@@ -9,66 +9,82 @@ import CouponsCard from "./CouponsCard";
 import CheckoutPopup from "./CheckoutPopup";
 import { CouponsByCC, MyCart } from "pages/api/api";
 import styles from "@/styles/components/Popups/CartAndOffer.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  callAddorRemoveCart,
+  callMyCartBycity,
+} from "redux/actions/cartActions/cartActions";
+import {
+  callFetchCoupons,
+  removeCoupons,
+  setCouponssSuccess,
+} from "redux/actions/couponActions/couponsActions";
+import { APPLY_COUPON_SUCCESS } from "redux/actions/actionTypes";
 
 export default function CartAndOffer({ show, onHide }) {
   const [active, setActive] = useState(0);
   const [total, setTotal] = useState(0);
   const [showCheckout, setShowCheckout] = useState(false);
-  const [couponsdata, setCouponsdata] = useState([]);
-  const [selectedCoupons, setSelectedCoupons] = useState({});
   const [couponShow, setCouponShow] = useState(false);
-  const [cartNetworkData, setCartNetworkData] = useState({});
-  const [cartItems, setCartItems] = useState([]);
 
-  const cartlist = [
-    {
-      name: "Lorem Ipsum ABC issues X",
-      price: 200,
-    },
-    {
-      name: "Lorem Ipsum ABC issues X",
-      price: 100,
-    },
-  ];
+  const cartSelector = useSelector((state) => state.cartdata);
+  const couponsselector = useSelector((state) => state.couponsdata);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    BillAmount();
+  }, [cartSelector]);
 
   useEffect(() => {
     if (!show) {
       setActive(0);
       setShowCheckout(false);
     }
-    MyCart(localStorage.getItem("token"), localStorage.getItem("cityid"))
-      .then((response) => {
-        if (response) {
-          setCartNetworkData(response.data);
-          if (response.data.success) {
-            setCartItems(response.data.data);
-          }
-        }
-      })
-      .catch((e) => console.log("my cart " + e));
+    dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
   }, [show]);
 
   const BillAmount = () => {
     var ans = 0;
-    for (let i = 0; i < cartItems.length; i++) {
-      ans = parseInt(cartItems[i].issue_price) + ans;
+    for (let i = 0; i < cartDetailList.length; i++) {
+      ans = parseInt(cartDetailList[i].issue_price) + ans;
     }
     setTotal(ans);
   };
-  useEffect(() => {
-    BillAmount();
 
-    CouponsByCC()
-      .then((response) => {
-        if (response.data.success) {
-          setCouponsdata(response.data.data);
-        }
-      })
-      .catch((e) => console.log("coupons error" + e));
+  const RemoveFromCart = (id) => {
+    dispatch(callAddorRemoveCart(localStorage.getItem("token"), id));
+    dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
+  };
+
+  useEffect(() => {
+    dispatch(callFetchCoupons());
+    dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
   }, []);
 
+  const couponsdataList = couponsselector.data
+    ? couponsselector.data.data !== undefined
+      ? couponsselector.data.data
+      : []
+    : [];
+
+  const cartDetailList = cartSelector.data
+    ? cartSelector.data.data !== undefined
+      ? cartSelector.data.data
+      : []
+    : [];
+
+  const selectingCoupons =
+    couponsselector.selectedcoupons !== null
+      ? couponsselector.selectedcoupons
+      : null;
+
+  useEffect(() => {
+    // `₹${total - parseInt(selectingCoupons.coupon_amount)}`;
+  }, [couponShow]);
+
   return (
-    <>
+    <div>
       <Modal
         show={show}
         onHide={onHide}
@@ -101,21 +117,21 @@ export default function CartAndOffer({ show, onHide }) {
                 xl={12}
                 className={styles.ProductListWrraper}
               >
-                {cartNetworkData.success == false ? (
-                  <h4 className="text-center">{cartNetworkData.message}</h4>
+                {cartSelector.data.success == false ? (
+                  <h4 className="text-center">{cartSelector.data.message}</h4>
                 ) : (
-                  cartItems.map((v, i) => (
+                  cartDetailList.map((v, i) => (
                     <CartProductList
                       key={i}
                       productname={v.issue_title}
                       price={v.issue_price}
-                      clickHandler={() => alert(index)}
+                      clickHandler={() => RemoveFromCart(v.issue_id)}
                     />
                   ))
                 )}
               </Col>
             </Row>
-            {cartNetworkData.success == false ? null : (
+            {cartSelector.data.success == false ? null : (
               <Row className={styles.AvailableCoupons}>
                 <Col xs={6} md={6} lg={6} xl={6}>
                   <h4 className={styles.CartAndOfferSubMainTitle}>
@@ -140,22 +156,22 @@ export default function CartAndOffer({ show, onHide }) {
                 >
                   {couponShow && (
                     <Coupons
-                      title={selectedCoupons.coupon_title}
-                      offer={`-- ₹${selectedCoupons.coupon_amount} ${
-                        selectedCoupons.coupon_is_percentage
-                          ? "(" + selectedCoupons.coupon_percentage + "OFF)"
+                      title={selectingCoupons.coupon_title}
+                      offer={`-- ₹${selectingCoupons.coupon_amount} ${
+                        selectingCoupons.coupon_is_percentage
+                          ? "(" + selectingCoupons.coupon_percentage + "OFF)"
                           : ""
                       }`}
                       clickHandler={() => {
                         setCouponShow(false);
-                        setSelectedCoupons({});
+                        dispatch(removeCoupons());
                       }}
                     />
                   )}
                 </Col>
               </Row>
             )}
-            {cartNetworkData.success == false ? null : (
+            {cartSelector.data.success == false ? null : (
               <Row>
                 <Col xs={12} md={12} lg={12} xl={12}>
                   <hr />
@@ -165,10 +181,13 @@ export default function CartAndOffer({ show, onHide }) {
                     Discount
                   </h4>
                 </Col>
+
                 <Col xs={6} md={6} lg={6} xl={6} className={styles.TextRight}>
                   <lable className={styles.CartAndOfferSubMainTitleUni}>
-                    {selectedCoupons.coupon_amount
-                      ? "₹" + selectedCoupons.coupon_amount
+                    {couponShow
+                      ? selectingCoupons.coupon_amount
+                        ? "₹" + selectingCoupons.coupon_amount
+                        : ""
                       : ""}
                   </lable>
                 </Col>
@@ -177,7 +196,11 @@ export default function CartAndOffer({ show, onHide }) {
                 </Col>
                 <Col xs={6} md={6} lg={6} xl={6} className={styles.TextRight}>
                   <lable className={styles.CartAndOfferSubMainTitleBold}>
-                    ₹{total - 100}
+                    {couponShow
+                      ? selectingCoupons.coupon_amount
+                        ? `₹${total - parseInt(selectingCoupons.coupon_amount)}`
+                        : `₹${total}`
+                      : `₹${total}`}
                   </lable>
                 </Col>
                 <Col
@@ -228,14 +251,15 @@ export default function CartAndOffer({ show, onHide }) {
                 xl={12}
                 className={styles.CouponsView}
               >
-                {couponsdata.map((v, i) => (
+                {couponsdataList.map((v, i) => (
                   <CouponsCard
                     code={v.coupon_code}
                     detail={v.coupon_title}
                     key={i}
                     applyaction={() => {
                       setCouponShow(true);
-                      setSelectedCoupons(v);
+                      // setSelectedCoupons(v);
+                      dispatch(setCouponssSuccess(v));
                       setActive(0);
                     }}
                   />
@@ -249,6 +273,6 @@ export default function CartAndOffer({ show, onHide }) {
         show={showCheckout}
         onHide={() => setShowCheckout(false)}
       />
-    </>
+    </div>
   );
 }

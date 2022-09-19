@@ -38,7 +38,7 @@ export const CityDetactionAPI = () => {
 
 // mix
 export const TimeSloatAPI = () => {
-  return axios.get(`${API_URL}api/v1/timeslots`);
+  return axios.get(`http://43.204.87.153/api/v1/timeslots`);
 };
 export const PincodeByCity = (cityid) => {
   return axios.get(`${API_URL}api/v1/pincodes_by_city`, {
@@ -59,7 +59,7 @@ export const UserLogout = (token) => {
 };
 //
 export const CouponsByCC = (city = 1, category = 1) => {
-  return axios.get(`${API_URL}api/v1/cms/coupons_by_cc?city=1&category=1`, {
+  return axios.get(`${API_URL}api/v1/cms/coupons_by_cc`, {
     params: {
       city: city,
       category: category,
@@ -105,7 +105,7 @@ export const MyCart = (token, city) => {
 };
 export const AddToCart = (token, issueId) => {
   return axios.post(
-    "http://43.204.87.153/api/v1/users/my_cart",
+    `${API_URL}api/v1/users/my_cart`,
     { issueId: issueId },
     {
       headers: { Authorization: `Bearer ${token}` },

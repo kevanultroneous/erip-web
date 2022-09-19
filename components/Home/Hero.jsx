@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Carousel, Image } from "react-bootstrap";
 import styles from "@/styles/components/Home/Hero.module.css";
 import { HomeHerodata } from "utils/data";
+
 export default function HomeHero({ data = HomeHerodata }) {
   return (
     <Carousel indicators={false} variant="dark">

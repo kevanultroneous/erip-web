@@ -3,7 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import PrimaryButton from "./PrimaryButton";
-import { Col, Image, Row } from "react-bootstrap";
+import { Col, Image, Row, Spinner } from "react-bootstrap";
 import { moreMenu } from "utils/moreMenu";
 import { useEffect, useRef, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -18,12 +18,24 @@ import { MatchCity } from "utils/utilsfunctions";
 import Logout from "../Popups/Logout";
 import axios from "axios";
 import { FiSearch } from "react-icons/fi";
+import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCityFail,
+  getCityStart,
+  getCitySuccess,
+} from "redux/actions/cityActions/cityAction";
+import { LOGIN_USER_SUCCESS, USER_CLEAR } from "redux/actions/actionTypes";
+import { GET_CITY_SUCCESS } from "redux/actions/actionTypes";
+import { BiUser } from "react-icons/bi";
+import { callNavsearch } from "redux/actions/mixActions/mixActions";
+import { selectCategory } from "redux/actions/issuePageActions/issuePageActions";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
   const [loginPopup, setLoginPopup] = useState(false);
   const [cartandOfferPopup, setCartAndOfferPopup] = useState(false);
-  const [locationPopupShow, setLocationPopupShow] = useState(false);
+  const [locationPopupShow, setLocationPopupShow] = useState(true);
   const [currentCity, setCurrentCity] = useState("");
   const [selectedAddress, setSelectedAddress] = useState("");
   const [cityData, setCityData] = useState([]);
@@ -33,16 +45,64 @@ export function Header() {
   const [topBrandsHeaderData, setTopBrandsHeaderData] = useState([]);
   const [mobileRepairHeaderData, setmobileRepairHeaderData] = useState([]);
   const [topIssuesHeaderData, settopIssuesHeaderData] = useState([]);
-
+  const [loactionloader, setLocationLoader] = useState(false);
   const [showMobloc, setShowMobloc] = useState(false);
+  const [search, setSearch] = useState("");
+  const [sdata, setSdata] = useState(null);
+  const dispatch = useDispatch();
+
+  const locationselector = useSelector((selector) => selector.locationdata);
+  const navsearch = useSelector((selector) => selector.mix.navsearch);
+  const userselector = useSelector((selector) => selector.userdata);
+  const profileselector = useSelector((selector) => selector.profile.profile);
+  const profiledetail = profileselector
+    ? profileselector.data
+      ? {
+          name: profileselector.data[0].user_fullname,
+          number: profileselector.data[0].user_mobile,
+        }
+      : null
+    : null;
+  const navdata = navsearch ? (navsearch.data ? navsearch.data : null) : null;
+
+  useEffect(() => {
+    dispatch(callNavsearch(1, search));
+  }, [search]);
+  setTimeout(() => {
+    setSdata(navdata);
+  }, 1000);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      dispatch({
+        type: LOGIN_USER_SUCCESS,
+        payload: localStorage.getItem("token"),
+      });
+    } else {
+      dispatch({
+        type: USER_CLEAR,
+        payload: 0,
+      });
+    }
+  }, []);
+  // getting header menus from api
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
     var modal = document.getElementById("dropdown_location");
-  }, []);
-
-  // getting header menus from api
-  useEffect(() => {
     getHeaderDataFromAPI();
+    // getLocation();
+
+    dispatch(getCityStart());
+    if (!localStorage.getItem("city") || !localStorage.getItem("cityid")) {
+      dispatch(getCityFail("we are not available in this current location"));
+    } else {
+      dispatch(
+        getCitySuccess({
+          city: parseInt(localStorage.getItem("cityid")),
+          name: localStorage.getItem("city"),
+        })
+      );
+    }
   }, []);
 
   const getHeaderDataFromAPI = async () => {
@@ -84,7 +144,7 @@ export function Header() {
   });
 
   useEffect(() => {
-    setLocationPopupShow(false);
+    // setLocationPopupShow(false);
 
     CityDetactionAPI()
       .then((r) => {
@@ -93,6 +153,7 @@ export function Header() {
       .catch((e) => console.log(e));
 
     if (MatchCity(cityData, currentCity)) {
+      setLocationPopupShow(false);
     } else {
       setSelectedAddress("");
     }
@@ -103,8 +164,8 @@ export function Header() {
       //   .catch((e) => console.log(e));
     }
   }, [currentCity]);
-
   function getLocation() {
+    setLocationLoader(true);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
     } else {
@@ -123,7 +184,7 @@ export function Header() {
       for (let i = 0; i < childs.length; i++) {
         const element = childs[i];
         if (element.classList.contains("show")) {
-          element.classList.remove("show");
+          element.children[1].classList.remove("show");
         }
       }
 
@@ -132,7 +193,10 @@ export function Header() {
           menuCollapse.current.classList.remove("show");
         }
       }
+      setLocationPopupShow(false);
+      setShowMobloc(false);
     };
+
     window.addEventListener("scroll", handleScroll);
 
     return () => {
@@ -146,12 +210,12 @@ export function Header() {
   function LogoutAction() {
     UserLogout(localStorage.getItem("token"))
       .then((response) => {
+        console.log(response);
         if (response.data.success) {
-          alert(response.data.message);
+          // alert(response.data.message);
           localStorage.removeItem("token");
           setLogoutPopup(false);
         }
-        console.log(response);
       })
       .catch((e) => console.log("logout" + e));
   }
@@ -165,7 +229,8 @@ export function Header() {
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[1]) {
-          setLocationPopupShow(false);
+          // setLocationPopupShow(false);
+          setLocationLoader(false);
           setSelectedAddress(results[1].formatted_address);
         }
       }
@@ -209,46 +274,60 @@ export function Header() {
     if (mobileView) {
       return (
         <Navbar expand="lg" className={`${styles.mobileNavBar} mobileNavBar`}>
-          <Container>
-            <Navbar.Brand href="#">
-              <div className={styles.brandLogo}>
-                <Image
-                  fluid
-                  src="/assets/icons/erip-logo-blue.png"
-                  alt="Erip Logo"
-                />
-              </div>
-            </Navbar.Brand>
-            <div>
-              <Image
-                src="assets/icons/mobile-header-cart.svg"
-                alt="header cart"
-                className={styles.CartSpace}
-                onClick={() => setCartAndOfferPopup(true)}
-              />
-              <Navbar.Toggle
-                aria-controls="basic-navbar-nav"
-                className={styles.mobileToggleButton}
-              />
-            </div>
+          <Container className={styles.ContainerNavmob}>
+            <Row>
+              <Col xs={6} sm={6} md={6} className={styles.MobNavCol}>
+                <Link href={"/"}>
+                  <Navbar.Brand>
+                    <div className={styles.brandLogo}>
+                      <Image
+                        fluid
+                        src="/assets/icons/erip-logo-blue.png"
+                        alt="Erip Logo"
+                      />
+                    </div>
+                  </Navbar.Brand>
+                </Link>
+              </Col>
+              <Col xs={6} sm={6} md={6} className={styles.SubMainWrraper}>
+                <div className={styles.SubWrraper}>
+                  <Image
+                    src="assets/icons/mobile-header-cart.svg"
+                    alt="header cart"
+                    className={styles.CartSpace}
+                    onClick={() => setCartAndOfferPopup(true)}
+                  />
+                  <Navbar.Toggle
+                    aria-controls="basic-navbar-nav"
+                    className={styles.mobileToggleButton}
+                  />
+                </div>
+              </Col>
+            </Row>
 
             <Navbar.Collapse id="basic-navbar-nav" ref={menuCollapse}>
               <Nav className="me-auto">
-                <Nav.Link
-                  href="#home"
-                  className={styles.mobileMenuLink}
-                  onClick={() => (token ? LogoutUser() : setLoginPopup(true))}
-                >
-                  {token ? "Logout" : "Login"}
-                </Nav.Link>
+                {token ? (
+                  <Link href={"/my-bookings"}>
+                    <BiUser size={40} />
+                  </Link>
+                ) : (
+                  <Nav.Link
+                    href="#"
+                    className={styles.mobileMenuLink}
+                    onClick={() => setLoginPopup(true)}
+                  >
+                    Login
+                  </Nav.Link>
+                )}
 
-                <Nav.Link href="#link" className={styles.mobileMenuLink}>
+                <Nav.Link href="#" className={styles.mobileMenuLink}>
                   My Bookings
                 </Nav.Link>
-                <Nav.Link href="#link" className={styles.mobileMenuLink}>
+                <Nav.Link href="#" className={styles.mobileMenuLink}>
                   About Us
                 </Nav.Link>
-                <Nav.Link href="#link" className={styles.mobileMenuLink}>
+                <Nav.Link href="#" className={styles.mobileMenuLink}>
                   Blogs
                 </Nav.Link>
               </Nav>
@@ -316,6 +395,7 @@ export function Header() {
                   <Image
                     src="/assets/icons/location-color.svg"
                     loading="lazy"
+                    alt="Location"
                   />
                   <p className={styles.LocationDetectText}>
                     Detect My Location
@@ -330,14 +410,33 @@ export function Header() {
       return (
         <Navbar expand="lg" className={styles.navHeader}>
           <Container fluid className={styles.navBarTopHeader}>
-            <Navbar.Brand href="/">
-              <div className={styles.brandLogo}>
-                <Image
-                  fluid
-                  src="/assets/icons/erip-logo-blue.png"
-                  alt="Erip Logo"
+            <Navbar.Brand>
+              <Link href={"/"}>
+                <div className={styles.brandLogo}>
+                  <Image
+                    fluid
+                    src="/assets/icons/erip-logo-blue.png"
+                    alt="Erip Logo"
+                  />
+                </div>
+              </Link>
+            </Navbar.Brand>
+            <Navbar.Brand>
+              <div className={styles.Searchbar}>
+                <FiSearch
+                  size={25}
+                  color="#0E62CB"
+                  style={{ marginRight: "1rem" }}
+                />
+                <input
+                  type="text"
+                  placeholder="Search your brand or model"
+                  onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
+              {/* <div className={styles.SearchItems}>
+                <ul>{sdata ? sdata.map((v) => v.brands) : null}</ul>
+              </div> */}
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll" className={styles.navBarcolor}>
@@ -372,14 +471,30 @@ export function Header() {
                     : setCartAndOfferPopup(true);
                 }}
               />
-
-              <PrimaryButton
-                title={token ? "Logout" : "Login"}
-                className={styles.headerLoginBtn}
-                clickHandler={() =>
-                  token ? LogoutUser() : setLoginPopup(true)
-                }
-              />
+              {token ? (
+                <Link href={"/my-bookings"}>
+                  <div className="d-flex align-items-end">
+                    <BiUser size={40} />
+                    <span
+                      style={{
+                        color: "#0E62CB",
+                        fontSize: "20px",
+                        fontWeight: "700",
+                        margin: "0%",
+                        marginLeft: "1rem",
+                      }}
+                    >
+                      {profiledetail !== null && profiledetail.name}
+                    </span>
+                  </div>
+                </Link>
+              ) : (
+                <PrimaryButton
+                  title={"Login"}
+                  className={styles.headerLoginBtn}
+                  clickHandler={() => setLoginPopup(true)}
+                />
+              )}
             </Navbar.Collapse>
           </Container>
           <Container fluid className="navBarBottomHeader">
@@ -407,9 +522,17 @@ export function Header() {
                         </Dropdown.Item>
                         {menu.submenuItems.map((model, index) => {
                           return (
-                            <Dropdown.Item eventKey="4.2" key={index}>
-                              {model.model_title}
-                            </Dropdown.Item>
+                            <Link
+                              key={index}
+                              href={{
+                                pathname: "personal-gadgets",
+                                query: { issue: model.model_id },
+                              }}
+                            >
+                              <Dropdown.Item eventKey="4.2">
+                                {model.model_title}
+                              </Dropdown.Item>
+                            </Link>
                           );
                         })}
                       </div>
@@ -425,11 +548,19 @@ export function Header() {
               >
                 {topBrandsHeaderData.map((menu, menuIndex) => {
                   return (
-                    <div key={menuIndex}>
-                      <Dropdown.Item eventKey="4.2" key={menuIndex}>
-                        {menu.brand_title}
-                      </Dropdown.Item>
-                    </div>
+                    <Link
+                      key={menuIndex}
+                      href={{
+                        pathname: "personal-gadgets",
+                        query: { issue: menu.brand_id },
+                      }}
+                    >
+                      <div>
+                        <Dropdown.Item eventKey="4.2" key={menuIndex}>
+                          {menu.brand_title}
+                        </Dropdown.Item>
+                      </div>
+                    </Link>
                   );
                 })}
               </DropdownButton>
@@ -441,11 +572,25 @@ export function Header() {
               >
                 {mobileRepairHeaderData.map((menu, menuIndex) => {
                   return (
-                    <div key={menuIndex}>
-                      <Dropdown.Item eventKey="4.2" key={menuIndex}>
-                        {menu.model_title}
-                      </Dropdown.Item>
-                    </div>
+                    <Link
+                      key={menuIndex}
+                      href={{
+                        pathname: "personal-gadgets",
+                        query: { issue: menu.model_id },
+                      }}
+                    >
+                      <div>
+                        <Dropdown.Item
+                          eventKey="4.2"
+                          key={menuIndex}
+                          onClick={() => {
+                            dispatch(selectCategory(1));
+                          }}
+                        >
+                          {menu.model_title}
+                        </Dropdown.Item>
+                      </div>
+                    </Link>
                   );
                 })}
               </DropdownButton>
@@ -487,11 +632,11 @@ export function Header() {
               show={cartandOfferPopup}
               onHide={() => setCartAndOfferPopup(false)}
             />
-            <Logout
+            {/* <Logout
               show={logoutpopup}
               yesaction={() => LogoutAction()}
               noaction={() => setLogoutPopup(false)}
-            />
+            /> */}
           </Container>
           <div
             className={`${styles.LocationSmallModal} ${
@@ -499,7 +644,11 @@ export function Header() {
             }`}
           >
             <div className={styles.ModalHeadDir}>
-              <Image src="/assets/icons/gmap-location.svg" loading="lazy" />
+              <Image
+                src="/assets/icons/gmap-location.svg"
+                loading="lazy"
+                alt="location"
+              />
               <p className={styles.LocationText}>
                 Please provide your location for best experience
               </p>
@@ -509,8 +658,20 @@ export function Header() {
               className={styles.ModalHeadDetect}
               onClick={() => getLocation()}
             >
-              <Image src="/assets/icons/location-color.svg" loading="lazy" />
+              <Image
+                src="/assets/icons/location-color.svg"
+                loading="lazy"
+                alt="location"
+              />
               <p className={styles.LocationDetectText}>Detect My Location</p>
+              {loactionloader && (
+                <Spinner
+                  animation="border"
+                  size="sm"
+                  variant="primary"
+                  className="ms-2"
+                />
+              )}
             </div>
             <div className={styles.InputGroup}>
               <p className={styles.InputOrText}>or</p>
@@ -518,9 +679,15 @@ export function Header() {
                 defaultValue={selectedAddress}
                 placeholder="Search city, area, pincode"
                 apiKey={GMAP_API}
-                onPlaceSelected={(place) =>
-                  getLatandLongByAddress(place.formatted_address)
-                }
+                onPlaceSelected={(place) => {
+                  setLocationLoader(true);
+                  setTimeout(() => {
+                    if (place) {
+                      getLatandLongByAddress(place.formatted_address);
+                      setLocationLoader(false);
+                    }
+                  }, 3000);
+                }}
                 options={{
                   types: ["establishment"],
                   componentRestrictions: { country: "in" },

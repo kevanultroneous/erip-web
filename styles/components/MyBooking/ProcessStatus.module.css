@@ -1,0 +1,134 @@
+.ArrowLeft {
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-left: 20px solid #ffd7bd;
+}
+
+.ArrowLeftUnq {
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-left: 20px solid #ffd7bd;
+}
+
+.ArrowBackShapeONE {
+  width: 0;
+  height: 0;
+  border-top: 2px solid transparent;
+  border-bottom: 22px solid transparent;
+  border-left: 0px solid #ffd7bd;
+  border-right: 28px solid #ffd7bd;
+}
+
+.ArrowBackShapeTWO {
+  width: 0;
+  height: 0;
+  border-top: 2px solid transparent;
+  border-bottom: 22px solid transparent;
+  border-left: 0px solid #ffd7bd;
+  border-right: 28px solid #ffd7bd;
+}
+
+.ArrowBackWrraper {
+  display: flex;
+}
+
+.ProcessWrapper {
+  padding: 8px 1rem 8px 1rem;
+  background-color: #ffd7bd;
+  max-width: 190px;
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+}
+
+.ProcessWrapper p {
+  margin: 0%;
+  color: #dd5600;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.CombineShape {
+  display: flex;
+}
+
+.MainTitle {
+  font-weight: 400;
+  font-size: 32px;
+  text-align: center;
+}
+
+.BackArrow {
+  font-size: 30px;
+}
+
+.ViewBookingRow {
+  padding: 2.5rem 1rem;
+  overflow: hidden;
+}
+
+@media (min-width: 320px) and (max-width: 450px) {
+  .BookingBox {
+    margin-left: -4%;
+    padding: 1rem 0.5rem 1.5rem 0.5rem;
+  }
+
+  .BoxOrder {
+    float: left;
+  }
+
+  .BoxAmountWrraper {
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .BoxTitle {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 0.5rem;
+  }
+
+  .BoxOrder {
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+  .BoxProduct {
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+  .BoxAmount {
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+  .BoxAddress {
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+  .BoxDateTime {
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+  .NeedHelpWrraper {
+    margin-left: 0%;
+  }
+  .MainTitle {
+    font-size: 20px;
+  }
+  .ViewBookingRow {
+    padding-bottom: 1rem;
+  }
+  .ViewBookingRow p {
+    margin: 0%;
+    margin-left: -2rem;
+  }
+}
+@media (min-width: 768px) and (max-width: 1080px) {
+}

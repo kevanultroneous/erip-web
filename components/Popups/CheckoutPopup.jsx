@@ -29,6 +29,9 @@ import { MatchCity, TimeSloatOver } from "utils/utilsfunctions";
 import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { RiAddFill } from "react-icons/ri";
+import { useSelector } from "react-redux";
+import Coupons from "./Coupons";
+import PaymentOption from "./PaymentOption";
 
 export default function CheckoutPopup({ show, onHide }) {
   const [selectedTime, setSelectedTime] = useState(null);
@@ -59,6 +62,15 @@ export default function CheckoutPopup({ show, onHide }) {
   const [myselectedaddress, setMyselectedAddress] = useState({});
   const [deleteShow, setDeleteShow] = useState(false);
   const [tabletView, setTabletView] = useState(false);
+  const [finalPayment, setFinalPayment] = useState(false);
+  // address flow
+  const [addressFlowOne, setAddressFlowOne] = useState(false);
+  const [addressFlowTwo, setAddressFlowTwo] = useState(false);
+  const [confirmSession, setConfirmSession] = useState(false);
+  const [dateandTimeSelection, setDateAndTimeSelection] = useState(true);
+  const [directSelected, setDirectSelected] = useState(false);
+  const [procced, setProcced] = useState(false);
+
   const TimeIsOver = (timesloatsata, timesofsloats) => {
     let overdata = [];
     let newDate = new Date();
@@ -122,8 +134,15 @@ export default function CheckoutPopup({ show, onHide }) {
     selectedTime === null ? setShowTimeError(true) : setShowTimeError(false);
     selectedDate === null ? setShowDateError(true) : setShowDateError(false);
     if (!(selectedTime === null) && !(selectedDate === null)) {
-      setSecondProcessShow(true);
-      setChangeModalSize(false);
+      if (myaddress.length > 0) {
+        setDirectSelected(true);
+        setDateAndTimeSelection(false);
+        setChangeModalSize(true);
+      } else {
+        setSecondProcessShow(true);
+        setDateAndTimeSelection(false);
+        setChangeModalSize(false);
+      }
     }
   };
 
@@ -158,6 +177,9 @@ export default function CheckoutPopup({ show, onHide }) {
     reverseMap(position.coords.latitude, position.coords.longitude);
     displayLocation(position.coords.latitude, position.coords.longitude);
   }
+  useEffect(() => {
+    reverseMap(currentLocation.latitude, currentLocation.longitude);
+  }, [currentLocation]);
 
   function reverseMap(lat, lng) {
     var latlng = new google.maps.LatLng(lat, lng);
@@ -175,15 +197,17 @@ export default function CheckoutPopup({ show, onHide }) {
 
   function getLatandLongByAddress(address) {
     var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ address: address }, function (results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        var latitude = results[0].geometry.location.lat();
-        var longitude = results[0].geometry.location.lng();
+    setTimeout(() => {
+      geocoder.geocode({ address: address }, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          var latitude = results[0].geometry.location.lat();
+          var longitude = results[0].geometry.location.lng();
 
-        setCurrentLocation({ latitude, longitude });
-        displayLocation(latitude, longitude);
-      }
-    });
+          setCurrentLocation({ latitude, longitude });
+          displayLocation(latitude, longitude);
+        }
+      });
+    }, 1200);
   }
   //  observer for close or open modal
   useEffect(() => {
@@ -195,7 +219,15 @@ export default function CheckoutPopup({ show, onHide }) {
       setSelectedAddress("");
       setSecondProcessShow(false);
       setFinalLocationStep(false);
+      //
       setChangeModalSize(true);
+      setAddressFlowOne(false);
+      setAddressFlowTwo(false);
+      setConfirmSession(false);
+      setDateAndTimeSelection(true);
+      setFinalPayment(false);
+    } else {
+      setSelectedDate(0);
     }
   }, [show]);
 
@@ -253,6 +285,7 @@ export default function CheckoutPopup({ show, onHide }) {
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(latitude, longitude);
     var count, country, state, city;
+
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[0]) {
@@ -268,7 +301,7 @@ export default function CheckoutPopup({ show, onHide }) {
           alert("address not found");
         }
       } else {
-        alert("Geocoder failed due to: " + status);
+        console.log("Geocoder failed due to: " + status);
       }
     });
   }
@@ -282,11 +315,20 @@ export default function CheckoutPopup({ show, onHide }) {
       setSelectedAddress("");
     }
   }, [currentCity]);
+
   const timeselectedHandler = (index) => {
     setShowTimeError(false);
     setSelectedTime(index);
   };
 
+  const finalPaymentBackHandler = () => {
+    if (myaddress.length > 0) {
+      setDirectSelected(true);
+      setFinalPayment(false);
+    }
+  };
+
+  const [paymentway, setSelectedPaymentWay] = useState(null);
   return (
     <Modal
       show={show}
@@ -301,7 +343,8 @@ export default function CheckoutPopup({ show, onHide }) {
           secondProcessShow && styles.LocationModalBody
         }`}
       >
-        {!secondProcessShow ? (
+        {/*======================================== date time selection ======================================== */}
+        {dateandTimeSelection ? (
           <Row>
             <NavigationHandler backhandler={onHide} navtitle="Checkout" />
             <Col xs={12} md={12} lg={12} xl={12}>
@@ -406,329 +449,14 @@ export default function CheckoutPopup({ show, onHide }) {
           </Row>
         ) : null}
 
-        {/* Address and Location  popup 0 */}
-        {secondProcessShow &&
-        (selectedAddress === null || selectedAddress === "") ? (
-          <Row>
+        {directSelected ? (
+          <div>
+            {/* if you need to delete model code is already done put here code-backup-no-001 from etc.code.txt*/}
             <NavigationHandler
-              navtitle={"Select Location"}
               backhandler={() => {
-                setSecondProcessShow(false);
                 setChangeModalSize(true);
-              }}
-              unique
-            />
-
-            <Col xs={12} md={12} lg={12} xl={12}>
-              <div className={styles.LocationHeadLine}>
-                <p className={styles.HeadLine}>
-                  Select your delivery location to get started
-                </p>
-              </div>
-              <div>
-                <PrimaryButton
-                  clickHandler={() => getLocation()}
-                  title={
-                    <div>
-                      <Image
-                        src="/assets/icons/location-icon.svg"
-                        alt="location-icon"
-                        loading="lazy"
-                      />
-                      &nbsp;&nbsp; Use my current location
-                    </div>
-                  }
-                  buttonStyle={{
-                    width: "100%",
-                    backgroundColor: "#0E62CB",
-                    color: "#fff",
-                  }}
-                />
-                <p className={styles.OrOptionText}>OR</p>
-                <div className={styles.SearchInput}>
-                  <FiSearch className={styles.SearchIcon} />
-                  <ReactGoogleAutocomplete
-                    placeholder="Search street, locality, etc"
-                    apiKey={GMAP_API}
-                    onPlaceSelected={(place) => OnPlaceSelect(place)}
-                    defaultValue={selectedAddress}
-                    options={{
-                      types: ["establishment"],
-                      componentRestrictions: { country: "in" },
-                    }}
-                  />
-                </div>
-              </div>
-            </Col>
-          </Row>
-        ) : //address & location popup 1
-
-        !(selectedAddress === "" || selectedAddress === null) &&
-          secondProcessShow &&
-          confirmLocationSession ? (
-          <Row className={styles.ColReverse}>
-            <div className={styles.HideNavigationBar}>
-              <NavigationHandler
-                navtitle={"Confirm Location"}
-                backhandler={() => {
-                  setSecondProcessShow(true);
-                  setSelectedAddress("");
-                }}
-                unique
-              />
-            </div>
-            <Col
-              xs={12}
-              md={12}
-              lg={6}
-              xl={5}
-              className={styles.ConfirmLocationSpace}
-            >
-              <div>
-                <div className={styles.ConfirmLocationInput}>
-                  <ReactGoogleAutocomplete
-                    placeholder="Address"
-                    apiKey={GMAP_API}
-                    onPlaceSelected={(place) => OnPlaceSelect(place)}
-                    defaultValue={selectedAddress}
-                    options={{
-                      types: ["establishment"],
-                      componentRestrictions: { country: "in" },
-                      mapTypeControl: false,
-                      streetViewControl: false,
-                    }}
-                    className={styles.SearchInp}
-                  />
-                  <label className={styles.ChangeLable}>CHANGE</label>
-                </div>
-                <div
-                  className={styles.CurrentLocationDiv}
-                  onClick={() => getLocation()}
-                >
-                  <Image
-                    src={
-                      mobileView
-                        ? "/assets/icons/blue-location.svg"
-                        : "/assets/icons/dark-icon-location.svg"
-                    }
-                    alt="location-icon"
-                    loading="lazy"
-                  />
-                  <span className={styles.DetectDirectLabel}>
-                    Use my current location
-                  </span>
-                </div>
-
-                <div className={styles.ConfirmButtonDiv}>
-                  <PrimaryButton
-                    clickHandler={() => {
-                      setFinalLocationStep(true);
-                      setConfirmLocationSession(false);
-                      setChangeModalSize(true);
-                    }}
-                    title={"Confirm and Proceed"}
-                    buttonStyle={{
-                      width: "100%",
-                      backgroundColor: "#0E62CB",
-                      color: "#fff",
-                    }}
-                  />
-                </div>
-              </div>
-            </Col>
-            <Col
-              xs={12}
-              md={12}
-              lg={6}
-              xl={7}
-              className={`${styles.ConfirmLocationSpace}`}
-            >
-              <Gmaps
-                height={mobileView ? "500px" : "300px"}
-                lat={currentLocation.latitude}
-                lng={currentLocation.longitude}
-                zoom={12}
-                loadingMessage={"Waiting For Maps...."}
-                params={params}
-                onMapCreated={() => onMapCreated}
-              >
-                <Marker
-                  lat={currentLocation.latitude}
-                  lng={currentLocation.longitude}
-                  draggable={false}
-                />
-              </Gmaps>
-            </Col>
-          </Row>
-        ) : // address & location popup 2
-        secondProcessShow && finalLocationStep ? (
-          <Row>
-            <NavigationHandler backhandler={onHide} navtitle="Checkout" />
-            <StatusProcess processStatus={processStatus} />
-            <Col xs={12} md={12} lg={12} xl={12}>
-              {LocationInputError == 1 ? (
-                <Alert variant={"danger"}>
-                  House/Flat number is Required !
-                </Alert>
-              ) : null}
-              {LocationInputError == 2 ? (
-                <Alert variant={"danger"}>Name is Required !</Alert>
-              ) : null}
-            </Col>
-            <Col
-              xs={12}
-              md={12}
-              lg={6}
-              xl={5}
-              className={`${styles.ConfirmLocationSpace} ${styles.finalLocationStep}`}
-            >
-              <Row>
-                <Col xs={12} md={12} lg={12} xl={12}>
-                  <div className={styles.SelectedAddressActions}>
-                    <p className={styles.SelectedAddressText}>
-                      {selectedAddress}
-                    </p>
-                    <PrimaryButton
-                      clickHandler={() => {
-                        setChangeModalSize(false);
-                        setConfirmLocationSession(true);
-                        setFinalLocationStep(false);
-                      }}
-                      title="Change"
-                      buttonStyle={{
-                        width: "fit-content",
-                        padding: "0.2rem 0.5rem",
-                        fontSize: "17px",
-                      }}
-                    />
-                  </div>
-                  <div className="d-block">
-                    <input
-                      type={"text"}
-                      placeholder="House/Flat number"
-                      value={houseInput}
-                      onChange={(e) => setHouseInput(e.target.value)}
-                      className={styles.FinalInput}
-                    />
-                    <input
-                      type={"text"}
-                      value={landmarkInput}
-                      onChange={(e) => setLandMarkInput(e.target.value)}
-                      placeholder="Landmark(optional)"
-                      className={styles.FinalInput}
-                    />
-                    <input
-                      type={"text"}
-                      value={nameInput}
-                      onChange={(e) => setNameInput(e.target.value)}
-                      placeholder="Name"
-                      className={styles.FinalInput}
-                    />
-                  </div>
-                  <div className={styles.SelectionMenu}>
-                    {["Home", "Office", "Others"].map((v, i) => (
-                      <PrimaryButton
-                        clickHandler={() => setAddressType(v)}
-                        key={i}
-                        title={v}
-                        buttonStyle={{
-                          width: "30%",
-                          padding: "0.2rem 0.5rem",
-                          fontSize: "18px",
-                          backgroundColor: addressType === v ? "#0E62CB" : null,
-                          color: addressType === v && "#fff",
-                        }}
-                      />
-                    ))}
-                  </div>
-                </Col>
-              </Row>
-              <div>
-                <div>
-                  <PrimaryButton
-                    clickHandler={() => SaveAndProceedHandle()}
-                    title={"Save and Proceed"}
-                    buttonStyle={{
-                      width: "100%",
-                      backgroundColor: "#676767",
-                      color: "#fff",
-                      border: "none",
-                    }}
-                  />
-                </div>
-              </div>
-            </Col>
-            <Col
-              xs={12}
-              md={12}
-              lg={6}
-              xl={7}
-              className={`${styles.ConfirmLocationSpace}  ${styles.FinalGmap}`}
-            >
-              <Gmaps
-                height={"430px"}
-                lat={currentLocation.latitude}
-                lng={currentLocation.longitude}
-                zoom={12}
-                loadingMessage={"Waiting For Maps...."}
-                params={params}
-                onMapCreated={() => onMapCreated}
-              >
-                <Marker
-                  lat={currentLocation.latitude}
-                  lng={currentLocation.longitude}
-                  draggable={false}
-                />
-              </Gmaps>
-            </Col>
-          </Row>
-        ) : secondProcessShow && selectedAddress ? (
-          <>
-            <Modal
-              show={deleteShow}
-              onHide={() => setDeleteShow(false)}
-              size="lg"
-              aria-labelledby="contained-modal-title-vcenter"
-              centered
-              className="CartandOfferPopup"
-            >
-              <Modal.Body className="ps-4 pe-3">
-                <NavigationHandler
-                  backhandler={() => setDeleteShow(false)}
-                  navtitle="Delete Address"
-                />
-                <Row className="pt-5">
-                  <Col xs={12} md={12} lg={12} xl={12}>
-                    <p className="text-center pt-5 pb-5">
-                      Are you sure you want to delete this address?
-                    </p>
-                  </Col>
-                  <Col xs={12} md={12} lg={12} xl={12}>
-                    <Row className="pe-5 ps-5 pb-5 pt-5 justify-content-center">
-                      <Col xs={4} md={4} lg={4} xl={4}>
-                        <PrimaryButton
-                          title="No ,go back"
-                          clickHandler={() => setDeleteShow(false)}
-                        />
-                      </Col>
-                      <Col xs={4} md={4} lg={4} xl={4}>
-                        <PrimaryButton
-                          buttonStyle={{
-                            backgroundColor: "#0E62CB",
-                            color: "#fff",
-                          }}
-                          title="Yes,delete it"
-                        />
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
-              </Modal.Body>
-            </Modal>
-            <NavigationHandler
-              backhandler={() => {
-                setFinalLocationStep(true);
-                setSelectedAddressStatus(false);
+                setDateAndTimeSelection(true);
+                setDirectSelected(false);
               }}
               navtitle="Checkout"
             />
@@ -747,7 +475,7 @@ export default function CheckoutPopup({ show, onHide }) {
                       <input
                         type="radio"
                         name={"address"}
-                        onChange={(e) =>
+                        onChange={() =>
                           setMyselectedAddress({
                             id: i,
                             address: v.address_line_1,
@@ -759,18 +487,7 @@ export default function CheckoutPopup({ show, onHide }) {
                         {v.address_line_1}
                       </span>
                     </Col>
-                    <Col xs={1} md={1} lg={1} xl={1}>
-                      <div className="d-flex justify-content-end">
-                        <FiEdit2
-                          color="#0E62CB"
-                          style={{ marginRight: "1rem" }}
-                        />
-                        <MdDelete
-                          color="red"
-                          onClick={() => setDeleteShow(true)}
-                        />
-                      </div>
-                    </Col>
+                    {/* if you need so put here code-backup-no-002 from etc.code.txt */}
                     <hr />
                   </Row>
                 ))}
@@ -781,6 +498,11 @@ export default function CheckoutPopup({ show, onHide }) {
                   </p>
                 </div>
                 <PrimaryButton
+                  clickHandler={() => {
+                    setSecondProcessShow(false);
+                    setFinalPayment(true);
+                    setDirectSelected(false);
+                  }}
                   buttonStyle={{
                     width: "100%",
                     backgroundColor: "#0E62CB",
@@ -790,8 +512,487 @@ export default function CheckoutPopup({ show, onHide }) {
                 />
               </Col>
             </Row>
-          </>
-        ) : null}
+          </div>
+        ) : (
+          <div>
+            {/*======================================== Address and Location Flows ======================================== */}
+            {secondProcessShow ? (
+              <Row>
+                <NavigationHandler
+                  navtitle={"Select Location"}
+                  backhandler={() => {
+                    setSecondProcessShow(false);
+                    setChangeModalSize(true);
+                    setDateAndTimeSelection(true);
+                  }}
+                  unique
+                />
+
+                <Col xs={12} md={12} lg={12} xl={12}>
+                  <div className={styles.LocationHeadLine}>
+                    <p className={styles.HeadLine}>
+                      Select your delivery location to get started
+                    </p>
+                  </div>
+                  <div>
+                    <PrimaryButton
+                      clickHandler={() => {
+                        setSecondProcessShow(false);
+                        setChangeModalSize(true);
+                        setAddressFlowOne(true);
+                        setConfirmSession(true);
+                        setChangeModalSize(false);
+                      }}
+                      title={
+                        <div>
+                          <Image
+                            src="/assets/icons/location-icon.svg"
+                            alt="location-icon"
+                            loading="lazy"
+                          />
+                          &nbsp;&nbsp; Use my current location
+                        </div>
+                      }
+                      buttonStyle={{
+                        width: "100%",
+                        backgroundColor: "#0E62CB",
+                        color: "#fff",
+                      }}
+                    />
+                    <p className={styles.OrOptionText}>OR</p>
+                    <div className={styles.SearchInput}>
+                      <FiSearch className={styles.SearchIcon} />
+                      <ReactGoogleAutocomplete
+                        onClick={() => {
+                          setSecondProcessShow(false);
+                          setChangeModalSize(true);
+                          setAddressFlowTwo(true);
+                          setConfirmSession(true);
+                          setChangeModalSize(false);
+                        }}
+                        placeholder={
+                          addressFlowOne
+                            ? "Search street, locality, etc"
+                            : "Search your locality"
+                        }
+                        apiKey={GMAP_API}
+                        onPlaceSelected={(place) => OnPlaceSelect(place)}
+                        defaultValue={selectedAddress}
+                        options={{
+                          types: ["establishment"],
+                          componentRestrictions: { country: "in" },
+                        }}
+                      />
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            ) : null}
+
+            {/* ======================================== for flow 1  : 1.1  ========================================*/}
+            {confirmSession && (addressFlowOne || addressFlowTwo) ? (
+              <Row className={styles.ColReverse}>
+                <div className={styles.HideNavigationBar}>
+                  <NavigationHandler
+                    navtitle={"Confirm Location"}
+                    backhandler={() => {
+                      setSecondProcessShow(true);
+                      setConfirmSession(false);
+                      addressFlowOne
+                        ? setAddressFlowOne(false)
+                        : setAddressFlowTwo(false);
+                    }}
+                    unique
+                  />
+                </div>
+                <Col
+                  xs={12}
+                  md={12}
+                  lg={6}
+                  xl={5}
+                  className={styles.ConfirmLocationSpace}
+                >
+                  <div>
+                    <div className={styles.ConfirmLocationInput}>
+                      <ReactGoogleAutocomplete
+                        placeholder="Address"
+                        apiKey={GMAP_API}
+                        onPlaceSelected={(place) => OnPlaceSelect(place)}
+                        options={{
+                          types: ["establishment"],
+                          componentRestrictions: { country: "in" },
+                          mapTypeControl: false,
+                          streetViewControl: false,
+                        }}
+                        className={styles.SearchInp}
+                      />
+                      {addressFlowOne ? null : (
+                        <label className={styles.ChangeLable}>CHANGE</label>
+                      )}
+                    </div>
+                    <div
+                      className={styles.CurrentLocationDiv}
+                      onClick={() => getLocation()}
+                    >
+                      <Image
+                        src={
+                          addressFlowOne
+                            ? "/assets/icons/dark-icon-location.svg"
+                            : "/assets/icons/blue-location.svg"
+                        }
+                        alt="location-icon"
+                        loading="lazy"
+                      />
+                      <span
+                        className={styles.DetectDirectLabel}
+                        style={addressFlowTwo ? { color: "#0E62CB" } : null}
+                      >
+                        Use my current location
+                      </span>
+                    </div>
+
+                    <div className={styles.ConfirmButtonDiv}>
+                      <PrimaryButton
+                        clickHandler={() => {
+                          if (
+                            selectedAddress == "" ||
+                            selectedAddress == null
+                          ) {
+                            alert("Please select valid address");
+                          } else {
+                            alert(selectedAddress);
+                            setFinalLocationStep(true);
+                            setConfirmLocationSession(false);
+                            setChangeModalSize(true);
+                            addressFlowOne
+                              ? setAddressFlowOne(false)
+                              : setAddressFlowTwo(false);
+                            setConfirmSession(false);
+                          }
+                        }}
+                        title={"Confirm and Proceed"}
+                        buttonStyle={{
+                          width: "100%",
+                          backgroundColor: "#0E62CB",
+                          color: "#fff",
+                        }}
+                      />
+                    </div>
+                  </div>
+                </Col>
+                {!(selectedAddress == "") && (
+                  <Col
+                    xs={12}
+                    md={12}
+                    lg={6}
+                    xl={7}
+                    className={`${styles.ConfirmLocationSpace}`}
+                  >
+                    <Gmaps
+                      height={mobileView ? "500px" : "300px"}
+                      lat={currentLocation.latitude}
+                      lng={currentLocation.longitude}
+                      zoom={12}
+                      loadingMessage={"Waiting For Maps...."}
+                      params={params}
+                      onMapCreated={() => onMapCreated}
+                    >
+                      <Marker
+                        lat={currentLocation.latitude}
+                        lng={currentLocation.longitude}
+                        draggable={true}
+                        onDragEnd={(e) =>
+                          setCurrentLocation({
+                            latitude: e.latLng.lat(),
+                            longitude: e.latLng.lng(),
+                          })
+                        }
+                      />
+                    </Gmaps>
+                  </Col>
+                )}
+              </Row>
+            ) : null}
+
+            {/*======================================== location save and procced ======================================== */}
+            {selectedAddress != "" && finalLocationStep ? (
+              <Row>
+                <NavigationHandler backhandler={onHide} navtitle="Checkout" />
+                <StatusProcess processStatus={processStatus} />
+                <Col xs={12} md={12} lg={12} xl={12}>
+                  {LocationInputError == 1 ? (
+                    <Alert variant={"danger"}>
+                      House/Flat number is Required !
+                    </Alert>
+                  ) : null}
+                  {LocationInputError == 2 ? (
+                    <Alert variant={"danger"}>Name is Required !</Alert>
+                  ) : null}
+                </Col>
+                <Col
+                  xs={12}
+                  md={12}
+                  lg={6}
+                  xl={5}
+                  className={`${styles.ConfirmLocationSpace} ${styles.finalLocationStep}`}
+                >
+                  <Row>
+                    <Col xs={12} md={12} lg={12} xl={12}>
+                      <div className={styles.SelectedAddressActions}>
+                        <p className={styles.SelectedAddressText}>
+                          {selectedAddress}
+                        </p>
+                        <PrimaryButton
+                          clickHandler={() => {
+                            setSecondProcessShow(false);
+                            setChangeModalSize(true);
+                            setAddressFlowOne(true);
+                            setConfirmSession(true);
+                            setChangeModalSize(false);
+                            setFinalLocationStep(false);
+                          }}
+                          title="Change"
+                          buttonStyle={{
+                            width: "fit-content",
+                            padding: "0.2rem 0.5rem",
+                            fontSize: "17px",
+                          }}
+                        />
+                      </div>
+                      <div className="d-block">
+                        <input
+                          type={"text"}
+                          placeholder="House/Flat number"
+                          value={houseInput}
+                          onChange={(e) => setHouseInput(e.target.value)}
+                          className={styles.FinalInput}
+                        />
+                        <input
+                          type={"text"}
+                          value={landmarkInput}
+                          onChange={(e) => setLandMarkInput(e.target.value)}
+                          placeholder="Landmark(optional)"
+                          className={styles.FinalInput}
+                        />
+                        <input
+                          type={"text"}
+                          value={nameInput}
+                          onChange={(e) => setNameInput(e.target.value)}
+                          placeholder="Name"
+                          className={styles.FinalInput}
+                        />
+                      </div>
+                      <div className={styles.SelectionMenu}>
+                        {["Home", "Office", "Others"].map((v, i) => (
+                          <PrimaryButton
+                            clickHandler={() => setAddressType(v)}
+                            key={i}
+                            title={v}
+                            buttonStyle={{
+                              width: "30%",
+                              padding: "0.2rem 0.5rem",
+                              fontSize: "18px",
+                              backgroundColor:
+                                addressType === v ? "#0E62CB" : null,
+                              color: addressType === v && "#fff",
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </Col>
+                  </Row>
+                  <div>
+                    <div>
+                      <PrimaryButton
+                        clickHandler={() => SaveAndProceedHandle()}
+                        title={"Save and Proceed"}
+                        buttonStyle={{
+                          width: "100%",
+                          backgroundColor: "#676767",
+                          color: "#fff",
+                          border: "none",
+                        }}
+                      />
+                    </div>
+                  </div>
+                </Col>
+                <Col
+                  xs={12}
+                  md={12}
+                  lg={6}
+                  xl={7}
+                  className={`${styles.ConfirmLocationSpace}  ${styles.FinalGmap}`}
+                >
+                  <Gmaps
+                    height={"430px"}
+                    lat={currentLocation.latitude}
+                    lng={currentLocation.longitude}
+                    zoom={12}
+                    loadingMessage={"Waiting For Maps...."}
+                    params={params}
+                    onMapCreated={() => onMapCreated}
+                  >
+                    <Marker
+                      lat={currentLocation.latitude}
+                      lng={currentLocation.longitude}
+                      draggable={false}
+                    />
+                  </Gmaps>
+                </Col>
+              </Row>
+            ) : null}
+          </div>
+        )}
+
+        {/*======================================== final payment ========================================*/}
+        {finalPayment && (
+          <div>
+            <NavigationHandler
+              navtitle={paymentway == 0 ? "Payment" : "Checkout"}
+              backhandler={() => finalPaymentBackHandler()}
+            />
+
+            <Row>
+              {paymentway == 0 ? null : (
+                <div>
+                  <Col xs={6} md={6} lg={6} xl={6}>
+                    <h4 className={styles.CartAndOfferSubMainTitle}>
+                      Available coupons
+                    </h4>
+                  </Col>
+
+                  <Col xs={6} md={6} lg={6} xl={6} className={styles.TextRight}>
+                    <lable
+                      className={`${styles.CartAndOfferSubMainTitle} ${styles.LinkType}`}
+                      onClick={() => setActive(1)}
+                    >
+                      See All
+                    </lable>
+                  </Col>
+                  <Col
+                    xs={12}
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    className={styles.CouponsCol}
+                  >
+                    <Coupons title={"TRYNEW"} offer={`-- ₹${100}`} />
+                  </Col>
+                </div>
+              )}
+              <Col
+                xs={12}
+                md={12}
+                lg={12}
+                xl={12}
+                className={styles.YourCartCol}
+              >
+                <h4 className={styles.CartAndOfferSubMainTitle}>Your Cart</h4>
+                <hr />
+              </Col>
+              <Col
+                xs={12}
+                md={6}
+                lg={6}
+                xl={6}
+                className={styles.YourCartInCol}
+              >
+                <Row>
+                  <Col xs={6} md={6} lg={6} xl={6}>
+                    <p className={styles.ProductName}>
+                      Lorem Ipsum ABC issues X
+                    </p>
+                  </Col>
+                  <Col
+                    xs={6}
+                    md={6}
+                    lg={6}
+                    xl={6}
+                    className={styles.TextRightPay}
+                  >
+                    <label className={styles.ProductPrice}>₹100</label>
+                    <Image
+                      src="/assets/icons/delete-icon.png"
+                      alt="delete-icon"
+                      loading="lazy"
+                      className={styles.DeleteImg}
+                    />
+                  </Col>
+                </Row>
+              </Col>
+              <Col
+                xs={12}
+                md={6}
+                lg={6}
+                xl={6}
+                className={styles.YourCartInCol}
+              >
+                <Row>
+                  <Col xs={6} md={6} lg={6} xl={6}>
+                    <p className={styles.TotalAmount}>Total</p>
+                  </Col>
+                  <Col
+                    xs={6}
+                    md={6}
+                    lg={6}
+                    xl={6}
+                    className={styles.TextMoneyRight}
+                  >
+                    ₹100
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+            {paymentway == null && (
+              <Row className={styles.PaymentSelectionRow}>
+                {[
+                  {
+                    img: "/assets/icons/paynow.png",
+                    title: "Pay Now (Online)",
+                  },
+                  {
+                    img: "/assets/icons/payafter.png",
+                    title: "Pay After Services",
+                  },
+                ].map((v, i) => (
+                  <Col xs={12} md={6} lg={6} xl={6}>
+                    <div
+                      key={i}
+                      className={`${styles.PaymentSelection} ${
+                        paymentway == i && styles.SelectedPaymentWay
+                      }`}
+                      onClick={() => setSelectedPaymentWay(i)}
+                    >
+                      <span>
+                        <Image src={v.img} alt="payment" loading="lazy" />
+                      </span>
+                      <p className={styles.PaymentTitle}>{v.title}</p>
+                    </div>
+                  </Col>
+                ))}
+              </Row>
+            )}
+
+            {paymentway == 0 && <PaymentOption />}
+            {procced == true && (
+              <Row>
+                <Col xs={12} md={12} lg={12} xl={12}>
+                  <PrimaryButton
+                    title="Proceed"
+                    buttonStyle={{
+                      width: "100%",
+                      background: "#0E62CB",
+                      color: "#fff",
+                    }}
+                    clickHandler={() => {
+                      paymentway == null ? null : setProcced(true);
+                    }}
+                  />
+                </Col>
+              </Row>
+            )}
+          </div>
+        )}
       </Modal.Body>
     </Modal>
   );
