@@ -67,6 +67,7 @@ export function Header() {
   useEffect(() => {
     dispatch(callNavsearch(1, search));
   }, [search]);
+
   setTimeout(() => {
     setSdata(navdata);
   }, 1000);
@@ -84,24 +85,13 @@ export function Header() {
       });
     }
   }, []);
+
   // getting header menus from api
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
     var modal = document.getElementById("dropdown_location");
     getHeaderDataFromAPI();
     // getLocation();
-
-    dispatch(getCityStart());
-    if (!localStorage.getItem("city") || !localStorage.getItem("cityid")) {
-      dispatch(getCityFail("we are not available in this current location"));
-    } else {
-      dispatch(
-        getCitySuccess({
-          city: parseInt(localStorage.getItem("cityid")),
-          name: localStorage.getItem("city"),
-        })
-      );
-    }
   }, []);
 
   const getHeaderDataFromAPI = async () => {
@@ -151,7 +141,7 @@ export function Header() {
       })
       .catch((e) => console.log(e));
 
-    if (MatchCity(cityData, currentCity)) {
+    if (MatchCity(cityData, currentCity, dispatch)) {
       setLocationPopupShow(false);
     } else {
       setSelectedAddress("");
@@ -171,7 +161,6 @@ export function Header() {
       alert("Geolocation is not supported by this browser.");
     }
   }
-
   const menuCollapse = useRef();
 
   useEffect(() => {
@@ -206,6 +195,7 @@ export function Header() {
   function LogoutUser() {
     setLogoutPopup(true);
   }
+
   function LogoutAction() {
     UserLogout(localStorage.getItem("token"))
       .then((response) => {
@@ -218,10 +208,12 @@ export function Header() {
       })
       .catch((e) => console.log("logout" + e));
   }
+
   function showPosition(position) {
     reverseMap(position.coords.latitude, position.coords.longitude);
     displayLocation(position.coords.latitude, position.coords.longitude);
   }
+
   function reverseMap(lat, lng) {
     var latlng = new google.maps.LatLng(lat, lng);
     var geocoder = (geocoder = new google.maps.Geocoder());
@@ -235,6 +227,7 @@ export function Header() {
       }
     });
   }
+
   function getLatandLongByAddress(address) {
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({ address: address }, function (results, status) {
@@ -245,6 +238,7 @@ export function Header() {
       }
     });
   }
+
   function displayLocation(latitude, longitude) {
     var geocoder;
     geocoder = new google.maps.Geocoder();
@@ -269,6 +263,7 @@ export function Header() {
       }
     });
   }
+
   {
     if (mobileView) {
       return (
@@ -349,7 +344,7 @@ export function Header() {
                 onClick={() => setShowMobloc(!showMobloc)}
               >
                 <Image src="/assets/icons/mobile-loc.png" alt="mob-loc" />
-                <p className={styles.LocationText}>Banglore</p>
+                <p className={styles.LocationText}>{locationselector.name}</p>
                 <Image
                   src="/assets/icons/mobile-dropdown.png"
                   alt="mob-loc"
@@ -440,7 +435,6 @@ export function Header() {
             <Navbar.Collapse id="navbarScroll" className={styles.navBarcolor}>
               <Nav className="me-auto my-2 my-lg-0"></Nav>
               {/* location popup */}
-
               <div
                 className={styles.navBarGeo}
                 onClick={() => setLocationPopupShow(!locationPopupShow)}
@@ -451,7 +445,7 @@ export function Header() {
                   alt="header location"
                 />
 
-                <p id="dropdown_location">Bengaluru</p>
+                <p id="dropdown_location">{locationselector.name}</p>
                 <Image
                   id="dropdown_location"
                   src="assets/icons/header-down-arrow.svg"

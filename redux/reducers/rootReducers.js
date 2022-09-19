@@ -24,5 +24,5 @@ export const rootReducer = combineReducers({
   userdata: userAuthenticationReducer,
   couponsdata: couponsReducer,
   profile: profileReducer,
-  mix: mixReducer
+  mix: mixReducer,
 });
