@@ -9,6 +9,7 @@
 
 .brandLogo {
   width: 7vw;
+  cursor: pointer;
 }
 
 .navBarTopHeader {
@@ -119,7 +120,7 @@
   color: #0e62cb;
 }
 
-.InputGroup {}
+/* .InputGroup {} */
 
 .InputOrText {
   text-align: center;
@@ -174,6 +175,16 @@
   background-color: #fff;
   border: 1px solid #000;
   border-radius: 3px;
+}
+
+.FlexEnd {
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+}
+
+.navHeaderCart {
+  cursor: pointer;
 }
 
 @media (max-width: 600px) {

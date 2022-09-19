@@ -14,6 +14,8 @@ function LeftMenu({
   alternativenumberaction,
   addemailaction,
   logout,
+  altnum,
+  altemail,
 }) {
   const router = useRouter();
 
@@ -32,10 +34,10 @@ function LeftMenu({
                 onClick={alternativenumberaction}
                 className={styles.AlternativeButtons}
               >
-                add alternative number
+                {altnum ? altnum : "add alternative number"}
               </p>
               <p onClick={addemailaction} className={styles.AlternativeButtons}>
-                add email
+                {altemail ? altemail : "add email"}
               </p>
             </div>
           </Col>
@@ -52,14 +54,14 @@ function LeftMenu({
         </div>
       </div>
       <div className={styles.profileDetailsLogOut}>
-        <h6
+        <p
           onClick={() => {
             localStorage.removeItem("token");
             router.push("/");
           }}
         >
           Log Out
-        </h6>
+        </p>
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ import ViewBooking from "./ViewBooking";
 import Support from "./Support";
 import { useDispatch, useSelector } from "react-redux";
 import { callFetchProfile } from "redux/actions/profileActions/profileActions";
+import Container from "../common/Container";
 
 function AllBookings() {
   const [alternatePopup, setAlternatePopup] = useState(false);
@@ -31,6 +32,8 @@ function AllBookings() {
       ? {
           name: profileselector.data[0].user_fullname,
           number: profileselector.data[0].user_mobile,
+          email: profileselector.data[0].user_email,
+          altnum: profileselector.data[0].user_alt_data,
         }
       : null
     : null;
@@ -45,16 +48,19 @@ function AllBookings() {
       {/* cancel order */}
       <CancelOrder show={cancelOrder} onHide={() => setCancelOrder(false)} />
       <Row className={styles.allBookingRow}>
-        <Col xs={12} md={9} lg={9} xl={9}>
+        <Col xs={12} md={12} lg={9} xl={9}>
           {viewSupport && <Support backaction={() => setViewSupport(false)} />}
           {viewdetail ? (
             <ViewBooking backhandler={() => setViewDetail(false)} />
           ) : null}
           {!viewdetail && !viewSupport && (
-            <Row>
+            <Row className={styles.BookingContainer}>
+              <Col xs={12} md={12} lg={12} xl={12}>
+                <h4 className={styles.BookingHeading}>My Bookings</h4>
+              </Col>
               {bookingData.map((bookings) => {
                 return (
-                  <Col key={bookings.orderNumber} xl={6}>
+                  <Col key={bookings.orderNumber} xl={6} md={12}>
                     <BookingCard
                       callsupport={() => setViewSupport(true)}
                       viewdetails={() => setViewDetail(true)}
@@ -85,6 +91,11 @@ function AllBookings() {
             addemailaction={() => setaddEmail(true)}
             alternativenumberaction={() => setAlternatePopup(true)}
             logout={() => {}}
+            altnum={
+              profiledetail !== null &&
+              "+91" + profiledetail.altnum[0].mobile_number
+            }
+            altemail={profiledetail !== null && profiledetail.email}
           />
         </Col>
       </Row>

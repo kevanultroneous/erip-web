@@ -401,6 +401,15 @@ input[type="number"] {
   width: 22.45px;
 }
 
+.btn:hover {
+  border-color: transparent !important;
+}
+
+.btn:focus {
+  border: none;
+  border-color: transparent !important;
+}
+
 /*  */
 @media (min-width: 320px) and (max-width: 450px) {
   .modal {

@@ -54,14 +54,8 @@ export function Header() {
   const navsearch = useSelector((selector) => selector.mix.navsearch);
   const userselector = useSelector((selector) => selector.userdata);
   const profileselector = useSelector((selector) => selector.profile.profile);
-  const profiledetail = profileselector
-    ? profileselector.data
-      ? {
-          name: profileselector.data[0].user_fullname,
-          number: profileselector.data[0].user_mobile,
-        }
-      : null
-    : null;
+  const selector = useSelector((selector) => selector);
+
   const navdata = navsearch ? (navsearch.data ? navsearch.data : null) : null;
 
   useEffect(() => {
@@ -301,11 +295,7 @@ export function Header() {
 
             <Navbar.Collapse id="basic-navbar-nav" ref={menuCollapse}>
               <Nav className="me-auto">
-                {token ? (
-                  <Link href={"/my-bookings"}>
-                    <BiUser size={40} />
-                  </Link>
-                ) : (
+                {token ? null : (
                   <Nav.Link
                     href="#"
                     className={styles.mobileMenuLink}
@@ -323,6 +313,9 @@ export function Header() {
                 </Nav.Link>
                 <Nav.Link href="#" className={styles.mobileMenuLink}>
                   Blogs
+                </Nav.Link>
+                <Nav.Link href="#" className={styles.mobileMenuLink}>
+                  Logout
                 </Nav.Link>
               </Nav>
             </Navbar.Collapse>
@@ -465,8 +458,8 @@ export function Header() {
               />
               {token ? (
                 <Link href={"/my-bookings"}>
-                  <div className="d-flex align-items-end">
-                    <BiUser size={40} />
+                  <div className={styles.FlexEnd}>
+                    <BiUser size={30} />
                     <span
                       style={{
                         color: "#0E62CB",
@@ -476,7 +469,11 @@ export function Header() {
                         marginLeft: "1rem",
                       }}
                     >
-                      {profiledetail !== null && profiledetail.name}
+                      {profileselector
+                        ? profileselector.data
+                          ? profileselector.data[0].user_fullname
+                          : null
+                        : null}
                     </span>
                   </div>
                 </Link>
