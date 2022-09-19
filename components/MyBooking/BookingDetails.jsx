@@ -4,6 +4,28 @@ import { useState } from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import { BsChevronRight } from "react-icons/bs";
 import PrimaryButton from "../common/PrimaryButton";
+export const DeliveryJobCard = () => {
+  return (
+    <div>
+      <Row className={styles.MiniCard}>
+        <Col xs={6} md={6} lg={6} xl={6}>
+          <p className={styles.ItemTitle}>Estimated to deliver on</p>
+        </Col>
+        <Col xs={6} md={6} lg={6} xl={6}>
+          <p className={styles.ItemAns}>24th April</p>
+        </Col>
+      </Row>
+      <Row className={styles.MiniCard}>
+        <Col xs={6} md={6} lg={6} xl={6}>
+          <p className={styles.ItemTitleJob}>View Job Card</p>
+        </Col>
+        <Col xs={6} md={6} lg={6} xl={6}>
+          <BsChevronRight className={styles.ItemArrow} />
+        </Col>
+      </Row>
+    </div>
+  );
+};
 export default function BookingDetails({
   hideoutcallsupport,
   deliveryAndJobcard,
@@ -104,26 +126,7 @@ export default function BookingDetails({
             </Col>
           </Row>
         ))}
-      {deliveryAndJobcard && (
-        <div>
-          <Row className={styles.MiniCard}>
-            <Col xs={6} md={6} lg={6} xl={6}>
-              <p className={styles.ItemTitle}>Estimated to deliver on</p>
-            </Col>
-            <Col xs={6} md={6} lg={6} xl={6}>
-              <p className={styles.ItemAns}>24th April</p>
-            </Col>
-          </Row>
-          <Row className={styles.MiniCard}>
-            <Col xs={6} md={6} lg={6} xl={6}>
-              <p className={styles.ItemTitleJob}>View Job Card</p>
-            </Col>
-            <Col xs={6} md={6} lg={6} xl={6}>
-              <BsChevronRight className={styles.ItemArrow} />
-            </Col>
-          </Row>
-        </div>
-      )}
+      {deliveryAndJobcard && <DeliveryJobCard />}
       {raiseticketshow ? (
         <Row className={styles.MiniCard}>
           <Col xs={12} md={12} lg={12} xl={12}>
