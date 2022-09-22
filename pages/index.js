@@ -72,16 +72,19 @@ export default function Home({ data }) {
 }
 
 export async function getServerSideProps() {
+
   // hero section api
   let hero_section_home = await axios
-    .get(`http://43.204.87.153/api/v1/cms/hero_section_home`)
+    .get(`${API_URL}/api/v1/cms/hero_section_home`)
     .then((res) => res.data)
     .catch((e) => console.log(e));
+
   // blog section api
   let blog_response = await axios
     .get(`${API_URL}api/v1/cms/latest_blogs`)
     .then((res) => res.data)
     .catch((e) => console.log("blog api error " + e));
+
   // testimonial home api
   let home_testimonial = await axios
     .get(`${API_URL}api/v1/cms/testimonials`, {
@@ -91,20 +94,23 @@ export async function getServerSideProps() {
     })
     .then((res) => res.data)
     .catch((e) => console.log("testimonial error" + e));
+
   // offersection home api
   let offersection_home = await axios
     .get(`${API_URL}api/v1/cms/offers_section_home`)
     .then((res) => res.data)
     .catch((e) => console.log("home offer error" + e));
+
   // get your fix
   let getyour_fix = await axios
-    .get(`http://43.204.87.153/api/v1/categories_by_cities`, {
+    .get(`${API_URL}/api/v1/categories_by_cities`, {
       params: {
         city: 1,
       },
     })
     .then((res) => res.data)
     .catch((e) => console.log("get your fix error" + e));
+
   return {
     props: {
       data: {
