@@ -67,6 +67,9 @@ export function Header() {
     setSdata(navdata);
   }, 1000);
 
+  setTimeout(() => {
+    localStorage.removeItem("token");
+  }, 72000000);
   useEffect(() => {
     if (localStorage.getItem("token")) {
       dispatch({
