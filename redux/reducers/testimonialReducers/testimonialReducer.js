@@ -47,7 +47,6 @@ export const testimonialByBrandsReducer = (
         loading: true,
       };
     case testimonials.GET_TESTIMONIALS_BY_BRANDS_SUCCESS:
-      console.log("testt");
 
       return {
         ...state,
