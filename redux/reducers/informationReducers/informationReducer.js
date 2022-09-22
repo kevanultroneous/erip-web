@@ -6,7 +6,10 @@ const infoInitialState = {
   loading: false,
 };
 
-export const infoCategory = (state = infoInitialState, { type, payload }) => {
+export const infoCategoryReducer = (
+  state = infoInitialState,
+  { type, payload }
+) => {
   switch (type) {
     case info.GET_INFORMATION_BY_CATEGORY_START:
       return {
@@ -33,7 +36,10 @@ export const infoCategory = (state = infoInitialState, { type, payload }) => {
   }
 };
 
-export const infoBrands = (state = infoInitialState, { type, payload }) => {
+export const infoBrandsReducer = (
+  state = infoInitialState,
+  { type, payload }
+) => {
   switch (type) {
     case info.GET_INFORMATION_BY_BRANDS_START:
       return {
@@ -60,7 +66,10 @@ export const infoBrands = (state = infoInitialState, { type, payload }) => {
   }
 };
 
-export const infoModels = (state = infoInitialState, { type, payload }) => {
+export const infoModelsReducer = (
+  state = infoInitialState,
+  { type, payload }
+) => {
   switch (type) {
     case info.GET_INFORMATION_BY_MODELS_START:
       return {

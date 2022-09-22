@@ -6,7 +6,11 @@ export const testimonialsHome = async () => {
     .get(`${API_URL}api/v1/cms/testimonials`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (data.data.data !== undefined) {
+          return data.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
@@ -19,7 +23,11 @@ export const testimonialsByCategory = async (categoryID) => {
     .get(`${API_URL}api/v1/cms/testimonials_by_category?category=${categoryID}`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (data.data.data !== undefined) {
+          return data.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
@@ -32,7 +40,11 @@ export const testimonialsByBrands = async (brandID) => {
     .get(`${API_URL}api/v1/cms/testimonials_by_brand?brand=${brandID}`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (data.data.data !== undefined) {
+          return data.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
@@ -45,7 +57,11 @@ export const testimonialsByModels = async (modelID) => {
     .get(`${API_URL}api/v1/cms/testimonials_by_model?model=${modelID}`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (data.data.data !== undefined) {
+          return data.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {

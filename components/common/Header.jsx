@@ -29,6 +29,7 @@ import { LOGIN_USER_SUCCESS, USER_CLEAR } from "redux/actions/actionTypes";
 import { GET_CITY_SUCCESS } from "redux/actions/actionTypes";
 import { BiUser } from "react-icons/bi";
 import { callNavsearch } from "redux/actions/mixActions/mixActions";
+import { selectCategory } from "redux/actions/issuePageActions/issuePageActions";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
@@ -382,6 +383,7 @@ export function Header() {
                   <Image
                     src="/assets/icons/location-color.svg"
                     loading="lazy"
+                    alt="Location"
                   />
                   <p className={styles.LocationDetectText}>
                     Detect My Location
@@ -511,9 +513,17 @@ export function Header() {
                         </Dropdown.Item>
                         {menu.submenuItems.map((model, index) => {
                           return (
-                            <Dropdown.Item eventKey="4.2" key={index}>
-                              {model.model_title}
-                            </Dropdown.Item>
+                            <Link
+                              key={index}
+                              href={{
+                                pathname: "personal-gadgets",
+                                query: { issue: model.model_id },
+                              }}
+                            >
+                              <Dropdown.Item eventKey="4.2">
+                                {model.model_title}
+                              </Dropdown.Item>
+                            </Link>
                           );
                         })}
                       </div>
@@ -529,11 +539,19 @@ export function Header() {
               >
                 {topBrandsHeaderData.map((menu, menuIndex) => {
                   return (
-                    <div key={menuIndex}>
-                      <Dropdown.Item eventKey="4.2" key={menuIndex}>
-                        {menu.brand_title}
-                      </Dropdown.Item>
-                    </div>
+                    <Link
+                      key={menuIndex}
+                      href={{
+                        pathname: "personal-gadgets",
+                        query: { issue: menu.brand_id },
+                      }}
+                    >
+                      <div>
+                        <Dropdown.Item eventKey="4.2" key={menuIndex}>
+                          {menu.brand_title}
+                        </Dropdown.Item>
+                      </div>
+                    </Link>
                   );
                 })}
               </DropdownButton>
@@ -545,11 +563,25 @@ export function Header() {
               >
                 {mobileRepairHeaderData.map((menu, menuIndex) => {
                   return (
-                    <div key={menuIndex}>
-                      <Dropdown.Item eventKey="4.2" key={menuIndex}>
-                        {menu.model_title}
-                      </Dropdown.Item>
-                    </div>
+                    <Link
+                      key={menuIndex}
+                      href={{
+                        pathname: "personal-gadgets",
+                        query: { issue: menu.model_id },
+                      }}
+                    >
+                      <div>
+                        <Dropdown.Item
+                          eventKey="4.2"
+                          key={menuIndex}
+                          onClick={() => {
+                            dispatch(selectCategory(1));
+                          }}
+                        >
+                          {menu.model_title}
+                        </Dropdown.Item>
+                      </div>
+                    </Link>
                   );
                 })}
               </DropdownButton>
@@ -603,7 +635,11 @@ export function Header() {
             }`}
           >
             <div className={styles.ModalHeadDir}>
-              <Image src="/assets/icons/gmap-location.svg" loading="lazy" />
+              <Image
+                src="/assets/icons/gmap-location.svg"
+                loading="lazy"
+                alt="location"
+              />
               <p className={styles.LocationText}>
                 Please provide your location for best experience
               </p>
@@ -613,7 +649,11 @@ export function Header() {
               className={styles.ModalHeadDetect}
               onClick={() => getLocation()}
             >
-              <Image src="/assets/icons/location-color.svg" loading="lazy" />
+              <Image
+                src="/assets/icons/location-color.svg"
+                loading="lazy"
+                alt="location"
+              />
               <p className={styles.LocationDetectText}>Detect My Location</p>
               {loactionloader && (
                 <Spinner

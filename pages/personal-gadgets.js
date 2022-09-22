@@ -1,6 +1,7 @@
 // react hooks
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 // components
 import { Header } from "@/components/common/Header";
@@ -22,6 +23,9 @@ import axios from "axios";
 
 // styles
 import styles from "@/styles/components/personalGadgets/issuepage.module.css";
+import OfferBanner from "@/components/Home/OfferBanner";
+import InformationSection from "@/components/PersonalGadgets/informationSection";
+import HomeHero from "@/components/Home/Hero";
 
 function IssuePage({ data }) {
   // states
@@ -29,8 +33,46 @@ function IssuePage({ data }) {
   const [popupLogin, setPopupLogin] = useState(false);
   const [token, setToken] = useState(false);
 
+  // useSelector
+
+  // category brand model IDs
+  const categoryID = useSelector((state) => state.issuePage.categoryID);
+  const getBrandID = useSelector((state) => state.issuePage.brandID);
+  const getModelID = useSelector((state) => state.issuePage.modelID);
+
+  // Arrays of category testimonial hero Offers
+  const categoryFaq = useSelector((state) => state.faqCategory);
+  const brandsFaq = useSelector((state) => state.faqBrand);
+  const modelsFaq = useSelector((state) => state.faqModel);
+
+  // Arrays of category testimonial hero Offers
+  const categoryTestimonial = useSelector((state) => state.testimonialCategory);
+  const brandsTestimonial = useSelector((state) => state.testimonialBrands);
+  const modelTestimonial = useSelector((state) => state.testimonialModels);
+
+  // Arrays of category testimonial hero Offers
+  const categoryHero = useSelector((state) => state.heroCategory);
+  const brandsHero = useSelector((state) => state.heroBrands);
+  const modelHero = useSelector((state) => state.heroModels);
+
+  // Arrays of category testimonial hero Offers
+  const categoryInfo = useSelector((state) => state.informationCategory);
+  const brandsInfo = useSelector((state) => state.informationBrands);
+  const modelInfo = useSelector((state) => state.informationModels);
+
+  // Arrays of category testimonial hero Offers
+  const categoryOffer = useSelector((state) => state.offerCategory);
+  const brandsOffer = useSelector((state) => state.offerBrands);
+  const modelOffer = useSelector((state) => state.offerModels);
+
   // declaration
   const router = useRouter();
+
+  useEffect(() => {
+    console.log(categoryTestimonial.data, "offer");
+  }, [categoryTestimonial.data]);
+
+  useEffect(() => {}, []);
 
   // useEffects
   useEffect(() => {
@@ -56,10 +98,12 @@ function IssuePage({ data }) {
         modelSection={styles.selectDeviceSection}
         homeQuery={router.query.issue}
       />
+      <HomeHero offers={categoryOffer.data} />
       <HowItWork />
       <WhyErip />
-      <ContactFAQ />
-      <Testimonials data={data.hometestimonial} />
+      <InformationSection paragraph={categoryInfo.data} />
+      <ContactFAQ faqArray={categoryFaq.data} />
+      <Testimonials data={categoryTestimonial.data} />
       {mobileView ? <Footer /> : <MobileFooter />}
     </Layout>
   );

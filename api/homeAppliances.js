@@ -6,7 +6,11 @@ export const getSegmentByCategory = async (categoryID) => {
     .get(`${API_URL}api/v1/segments_by_category?category=${categoryID}`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (data.data.data !== undefined) {
+          return data.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
@@ -19,7 +23,11 @@ export const getIssuesBySegments = async (segmentID) => {
     .get(`${API_URL}api/v1/issues_by_segments?segment=${segmentID}`)
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (data.data.data !== undefined) {
+          return data.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
@@ -34,7 +42,11 @@ export const getIssuesBySegmentsDetails = async (segmentID, cityID) => {
     )
     .then((data) => {
       if (data.status === 200) {
-        return data.data.data;
+        if (data.data.data !== undefined) {
+          return data.data.data;
+        } else {
+          return [];
+        }
       }
     })
     .catch((err) => {
