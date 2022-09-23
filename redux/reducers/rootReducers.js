@@ -39,6 +39,7 @@ import {
   testimonialByModelsReducer,
 } from "./testimonialReducers/testimonialReducer";
 import { userAuthenticationReducer } from "./userReducer/userReducer";
+import { enquiresReducers } from "./enquiresReducers/enquiresReducers";
 
 export const rootReducer = combineReducers({
   locationdata: cityReducer,
@@ -69,5 +70,6 @@ export const rootReducer = combineReducers({
   userdata: userAuthenticationReducer,
   couponsdata: couponsReducer,
   profile: profileReducer,
+  enquires: enquiresReducers,
   mix: mixReducer,
 });

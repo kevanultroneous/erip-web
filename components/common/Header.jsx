@@ -413,18 +413,18 @@ export function Header() {
               </Link>
             </Navbar.Brand>
             <Navbar.Brand>
-              <div className={styles.Searchbar}>
-                <FiSearch
+              {/* <div className={styles.Searchbar}> */}
+              {/* <FiSearch
                   size={25}
                   color="#0E62CB"
                   style={{ marginRight: "1rem" }}
-                />
-                <input
+                /> */}
+              {/* <input
                   type="text"
                   placeholder="Search your brand or model"
                   onChange={(e) => setSearch(e.target.value)}
-                />
-              </div>
+                /> */}
+              {/* </div> */}
               {/* <div className={styles.SearchItems}>
                 <ul>{sdata ? sdata.map((v) => v.brands) : null}</ul>
               </div> */}
