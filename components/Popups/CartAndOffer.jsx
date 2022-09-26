@@ -16,6 +16,7 @@ import {
 } from "redux/actions/cartActions/cartActions";
 import {
   callFetchCoupons,
+  callVerifyCoupons,
   removeCoupons,
   setCouponssSuccess,
 } from "redux/actions/couponActions/couponsActions";
@@ -83,6 +84,10 @@ export default function CartAndOffer({ show, onHide }) {
     // `₹${total - parseInt(selectingCoupons.coupon_amount)}`;
   }, [couponShow]);
 
+  const CheckOutHandler = () => {
+    dispatch(callVerifyCoupons(localStorage.getItem("cityid")));
+    // setShowCheckout(true);
+  };
   return (
     <div>
       <Modal
@@ -211,7 +216,7 @@ export default function CartAndOffer({ show, onHide }) {
                   className={styles.CheckoutButtonWrraper}
                 >
                   <PrimaryButton
-                    clickHandler={() => setShowCheckout(true)}
+                    clickHandler={() => CheckOutHandler()}
                     title={"Checkout"}
                     buttonStyle={{
                       width: "100%",

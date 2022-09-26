@@ -3,7 +3,7 @@ import * as city from "../../actions/actionTypes";
 const initialCityState = {
   city: 1,
   err: "",
-  name: "Gondal",
+  name: "Bengaluru",
   loading: false,
 };
 
@@ -28,7 +28,7 @@ export const cityReducer = (state = initialCityState, { type, payload }) => {
         ...state,
         err: payload,
         city: 1,
-        name: "",
+        name: "Bengaluru",
         loading: false,
       };
     default:

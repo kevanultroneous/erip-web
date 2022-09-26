@@ -9,6 +9,7 @@
 
 .brandLogo {
   width: 7vw;
+  cursor: pointer;
 }
 
 .navBarTopHeader {
@@ -119,7 +120,7 @@
   color: #0e62cb;
 }
 
-.InputGroup {}
+/* .InputGroup {} */
 
 .InputOrText {
   text-align: center;
@@ -148,6 +149,42 @@
 
 .LocationModalVisible {
   display: block !important;
+}
+
+.Searchbar {
+  border: 1px solid #676767;
+  border-radius: 3px;
+  padding: 0.3rem 1rem;
+  margin-left: 3rem;
+  font-size: 18px;
+}
+
+.Searchbar input {
+  border: none;
+  outline: none;
+
+}
+
+.SearchItems {
+  padding: 1rem;
+
+  position: fixed;
+  width: 28rem;
+  top: 4.5rem;
+  z-index: 1;
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 3px;
+}
+
+.FlexEnd {
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+}
+
+.navHeaderCart {
+  cursor: pointer;
 }
 
 @media (max-width: 600px) {

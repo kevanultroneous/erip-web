@@ -26,6 +26,9 @@ import {
   getCitySuccess,
 } from "redux/actions/cityActions/cityAction";
 import { LOGIN_USER_SUCCESS, USER_CLEAR } from "redux/actions/actionTypes";
+import { GET_CITY_SUCCESS } from "redux/actions/actionTypes";
+import { BiUser } from "react-icons/bi";
+import { callNavsearch } from "redux/actions/mixActions/mixActions";
 import { selectCategory } from "redux/actions/issuePageActions/issuePageActions";
 
 export function Header() {
@@ -44,13 +47,29 @@ export function Header() {
   const [topIssuesHeaderData, settopIssuesHeaderData] = useState([]);
   const [loactionloader, setLocationLoader] = useState(false);
   const [showMobloc, setShowMobloc] = useState(false);
-
+  const [search, setSearch] = useState("");
+  const [sdata, setSdata] = useState(null);
   const dispatch = useDispatch();
 
   const locationselector = useSelector((selector) => selector.locationdata);
-
+  const navsearch = useSelector((selector) => selector.mix.navsearch);
   const userselector = useSelector((selector) => selector.userdata);
+  const profileselector = useSelector((selector) => selector.profile.profile);
+  const selector = useSelector((selector) => selector);
 
+  const navdata = navsearch ? (navsearch.data ? navsearch.data : null) : null;
+
+  useEffect(() => {
+    dispatch(callNavsearch(1, search));
+  }, [search]);
+
+  setTimeout(() => {
+    setSdata(navdata);
+  }, 1000);
+
+  setTimeout(() => {
+    localStorage.removeItem("token");
+  }, 72000000);
   useEffect(() => {
     if (localStorage.getItem("token")) {
       dispatch({
@@ -64,24 +83,13 @@ export function Header() {
       });
     }
   }, []);
+
   // getting header menus from api
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
     var modal = document.getElementById("dropdown_location");
     getHeaderDataFromAPI();
     // getLocation();
-
-    dispatch(getCityStart());
-    if (!localStorage.getItem("city") || !localStorage.getItem("cityid")) {
-      dispatch(getCityFail("we are not available in this current location"));
-    } else {
-      dispatch(
-        getCitySuccess({
-          city: parseInt(localStorage.getItem("cityid")),
-          name: localStorage.getItem("city"),
-        })
-      );
-    }
   }, []);
 
   const getHeaderDataFromAPI = async () => {
@@ -131,7 +139,7 @@ export function Header() {
       })
       .catch((e) => console.log(e));
 
-    if (MatchCity(cityData, currentCity)) {
+    if (MatchCity(cityData, currentCity, dispatch)) {
       setLocationPopupShow(false);
     } else {
       setSelectedAddress("");
@@ -143,7 +151,6 @@ export function Header() {
       //   .catch((e) => console.log(e));
     }
   }, [currentCity]);
-
   function getLocation() {
     setLocationLoader(true);
     if (navigator.geolocation) {
@@ -152,7 +159,6 @@ export function Header() {
       alert("Geolocation is not supported by this browser.");
     }
   }
-
   const menuCollapse = useRef();
 
   useEffect(() => {
@@ -187,6 +193,7 @@ export function Header() {
   function LogoutUser() {
     setLogoutPopup(true);
   }
+
   function LogoutAction() {
     UserLogout(localStorage.getItem("token"))
       .then((response) => {
@@ -199,10 +206,12 @@ export function Header() {
       })
       .catch((e) => console.log("logout" + e));
   }
+
   function showPosition(position) {
     reverseMap(position.coords.latitude, position.coords.longitude);
     displayLocation(position.coords.latitude, position.coords.longitude);
   }
+
   function reverseMap(lat, lng) {
     var latlng = new google.maps.LatLng(lat, lng);
     var geocoder = (geocoder = new google.maps.Geocoder());
@@ -216,6 +225,7 @@ export function Header() {
       }
     });
   }
+
   function getLatandLongByAddress(address) {
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({ address: address }, function (results, status) {
@@ -226,6 +236,7 @@ export function Header() {
       }
     });
   }
+
   function displayLocation(latitude, longitude) {
     var geocoder;
     geocoder = new google.maps.Geocoder();
@@ -250,6 +261,7 @@ export function Header() {
       }
     });
   }
+
   {
     if (mobileView) {
       return (
@@ -287,22 +299,27 @@ export function Header() {
 
             <Navbar.Collapse id="basic-navbar-nav" ref={menuCollapse}>
               <Nav className="me-auto">
-                <Nav.Link
-                  href="#home"
-                  className={styles.mobileMenuLink}
-                  onClick={() => (token ? LogoutAction() : setLoginPopup(true))}
-                >
-                  {token ? "Logout" : "Login"}
-                </Nav.Link>
+                {token ? null : (
+                  <Nav.Link
+                    href="#"
+                    className={styles.mobileMenuLink}
+                    onClick={() => setLoginPopup(true)}
+                  >
+                    Login
+                  </Nav.Link>
+                )}
 
-                <Nav.Link href="#link" className={styles.mobileMenuLink}>
+                <Nav.Link href="#" className={styles.mobileMenuLink}>
                   My Bookings
                 </Nav.Link>
-                <Nav.Link href="#link" className={styles.mobileMenuLink}>
+                <Nav.Link href="#" className={styles.mobileMenuLink}>
                   About Us
                 </Nav.Link>
-                <Nav.Link href="#link" className={styles.mobileMenuLink}>
+                <Nav.Link href="#" className={styles.mobileMenuLink}>
                   Blogs
+                </Nav.Link>
+                <Nav.Link href="#" className={styles.mobileMenuLink}>
+                  Logout
                 </Nav.Link>
               </Nav>
             </Navbar.Collapse>
@@ -324,7 +341,7 @@ export function Header() {
                 onClick={() => setShowMobloc(!showMobloc)}
               >
                 <Image src="/assets/icons/mobile-loc.png" alt="mob-loc" />
-                <p className={styles.LocationText}>Banglore</p>
+                <p className={styles.LocationText}>{locationselector.name}</p>
                 <Image
                   src="/assets/icons/mobile-dropdown.png"
                   alt="mob-loc"
@@ -395,11 +412,27 @@ export function Header() {
                 </div>
               </Link>
             </Navbar.Brand>
+            <Navbar.Brand>
+              {/* <div className={styles.Searchbar}> */}
+              {/* <FiSearch
+                  size={25}
+                  color="#0E62CB"
+                  style={{ marginRight: "1rem" }}
+                /> */}
+              {/* <input
+                  type="text"
+                  placeholder="Search your brand or model"
+                  onChange={(e) => setSearch(e.target.value)}
+                /> */}
+              {/* </div> */}
+              {/* <div className={styles.SearchItems}>
+                <ul>{sdata ? sdata.map((v) => v.brands) : null}</ul>
+              </div> */}
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll" className={styles.navBarcolor}>
               <Nav className="me-auto my-2 my-lg-0"></Nav>
               {/* location popup */}
-
               <div
                 className={styles.navBarGeo}
                 onClick={() => setLocationPopupShow(!locationPopupShow)}
@@ -410,7 +443,7 @@ export function Header() {
                   alt="header location"
                 />
 
-                <p id="dropdown_location">Bengaluru</p>
+                <p id="dropdown_location">{locationselector.name}</p>
                 <Image
                   id="dropdown_location"
                   src="assets/icons/header-down-arrow.svg"
@@ -428,14 +461,34 @@ export function Header() {
                     : setCartAndOfferPopup(true);
                 }}
               />
-
-              <PrimaryButton
-                title={token ? "Logout" : "Login"}
-                className={styles.headerLoginBtn}
-                clickHandler={() =>
-                  token ? LogoutAction() : setLoginPopup(true)
-                }
-              />
+              {token ? (
+                <Link href={"/my-bookings"}>
+                  <div className={styles.FlexEnd}>
+                    <BiUser size={30} />
+                    <span
+                      style={{
+                        color: "#0E62CB",
+                        fontSize: "20px",
+                        fontWeight: "700",
+                        margin: "0%",
+                        marginLeft: "1rem",
+                      }}
+                    >
+                      {profileselector
+                        ? profileselector.data
+                          ? profileselector.data[0].user_fullname
+                          : null
+                        : null}
+                    </span>
+                  </div>
+                </Link>
+              ) : (
+                <PrimaryButton
+                  title={"Login"}
+                  className={styles.headerLoginBtn}
+                  clickHandler={() => setLoginPopup(true)}
+                />
+              )}
             </Navbar.Collapse>
           </Container>
           <Container fluid className="navBarBottomHeader">

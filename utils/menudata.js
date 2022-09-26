@@ -4,19 +4,19 @@ export const footerMenuList = [
         menu: [
             {
                 name: "Mobile",
-                link: "/",
+                link: "personal-gadgets?issue=1",
             },
             {
                 name: "Tablet",
-                link: "/",
+                link: "personal-gadgets?issue=4",
             },
             {
                 name: "Laptop",
-                link: "/",
+                link: "/personal-gadgets?issue=3",
             },
             {
                 name: "Smart Watch",
-                link: "/",
+                link: "/personal-gadgets?issue=5",
             },
         ],
     },
@@ -54,11 +54,11 @@ export const footerMenuList = [
         menu: [
             {
                 name: "About Us",
-                link: "/",
+                link: "/about-us",
             },
             {
                 name: "Contact Us",
-                link: "/",
+                link: "/contact-us",
             },
             {
                 name: "Terms of Use",

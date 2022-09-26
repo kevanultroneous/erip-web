@@ -5,7 +5,7 @@ import Container from "../common/Container";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import PrimaryButton from "../common/PrimaryButton";
 import PartnerStatusProgress from "./PartnerStatusProgress";
-import BookingDetails from "./BookingDetails";
+import BookingDetails, { DeliveryJobCard } from "./BookingDetails";
 import NeedHelp from "./NeedHelp";
 import PartnerDetails from "./PartnerDetails";
 import Quotation from "./Quotation";
@@ -15,9 +15,9 @@ import Ratingbar from "./Ratingbar";
 import { useEffect } from "react";
 import MobileProgress from "./MobileProgress";
 export default function ViewBooking({ backhandler }) {
-  const [f1, setF1] = useState(0);
-  const [f2, setF2] = useState(null);
-  const [f3, setF3] = useState(null);
+  const [f1, setF1] = useState(1);
+  const [f2, setF2] = useState(1);
+  const [f3, setF3] = useState(1);
   const [f4, setF4] = useState(null);
   const [f5, setF5] = useState(null);
   const [mobileView, setMobileView] = useState(false);
@@ -119,7 +119,7 @@ export default function ViewBooking({ backhandler }) {
           <Col xs={12} md={6} lg={6} xl={6}>
             <BookingDetails
               hidereschedulebuttons={true}
-              deliveryAndJobcard={true}
+              deliveryAndJobcard={false}
               hideoutcallsupport={true}
               showinnercallsupport={true}
               raiseticketshow={false}
@@ -135,6 +135,7 @@ export default function ViewBooking({ backhandler }) {
                   otp="2121"
                   callpartnerhide={true}
                 />
+                {mobileView && <DeliveryJobCard />}
                 <Quotation
                   rejectaccept={f4 == 0 ? false : true}
                   showpaybutton={f4 == 0 && true}

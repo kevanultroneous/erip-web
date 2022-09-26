@@ -60,7 +60,6 @@ export default function NewsAndUpdate({ data = NewsandUpdateData }) {
                       src={value.post_image_url}
                       alt={value.post_image_url}
                       loading="lazy"
-                      fluid
                     />
                   </div>
                   <p className={styles.NewsandUpdateDetail}>

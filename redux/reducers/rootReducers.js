@@ -25,6 +25,8 @@ import {
   infoModelsReducer,
 } from "./informationReducers/informationReducer";
 import { issueReducer } from "./issueReducers/issueReducer";
+import { mixReducer } from "./mixReducers/mixReducers";
+import { profileReducer } from "./profileReducers/profileReducers";
 import {
   offerSectionBrandReducer,
   offerSectionCategoryReducer,
@@ -46,6 +48,7 @@ import {
   testimonialByModelsReducer,
 } from "./testimonialReducers/testimonialReducer";
 import { userAuthenticationReducer } from "./userReducer/userReducer";
+import { enquiresReducers } from "./enquiresReducers/enquiresReducers";
 
 export const rootReducer = combineReducers({
   locationdata: cityReducer,
@@ -82,4 +85,7 @@ export const rootReducer = combineReducers({
   categoryName: selectPersonalGadgetsReducer,
   brandName: selectPersonalGadgetsBrandsReducer,
   modelName: selectPersonalGadgetsModelReducer,
+  profile: profileReducer,
+  enquires: enquiresReducers,
+  mix: mixReducer,
 });

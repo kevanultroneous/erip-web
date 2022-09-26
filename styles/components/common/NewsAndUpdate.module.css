@@ -14,7 +14,8 @@
 
 .NewsImageWrraper img {
     border-radius: 10px;
-
+    width: 100%;
+    height: 20rem;
 }
 
 .NewsandUpdateCard img {}
@@ -44,6 +45,12 @@
 
     .NewsandUpdateDetail {
         font-size: 16px;
+    }
+
+    .NewsImageWrraper img {
+        border-radius: 10px;
+        width: 100%;
+        height: 10rem;
     }
 }
 
