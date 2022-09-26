@@ -70,10 +70,10 @@ export const callFetchCoupons = (city, category) => {
   };
 };
 
-export const callVerifyCoupons = (city, category, coupon, amount) => {
+export const callVerifyCoupons = (token, city, category, coupon, amount) => {
   return async function (dispatch) {
     dispatch(doVerifyCouponsStart());
-    VerifyCoupons(city, category, coupon, amount)
+    VerifyCoupons(token, city, category, coupon, amount)
       .then((response) => dispatch(doVerifyCouponsSuccess(response.data)))
       .catch(e => dispatch(doVerifyCouponsFail(e)))
   };

@@ -119,6 +119,7 @@ function SelectDeviceHero({
     dispatch(getTestimonialsByBrand(getModelID));
   }, [getModelID]);
 
+  const cartdata = useSelector((selector) => selector.cartdata.data.data);
   const selectDrop = useRef();
   const categoryModel = useRef();
 
@@ -258,7 +259,7 @@ function SelectDeviceHero({
   };
 
   return (
-    <>
+    <div>
       <section className={`${styles.modelHeroContainer} ${modelSection}`}>
         <Row className={`${styles.modelHeroRow} ${headClass}`}>
           <Col xl={2}>
@@ -470,7 +471,7 @@ function SelectDeviceHero({
       {token && cartIssues.length > 0 && (
         <IssueTotalBill totalPrice={totalprice} />
       )}
-    </>
+    </div>
   );
 }
 
