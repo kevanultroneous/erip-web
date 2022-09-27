@@ -14,16 +14,21 @@ import FeedbackQue from "./FeedbackQue";
 import Ratingbar from "./Ratingbar";
 import { useEffect } from "react";
 import MobileProgress from "./MobileProgress";
-export default function ViewBooking({ backhandler }) {
-  const [f1, setF1] = useState(1);
-  const [f2, setF2] = useState(1);
-  const [f3, setF3] = useState(1);
+import { getOrdersDetails } from "api/ordersAPI";
+export default function ViewBooking({ backhandler, order }) {
+  const [f1, setF1] = useState(0);
+  const [f2, setF2] = useState(null);
+  const [f3, setF3] = useState(null);
   const [f4, setF4] = useState(null);
   const [f5, setF5] = useState(null);
   const [mobileView, setMobileView] = useState(false);
+  const [details, setDetails] = useState([]);
 
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
+    getOrdersDetails(localStorage.getItem("token"), order)
+      .then((r) => setDetails(r.data.data))
+      .catch((e) => console.log(e));
   }, []);
 
   return (
@@ -33,7 +38,11 @@ export default function ViewBooking({ backhandler }) {
           <BiArrowBack className={styles.BackArrow} onClick={backhandler} />
         </Col>
         <Col xs={10} md={10} lg={10} xl={10}>
-          <p className={styles.MainTitle}>LG-Air Conditioner</p>
+          <p className={styles.MainTitle}>
+            {details.length > 0
+              ? details[0].order_brand + "-" + details[0].order_category
+              : null}
+          </p>
         </Col>
       </Row>
 
@@ -46,6 +55,29 @@ export default function ViewBooking({ backhandler }) {
           <Row>
             <Col xs={12} md={6} lg={6} xl={6}>
               <BookingDetails
+                orderid={details.length > 0 ? details[0].order_id : null}
+                device={details.length > 0 ? details[0].order_category : null}
+                issue={
+                  details.length > 0
+                    ? details[0].order_issues != null
+                      ? details[0].order_issues.length > 0
+                        ? details[0].order_issues.map((v) => (
+                            <>
+                              {v.issue_name}
+                              <br />
+                            </>
+                          ))
+                        : null
+                      : null
+                    : null
+                }
+                datetime={
+                  details.length > 0
+                    ? details[0].order_appointments[0].appointment_date +
+                      "," +
+                      details[0].order_appointments[0].appointment_timeslot
+                    : null
+                }
                 hidereschedulebuttons={false}
                 deliveryAndJobcard={false}
                 hideoutcallsupport={false}

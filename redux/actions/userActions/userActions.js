@@ -1,3 +1,4 @@
+import { setCookie } from "cookies-next";
 import {
   CheckRegistrationAPI,
   FinalLoginAPI,
@@ -215,6 +216,9 @@ export const callLoginapi = (ContactNumber, Otp) => {
         if (login_user.data.success) {
           dispatch(UserLoginSuccess(login_user.data));
           localStorage.setItem("token", login_user.data.authorisation.token);
+          setCookie("erip", "web", {
+            maxAge: 8 * 60 * 1000
+          })
         } else {
           dispatch(UserLoginFail(login_user.data.message));
         }

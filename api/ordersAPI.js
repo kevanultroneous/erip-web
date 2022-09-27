@@ -38,15 +38,10 @@ export const getOrders = async (token) => {
 }
 export const getOrdersDetails = async (token, order) => {
     return await axios.get(
-        `${API_URL}api/v1/users/orders`,
+        `${API_URL}api/v1/users/orders?order=${order}`,
         {
             headers: { Authorization: `Bearer ${token}` },
-        },
-        {
-            params: {
-                order: order,
-            },
-        },
+        }
     )
 }
 export const getOrderCancelReasonUser = async () => {

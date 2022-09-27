@@ -12,7 +12,7 @@ import ViewBooking from "./ViewBooking";
 import Support from "./Support";
 import { useDispatch, useSelector } from "react-redux";
 import { callFetchProfile } from "redux/actions/profileActions/profileActions";
-import Container from "../common/Container";
+import { getOrders } from "api/ordersAPI";
 
 function AllBookings() {
   const [alternatePopup, setAlternatePopup] = useState(false);
@@ -20,12 +20,22 @@ function AllBookings() {
   const [cancelOrder, setCancelOrder] = useState(false);
   const [viewdetail, setViewDetail] = useState(false);
   const [viewSupport, setViewSupport] = useState(false);
+  const [orderData, setOrderData] = useState([]);
+  const [orderhash, setOrderHash] = useState();
 
   const dispatch = useDispatch();
-  const profileselector = useSelector((selector) => selector.profile.profile);
   useEffect(() => {
     dispatch(callFetchProfile(localStorage.getItem("token")));
+    getOrders(localStorage.getItem("token"))
+      .then((r) => {
+        if (r.data.success) {
+          setOrderData(r.data.data);
+        }
+      })
+      .catch((e) => console.log(e));
   }, []);
+
+  const profileselector = useSelector((selector) => selector.profile.profile);
 
   const profiledetail = profileselector
     ? profileselector.data
@@ -37,7 +47,6 @@ function AllBookings() {
         }
       : null
     : null;
-
   return (
     <section className={styles.allBookingContainer}>
       <AlternatePopups
@@ -51,32 +60,57 @@ function AllBookings() {
         <Col xs={12} md={12} lg={9} xl={9}>
           {viewSupport && <Support backaction={() => setViewSupport(false)} />}
           {viewdetail ? (
-            <ViewBooking backhandler={() => setViewDetail(false)} />
+            <ViewBooking backhandler={() => setViewDetail(false)} order="" />
           ) : null}
           {!viewdetail && !viewSupport && (
             <Row className={styles.BookingContainer}>
               <Col xs={12} md={12} lg={12} xl={12}>
                 <h4 className={styles.BookingHeading}>My Bookings</h4>
               </Col>
-              {bookingData.map((bookings) => {
-                return (
-                  <Col key={bookings.orderNumber} xl={6} md={12}>
-                    <BookingCard
-                      callsupport={() => setViewSupport(true)}
-                      viewdetails={() => setViewDetail(true)}
-                      orderNumber={bookings.orderNumber}
-                      partnerStatusAssigned={bookings.partnerStatusAssigned}
-                      partnerImage={bookings.partnerImage}
-                      partnerName={bookings.partnerName}
-                      bookingDateAndTime={bookings.bookingDateAndTime}
-                      issueDevice={bookings.issueDevice}
-                      issueType={bookings.issueType}
-                      partnerAssigningStatus={bookings.partnerAssigningOTP}
-                      OTP={bookings.OTP}
-                    />
-                  </Col>
-                );
-              })}
+              {console.log(orderData)}
+              {orderData
+                ? orderData.length > 0
+                  ? orderData.map((bookings) => {
+                      return (
+                        <Col key={bookings.order_id} xl={6} md={12}>
+                          <BookingCard
+                            callsupport={() => setViewSupport(true)}
+                            viewdetails={() => {
+                              setViewDetail(true);
+                              setOrderHash(bookings.order_id_encrypted);
+                            }}
+                            orderNumber={bookings.order_id}
+                            bookingDateAndTime={
+                              bookings.order_appointments[0].appointment_date +
+                              " , " +
+                              bookings.order_appointments[0]
+                                .appointment_timeslot
+                            }
+                            // partnerStatusAssigned={bookings.partnerStatusAssigned}
+                            // partnerImage={bookings.partnerImage}
+                            // partnerName={bookings.partnerName}
+                            // bookingDateAndTime={bookings.bookingDateAndTime}
+                            issueDevice={bookings.order_category}
+                            issueType={
+                              bookings.order_issues != null
+                                ? bookings.order_issues.length > 0
+                                  ? bookings.order_issues.map((v) => (
+                                      <>
+                                        {v.issue_name}
+                                        <br />
+                                      </>
+                                    ))
+                                  : null
+                                : null
+                            }
+                            // partnerAssigningStatus={bookings.partnerAssigningOTP}
+                            // OTP={bookings.OTP}
+                          />
+                        </Col>
+                      );
+                    })
+                  : null
+                : null}
             </Row>
           )}
         </Col>

@@ -32,6 +32,10 @@ export default function BookingDetails({
   showinnercallsupport,
   hidereschedulebuttons,
   raiseticketshow,
+  orderid,
+  device,
+  issue,
+  datetime,
 }) {
   const [mobileView, setMobileView] = useState(false);
   useEffect(() => {
@@ -44,7 +48,7 @@ export default function BookingDetails({
           <label className={styles.BoxTitle}>Booking Details</label>
         </Col>
         <Col xs={12} md={6} lg={6} xl={6}>
-          <label className={styles.BoxOrder}>Order # - 0007</label>
+          <label className={styles.BoxOrder}>Order # - {orderid}</label>
         </Col>
         <Col xs={12} md={6} lg={6} xl={6} className={styles.ProductWrraper}>
           <Image
@@ -53,9 +57,9 @@ export default function BookingDetails({
             className={styles.BoxImg}
           />
           <label className={styles.BoxProduct}>
-            Air Conditioner
+            {device}
             <br />
-            No cooling/Less cooling
+            {issue}
           </label>
         </Col>
         <Col xs={12} md={6} lg={6} xl={6} className={styles.BoxAmountWrraper}>
@@ -76,13 +80,13 @@ export default function BookingDetails({
             Lorem ipsum cotor bajolt valom
           </label>
         </Col>
-        <Col xs={12} md={6} lg={6} xl={6}>
+        <Col xs={12} md={6} lg={6} xl={12}>
           <Image
             src="/assets/icons/box-time.png"
             alt="box-icons"
             className={styles.BoxImg}
           />
-          <label className={styles.BoxDateTime}>20th April, 9-11 AM</label>
+          <label className={styles.BoxDateTime}>{datetime}</label>
         </Col>
         {!hidereschedulebuttons && (
           <Col xs={12} md={12} lg={12} xl={12}>

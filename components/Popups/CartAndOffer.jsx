@@ -23,6 +23,7 @@ import {
 import { APPLY_COUPON_SUCCESS } from "redux/actions/actionTypes";
 import { VerifyCoupons } from "api/couponsApi";
 import axios from "axios";
+import { PostEnqApi } from "api/enquireAPI";
 
 export default function CartAndOffer({ show, onHide }) {
   const [active, setActive] = useState(0);
@@ -86,6 +87,27 @@ export default function CartAndOffer({ show, onHide }) {
     // `₹${total - parseInt(selectingCoupons.coupon_amount)}`;
   }, [couponShow]);
 
+  const EnquireNow = () => {
+    PostEnqApi(commonselector.userdata.useraccess, {
+      flowGroup: 1,
+      sourceType: 2,
+      subSourceType: 4,
+      city: 1,
+      category: 2,
+      brand: 7,
+      model_segment: 1,
+      issues: [3],
+      coupon: 0,
+    })
+      .then((r) => {
+        if (r.data.success) {
+          localStorage.setItem("enq_id", r.data.enquiry_data.enquiry_id);
+        } else {
+          alert(r.data.message);
+        }
+      })
+      .catch((e) => console.log(e));
+  };
   const CheckOutHandler = () => {
     console.log(total);
     console.log(selectingCoupons);
@@ -100,6 +122,7 @@ export default function CartAndOffer({ show, onHide }) {
         .then((r) => {
           if (r.data) {
             if (r.data.success) {
+              EnquireNow();
             } else {
               alert(r.data.message);
             }
@@ -107,6 +130,7 @@ export default function CartAndOffer({ show, onHide }) {
         })
         .catch((e) => console.log(e));
     } else {
+      EnquireNow();
       setShowCheckout(true);
     }
   };

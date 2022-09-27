@@ -40,6 +40,7 @@ import {
 } from "./testimonialReducers/testimonialReducer";
 import { userAuthenticationReducer } from "./userReducer/userReducer";
 import { enquiresReducers } from "./enquiresReducers/enquiresReducers";
+import orderReducer from "./orderReducers/orderReducer";
 
 export const rootReducer = combineReducers({
   locationdata: cityReducer,
