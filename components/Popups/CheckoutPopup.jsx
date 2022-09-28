@@ -381,14 +381,19 @@ export default function CheckoutPopup({ show, onHide }) {
   const [paymentway, setSelectedPaymentWay] = useState(null);
 
   const FinalOrderNow = () => {
+    let setup_day =
+      datelist[selectedDate].dates < 10
+        ? "0" + datelist[selectedDate].dates
+        : datelist[selectedDate].dates;
     let generated_date =
       new Date().getFullYear() +
       "-" +
-      (new Date().getMonth() + 1 < 10
-        ? "0" + (new Date().getMonth() + 1)
-        : new Date().getMonth() + 1) +
+      (datelist[selectedDate].month < 10
+        ? "0" + datelist[selectedDate].month
+        : datelist[selectedDate].month) +
       "-" +
-      datelist[selectedDate].dates;
+      setup_day;
+
     let selected_time = timesloatsata[selectedTime].id;
     postOrders(localStorage.getItem("token"), {
       enquiryId: localStorage.getItem("enq_id"),

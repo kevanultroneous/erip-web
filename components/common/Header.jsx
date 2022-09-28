@@ -69,9 +69,6 @@ export function Header() {
     setSdata(navdata);
   }, 1000);
 
-  setTimeout(() => {
-    localStorage.removeItem("token");
-  }, 72000000);
   useEffect(() => {
     if (localStorage.getItem("token")) {
       dispatch({
@@ -91,6 +88,12 @@ export function Header() {
       localStorage.removeItem("enq_id");
       localStorage.removeItem("cityid");
     }
+    if (locationselector.err === "" && locationselector.city != null) {
+      setLocationPopupShow(false);
+    }
+    if (!(localStorage.getItem("city") && localStorage.getItem("cityid"))) {
+      setLocationPopupShow(true);
+    }
   }, []);
 
   // getting header menus from api
@@ -98,7 +101,6 @@ export function Header() {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
     var modal = document.getElementById("dropdown_location");
     getHeaderDataFromAPI();
-    // getLocation();
   }, []);
 
   const getHeaderDataFromAPI = async () => {
@@ -227,7 +229,7 @@ export function Header() {
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[1]) {
-          // setLocationPopupShow(false);
+          setLocationPopupShow(false);
           setLocationLoader(false);
           setSelectedAddress(results[1].formatted_address);
         }

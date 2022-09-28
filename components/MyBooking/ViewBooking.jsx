@@ -15,6 +15,8 @@ import Ratingbar from "./Ratingbar";
 import { useEffect } from "react";
 import MobileProgress from "./MobileProgress";
 import { getOrdersDetails } from "api/ordersAPI";
+import CancelOrder from "../Popups/CancelOrder";
+import Reschedule from "../Popups/Reschedule";
 export default function ViewBooking({ backhandler, order }) {
   const [f1, setF1] = useState(0);
   const [f2, setF2] = useState(null);
@@ -23,13 +25,18 @@ export default function ViewBooking({ backhandler, order }) {
   const [f5, setF5] = useState(null);
   const [mobileView, setMobileView] = useState(false);
   const [details, setDetails] = useState([]);
-
+  const [cancelOrder, setCancelOrder] = useState(false);
+  const [reschedule, setReschedule] = useState(false);
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
+    getAllDetail();
+  }, []);
+
+  const getAllDetail = () => {
     getOrdersDetails(localStorage.getItem("token"), order)
       .then((r) => setDetails(r.data.data))
       .catch((e) => console.log(e));
-  }, []);
+  };
 
   return (
     <div>
@@ -50,11 +57,28 @@ export default function ViewBooking({ backhandler, order }) {
         <PartnerStatusProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
       </Row>
 
+      <CancelOrder
+        show={cancelOrder}
+        onHide={() => setCancelOrder(false)}
+        order={order}
+        backhandler={backhandler}
+      />
+      <Reschedule
+        show={reschedule}
+        onHide={() => {
+          getAllDetail();
+          setReschedule(false);
+        }}
+        order={order}
+      />
       {f1 == 0 && f2 == null && f3 == null && f4 == null && f5 == null ? (
         <Col xs={12} md={12} lg={12} xl={12}>
           <Row>
             <Col xs={12} md={6} lg={6} xl={6}>
               <BookingDetails
+                cancelorderclick={() => setCancelOrder(true)}
+                rescheduleclick={() => setReschedule(true)}
+                orderkey={order}
                 orderid={details.length > 0 ? details[0].order_id : null}
                 device={details.length > 0 ? details[0].order_category : null}
                 issue={
@@ -73,16 +97,30 @@ export default function ViewBooking({ backhandler, order }) {
                 }
                 datetime={
                   details.length > 0
-                    ? details[0].order_appointments[0].appointment_date +
+                    ? details[0].order_appointments[
+                        details[0].order_appointments.length > 0
+                          ? details[0].order_appointments.length - 1
+                          : 0
+                      ].appointment_date +
                       "," +
-                      details[0].order_appointments[0].appointment_timeslot
+                      details[0].order_appointments[
+                        details[0].order_appointments.length > 0
+                          ? details[0].order_appointments.length - 1
+                          : 0
+                      ].appointment_timeslot
                     : null
                 }
                 hidereschedulebuttons={false}
-                deliveryAndJobcard={false}
+                deliveryAndJobcard={true}
                 hideoutcallsupport={false}
                 showinnercallsupport={false}
-                raiseticketshow={false}
+                raiseticketshow={true}
+                callsupport={
+                  details.length > 0
+                    ? "tel:+91" +
+                      Object.values(details[0].order_options_1[0])[1]
+                    : null
+                }
               />
             </Col>
             {mobileView ? (
