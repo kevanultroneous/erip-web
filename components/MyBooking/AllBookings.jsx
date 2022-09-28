@@ -74,7 +74,6 @@ function AllBookings() {
               <Col xs={12} md={12} lg={12} xl={12}>
                 <h4 className={styles.BookingHeading}>My Bookings</h4>
               </Col>
-              {console.log(orderData)}
               {orderData
                 ? orderData.length > 0
                   ? orderData.map((bookings) => {

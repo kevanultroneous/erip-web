@@ -17,16 +17,24 @@ import MobileProgress from "./MobileProgress";
 import { getOrdersDetails } from "api/ordersAPI";
 import CancelOrder from "../Popups/CancelOrder";
 import Reschedule from "../Popups/Reschedule";
+import FeedbackQuestions from "../Popups/FeedbackQuestions";
+import RatingAndReview from "../Popups/RatingAndReview";
+import Thankyou from "../Popups/ThankYou";
 export default function ViewBooking({ backhandler, order }) {
   const [f1, setF1] = useState(0);
   const [f2, setF2] = useState(null);
   const [f3, setF3] = useState(null);
   const [f4, setF4] = useState(null);
   const [f5, setF5] = useState(null);
+
   const [mobileView, setMobileView] = useState(false);
   const [details, setDetails] = useState([]);
   const [cancelOrder, setCancelOrder] = useState(false);
   const [reschedule, setReschedule] = useState(false);
+  const [feedQue, setFeedQuestions] = useState(false);
+  const [ratingr, setRatingr] = useState(false);
+  const [thankYouShow, setThankYouShow] = useState(false);
+
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
     getAllDetail();
@@ -71,6 +79,19 @@ export default function ViewBooking({ backhandler, order }) {
         }}
         order={order}
       />
+
+      {/* in the last reviw */}
+      <FeedbackQuestions
+        show={feedQue}
+        onHide={() => setFeedQuestions(false)}
+      />
+      <RatingAndReview
+        show={ratingr}
+        onHide={() => setRatingr(false)}
+        order={order}
+      />
+      <Thankyou show={thankYouShow} onHide={() => setThankYouShow(false)} />
+
       {f1 == 0 && f2 == null && f3 == null && f4 == null && f5 == null ? (
         <Col xs={12} md={12} lg={12} xl={12}>
           <Row>
