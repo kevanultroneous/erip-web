@@ -84,20 +84,41 @@ export default function CartAndOffer({ show, onHide }) {
       ? couponsselector.selectedcoupons
       : null;
 
-  useEffect(() => {
-    // `₹${total - parseInt(selectingCoupons.coupon_amount)}`;
-  }, [couponShow]);
+  let listOfIssue = [];
+  cartDetailList.map((v) => {
+    listOfIssue.push(v.issue_id);
+  });
+
+  let flowGroup = [];
+  cartDetailList.map((v) => {
+    flowGroup.push(v.flow_group);
+  });
+
+  let segments = [];
+  cartDetailList.map((v) => {
+    segments.push(v.model_segment);
+  });
+
+  let brands = [];
+  cartDetailList.map((v) => {
+    brands.push(v.brand_id);
+  });
+
+  let catids = [];
+  cartDetailList.map((v) => {
+    catids.push(v.category_id);
+  });
 
   const EnquireNow = () => {
     PostEnqApi(commonselector.userdata.useraccess, {
-      flowGroup: 1,
+      flowGroup: cartDetailList[0].flow_group,
       sourceType: 2,
       subSourceType: 4,
-      city: 1,
-      category: 2,
-      brand: 7,
-      model_segment: 1,
-      issues: [3],
+      city: localStorage.getItem("cityid"),
+      category: cartDetailList[0].category_id,
+      brand: cartDetailList[0].brand_id,
+      model_segment: cartDetailList[0].model_segment,
+      issues: listOfIssue,
       coupon: 0,
     })
       .then((r) => {
@@ -109,6 +130,7 @@ export default function CartAndOffer({ show, onHide }) {
       })
       .catch((e) => console.log(e));
   };
+
   const CheckOutHandler = () => {
     console.log(total);
     console.log(selectingCoupons);
