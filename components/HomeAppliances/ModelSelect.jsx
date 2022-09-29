@@ -7,8 +7,13 @@ import { Radio, Tabs } from "antd";
 
 import styles from "@/styles/components/homeAppliances/ModelSelect.module.css";
 import { selectSegments } from "redux/actions/issuePageActions/issuePageActions";
-import { useDispatch } from "react-redux";
-function ModelSelect() {
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getHomeApplianceIssue,
+  getHomeApplianceModel,
+} from "redux/actions/homeApplianceActions/homeAppliances";
+
+function ModelSelect({ segmentArray }) {
   const [mobileView, setMobileView] = useState(false);
   const dispatch = useDispatch();
 
@@ -18,7 +23,15 @@ function ModelSelect() {
 
   const handleChange = (e) => {
     dispatch(selectSegments(e));
+    dispatch(getHomeApplianceIssue(e));
   };
+
+  const getCity = useSelector((state) => state.locationdata.city);
+  const segments = useSelector((state) => state.homeAppliancesModel.data);
+
+  useEffect(() => {
+    console.log({ segments });
+  }, [segments]);
 
   const modelData = [
     {
@@ -45,7 +58,7 @@ function ModelSelect() {
         <Row className={styles.modelSelectSegmentMain}>
           <h5>Please select a model</h5>
           <Row className={styles.modelSelectSegment}>
-            {modelData.map((models) => {
+            {segmentArray.map((models) => {
               return (
                 <Col key={models.segment_id} xl={2}>
                   <Button
@@ -68,10 +81,11 @@ function ModelSelect() {
         <Row className={styles.modelSelectSegmentMain}>
           <h5>Please select a model</h5>
           <div className={styles.modelSelectSegment}>
-            {modelData.map((models) => {
+            {segmentArray.map((models) => {
               return (
                 <div key={models.segment_id}>
                   <Button
+                    onClick={() => handleChange(models.segment_id)}
                     className={styles.modelSelectbutton}
                     variant={"outline-primary"}
                   >

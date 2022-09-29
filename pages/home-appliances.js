@@ -1,6 +1,6 @@
 // react hooks
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useRef, useMemo } from "react";
 
 // components
@@ -25,6 +25,9 @@ import ModelSelect from "@/components/HomeAppliances/ModelSelect";
 import HomeApplianceIssues from "@/components/HomeAppliances/HomeApplianceIssues";
 import HomeApplianceHero from "@/components/HomeAppliances/HomeApplianceHero";
 import HomeApplianceDetails from "@/components/HomeAppliances/HomeApplianceDetails";
+import { getSegmentByCategory } from "api/homeAppliances";
+import { getHomeApplianceModel } from "redux/actions/homeApplianceActions/homeAppliances";
+import { selectCategory } from "redux/actions/issuePageActions/issuePageActions";
 
 // styles
 // import styles from "@/styles/components/IssuePage/issuepage.module.css";
@@ -33,6 +36,13 @@ function Homeappliances() {
   const [mobileView, setMobileView] = useState(true);
   const [popupLogin, setPopupLogin] = useState(false);
   const [token, setToken] = useState(false);
+
+  // Brand/ Category/ Segment/ Category
+  const categoryID = useSelector((state) => state.issuePage.categoryID);
+
+  const homeApplianceSegment = useSelector(
+    (state) => state.homeAppliancesModel.data
+  );
 
   // Arrays of category testimonial hero Offers
   const categoryFaq = useSelector((state) => state.faqCategory);
@@ -59,6 +69,11 @@ function Homeappliances() {
   const brandsOffer = useSelector((state) => state.offerBrands);
   const modelOffer = useSelector((state) => state.offerModels);
 
+  const dispatch = useDispatch();
+
+  // declaration
+  const router = useRouter();
+
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
 
@@ -69,6 +84,14 @@ function Homeappliances() {
       setToken(false);
     }
   }, []);
+
+  useEffect(() => {
+    dispatch(selectCategory(2));
+    dispatch(getHomeApplianceModel(categoryID));
+  }, []);
+
+  // useEffect(() => {}, [homeApplianceSegment]);
+  console.log({ homeApplianceSegment });
 
   function useIsInViewport(ref) {
     const [isIntersecting, setIsIntersecting] = useState(false);
@@ -99,7 +122,7 @@ function Homeappliances() {
       <Header />
       <LoginPopup show={popupLogin} onHide={() => setPopupLogin(false)} />
       <HomeApplianceHero />
-      <ModelSelect />
+      <ModelSelect segmentArray={homeApplianceSegment} />
       <HomeApplianceIssues
         token={token}
         quoteaction={() => setPopupLogin(true)}

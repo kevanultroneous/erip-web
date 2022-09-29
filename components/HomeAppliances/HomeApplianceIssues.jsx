@@ -1,5 +1,5 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Container from "../common/Container";
 import IssueComponent from "../IssuePage/IssueComponent";
@@ -16,6 +16,10 @@ function HomeApplianceIssues({ token, quoteaction }) {
   const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
   const [modalData, setModalData] = useState({});
+
+  const homeAppliancesIssues = useSelector(
+    (state) => state.homeAppliancesIssues.data
+  );
 
   const issueData = [
     {
@@ -57,11 +61,13 @@ function HomeApplianceIssues({ token, quoteaction }) {
     setModal(!modal);
   };
 
+  useEffect(() => {}, [homeAppliancesIssues]);
+
   return (
     <Container userdefinedclass={styles.homeApplianceIssuesContainer}>
       <h4>Select your Repair Services</h4>
       <Row className={style.issuePageRow}>
-        {issueData.map((issues) => {
+        {homeAppliancesIssues.map((issues) => {
           return (
             <Col
               key={issues.issue_id}

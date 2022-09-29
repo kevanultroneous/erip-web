@@ -74,7 +74,6 @@ export const rootReducer = combineReducers({
   offerCategory: offerSectionCategoryReducer,
   offerBrands: offerSectionBrandReducer,
   offerModels: offerSectionModelReducer,
-  locationdata: cityReducer,
   cartdata: fetchMycartdataByCityReducer,
   cartaddremove: addtoCartorRemoveReducer,
   userdata: userAuthenticationReducer,
