@@ -77,12 +77,12 @@ export const SaveAddress = (token, type, no, add1, add2, landmark, pincode) => {
   return axios.post(
     `${API_URL}api/v1/users/my_addresses`,
     {
-      addressType: "H",
-      addressNo: "9039-jdu",
-      addressOne: "kdksj jsdhhjdhhsjdf",
-      addressTwo: "dsdsfdsdsd",
-      landmark: "ssksdj sdnjk",
-      pincode: "001",
+      addressType: type,
+      addressNo: no,
+      addressOne: add1,
+      addressTwo: add2,
+      landmark: landmark,
+      pincode: pincode,
     },
     {
       headers: { Authorization: `Bearer ${token}` },

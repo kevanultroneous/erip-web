@@ -16,10 +16,11 @@ import NavigationHandler from "./NavigationHandler";
 import {
   CityDetactionAPI,
   MyAddress,
+  PincodeByCity,
   SaveAddress,
   TimeSloatAPI,
 } from "pages/api/api";
-import { MatchCity } from "utils/utilsfunctions";
+import { getPincode, MatchCity } from "utils/utilsfunctions";
 import { RiAddFill } from "react-icons/ri";
 import Coupons from "./Coupons";
 import PaymentOption from "./PaymentOption";
@@ -83,6 +84,7 @@ export default function CheckoutPopup({ show, onHide }) {
 
   const [finalway, setFinalWay] = useState(false);
   const [proccessComplete, setProcessComplete] = useState(false);
+  const [savepincode, setSavePincode] = useState([]);
 
   const RemoveFromCart = (id) => {
     dispatch(callAddorRemoveCart(localStorage.getItem("token"), id));
@@ -161,7 +163,13 @@ export default function CheckoutPopup({ show, onHide }) {
       })
       .catch((e) => console.log("myaddress fetching " + e));
   }, []);
-
+  useEffect(() => {
+    if (localStorage.getItem("cityid")) {
+      PincodeByCity(1)
+        .then((r) => setSavePincode(r.data.data))
+        .catch((e) => console.log(e));
+    }
+  }, [currentLocation]);
   useEffect(() => {
     if (directSelected) {
       setProcessStatus(processStatus.concat(1));
@@ -226,18 +234,20 @@ export default function CheckoutPopup({ show, onHide }) {
   }
 
   function showPosition(position) {
+    getPincode(position.coords.latitude, position.coords.longitude);
     setCurrentLocation(position.coords);
     reverseMap(position.coords.latitude, position.coords.longitude);
     displayLocation(position.coords.latitude, position.coords.longitude);
   }
   useEffect(() => {
+    getPincode(currentLocation.latitude, currentLocation.longitude);
     reverseMap(currentLocation.latitude, currentLocation.longitude);
   }, [currentLocation]);
 
   function reverseMap(lat, lng) {
     var latlng = new google.maps.LatLng(lat, lng);
     var geocoder = (geocoder = new google.maps.Geocoder());
-
+    getPincode(lat, lng);
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         // results.map((v) => console.log(v));
@@ -307,7 +317,7 @@ export default function CheckoutPopup({ show, onHide }) {
     } else {
       setLocationError(0);
       setAddressData({
-        address: selectedAddress,
+        address: selectedAddress.substring(0, 10),
         type: addressType,
         house: houseInput,
         landmark: landmarkInput,
@@ -316,14 +326,25 @@ export default function CheckoutPopup({ show, onHide }) {
       if (!localStorage.getItem("token")) {
         alert("Please Login Now");
       } else {
-        SaveAddress(localStorage.getItem("token"))
+        console.log(localStorage.getItem("pincode"));
+        SaveAddress(
+          localStorage.getItem("token"),
+          addressType[0],
+          houseInput.substring(0, 10),
+          selectedAddress.substring(0, 49),
+          selectedAddress.substring(0, 49),
+          landmarkInput,
+          // localStorage.getItem("pincode").substring(2, 5)
+          "001"
+        )
           .then((r) => {
             console.log(r);
             if (r.data.success) {
               alert("address saved");
+              setMyselectedAddress(selectedAddress.substring(0, 49));
               setSelectedAddressStatus(true);
               setProcessStatus(processStatus.concat(1));
-              setFinalLocationStep(false);
+              setFinalLocationStep(true);
             }
           })
           .catch((e) => console.log(e));
@@ -340,7 +361,7 @@ export default function CheckoutPopup({ show, onHide }) {
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(latitude, longitude);
     var count, country, state, city;
-
+    getPincode(latitude, longitude);
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[0]) {

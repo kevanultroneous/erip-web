@@ -14,7 +14,7 @@ import CartAndOffer from "../Popups/CartAndOffer";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
 import { API_URL, GMAP_API } from "utils/data";
 import { CityDetactionAPI, PincodeByCity, UserLogout } from "pages/api/api";
-import { MatchCity } from "utils/utilsfunctions";
+import { getPincode, MatchCity } from "utils/utilsfunctions";
 import Logout from "../Popups/Logout";
 import axios from "axios";
 import { FiSearch } from "react-icons/fi";
@@ -53,6 +53,7 @@ export function Header() {
   const [showMobloc, setShowMobloc] = useState(false);
   const [search, setSearch] = useState("");
   const [sdata, setSdata] = useState(null);
+  const [savepincode, setSavePincode] = useState([]);
   const dispatch = useDispatch();
 
   const locationselector = useSelector((selector) => selector.locationdata);
@@ -198,9 +199,9 @@ export function Header() {
     }
 
     if (localStorage.getItem("cityid")) {
-      // PincodeByCity(1)
-      //   .then((r) => console.log(r))
-      //   .catch((e) => console.log(e));
+      PincodeByCity(1)
+        .then((r) => setSavePincode(r.data.data))
+        .catch((e) => console.log(e));
     }
   }, [currentCity]);
   function getLocation() {
@@ -260,6 +261,13 @@ export function Header() {
   }
 
   function showPosition(position) {
+    geocodeToPincode({
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+      key: GMAP_API,
+    })
+      .then((response) => localStorage.setItem("pincode", response.pincode))
+      .catch((error) => console.log(error));
     reverseMap(position.coords.latitude, position.coords.longitude);
     displayLocation(position.coords.latitude, position.coords.longitude);
   }
@@ -284,6 +292,7 @@ export function Header() {
       if (status == google.maps.GeocoderStatus.OK) {
         var latitude = results[0].geometry.location.lat();
         var longitude = results[0].geometry.location.lng();
+        getPincode(latitude, longitude);
         displayLocation(latitude, longitude);
       }
     });
@@ -294,6 +303,7 @@ export function Header() {
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(latitude, longitude);
     var count, country, state, city;
+    getPincode(latitude, longitude);
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[0]) {

@@ -1,5 +1,7 @@
+import geocodeToPincode from "geocode-to-pincode";
 import { GET_CITY_SUCCESS } from "redux/actions/actionTypes";
 import { getCityFail, getCityStart, getCitySuccess } from "redux/actions/cityActions/cityAction";
+import { GMAP_API } from "./data";
 
 export const MatchCity = (cityData, currentCity, dispatch) => {
   for (let k1 = 0; k1 < cityData.length; k1++) {
@@ -21,4 +23,14 @@ export const MatchCity = (cityData, currentCity, dispatch) => {
       return false;
     }
   }
+};
+export const getPincode = (lat, long) => {
+
+  geocodeToPincode({
+    lat: lat,
+    lng: long,
+    key: GMAP_API,
+  })
+    .then((response) => localStorage.setItem("pincode", response.pincode))
+    .catch((error) => console.log(error));
 };
