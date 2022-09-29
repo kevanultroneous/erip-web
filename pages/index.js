@@ -33,9 +33,7 @@ import {
 export default function Home({ data }) {
   const [mobileView, setMobileView] = useState(true);
   const [offerad, setOfferAd] = useState(false);
-  // const [feedQue, setFeedQuestions] = useState(false)
-  // const [ratingr, setRatingr] = useState(false)
-  // const [thankYouShow, setThankYouShow] = useState(false)
+
 
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
@@ -57,9 +55,7 @@ export default function Home({ data }) {
       <WhyErip />
       <ExclusiveService />
       {/*  */}
-      {/* <FeedbackQuestions show={feedQue} onHide={() => setFeedQuestions(false)} />
-      <RatingAndReview show={ratingr} onHide={() => setRatingr(false)} />
-      <Thankyou show={thankYouShow} onHide={() => setThankYouShow(false)} /> */}
+
       {/*  */}
       <BrowseOffer
         href={"offer-page"}
@@ -77,10 +73,9 @@ export default function Home({ data }) {
 }
 
 export async function getServerSideProps() {
-
   // hero section api
   let hero_section_home = await axios
-    .get(`${API_URL}/api/v1/cms/hero_section_home`)
+    .get(`${API_URL}api/v1/cms/hero_section_home`)
     .then((res) => res.data)
     .catch((e) => console.log(e));
 
@@ -108,7 +103,7 @@ export async function getServerSideProps() {
 
   // get your fix
   let getyour_fix = await axios
-    .get(`${API_URL}/api/v1/categories_by_cities`, {
+    .get(`${API_URL}api/v1/categories_by_cities`, {
       params: {
         city: 1,
       },
@@ -122,28 +117,28 @@ export async function getServerSideProps() {
         herosection: !hero_section_home
           ? HomeHerodata
           : hero_section_home.data.length > 0
-          ? hero_section_home
-          : HomeHerodata,
+            ? hero_section_home
+            : HomeHerodata,
         blogdata: !blog_response
           ? NewsandUpdateData
           : blog_response.data.length > 0
-          ? blog_response
-          : NewsandUpdateData,
+            ? blog_response
+            : NewsandUpdateData,
         hometestimonial: !home_testimonial
           ? TestimonialData
           : home_testimonial.data.length > 0
-          ? home_testimonial
-          : TestimonialData,
+            ? home_testimonial
+            : TestimonialData,
         offersection: !offersection_home
           ? OfferBannerhomedata
           : offersection_home.data.length > 0
-          ? offersection_home
-          : OfferBannerhomedata,
+            ? offersection_home
+            : OfferBannerhomedata,
         getyourfix: !getyour_fix
           ? GetYourFixCard
           : getyour_fix.data.length > 0
-          ? getyour_fix
-          : GetYourFixCard,
+            ? getyour_fix
+            : GetYourFixCard,
       },
     },
   };

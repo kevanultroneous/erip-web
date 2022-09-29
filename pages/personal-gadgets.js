@@ -65,6 +65,8 @@ function IssuePage({ data }) {
   const brandsOffer = useSelector((state) => state.offerBrands);
   const modelOffer = useSelector((state) => state.offerModels);
 
+
+
   // declaration
   const router = useRouter();
 
@@ -72,7 +74,7 @@ function IssuePage({ data }) {
     console.log(categoryTestimonial.data, "offer");
   }, [categoryTestimonial.data]);
 
-  useEffect(() => {}, []);
+
 
   // useEffects
   useEffect(() => {

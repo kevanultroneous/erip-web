@@ -1,0 +1,13 @@
+.homeApplianceIssuesContainer {
+  padding: 1rem 4rem;
+}
+
+@media screen and (max-width: 600px) {
+  .homeApplianceIssuesContainer {
+    padding: 2rem 0 0;
+  }
+
+  .homeApplianceIssuesContainer h4 {
+    padding: 0 0 0 1rem;
+  }
+}

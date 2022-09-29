@@ -14,17 +14,37 @@ import FeedbackQue from "./FeedbackQue";
 import Ratingbar from "./Ratingbar";
 import { useEffect } from "react";
 import MobileProgress from "./MobileProgress";
-export default function ViewBooking({ backhandler }) {
-  const [f1, setF1] = useState(1);
-  const [f2, setF2] = useState(1);
-  const [f3, setF3] = useState(1);
+import { getOrdersDetails } from "api/ordersAPI";
+import CancelOrder from "../Popups/CancelOrder";
+import Reschedule from "../Popups/Reschedule";
+import FeedbackQuestions from "../Popups/FeedbackQuestions";
+import RatingAndReview from "../Popups/RatingAndReview";
+import Thankyou from "../Popups/ThankYou";
+export default function ViewBooking({ backhandler, order }) {
+  const [f1, setF1] = useState(0);
+  const [f2, setF2] = useState(null);
+  const [f3, setF3] = useState(null);
   const [f4, setF4] = useState(null);
   const [f5, setF5] = useState(null);
+
   const [mobileView, setMobileView] = useState(false);
+  const [details, setDetails] = useState([]);
+  const [cancelOrder, setCancelOrder] = useState(false);
+  const [reschedule, setReschedule] = useState(false);
+  const [feedQue, setFeedQuestions] = useState(false);
+  const [ratingr, setRatingr] = useState(false);
+  const [thankYouShow, setThankYouShow] = useState(false);
 
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
+    getAllDetail();
   }, []);
+
+  const getAllDetail = () => {
+    getOrdersDetails(localStorage.getItem("token"), order)
+      .then((r) => setDetails(r.data.data))
+      .catch((e) => console.log(e));
+  };
 
   return (
     <div>
@@ -33,7 +53,11 @@ export default function ViewBooking({ backhandler }) {
           <BiArrowBack className={styles.BackArrow} onClick={backhandler} />
         </Col>
         <Col xs={10} md={10} lg={10} xl={10}>
-          <p className={styles.MainTitle}>LG-Air Conditioner</p>
+          <p className={styles.MainTitle}>
+            {details.length > 0
+              ? details[0].order_brand + "-" + details[0].order_category
+              : null}
+          </p>
         </Col>
       </Row>
 
@@ -41,16 +65,83 @@ export default function ViewBooking({ backhandler }) {
         <PartnerStatusProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
       </Row>
 
+      <CancelOrder
+        show={cancelOrder}
+        onHide={() => setCancelOrder(false)}
+        order={order}
+        backhandler={backhandler}
+      />
+      <Reschedule
+        show={reschedule}
+        onHide={() => {
+          getAllDetail();
+          setReschedule(false);
+        }}
+        order={order}
+      />
+
+      {/* in the last reviw */}
+      <FeedbackQuestions
+        show={feedQue}
+        onHide={() => setFeedQuestions(false)}
+      />
+      <RatingAndReview
+        show={ratingr}
+        onHide={() => setRatingr(false)}
+        order={order}
+      />
+      <Thankyou show={thankYouShow} onHide={() => setThankYouShow(false)} />
+
       {f1 == 0 && f2 == null && f3 == null && f4 == null && f5 == null ? (
         <Col xs={12} md={12} lg={12} xl={12}>
           <Row>
             <Col xs={12} md={6} lg={6} xl={6}>
               <BookingDetails
+                cancelorderclick={() => setCancelOrder(true)}
+                rescheduleclick={() => setReschedule(true)}
+                orderkey={order}
+                orderid={details.length > 0 ? details[0].order_id : null}
+                device={details.length > 0 ? details[0].order_category : null}
+                issue={
+                  details.length > 0
+                    ? details[0].order_issues != null
+                      ? details[0].order_issues.length > 0
+                        ? details[0].order_issues.map((v) => (
+                            <>
+                              {v.issue_name}
+                              <br />
+                            </>
+                          ))
+                        : null
+                      : null
+                    : null
+                }
+                datetime={
+                  details.length > 0
+                    ? details[0].order_appointments[
+                        details[0].order_appointments.length > 0
+                          ? details[0].order_appointments.length - 1
+                          : 0
+                      ].appointment_date +
+                      "," +
+                      details[0].order_appointments[
+                        details[0].order_appointments.length > 0
+                          ? details[0].order_appointments.length - 1
+                          : 0
+                      ].appointment_timeslot
+                    : null
+                }
                 hidereschedulebuttons={false}
-                deliveryAndJobcard={false}
+                deliveryAndJobcard={true}
                 hideoutcallsupport={false}
                 showinnercallsupport={false}
-                raiseticketshow={false}
+                raiseticketshow={true}
+                callsupport={
+                  details.length > 0
+                    ? "tel:+91" +
+                      Object.values(details[0].order_options_1[0])[1]
+                    : null
+                }
               />
             </Col>
             {mobileView ? (

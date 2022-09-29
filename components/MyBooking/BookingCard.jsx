@@ -56,7 +56,8 @@ function BookingCard({
           <PrimaryButton
             title="Call Support"
             customClass={styles.actionBtn}
-            clickHandler={callsupport}
+            // clickHandler={callsupport}
+            href={callsupport}
           />
         </Col>
         <Col xl={6} xs={6}>

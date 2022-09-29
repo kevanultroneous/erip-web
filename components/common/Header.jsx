@@ -30,6 +30,8 @@ import { GET_CITY_SUCCESS } from "redux/actions/actionTypes";
 import { BiUser } from "react-icons/bi";
 import { callNavsearch } from "redux/actions/mixActions/mixActions";
 import { selectCategory } from "redux/actions/issuePageActions/issuePageActions";
+import geocodeToPincode from "geocode-to-pincode";
+import { getCookie } from "cookies-next";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
@@ -67,9 +69,6 @@ export function Header() {
     setSdata(navdata);
   }, 1000);
 
-  setTimeout(() => {
-    localStorage.removeItem("token");
-  }, 72000000);
   useEffect(() => {
     if (localStorage.getItem("token")) {
       dispatch({
@@ -82,6 +81,19 @@ export function Header() {
         payload: 0,
       });
     }
+    if (getCookie("erip") == "web") {
+    } else {
+      localStorage.removeItem("token");
+      localStorage.removeItem("city");
+      localStorage.removeItem("enq_id");
+      localStorage.removeItem("cityid");
+    }
+    if (locationselector.err === "" && locationselector.city != null) {
+      setLocationPopupShow(false);
+    }
+    if (!(localStorage.getItem("city") && localStorage.getItem("cityid"))) {
+      setLocationPopupShow(true);
+    }
   }, []);
 
   // getting header menus from api
@@ -89,7 +101,6 @@ export function Header() {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
     var modal = document.getElementById("dropdown_location");
     getHeaderDataFromAPI();
-    // getLocation();
   }, []);
 
   const getHeaderDataFromAPI = async () => {
@@ -218,7 +229,7 @@ export function Header() {
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[1]) {
-          // setLocationPopupShow(false);
+          setLocationPopupShow(false);
           setLocationLoader(false);
           setSelectedAddress(results[1].formatted_address);
         }
@@ -232,7 +243,6 @@ export function Header() {
       if (status == google.maps.GeocoderStatus.OK) {
         var latitude = results[0].geometry.location.lat();
         var longitude = results[0].geometry.location.lng();
-        displayLocation(latitude, longitude);
       }
     });
   }
@@ -413,18 +423,18 @@ export function Header() {
               </Link>
             </Navbar.Brand>
             <Navbar.Brand>
-              {/* <div className={styles.Searchbar}> */}
-              {/* <FiSearch
+              <div className={styles.Searchbar}>
+                <FiSearch
                   size={25}
                   color="#0E62CB"
                   style={{ marginRight: "1rem" }}
-                /> */}
-              {/* <input
+                />
+                <input
                   type="text"
                   placeholder="Search your brand or model"
                   onChange={(e) => setSearch(e.target.value)}
-                /> */}
-              {/* </div> */}
+                />
+              </div>
               {/* <div className={styles.SearchItems}>
                 <ul>{sdata ? sdata.map((v) => v.brands) : null}</ul>
               </div> */}

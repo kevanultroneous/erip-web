@@ -61,7 +61,7 @@
 .BoxAmountWrraper {
   display: flex;
   align-items: flex-start;
-  justify-content: end;
+  justify-content: flex-end;
   margin-top: 0.5rem;
 }
 
@@ -151,6 +151,7 @@
     font-weight: 400;
     font-size: 16px;
   }
+
   .MiniCard {
     margin-left: 0%;
     margin-right: 0%;

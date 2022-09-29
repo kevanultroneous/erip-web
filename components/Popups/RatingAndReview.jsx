@@ -3,13 +3,17 @@ import styles from "@/styles/components/Popups/RatingAndReview.module.css";
 import PrimaryButton from "../common/PrimaryButton";
 import ReactStars from "react-rating-stars-component";
 import { MdStar, MdStarHalf, MdStarOutline } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BsEmojiSmile } from "react-icons/bs";
+import { postOrderRatePartner, postOrderReview } from "api/ordersAPI";
 
-export default function RatingAndReview({ show, onHide }) {
+export default function RatingAndReview({ show, onHide, order }) {
   //
   const [ratings, setRatings] = useState(null);
   const [mobileView, setMobileView] = useState(false);
+  const [edits, setEdits] = useState(true);
+  const [review, setReview] = useState([]);
+  const [tellus, setTellUs] = useState("");
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
   }, []);
@@ -98,11 +102,25 @@ export default function RatingAndReview({ show, onHide }) {
               Please rate our partner and the service according to your
               experience
             </p>
+
             <ReactStars
               count={5}
-              onChange={(e) => setRatings(e)}
+              onChange={(e) => {
+                setRatings(e);
+                postOrderRatePartner(localStorage.getItem("token"), {
+                  order: order,
+                  partner: 1,
+                  rating: ratings,
+                }).then((response) => {
+                  if (response.data.success) {
+                    alert(response.data.message);
+                  } else {
+                    alert(response.data.message);
+                  }
+                });
+              }}
               size={mobileView ? 40 : 50}
-              edit={ratings !== null ? false : true}
+              edit={true}
               isHalf={true}
               value={ratings}
               color="#ffffff"
@@ -142,7 +160,17 @@ export default function RatingAndReview({ show, onHide }) {
                   ].map((v, i) => (
                     <Col xs={12} md={6} lg={5} xl={5} key={i}>
                       <div className={styles.CheckBoxCover}>
-                        <Form.Check name="group1" type={"checkbox"} />
+                        <Form.Check
+                          name="group1"
+                          type={"checkbox"}
+                          onChange={(e) => {
+                            if (review.includes(i + 1)) {
+                              setReview(review.filter((k) => k !== i + 1));
+                            } else {
+                              setReview(review.concat(i + 1));
+                            }
+                          }}
+                        />
                         <p className={styles.CheckBoxTitle}>{v}</p>
                       </div>
                     </Col>
@@ -158,6 +186,8 @@ export default function RatingAndReview({ show, onHide }) {
               >
                 <div>
                   <textarea
+                    value={tellus}
+                    onChange={(e) => setTellUs(e.target.value)}
                     placeholder="Tell us more..."
                     rows={4}
                     cols={55}
@@ -175,6 +205,21 @@ export default function RatingAndReview({ show, onHide }) {
                   ) : null}
 
                   <PrimaryButton
+                    clickHandler={() => {
+                      postOrderReview(localStorage.getItem("token"), {
+                        order: order,
+                        question: 1,
+                        answer: review,
+                        remark: tellus,
+                      }).then((r) => {
+                        if (r.data.success) {
+                          alert(r.data.message);
+                          onHide();
+                        } else {
+                          alert(r.data.message);
+                        }
+                      });
+                    }}
                     title="Submit"
                     buttonStyle={{
                       color: "#ffffff",

@@ -4,7 +4,7 @@ import styles from "@/styles/components/ThankYou/ThankYouHero.module.css";
 import PrimaryButton from "../common/PrimaryButton";
 import Container from "../common/Container";
 
-function ThankYouHero() {
+function ThankYouHero({ clkhandler }) {
   return (
     <section className={styles.thankyouContainer}>
       <Container>
@@ -18,16 +18,29 @@ function ThankYouHero() {
               />
             </div>
           </Col>
-          <Col xl={5} className={styles.thankYouHeroTextCol}>
+          <Col xl={7} className={styles.thankYouHeroTextCol}>
             <div className={styles.thankYouHeroText}>
               <h3>Thank You!</h3>
               <p>Your booking has been placed successfully</p>
-              <PrimaryButton
-                title="View Order Status"
-                variant="primary"
-                customClass={styles.orderStatusBtn}
-              />
             </div>
+          </Col>
+          <Col
+            xs={12}
+            md={12}
+            lg={12}
+            xl={12}
+            className="d-flex justify-content-center mt-5"
+          >
+            <PrimaryButton
+              title="View Order Status"
+              variant="primary"
+              buttonStyle={{
+                background: "#0E62CB",
+                width: "50%",
+              }}
+              href="/my-bookings"
+              clickHandler={clkhandler}
+            />
           </Col>
         </Row>
       </Container>

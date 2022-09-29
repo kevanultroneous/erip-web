@@ -1,0 +1,61 @@
+.modelSelectSegmentMain {
+  text-align: center;
+}
+
+.modelSelectSegment {
+  justify-content: center;
+  margin: 1rem 0 0;
+}
+
+.modelSelectContainer {
+  padding: 1rem 4rem;
+}
+
+.modelSelectbutton {
+  font-size: 14px;
+  font-weight: 500;
+  width: 100%;
+  /* line-height: 1px; */
+}
+
+.modelSelectImage {
+  border-radius: 10px;
+}
+
+.modelSelectButtonWeb {
+  all: unset;
+  border-radius: 10px;
+  border: 2px solid transparent;
+}
+
+.modelSelectButtonWeb:focus,
+.modelSelectButtonWeb:active {
+  border: 2px solid #0e62cb;
+}
+
+@media screen and (max-width: 600px) {
+  .modelSelectSegmentMain {
+    text-align: left;
+  }
+  .modelSelectContainer {
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    background-color: #ebf3ff;
+  }
+  .modelSelectSegment {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow-x: auto;
+    margin: 0.5rem 0;
+  }
+  .modelSelectSegment div {
+    margin: 0 0.5rem 0 0;
+  }
+  .modelSelectbutton {
+    width: max-content;
+    padding: 0.5rem 0.7rem;
+  }
+  .modelSelectbutton:focus {
+    border: 1px solid #0d6efd;
+  }
+}

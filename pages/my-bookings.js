@@ -10,16 +10,17 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 
+
 function myBookings() {
   const [mobileView, setMobileView] = useState(false);
   const router = useRouter()
-
   useEffect(() => {
 
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
     if (!localStorage.getItem("token")) {
       router.push("/");
     }
+
   }, []);
 
   return (

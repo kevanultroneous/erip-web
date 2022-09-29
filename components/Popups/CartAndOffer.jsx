@@ -21,13 +21,16 @@ import {
   setCouponssSuccess,
 } from "redux/actions/couponActions/couponsActions";
 import { APPLY_COUPON_SUCCESS } from "redux/actions/actionTypes";
+import { VerifyCoupons } from "api/couponsApi";
+import axios from "axios";
+import { PostEnqApi } from "api/enquireAPI";
 
 export default function CartAndOffer({ show, onHide }) {
   const [active, setActive] = useState(0);
   const [total, setTotal] = useState(0);
   const [showCheckout, setShowCheckout] = useState(false);
   const [couponShow, setCouponShow] = useState(false);
-
+  const commonselector = useSelector((state) => state);
   const cartSelector = useSelector((state) => state.cartdata);
   const couponsselector = useSelector((state) => state.couponsdata);
 
@@ -42,7 +45,7 @@ export default function CartAndOffer({ show, onHide }) {
       setActive(0);
       setShowCheckout(false);
     }
-    dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
+    dispatch(callMyCartBycity(localStorage.getItem("token")));
   }, [show]);
 
   const BillAmount = () => {
@@ -59,8 +62,8 @@ export default function CartAndOffer({ show, onHide }) {
   };
 
   useEffect(() => {
-    dispatch(callFetchCoupons());
-    dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
+    dispatch(callFetchCoupons(commonselector.locationdata.city, 1));
+    dispatch(callMyCartBycity(localStorage.getItem("token")));
   }, []);
 
   const couponsdataList = couponsselector.data
@@ -84,9 +87,52 @@ export default function CartAndOffer({ show, onHide }) {
     // `₹${total - parseInt(selectingCoupons.coupon_amount)}`;
   }, [couponShow]);
 
+  const EnquireNow = () => {
+    PostEnqApi(commonselector.userdata.useraccess, {
+      flowGroup: 1,
+      sourceType: 2,
+      subSourceType: 4,
+      city: 1,
+      category: 2,
+      brand: 7,
+      model_segment: 1,
+      issues: [3],
+      coupon: 0,
+    })
+      .then((r) => {
+        if (r.data.success) {
+          localStorage.setItem("enq_id", r.data.enquiry_data.enquiry_id);
+        } else {
+          alert(r.data.message);
+        }
+      })
+      .catch((e) => console.log(e));
+  };
   const CheckOutHandler = () => {
-    dispatch(callVerifyCoupons(localStorage.getItem("cityid")));
-    // setShowCheckout(true);
+    console.log(total);
+    console.log(selectingCoupons);
+    if (couponShow) {
+      VerifyCoupons(
+        commonselector.userdata.useraccess,
+        commonselector.locationdata.city,
+        commonselector.cartdata.data.data[0].category_id,
+        selectingCoupons ? selectingCoupons.coupon_id : null,
+        total
+      )
+        .then((r) => {
+          if (r.data) {
+            if (r.data.success) {
+              EnquireNow();
+            } else {
+              alert(r.data.message);
+            }
+          }
+        })
+        .catch((e) => console.log(e));
+    } else {
+      EnquireNow();
+      setShowCheckout(true);
+    }
   };
   return (
     <div>
@@ -104,7 +150,9 @@ export default function CartAndOffer({ show, onHide }) {
           <Modal.Body className={styles.CartAndOfferBody}>
             <Row>
               <Col xs={10} md={6} lg={6} xl={6}>
-                <h4 className={styles.CartAndOfferMainTitle}>Your Cart</h4>
+                <h4 className={styles.CartAndOfferMainTitle}>
+                  {cartSelector.data.success == false ? null : "Your Cart"}
+                </h4>
               </Col>
               <Col
                 xs={2}
@@ -123,7 +171,13 @@ export default function CartAndOffer({ show, onHide }) {
                 className={styles.ProductListWrraper}
               >
                 {cartSelector.data.success == false ? (
-                  <h4 className="text-center">{cartSelector.data.message}</h4>
+                  <div className="text-center">
+                    <Image src="/assets/images/blank-cart.png" fluid />
+                    <h3 className="text-center mt-xl-4 mb-xl-4 mt-lg-4 mb-lg-4 mt-4 mb-4">
+                      <b>Your cart is empty!</b>
+                    </h3>
+                    <h5>You have not added any services to in your cart yet</h5>
+                  </div>
                 ) : (
                   cartDetailList.map((v, i) => (
                     <CartProductList
@@ -263,7 +317,6 @@ export default function CartAndOffer({ show, onHide }) {
                     key={i}
                     applyaction={() => {
                       setCouponShow(true);
-                      // setSelectedCoupons(v);
                       dispatch(setCouponssSuccess(v));
                       setActive(0);
                     }}

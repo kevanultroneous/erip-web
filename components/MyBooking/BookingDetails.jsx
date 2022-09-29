@@ -4,9 +4,13 @@ import { useState } from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import { BsChevronRight } from "react-icons/bs";
 import PrimaryButton from "../common/PrimaryButton";
+import PaymentSummary from "../Popups/PaymentSummary";
+import JobCardPopUp from "./JobCardPopUp";
 export const DeliveryJobCard = () => {
+  const [jobcard, setJobcard] = useState(false);
   return (
     <div>
+      <JobCardPopUp show={jobcard} onHide={() => setJobcard(false)} />
       <Row className={styles.MiniCard}>
         <Col xs={6} md={6} lg={6} xl={6}>
           <p className={styles.ItemTitle}>Estimated to deliver on</p>
@@ -20,7 +24,10 @@ export const DeliveryJobCard = () => {
           <p className={styles.ItemTitleJob}>View Job Card</p>
         </Col>
         <Col xs={6} md={6} lg={6} xl={6}>
-          <BsChevronRight className={styles.ItemArrow} />
+          <BsChevronRight
+            className={styles.ItemArrow}
+            onClick={() => setJobcard(true)}
+          />
         </Col>
       </Row>
     </div>
@@ -32,8 +39,17 @@ export default function BookingDetails({
   showinnercallsupport,
   hidereschedulebuttons,
   raiseticketshow,
+  orderid,
+  device,
+  issue,
+  datetime,
+  orderkey,
+  rescheduleclick,
+  cancelorderclick,
+  callsupport,
 }) {
   const [mobileView, setMobileView] = useState(false);
+  const [summaryView, setSummaryView] = useState(false);
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
   }, []);
@@ -44,7 +60,7 @@ export default function BookingDetails({
           <label className={styles.BoxTitle}>Booking Details</label>
         </Col>
         <Col xs={12} md={6} lg={6} xl={6}>
-          <label className={styles.BoxOrder}>Order # - 0007</label>
+          <label className={styles.BoxOrder}>Order # - {orderid}</label>
         </Col>
         <Col xs={12} md={6} lg={6} xl={6} className={styles.ProductWrraper}>
           <Image
@@ -53,9 +69,9 @@ export default function BookingDetails({
             className={styles.BoxImg}
           />
           <label className={styles.BoxProduct}>
-            Air Conditioner
+            {device}
             <br />
-            No cooling/Less cooling
+            {issue}
           </label>
         </Col>
         <Col xs={12} md={6} lg={6} xl={6} className={styles.BoxAmountWrraper}>
@@ -76,25 +92,27 @@ export default function BookingDetails({
             Lorem ipsum cotor bajolt valom
           </label>
         </Col>
-        <Col xs={12} md={6} lg={6} xl={6}>
+        <Col xs={12} md={6} lg={6} xl={12}>
           <Image
             src="/assets/icons/box-time.png"
             alt="box-icons"
             className={styles.BoxImg}
           />
-          <label className={styles.BoxDateTime}>20th April, 9-11 AM</label>
+          <label className={styles.BoxDateTime}>{datetime}</label>
         </Col>
         {!hidereschedulebuttons && (
           <Col xs={12} md={12} lg={12} xl={12}>
             <Row>
               <Col xs={6} md={6} lg={6} xl={6}>
                 <PrimaryButton
+                  clickHandler={rescheduleclick}
                   title="Reschedule"
                   buttonStyle={{ width: "100%" }}
                 />
               </Col>
               <Col xs={6} md={6} lg={6} xl={6}>
                 <PrimaryButton
+                  clickHandler={cancelorderclick}
                   title="Cancel"
                   buttonStyle={{
                     width: "100%",
@@ -109,6 +127,7 @@ export default function BookingDetails({
         {showinnercallsupport && (
           <Col xs={12} md={12} lg={12} xl={12}>
             <PrimaryButton
+              href={callsupport}
               title="Call Support"
               buttonStyle={{ width: "100%" }}
             />
@@ -120,6 +139,7 @@ export default function BookingDetails({
           <Row className={styles.CallUsForSupport}>
             <Col xs={12} md={12} lg={12} xl={12}>
               <PrimaryButton
+                href={callsupport}
                 title="Call Us For Support"
                 buttonStyle={{ width: "100%", marginBottom: "4rem" }}
               />
@@ -154,7 +174,17 @@ export default function BookingDetails({
             <p className={styles.ItemTitleJob}>View Receipt</p>
           </Col>
           <Col xs={4} md={4} lg={4} xl={4}>
-            <BsChevronRight className={styles.ItemArrow} />
+            <PaymentSummary
+              order={orderkey}
+              show={summaryView}
+              onHide={() => setSummaryView(false)}
+              back={() => setSummaryView(false)}
+              title={"Payment Summary"}
+            />
+            <BsChevronRight
+              className={styles.ItemArrow}
+              onClick={() => setSummaryView(true)}
+            />
           </Col>
           <Col xs={12} md={12} lg={12} xl={12} className="mt-3">
             <PrimaryButton

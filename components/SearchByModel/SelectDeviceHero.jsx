@@ -51,6 +51,7 @@ import {
   getPersonalGadgetsByModels,
   selectCategoryName,
 } from "redux/actions/personalGadgetActions/personalGadget";
+import KnowMoreModal from "../HomeAppliances/KnowMoreModal";
 
 function SelectDeviceHero({
   headClass,
@@ -151,6 +152,7 @@ function SelectDeviceHero({
     dispatch(getPersonalGadgetsByCity(cityID));
   }, [cityID]);
 
+  const cartdata = useSelector((selector) => selector.cartdata.data.data);
   const selectDrop = useRef();
   const categoryModel = useRef();
 
@@ -291,7 +293,7 @@ function SelectDeviceHero({
   };
 
   return (
-    <>
+    <div>
       <section className={`${styles.modelHeroContainer} ${modelSection}`}>
         <Row className={`${styles.modelHeroRow} ${headClass}`}>
           <Col xl={2}>
@@ -503,7 +505,16 @@ function SelectDeviceHero({
       {token && cartIssues.length > 0 && (
         <IssueTotalBill totalPrice={totalprice} />
       )}
-    </>
+      <div>
+        <KnowMoreModal
+          show={modal}
+          onHide={() => setModal(!modal)}
+          key={modalData.issue_id}
+          knowMoreTitle={modalData.issue_title}
+          knowMoreHTMLBody={modalData.templates_description}
+        />
+      </div>
+    </div>
   );
 }
 

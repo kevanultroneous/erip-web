@@ -1,7 +1,7 @@
 // react hooks
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 
 // components
 import { Header } from "@/components/common/Header";
@@ -17,15 +17,22 @@ import ContactFAQ from "@/components/ContactUs/ContactFAQ";
 
 // data
 import { API_URL, TestimonialData } from "utils/data";
+import { AccordionFAQ } from "utils/accordionFAQ";
 
 // external library
 import axios from "axios";
+import ModelSelect from "@/components/HomeAppliances/ModelSelect";
+import HomeApplianceIssues from "@/components/HomeAppliances/HomeApplianceIssues";
+import HomeApplianceHero from "@/components/HomeAppliances/HomeApplianceHero";
+import HomeApplianceDetails from "@/components/HomeAppliances/HomeApplianceDetails";
 
 // styles
 // import styles from "@/styles/components/IssuePage/issuepage.module.css";
 
 function Homeappliances() {
   const [mobileView, setMobileView] = useState(true);
+  const [popupLogin, setPopupLogin] = useState(false);
+  const [token, setToken] = useState(false);
 
   // Arrays of category testimonial hero Offers
   const categoryFaq = useSelector((state) => state.faqCategory);
@@ -54,15 +61,53 @@ function Homeappliances() {
 
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
+
+    if (localStorage.getItem("token")) {
+      setToken(true);
+      setPopupLogin(false);
+    } else {
+      setToken(false);
+    }
   }, []);
+
+  function useIsInViewport(ref) {
+    const [isIntersecting, setIsIntersecting] = useState(false);
+
+    // const observer = useMemo(
+    //   () =>
+    //     new IntersectionObserver(([entry]) =>
+    //       setIsIntersecting(entry.isIntersecting)
+    //     ),
+    //   []
+    // );
+
+    // console.log(observer, "observer");
+
+    // useEffect(() => {
+    //   observer.observe(ref.current);
+
+    //   return () => {
+    //     observer.disconnect();
+    //   };
+    // }, [ref, observer]);
+
+    return isIntersecting;
+  }
 
   return (
     <Layout title={"Home Appliances"}>
       <Header />
-      <WhyErip />
-      <InformationSection paragraph={categoryInfo.data} />
-      <ContactFAQ faqArray={categoryFaq.data} />
-      <Testimonials data={categoryTestimonial.data} />
+      <LoginPopup show={popupLogin} onHide={() => setPopupLogin(false)} />
+      <HomeApplianceHero />
+      <ModelSelect />
+      <HomeApplianceIssues
+        token={token}
+        quoteaction={() => setPopupLogin(true)}
+      />
+      {mobileView && <WhyErip />}
+      {mobileView && <Testimonials data={TestimonialData} />}
+      {mobileView && <HomeApplianceDetails />}
+      {mobileView && <ContactFAQ faqArray={AccordionFAQ} />}
       {mobileView ? <Footer /> : <MobileFooter />}
     </Layout>
   );

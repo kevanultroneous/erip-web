@@ -20,11 +20,11 @@ function IssueComponent({
   serviceTime,
   warranty,
   serviceType,
-  href,
   addToCart,
   buttonName,
   discountedPercentage,
   loggedIn,
+  modalHandler,
 }) {
   const [mobileView, setMobileView] = useState(false);
   useEffect(() => {
@@ -53,9 +53,9 @@ function IssueComponent({
           </Col>
           <Col xs={4} className={styles.mobilePrice}>
             <p className={styles.issueOfferPrice}>₹{issueOfferPrice}</p>
-            <Link href={href}>
-              <a className={styles.issueLink}>Know More</a>
-            </Link>
+            <a className={styles.issueLink} onClick={modalHandler}>
+              Know More
+            </a>
           </Col>
         </Row>
         <Row>
@@ -104,9 +104,10 @@ function IssueComponent({
               <p className={styles.issueDetails}>Service Time: {serviceTime}</p>
               <p className={styles.issueDetails}>Warranty: {warranty}</p>
               <p className={styles.issueDetails}>Service Type: {serviceType}</p>
-              <Link href={href}>
-                <a className={styles.issueLink}>Know More</a>
-              </Link>
+
+              <a className={styles.issueLink} onClick={modalHandler}>
+                Know More
+              </a>
             </div>
             <PrimaryButton
               title={buttonName}
