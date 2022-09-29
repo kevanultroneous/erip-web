@@ -73,7 +73,6 @@ export default function Home({ data }) {
 }
 
 export async function getServerSideProps() {
-
   // hero section api
   let hero_section_home = await axios
     .get(`${API_URL}api/v1/cms/hero_section_home`)

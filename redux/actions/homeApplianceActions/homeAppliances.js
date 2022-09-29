@@ -86,8 +86,10 @@ export const getHomeAppliance = (data) => {
 export const getHomeApplianceModel = (data) => {
   return async function (dispatch) {
     getHomeApplianceModelStart();
+    console.log({ data });
     await getSegmentByCategory(data)
       .then((response) => {
+        console.log({ response });
         dispatch(getHomeApplianceModelSuccess(response));
       })
       .catch((err) => {

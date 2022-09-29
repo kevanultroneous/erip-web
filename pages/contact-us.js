@@ -8,9 +8,11 @@ import Layout from "@/components/common/Layout";
 
 function ContactUs() {
   const [mobileView, setMobileView] = useState(true);
+
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(false) : setMobileView(true);
   }, []);
+
   return (
     <>
       <Layout title={"Contact Us"}>

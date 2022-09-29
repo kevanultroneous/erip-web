@@ -1,9 +1,12 @@
 import { getCategoriesByCity } from "api/categoryByCity";
 import {
+  getBrandName,
   getBrandsByCategory,
+  getCategoryName,
   getIssuesByModel,
+  getModelName,
   getModelsByBrand,
-} from "api/personalGadgets";
+} from "api/personalGadgetsApi";
 import * as personalGadgets from "../actionTypes";
 
 export const getPersonalGadgetsStart = () => {
@@ -26,6 +29,29 @@ export const getPersonalGadgetsFail = (err) => {
     type: personalGadgets.GET_PERSONAL_GADGETS_FAIL,
     payload: err,
     loading: false,
+  };
+};
+
+export const selectPersonalGadgetsStart = () => {
+  return {
+    type: personalGadgets.SELECT_PERSONAL_GADGETS_START,
+    loading: true,
+  };
+};
+
+export const selectPersonalGadgetsSuccess = (data) => {
+  return {
+    type: personalGadgets.SELECT_PERSONAL_GADGETS_SUCCESS,
+    loading: false,
+    payload: data,
+  };
+};
+
+export const selectPersonalGadgetsFail = (err) => {
+  return {
+    type: personalGadgets.SELECT_PERSONAL_GADGETS_START,
+    loading: false,
+    payload: err,
   };
 };
 
@@ -183,7 +209,7 @@ export const getPersonalGadgetsByModels = (data) => {
   };
 };
 
-export const getPersonalGdgetsByIssues = (data) => {
+export const getPersonalGadgetsByIssues = (data) => {
   return async function (dispatch) {
     getPersonalGadgetsIssueStart();
     await getIssuesByModel(data)
@@ -192,6 +218,46 @@ export const getPersonalGdgetsByIssues = (data) => {
       })
       .catch((err) => {
         dispatch(getPersonalGadgetssIssueFail(err));
+      });
+  };
+};
+
+export const selectCategoryName = (data) => {
+  return async function (dispatch) {
+    console.log(data);
+    selectPersonalGadgetsStart();
+    await getCategoryName(data)
+      .then((response) => {
+        dispatch(selectPersonalGadgetsSuccess(response));
+      })
+      .catch((err) => {
+        dispatch(selectPersonalGadgetsFail(err));
+      });
+  };
+};
+
+export const selectBrandName = (data) => {
+  return async function (dispatch) {
+    selectPersonalGadgetsBrandStart();
+    await getBrandName(data)
+      .then((response) => {
+        dispatch(selectPersonalGadgetsBrandSuccess(response));
+      })
+      .catch((err) => {
+        dispatch(selectPersonalGadgetsBrandFail(err));
+      });
+  };
+};
+
+export const selectModelName = (data) => {
+  return async function (dispatch) {
+    selectPersonalGadgetsModelStart();
+    await getModelName(data)
+      .then((response) => {
+        dispatch(selectPersonalGadgetsModelSuccess(response));
+      })
+      .catch((err) => {
+        dispatch(selectPersonalGadgetsModelFail(err));
       });
   };
 };

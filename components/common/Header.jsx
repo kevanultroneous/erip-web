@@ -380,9 +380,6 @@ export function Header() {
                 <Nav.Link href="#" className={styles.mobileMenuLink}>
                   Blogs
                 </Nav.Link>
-                <Nav.Link href="#" className={styles.mobileMenuLink}>
-                  Logout
-                </Nav.Link>
               </Nav>
             </Navbar.Collapse>
             <LoginPopup show={loginPopup} onHide={() => setLoginPopup(false)} />

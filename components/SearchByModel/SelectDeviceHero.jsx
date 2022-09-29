@@ -43,7 +43,18 @@ import {
   getTestimonialsByBrand,
   getTestimonialsByCategory,
 } from "redux/actions/testimonialActions/testimonialAction";
-import { callAddorRemoveCart } from "redux/actions/cartActions/cartActions";
+import {
+  callAddorRemoveCart,
+  callMyCartBycity,
+} from "redux/actions/cartActions/cartActions";
+import {
+  getPersonalGadgetsByBrands,
+  getPersonalGadgetsByCity,
+  getPersonalGadgetsByIssues,
+  getPersonalGadgetsByModels,
+  selectCategoryName,
+} from "redux/actions/personalGadgetActions/personalGadget";
+import KnowMoreModal from "../HomeAppliances/KnowMoreModal";
 
 function SelectDeviceHero({
   headClass,
@@ -55,6 +66,8 @@ function SelectDeviceHero({
   const [categories, setcategories] = useState([]);
   const [brandData, setbrandData] = useState([{}]);
   const [models, setmodels] = useState([{}]);
+  const [modal, setModal] = useState(false);
+  const [modalData, setModalData] = useState({});
 
   const [categoryName, setCategoryName] = useState("Device");
   const [brandName, setBrandName] = useState("Brands");
@@ -72,8 +85,6 @@ function SelectDeviceHero({
   const [cartIssues, setCartIssues] = useState([]);
   const [displayIssues, setDisplayIssues] = useState(false);
 
-  const [activeCat, setActiveCat] = useState(0);
-
   const [topBrands, setTopBrands] = useState(true);
   const [totalBrands, setTotalBrands] = useState(6);
   const [displayBrands, setDisplayBrands] = useState(true);
@@ -81,11 +92,31 @@ function SelectDeviceHero({
   // Use Selector
   // City ID
   const cityID = useSelector((state) => state.locationdata.city);
+  const cityName = useSelector((state) => state.locationdata.name);
 
   // category brand model IDs
   const categoryID = useSelector((state) => state.issuePage.categoryID);
   const getBrandID = useSelector((state) => state.issuePage.brandID);
   const getModelID = useSelector((state) => state.issuePage.modelID);
+
+  // personalGadgetsArrays
+  const personalGadgetCategory = useSelector((state) => state.personalGadget);
+  const personalGadgetBrands = useSelector(
+    (state) => state.personalGadgetBrands
+  );
+  const personalGadgetModels = useSelector(
+    (state) => state.personalGadgetModels
+  );
+  const personalGadgetIssues = useSelector(
+    (state) => state.personalGadgetIssues
+  );
+
+  // selectgadgets
+  const selectCategoryID = useSelector(
+    (state) => state.categoryName.categoryName
+  );
+  const selectBrandsName = useSelector((state) => state.brandName.brandName);
+  const selectModelsName = useSelector((state) => state.modelName.modelName);
 
   const dispatch = useDispatch();
 
@@ -95,6 +126,8 @@ function SelectDeviceHero({
 
   useEffect(() => {
     console.log({ categoryID });
+    console.log("category", { selectCategoryID });
+    dispatch(getPersonalGadgetsByBrands(categoryID));
     dispatch(getCategoryHero(categoryID));
     dispatch(callFaqByCategory(categoryID));
     dispatch(getInformationByCategory(categoryID));
@@ -104,22 +137,28 @@ function SelectDeviceHero({
 
   useEffect(() => {
     console.log({ getBrandID });
-    dispatch(getBrandsHero(getBrandID));
-    dispatch(callFaqByBrands(getBrandID));
-    dispatch(getInformationByBrands(getBrandID));
-    dispatch(getBrandsOffer(getBrandID));
-    dispatch(getTestimonialsByBrand(getBrandID));
+    // dispatch(getPersonalGadgetsByModels(getBrandID));
+    // dispatch(getBrandsHero(getBrandID));
+    // dispatch(callFaqByBrands(getBrandID));
+    // dispatch(getInformationByBrands(getBrandID));
+    // dispatch(getBrandsOffer(getBrandID));
+    // dispatch(getTestimonialsByBrand(getBrandID));
   }, [getBrandID]);
 
   useEffect(() => {
-    dispatch(getModelHero(getModelID));
-    dispatch(callFaqByBrands(getModelID));
-    dispatch(getInformationByBrands(getModelID));
-    dispatch(getBrandsOffer(getModelID));
-    dispatch(getTestimonialsByBrand(getModelID));
+    // dispatch(getPersonalGadgetsByIssues(getModelID));
+    // dispatch(getModelHero(getModelID));
+    // dispatch(callFaqByBrands(getModelID));
+    // dispatch(getInformationByBrands(getModelID));
+    // dispatch(getBrandsOffer(getModelID));
+    // dispatch(getTestimonialsByBrand(getModelID));
   }, [getModelID]);
 
-  const cartdata = useSelector((selector) => selector.cartdata.data.data);
+  useEffect(() => {
+    dispatch(getPersonalGadgetsByCity(cityID));
+  }, [cityID]);
+
+  const cartdata = useSelector((state) => state.cartdata);
   const selectDrop = useRef();
   const categoryModel = useRef();
 
@@ -178,6 +217,7 @@ function SelectDeviceHero({
 
   const getBrands = async (eventKey, key) => {
     dispatch(selectCategory(eventKey));
+    dispatch(selectCategoryName(cityID));
 
     await axios
       .get(`${API_URL}api/v1/brands_by_category?category=${eventKey}`)
@@ -241,12 +281,12 @@ function SelectDeviceHero({
     setModelName("Models");
   };
 
-  const totalprice =
-    cartIssues.length <= 0
-      ? 0
-      : cartIssues
-          .map((issueMap) => Number(issueMap.discounted_price))
-          .reduce((a, b) => a + b);
+  // const totalprice =
+  //   cartdata == undefined
+  //     ? 0
+  //     : cartdata
+  //         .map((issueMap) => Number(issueMap.issue_price))
+  //         .reduce((a, b) => a + b);0
 
   const showMoreBrands = () => {
     setTotalBrands(brandData.length);
@@ -258,6 +298,26 @@ function SelectDeviceHero({
     setDisplayBrands(true);
   };
 
+  const handlingModal = (modalIssue) => {
+    setModalData(modalIssue);
+    setModal(!modal);
+  };
+
+  let heroCatName = "";
+  const firstCap = () => {
+    let firstLetter = categoryName.substring(0, 1);
+    let smallLetter = categoryName.substring(1, categoryName.length);
+    return (heroCatName = firstLetter + smallLetter.toLowerCase());
+  };
+
+  const getCartData = (e) => {
+    dispatch(callAddorRemoveCart(localStorage.getItem("token"), e));
+    dispatch(callMyCartBycity(localStorage.getItem("token")));
+  };
+
+  useEffect(() => {
+    console.log({ cartdata });
+  }, [cartdata]);
   return (
     <div>
       <section className={`${styles.modelHeroContainer} ${modelSection}`}>
@@ -270,7 +330,9 @@ function SelectDeviceHero({
             />
           </Col>
           <Col xl={10}>
-            <h1>Mobile repair service in Bangalore</h1>
+            <h1>
+              {firstCap()} repair service in {cityName}
+            </h1>
           </Col>
         </Row>
         {mobileView ? (
@@ -341,8 +403,8 @@ function SelectDeviceHero({
                                 >
                                   <div className={styles.brandLogoBox}>
                                     <Image
-                                      accessKey={brands.brand_id}
                                       fluid
+                                      accessKey={brands.brand_id}
                                       src={brands.brand_icon_url}
                                       alt={brands.brand_title}
                                     />
@@ -449,17 +511,9 @@ function SelectDeviceHero({
                   serviceTime={issues.repair_duration}
                   warranty={issues.warranty_period}
                   serviceType={issues.repair_type}
-                  href={"#"}
+                  modalHandler={() => handlingModal(issues)}
                   addToCart={() => {
-                    setCartIssues((previssues) => [...previssues, issues]);
-                    token
-                      ? dispatch(
-                          callAddorRemoveCart(
-                            localStorage.getItem("token"),
-                            issues.issue_id
-                          )
-                        )
-                      : quoteaction();
+                    token ? getCartData(issues.issue_id) : quoteaction();
                   }}
                   buttonName={token ? "Add to cart" : "Get Quote"}
                 />
@@ -471,6 +525,15 @@ function SelectDeviceHero({
       {token && cartIssues.length > 0 && (
         <IssueTotalBill totalPrice={totalprice} />
       )}
+      <div>
+        <KnowMoreModal
+          show={modal}
+          onHide={() => setModal(!modal)}
+          key={modalData.issue_id}
+          knowMoreTitle={modalData.issue_title}
+          knowMoreHTMLBody={modalData.templates_description}
+        />
+      </div>
     </div>
   );
 }
