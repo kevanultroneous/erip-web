@@ -140,8 +140,9 @@ function AllBookings() {
             alternativenumberaction={() => setAlternatePopup(true)}
             logout={() => {}}
             altnum={
-              profiledetail !== null &&
-              "+91" + profiledetail.altnum[0].mobile_number
+              profiledetail !== null && profiledetail.altnum.length > 0
+                ? "+91" + profiledetail.altnum[0].mobile_number
+                : null
             }
             altemail={profiledetail !== null && profiledetail.email}
           />

@@ -163,6 +163,11 @@ export default function CheckoutPopup({ show, onHide }) {
   }, []);
 
   useEffect(() => {
+    if (directSelected) {
+      setProcessStatus(processStatus.concat(1));
+    }
+  }, [directSelected]);
+  useEffect(() => {
     if (myaddress.length > 0) {
       setMyselectedAddress({ id: 0, address: myaddress[0].address_line_1 });
     }
@@ -379,13 +384,12 @@ export default function CheckoutPopup({ show, onHide }) {
   };
 
   const [paymentway, setSelectedPaymentWay] = useState(null);
-
   const FinalOrderNow = () => {
-    let setup_day =
+    var setup_day =
       datelist[selectedDate].dates < 10
         ? "0" + datelist[selectedDate].dates
         : datelist[selectedDate].dates;
-    let generated_date =
+    var generated_date =
       new Date().getFullYear() +
       "-" +
       (datelist[selectedDate].month < 10
@@ -394,7 +398,7 @@ export default function CheckoutPopup({ show, onHide }) {
       "-" +
       setup_day;
 
-    let selected_time = timesloatsata[selectedTime].id;
+    var selected_time = timesloatsata[selectedTime].id;
     postOrders(localStorage.getItem("token"), {
       enquiryId: localStorage.getItem("enq_id"),
       addressId: myselectedaddress.id,
@@ -967,6 +971,34 @@ export default function CheckoutPopup({ show, onHide }) {
                     setFinalWay(null);
                   }}
                 />
+                {paymentway == null && (
+                  <StatusProcess
+                    processStatus={processStatus}
+                    address={myselectedaddress.address}
+                    datetime={
+                      new Date().getFullYear() +
+                      " - " +
+                      (datelist[selectedDate].month < 10
+                        ? "0" + (datelist[selectedDate].month + 1)
+                        : datelist[selectedDate].month + 1) +
+                      " - " +
+                      (datelist[selectedDate].dates < 10
+                        ? "0" + datelist[selectedDate].dates
+                        : datelist[selectedDate].dates) +
+                      " , " +
+                      timesloatsata[selectedTime].title
+                    }
+                    datetimeclk={() => {
+                      setFinalPayment(false);
+                      setDateAndTimeSelection(true);
+                    }}
+                    addressclk={() => {
+                      setFinalPayment(false);
+                      setDirectSelected(true);
+                    }}
+                  />
+                )}
+
                 <Modal
                   show={couponsSow}
                   onHide={() => setCouponsSow(false)}

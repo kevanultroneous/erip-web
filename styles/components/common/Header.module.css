@@ -167,9 +167,9 @@
 
 .SearchItems {
   padding: 1rem;
-
   position: fixed;
-  width: 28rem;
+  width: 21.5rem;
+  margin-left: 3rem;
   top: 4.5rem;
   z-index: 1;
   background-color: #fff;
@@ -185,6 +185,32 @@
 
 .navHeaderCart {
   cursor: pointer;
+}
+
+.SearchLi {
+
+  list-style: none;
+  padding-left: 0% !important;
+}
+
+.SearchText {
+  font-weight: 400;
+  font-size: 13px;
+  margin: 0%;
+  color: #676767;
+}
+
+.SearchRow {
+  cursor: pointer;
+}
+
+.SearchTextCenter {
+  display: flex;
+  align-items: center;
+}
+
+.SearchHr {
+  margin-top: 1rem;
 }
 
 @media (max-width: 600px) {
@@ -252,6 +278,28 @@
   .dropdownicons {
     transition: 0.5s;
   }
+
+
+  .Searchbar {
+    margin: 0%;
+    margin-top: 2rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    display: flex;
+  }
+
+  .SearchItems {
+    padding: 1rem;
+    position: fixed;
+    max-width: 25rem;
+    top: 11rem;
+    z-index: 1;
+    left: 1rem;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 3px;
+    margin: 0%;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1080px) {
@@ -300,5 +348,26 @@
     padding: 0.5rem;
     border: none;
     outline: none;
+  }
+
+  .Searchbar {
+    margin: 0%;
+    margin-top: 1rem;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .SearchItems {
+    padding: 1rem;
+    position: fixed;
+    max-width: 25rem;
+    top: 10rem;
+    z-index: 1;
+    left: 2.5rem;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 3px;
+    margin: 0%;
   }
 }

@@ -3,7 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import PrimaryButton from "./PrimaryButton";
-import { Col, Image, Row, Spinner } from "react-bootstrap";
+import { Col, Image, Modal, Row, Spinner } from "react-bootstrap";
 import { moreMenu } from "utils/moreMenu";
 import { useEffect, useRef, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -32,6 +32,8 @@ import { callNavsearch } from "redux/actions/mixActions/mixActions";
 import { selectCategory } from "redux/actions/issuePageActions/issuePageActions";
 import geocodeToPincode from "geocode-to-pincode";
 import { getCookie } from "cookies-next";
+import { NavSearchApi } from "api/mixApi";
+import NavigationHandler from "../Popups/NavigationHandler";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
@@ -61,8 +63,46 @@ export function Header() {
 
   const navdata = navsearch ? (navsearch.data ? navsearch.data : null) : null;
 
+  const [categoriesSearch, setCategoriesSearch] = useState([]);
+  const [brandsSearch, setBrandsSearch] = useState([]);
+  const [modelsSearch, setModelsSearch] = useState([]);
+  const [segmentSearch, setsegmentSearch] = useState([]);
+  const [errSearch, setErrsearch] = useState("");
+  const [loadsSearch, setLoadsSearch] = useState(false);
+  const [showsearch, setShowSearch] = useState(false);
   useEffect(() => {
-    dispatch(callNavsearch(1, search));
+    if (search.length < 0) {
+      setShowSearch(false);
+      setCategoriesSearch(null);
+      setBrandsSearch(null);
+      setModelsSearch(null);
+      setsegmentSearch(null);
+    } else {
+      setShowSearch(true);
+    }
+    setLoadsSearch(true);
+    NavSearchApi(1, search)
+      .then((response) => {
+        if (response.data.success) {
+          if (response.data.message == "no data found") {
+            setCategoriesSearch(null);
+            setBrandsSearch(null);
+            setModelsSearch(null);
+            setsegmentSearch(null);
+            setErrsearch("No data Found");
+          } else {
+            setCategoriesSearch(response.data.data[0].categories);
+            setBrandsSearch(response.data.data[0].brands);
+            setModelsSearch(response.data.data[0].models);
+            setsegmentSearch(response.data.data[0].segments);
+            setLoadsSearch(false);
+          }
+        } else {
+          setErrsearch(response.data.message);
+          setLoadsSearch(false);
+        }
+      })
+      .catch((e) => console.log(e));
   }, [search]);
 
   setTimeout(() => {
@@ -152,6 +192,7 @@ export function Header() {
 
     if (MatchCity(cityData, currentCity, dispatch)) {
       setLocationPopupShow(false);
+      setShowMobloc(false);
     } else {
       setSelectedAddress("");
     }
@@ -243,6 +284,7 @@ export function Header() {
       if (status == google.maps.GeocoderStatus.OK) {
         var latitude = results[0].geometry.location.lat();
         var longitude = results[0].geometry.location.lng();
+        displayLocation(latitude, longitude);
       }
     });
   }
@@ -364,8 +406,64 @@ export function Header() {
                 />
               </div>
             </Col>
+            <Modal
+              show={showMobloc}
+              onHide={() => setShowMobloc(false)}
+              centered
+              size="md"
+              className="OfferPopup Searchpopups"
+            >
+              <Modal.Body style={{ height: "90vh" }}>
+                <NavigationHandler backhandler={() => setShowMobloc(false)} />
+                <div className={`${styles.SearchLocMob}`}>
+                  <FiSearch className={styles.SearchIcon} />
+                  <ReactGoogleAutocomplete
+                    defaultValue={selectedAddress}
+                    placeholder="Search city, area, pincode"
+                    apiKey={GMAP_API}
+                    onPlaceSelected={(place) => {
+                      setLocationLoader(true);
+                      setTimeout(() => {
+                        if (place) {
+                          setLocationLoader(false);
+                          getLatandLongByAddress(place.formatted_address);
+                        }
+                      }, 3000);
+                    }}
+                    options={{
+                      types: ["establishment"],
+                      componentRestrictions: { country: "in" },
+                    }}
+                    className={styles.SearchBoxMob}
+                  />
+                </div>
+                <p className={styles.InputOrText}>or</p>
+                <div
+                  className={styles.ModalHeadDetect}
+                  onClick={() => getLocation()}
+                >
+                  <Image
+                    src="/assets/icons/location-color.svg"
+                    loading="lazy"
+                    alt="Location"
+                  />
+                  <p className={styles.LocationDetectText}>
+                    Detect My Location
+                  </p>
+                </div>
+                <center>
+                  {loactionloader && (
+                    <Spinner
+                      animation="border"
+                      variant="primary"
+                      className="ms-2"
+                    />
+                  )}
+                </center>
+              </Modal.Body>
+            </Modal>
             <Col xs={12}>
-              <div
+              {/* <div
                 style={
                   showMobloc
                     ? { display: "block", transition: "0.5s ease" }
@@ -402,6 +500,222 @@ export function Header() {
                     Detect My Location
                   </p>
                 </div>
+              </div> */}
+              <div className={styles.Searchbar}>
+                <FiSearch
+                  size={25}
+                  color="#0E62CB"
+                  style={{ marginRight: "1rem" }}
+                />
+                <input
+                  type="text"
+                  placeholder="Search your brand or model"
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                {search.length <= 0 ? null : (
+                  <div className={styles.SearchItems}>
+                    {loadsSearch ? (
+                      <center>
+                        <Spinner
+                          animation="border"
+                          variant="primary"
+                          className="ms-2"
+                        />
+                      </center>
+                    ) : (
+                      <ul className={styles.SearchLi}>
+                        {categoriesSearch.map((v, i) => (
+                          <li key={i}>
+                            <Link
+                              href={
+                                v.category_flow_group == "1"
+                                  ? {
+                                      pathname: "personal-gadgets",
+                                      query: {
+                                        issue: v.category_id,
+                                        category: v.category_title,
+                                      },
+                                    }
+                                  : {
+                                      pathname: "home-appliances",
+                                      query: {
+                                        issue: v.category_id,
+                                        category: v.category_title,
+                                      },
+                                    }
+                              }
+                            >
+                              <Row className={styles.SearchRow}>
+                                <Col xs={3} md={3} lg={3} xl={3}>
+                                  <Image
+                                    src={v.category_image_url}
+                                    fluid
+                                    width={70}
+                                  />
+                                </Col>
+                                <Col
+                                  xs={9}
+                                  md={9}
+                                  lg={9}
+                                  xl={9}
+                                  className={styles.SearchTextCenter}
+                                >
+                                  <p className={styles.SearchText}>
+                                    {v.category_title}
+                                  </p>
+                                </Col>
+                                <hr className={styles.SearchHr} />
+                              </Row>
+                            </Link>
+                          </li>
+                        ))}
+                        {brandsSearch.map((v, i) => (
+                          <li key={i}>
+                            <Link
+                              href={
+                                v.category_flow_group == "1"
+                                  ? {
+                                      pathname: "personal-gadgets",
+                                      query: {
+                                        issue: v.category_id,
+                                        category: v.category_title,
+                                        brand: v.brand_title,
+                                      },
+                                    }
+                                  : {
+                                      pathname: "home-appliances",
+                                      query: {
+                                        issue: v.category_id,
+                                        category: v.category_title,
+                                        brand: v.brand_title,
+                                      },
+                                    }
+                              }
+                            >
+                              <Row className={styles.SearchRow}>
+                                <Col xs={3} md={3} lg={3} xl={3}>
+                                  <Image
+                                    src={v.brand_image_url}
+                                    fluid
+                                    width={70}
+                                  />
+                                </Col>
+                                <Col
+                                  xs={9}
+                                  md={9}
+                                  lg={9}
+                                  xl={9}
+                                  className={styles.SearchTextCenter}
+                                >
+                                  <p className={styles.SearchText}>
+                                    {v.category_title}
+                                  </p>
+                                </Col>
+                                <hr className={styles.SearchHr} />
+                              </Row>
+                            </Link>
+                          </li>
+                        ))}
+                        {modelsSearch.map((v, i) => (
+                          <li key={i}>
+                            <Link
+                              href={
+                                v.category_flow_group == "1"
+                                  ? {
+                                      pathname: "personal-gadgets",
+                                      query: {
+                                        issue: v.category_id,
+                                        category: v.category_title,
+                                        brand: v.brand_title,
+                                        model: v.model_title,
+                                      },
+                                    }
+                                  : {
+                                      pathname: "home-appliances",
+                                      query: {
+                                        issue: v.category_id,
+                                        category: v.category_title,
+                                        brand: v.brand_title,
+                                        model: v.model_title,
+                                      },
+                                    }
+                              }
+                            >
+                              <Row className={styles.SearchRow}>
+                                <Col xs={3} md={3} lg={3} xl={3}>
+                                  <Image
+                                    src={v.model_image_url}
+                                    fluid
+                                    width={70}
+                                  />
+                                </Col>
+                                <Col
+                                  xs={9}
+                                  md={9}
+                                  lg={9}
+                                  xl={9}
+                                  className={styles.SearchTextCenter}
+                                >
+                                  <p className={styles.SearchText}>
+                                    {v.model_title}
+                                  </p>
+                                </Col>
+                                <hr className={styles.SearchHr} />
+                              </Row>
+                            </Link>
+                          </li>
+                        ))}
+                        {segmentSearch.map((v, i) => (
+                          <li key={i}>
+                            <Link
+                              href={
+                                v.category_flow_group == "1"
+                                  ? {
+                                      pathname: "personal-gadgets",
+                                      query: {
+                                        issue: v.category_id,
+                                        category: v.category_title,
+                                        brand: v.brand_title,
+                                        model: v.model_title,
+                                      },
+                                    }
+                                  : {
+                                      pathname: "home-appliances",
+                                      query: {
+                                        issue: v.category_id,
+                                        category: v.category_title,
+                                      },
+                                    }
+                              }
+                            >
+                              <Row className={styles.SearchRow}>
+                                <Col xs={3} md={3} lg={3} xl={3}>
+                                  <Image
+                                    src={v.segment_image_url}
+                                    fluid
+                                    width={70}
+                                  />
+                                </Col>
+                                <Col
+                                  xs={9}
+                                  md={9}
+                                  lg={9}
+                                  xl={9}
+                                  className={styles.SearchTextCenter}
+                                >
+                                  <p className={styles.SearchText}>
+                                    {v.segment_title}
+                                  </p>
+                                </Col>
+                                <hr className={styles.SearchHr} />
+                              </Row>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )}
               </div>
             </Col>
           </Row>
@@ -435,9 +749,210 @@ export function Header() {
                   onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
-              {/* <div className={styles.SearchItems}>
-                <ul>{sdata ? sdata.map((v) => v.brands) : null}</ul>
-              </div> */}
+              {search.length <= 0 ? null : (
+                <div className={styles.SearchItems}>
+                  {loadsSearch ? (
+                    <center>
+                      <Spinner
+                        animation="border"
+                        variant="primary"
+                        className="ms-2"
+                      />
+                    </center>
+                  ) : (
+                    <ul className={styles.SearchLi}>
+                      {categoriesSearch.map((v, i) => (
+                        <li key={i}>
+                          <Link
+                            href={
+                              v.category_flow_group == "1"
+                                ? {
+                                    pathname: "personal-gadgets",
+                                    query: {
+                                      issue: v.category_id,
+                                      category: v.category_title,
+                                    },
+                                  }
+                                : {
+                                    pathname: "home-appliances",
+                                    query: {
+                                      issue: v.category_id,
+                                      category: v.category_title,
+                                    },
+                                  }
+                            }
+                          >
+                            <Row className={styles.SearchRow}>
+                              <Col xs={3} md={3} lg={3} xl={3}>
+                                <Image
+                                  src={v.category_image_url}
+                                  fluid
+                                  width={70}
+                                />
+                              </Col>
+                              <Col
+                                xs={9}
+                                md={9}
+                                lg={9}
+                                xl={9}
+                                className={styles.SearchTextCenter}
+                              >
+                                <p className={styles.SearchText}>
+                                  {v.category_title}
+                                </p>
+                              </Col>
+                              <hr className={styles.SearchHr} />
+                            </Row>
+                          </Link>
+                        </li>
+                      ))}
+                      {brandsSearch.map((v, i) => (
+                        <li key={i}>
+                          <Link
+                            href={
+                              v.category_flow_group == "1"
+                                ? {
+                                    pathname: "personal-gadgets",
+                                    query: {
+                                      issue: v.category_id,
+                                      category: v.category_title,
+                                      brand: v.brand_title,
+                                    },
+                                  }
+                                : {
+                                    pathname: "home-appliances",
+                                    query: {
+                                      issue: v.category_id,
+                                      category: v.category_title,
+                                      brand: v.brand_title,
+                                    },
+                                  }
+                            }
+                          >
+                            <Row className={styles.SearchRow}>
+                              <Col xs={3} md={3} lg={3} xl={3}>
+                                <Image
+                                  src={v.brand_image_url}
+                                  fluid
+                                  width={70}
+                                />
+                              </Col>
+                              <Col
+                                xs={9}
+                                md={9}
+                                lg={9}
+                                xl={9}
+                                className={styles.SearchTextCenter}
+                              >
+                                <p className={styles.SearchText}>
+                                  {v.category_title}
+                                </p>
+                              </Col>
+                              <hr className={styles.SearchHr} />
+                            </Row>
+                          </Link>
+                        </li>
+                      ))}
+                      {modelsSearch.map((v, i) => (
+                        <li key={i}>
+                          <Link
+                            href={
+                              v.category_flow_group == "1"
+                                ? {
+                                    pathname: "personal-gadgets",
+                                    query: {
+                                      issue: v.category_id,
+                                      category: v.category_title,
+                                      brand: v.brand_title,
+                                      model: v.model_title,
+                                    },
+                                  }
+                                : {
+                                    pathname: "home-appliances",
+                                    query: {
+                                      issue: v.category_id,
+                                      category: v.category_title,
+                                      brand: v.brand_title,
+                                      model: v.model_title,
+                                    },
+                                  }
+                            }
+                          >
+                            <Row className={styles.SearchRow}>
+                              <Col xs={3} md={3} lg={3} xl={3}>
+                                <Image
+                                  src={v.model_image_url}
+                                  fluid
+                                  width={70}
+                                />
+                              </Col>
+                              <Col
+                                xs={9}
+                                md={9}
+                                lg={9}
+                                xl={9}
+                                className={styles.SearchTextCenter}
+                              >
+                                <p className={styles.SearchText}>
+                                  {v.model_title}
+                                </p>
+                              </Col>
+                              <hr className={styles.SearchHr} />
+                            </Row>
+                          </Link>
+                        </li>
+                      ))}
+                      {segmentSearch.map((v, i) => (
+                        <li key={i}>
+                          <Link
+                            href={
+                              v.category_flow_group == "1"
+                                ? {
+                                    pathname: "personal-gadgets",
+                                    query: {
+                                      issue: v.category_id,
+                                      category: v.category_title,
+                                      brand: v.brand_title,
+                                      model: v.model_title,
+                                    },
+                                  }
+                                : {
+                                    pathname: "home-appliances",
+                                    query: {
+                                      issue: v.category_id,
+                                      category: v.category_title,
+                                    },
+                                  }
+                            }
+                          >
+                            <Row className={styles.SearchRow}>
+                              <Col xs={3} md={3} lg={3} xl={3}>
+                                <Image
+                                  src={v.segment_image_url}
+                                  fluid
+                                  width={70}
+                                />
+                              </Col>
+                              <Col
+                                xs={9}
+                                md={9}
+                                lg={9}
+                                xl={9}
+                                className={styles.SearchTextCenter}
+                              >
+                                <p className={styles.SearchText}>
+                                  {v.segment_title}
+                                </p>
+                              </Col>
+                              <hr className={styles.SearchHr} />
+                            </Row>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll" className={styles.navBarcolor}>
@@ -671,7 +1186,6 @@ export function Header() {
               {loactionloader && (
                 <Spinner
                   animation="border"
-                  size="sm"
                   variant="primary"
                   className="ms-2"
                 />

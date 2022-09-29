@@ -41,11 +41,17 @@ export default function GetYourFix({ data = GetYourFixCard }) {
               value.group_id == 1
                 ? {
                     pathname: "personal-gadgets",
-                    query: { issue: value.category_id },
+                    query: {
+                      issue: value.category_id,
+                      category: value.category_title,
+                    },
                   }
                 : {
                     pathname: "home-appliances",
-                    query: { issue: value.category_id },
+                    query: {
+                      issue: value.category_id,
+                      category: value.category_title,
+                    },
                   }
             }
             onClick={() => dispatch(selectCategory(value.category_id))}
