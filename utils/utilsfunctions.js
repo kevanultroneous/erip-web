@@ -14,6 +14,8 @@ export const MatchCity = (cityData, currentCity, dispatch) => {
       return true;
     } else {
       dispatch(getCityFail("we are not availble in other location"))
+      localStorage.setItem("cityid", 1);
+      localStorage.setItem("city", "Bengluru");
       alert("we are not availble in other location");
       return false;
     }
