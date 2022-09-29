@@ -344,7 +344,8 @@ export default function CheckoutPopup({ show, onHide }) {
               setMyselectedAddress(selectedAddress.substring(0, 49));
               setSelectedAddressStatus(true);
               setProcessStatus(processStatus.concat(1));
-              setFinalLocationStep(true);
+              setFinalLocationStep(false);
+              setDirectSelected(true);
             }
           })
           .catch((e) => console.log(e));
