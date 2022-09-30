@@ -23,7 +23,7 @@ function BookingCard({
         </Col>
         <Col xl={6} xs={6}>
           <div className={styles.bookingCardStatus}>
-            <p>{partnerStatusAssigned}</p>
+            <p>{"Assigning Partner"}</p>
           </div>
         </Col>
       </Row>
