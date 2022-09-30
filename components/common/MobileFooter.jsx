@@ -1,7 +1,7 @@
-import { Accordion, Col, Row } from "react-bootstrap";
+import { Accordion, Col, Image, Modal, Row } from "react-bootstrap";
 import Container from "./Container";
 import PrimaryButton from "./PrimaryButton";
-import { HiHome } from "react-icons/hi";
+import { HiChevronRight, HiHome } from "react-icons/hi";
 import { MdDevices } from "react-icons/md";
 import { IoIosHelpCircle } from "react-icons/io";
 import { RiAccountPinCircleLine } from "react-icons/ri";
@@ -12,27 +12,157 @@ import { AiOutlineTwitter } from "react-icons/ai";
 import { RiLinkedinBoxFill } from "react-icons/ri";
 import { footerMenuList } from "utils/menudata";
 import Link from "next/link";
-import { useState } from "react";
-export default function MobileFooter() {
-  const [selectedMenu, setSelectedMenu] = useState(false);
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { API_URL } from "utils/data";
+import axios from "axios";
+
+export const BottomBar = () => {
+  const [selectedMenu, setSelectedMenu] = useState(0);
+  const router = useRouter();
+  const [devices, setDevices] = useState(false);
+  const [devicedata, setDeviceData] = useState([]);
+  useEffect(() => {
+    setDeviceApiData();
+  }, []);
+
+  const setDeviceApiData = async () => {
+    await axios
+      .get(`${API_URL}api/v1/categories_by_cities`, {
+        params: {
+          city: 1,
+        },
+      })
+      .then((res) => {
+        if (res.data.success) {
+          setDeviceData(res.data.data);
+          console.log(res.data.data);
+        }
+      })
+      .catch((e) => console.log("get your fix error" + e));
+  };
   const dataOfBottombar = [
     {
       icon: HiHome,
       name: "Home",
+      link: "/",
+      linkable: true,
     },
     {
       icon: MdDevices,
       name: "Devices",
+      linkable: false,
     },
     {
       icon: IoIosHelpCircle,
       name: "Help",
+      link: "/contact-us",
+      linkable: true,
     },
     {
       icon: RiAccountPinCircleLine,
       name: "Account",
+      link: "/my-bookings",
+      linkable: true,
     },
   ];
+  return (
+    <>
+      <Modal
+        show={devices}
+        onHide={() => setDevices(false)}
+        centered
+        size="md"
+        className="OfferPopup Searchpopups"
+      >
+        <Modal.Body style={{ height: "100vh" }}>
+          {devicedata.map((v, i) => (
+            <Row className="mb-3">
+              <Col xs={2} md={2} lg={2} xl={2}>
+                <Image src={v.category_icon_url} height={60} />
+                {v.coming_soon ? (
+                  <p
+                    style={{ background: "red", fontSize: "12px" }}
+                    className="mt-2 text-center text-white"
+                  >
+                    coming soon
+                  </p>
+                ) : null}
+              </Col>
+              <Col xs={10} md={10} lg={10} xl={10}>
+                <Row>
+                  <Col
+                    xs={9}
+                    md={9}
+                    lg={9}
+                    xl={9}
+                    style={{ alignItems: "center", justifyContent: "center" }}
+                    className="mt-3 "
+                  >
+                    {v.category_title}
+                  </Col>
+                  <Col
+                    xs={3}
+                    md={3}
+                    lg={3}
+                    xl={3}
+                    style={{ display: "flex", justifyContent: "flex-end" }}
+                    className="mt-3"
+                  >
+                    <HiChevronRight size={20} />
+                  </Col>
+                </Row>
+              </Col>
+              <BottomBar />
+            </Row>
+          ))}
+        </Modal.Body>
+      </Modal>
+      <div className={styles.BottomNavbar}>
+        {dataOfBottombar.map((value, index) => (
+          <div
+            key={index}
+            className={styles.BottomMenu}
+            onClick={() => {
+              if (!value.linkable) {
+                if (value.name == "Devices") {
+                  setDevices(true);
+                  setSelectedMenu(index);
+                }
+              } else {
+                setSelectedMenu(index);
+                router.push(value.linkable ? value.link : "/");
+              }
+            }}
+          >
+            <value.icon
+              className={styles.BottomIcon}
+              style={
+                selectedMenu === index
+                  ? { color: "#000" }
+                  : null || router.pathname == value.link
+                  ? { color: "#000" }
+                  : null
+              }
+            />
+            <p
+              style={
+                selectedMenu === index
+                  ? { color: "#000" }
+                  : null || router.pathname == value.link
+                  ? { color: "#000" }
+                  : null
+              }
+            >
+              {value.name}
+            </p>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+};
+export default function MobileFooter() {
   return (
     <Container userdefinedclass={"MobileFooter"}>
       <Row>
@@ -71,23 +201,8 @@ export default function MobileFooter() {
               buttonStyle={{ width: "100%" }}
             />
           </div>
-          <div className={styles.BottomNavbar}>
-            {dataOfBottombar.map((value, index) => (
-              <div
-                key={index}
-                className={styles.BottomMenu}
-                onClick={() => setSelectedMenu(index)}
-              >
-                <value.icon
-                  className={styles.BottomIcon}
-                  style={selectedMenu === index ? { color: "#000" } : null}
-                />
-                <p style={selectedMenu === index ? { color: "#000" } : null}>
-                  {value.name}
-                </p>
-              </div>
-            ))}
-          </div>
+
+          <BottomBar />
         </Col>
       </Row>
     </Container>

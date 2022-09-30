@@ -294,6 +294,7 @@
   color: #0e62cb;
   text-decoration: underline;
   cursor: pointer;
+  text-align: right;
 }
 
 .CouponsCol {
@@ -323,9 +324,11 @@
 .TotalAmount {
   font-weight: 700;
   font-size: 18px;
+  margin-top: 0.5rem;
 }
 
 .TextMoneyRight {
+  margin-top: 0.5rem;
   font-weight: 700;
   font-size: 18px;
 }

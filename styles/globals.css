@@ -5,6 +5,7 @@ body {
   margin: 0;
   font-family: "ProductSansRegular" !important;
   font-size: 16px;
+  /* overflow-x: hidden; */
 }
 
 a {
@@ -302,6 +303,7 @@ input[type="number"] {
 
 /* .pac-matched {
 } */
+.pac-matched {}
 
 .pac-icon {
   background: url("/assets/icons/gmap-location.svg") !important;
@@ -401,8 +403,33 @@ input[type="number"] {
   width: 22.45px;
 }
 
+.btn:hover {
+  border-color: transparent !important;
+}
+
+.btn:focus {
+  border: none;
+  border-color: transparent !important;
+}
+
+.fs-18 {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.fs-20 {
+  font-size: 20px;
+  font-weight: 400;
+}
+
 /*  */
 @media (min-width: 320px) and (max-width: 450px) {
+
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
   .modal {
     top: 0px !important;
   }
@@ -651,6 +678,12 @@ input[type="number"] {
 }
 
 @media (min-width: 768px) and (max-width: 1080px) {
+
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
   .MobileFooter {
     display: block;
   }

@@ -17,7 +17,7 @@
   text-align: center;
 }
 
-.profileDetails > * {
+.profileDetails>* {
   margin: 0 0 0.5rem;
 }
 
@@ -48,9 +48,10 @@
 .profileDetailsLogOut {
   text-align: center;
   color: #0e62cb;
-  text-decoration: underline;
   cursor: pointer;
   user-select: none;
+  font-weight: 700;
+  font-size: 18px;
 }
 
 .AlternativeButtons {

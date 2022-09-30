@@ -25,12 +25,23 @@ import {
   infoModelsReducer,
 } from "./informationReducers/informationReducer";
 import { issueReducer } from "./issueReducers/issueReducer";
+import { mixReducer } from "./mixReducers/mixReducers";
+import { profileReducer } from "./profileReducers/profileReducers";
 import {
   offerSectionBrandReducer,
   offerSectionCategoryReducer,
   offerSectionHomeReducer,
   offerSectionModelReducer,
 } from "./offersReducers/offerReducer";
+import {
+  getPersonalGadgetsBrandsReducer,
+  getPersonalGadgetsIssueReducer,
+  getPersonalGadgetsModelReducer,
+  getPersonalGadgetsReducer,
+  selectPersonalGadgetsBrandsReducer,
+  selectPersonalGadgetsModelReducer,
+  selectPersonalGadgetsReducer,
+} from "./personalGadgetReducers/personalGadgetReducer";
 import {
   testimonialByBrandsReducer,
   testimonialByCategoryReducer,
@@ -39,6 +50,8 @@ import {
 import { mixReducer } from "./mixReducers/mixReducers";
 import { profileReducer } from "./profileReducers/profileReducers";
 import { userAuthenticationReducer } from "./userReducer/userReducer";
+import { enquiresReducers } from "./enquiresReducers/enquiresReducers";
+import orderReducer from "./orderReducers/orderReducer";
 
 export const rootReducer = combineReducers({
   locationdata: cityReducer,
@@ -63,11 +76,18 @@ export const rootReducer = combineReducers({
   offerCategory: offerSectionCategoryReducer,
   offerBrands: offerSectionBrandReducer,
   offerModels: offerSectionModelReducer,
-  locationdata: cityReducer,
   cartdata: fetchMycartdataByCityReducer,
   cartaddremove: addtoCartorRemoveReducer,
   userdata: userAuthenticationReducer,
   couponsdata: couponsReducer,
+  personalGadget: getPersonalGadgetsReducer,
+  personalGadgetBrands: getPersonalGadgetsBrandsReducer,
+  personalGadgetModels: getPersonalGadgetsModelReducer,
+  personalGadgetIssues: getPersonalGadgetsIssueReducer,
+  categoryName: selectPersonalGadgetsReducer,
+  brandName: selectPersonalGadgetsBrandsReducer,
+  modelName: selectPersonalGadgetsModelReducer,
   profile: profileReducer,
-  mix: mixReducer
+  enquires: enquiresReducers,
+  mix: mixReducer,
 });

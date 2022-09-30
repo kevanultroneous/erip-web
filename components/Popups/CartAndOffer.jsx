@@ -16,17 +16,21 @@ import {
 } from "redux/actions/cartActions/cartActions";
 import {
   callFetchCoupons,
+  callVerifyCoupons,
   removeCoupons,
   setCouponssSuccess,
 } from "redux/actions/couponActions/couponsActions";
 import { APPLY_COUPON_SUCCESS } from "redux/actions/actionTypes";
+import { VerifyCoupons } from "api/couponsApi";
+import axios from "axios";
+import { PostEnqApi } from "api/enquireAPI";
 
 export default function CartAndOffer({ show, onHide }) {
   const [active, setActive] = useState(0);
   const [total, setTotal] = useState(0);
   const [showCheckout, setShowCheckout] = useState(false);
   const [couponShow, setCouponShow] = useState(false);
-
+  const commonselector = useSelector((state) => state);
   const cartSelector = useSelector((state) => state.cartdata);
   const couponsselector = useSelector((state) => state.couponsdata);
 
@@ -34,6 +38,7 @@ export default function CartAndOffer({ show, onHide }) {
 
   useEffect(() => {
     BillAmount();
+    console.log({ cartSelector }, "cart");
   }, [cartSelector]);
 
   useEffect(() => {
@@ -41,7 +46,7 @@ export default function CartAndOffer({ show, onHide }) {
       setActive(0);
       setShowCheckout(false);
     }
-    dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
+    dispatch(callMyCartBycity(localStorage.getItem("token")));
   }, [show]);
 
   const BillAmount = () => {
@@ -58,8 +63,8 @@ export default function CartAndOffer({ show, onHide }) {
   };
 
   useEffect(() => {
-    dispatch(callFetchCoupons());
-    dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
+    dispatch(callFetchCoupons(commonselector.locationdata.city, 1));
+    dispatch(callMyCartBycity(localStorage.getItem("token")));
   }, []);
 
   const couponsdataList = couponsselector.data
@@ -79,10 +84,79 @@ export default function CartAndOffer({ show, onHide }) {
       ? couponsselector.selectedcoupons
       : null;
 
-  useEffect(() => {
-    // `₹${total - parseInt(selectingCoupons.coupon_amount)}`;
-  }, [couponShow]);
+  let listOfIssue = [];
+  cartDetailList.map((v) => {
+    listOfIssue.push(v.issue_id);
+  });
 
+  let flowGroup = [];
+  cartDetailList.map((v) => {
+    flowGroup.push(v.flow_group);
+  });
+
+  let segments = [];
+  cartDetailList.map((v) => {
+    segments.push(v.model_segment);
+  });
+
+  let brands = [];
+  cartDetailList.map((v) => {
+    brands.push(v.brand_id);
+  });
+
+  let catids = [];
+  cartDetailList.map((v) => {
+    catids.push(v.category_id);
+  });
+
+  const EnquireNow = () => {
+    PostEnqApi(commonselector.userdata.useraccess, {
+      flowGroup: cartDetailList[0].flow_group,
+      sourceType: 1,
+      subSourceType: 1,
+      city: localStorage.getItem("cityid"),
+      category: cartDetailList[0].category_id,
+      brand: cartDetailList[0].brand_id,
+      model_segment: cartDetailList[0].model_segment,
+      issues: listOfIssue,
+      coupon: couponShow ? selectingCoupons.coupon_id : 0,
+    })
+      .then((r) => {
+        if (r.data.success) {
+          localStorage.setItem("enq_id", r.data.enquiry_data.enquiry_id);
+        } else {
+          alert(r.data.message);
+        }
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const CheckOutHandler = () => {
+    console.log(total);
+    console.log(selectingCoupons);
+    if (couponShow) {
+      VerifyCoupons(
+        commonselector.userdata.useraccess,
+        commonselector.locationdata.city,
+        commonselector.cartdata.data.data[0].category_id,
+        selectingCoupons ? selectingCoupons.coupon_id : null,
+        total
+      )
+        .then((r) => {
+          if (r.data) {
+            if (r.data.success) {
+              EnquireNow();
+            } else {
+              alert(r.data.message);
+            }
+          }
+        })
+        .catch((e) => console.log(e));
+    } else {
+      EnquireNow();
+      setShowCheckout(true);
+    }
+  };
   return (
     <div>
       <Modal
@@ -99,7 +173,9 @@ export default function CartAndOffer({ show, onHide }) {
           <Modal.Body className={styles.CartAndOfferBody}>
             <Row>
               <Col xs={10} md={6} lg={6} xl={6}>
-                <h4 className={styles.CartAndOfferMainTitle}>Your Cart</h4>
+                <h4 className={styles.CartAndOfferMainTitle}>
+                  {cartSelector.data.success == false ? null : "Your Cart"}
+                </h4>
               </Col>
               <Col
                 xs={2}
@@ -118,7 +194,13 @@ export default function CartAndOffer({ show, onHide }) {
                 className={styles.ProductListWrraper}
               >
                 {cartSelector.data.success == false ? (
-                  <h4 className="text-center">{cartSelector.data.message}</h4>
+                  <div className="text-center">
+                    <Image src="/assets/images/blank-cart.png" fluid />
+                    <h3 className="text-center mt-xl-4 mb-xl-4 mt-lg-4 mb-lg-4 mt-4 mb-4">
+                      <b>Your cart is empty!</b>
+                    </h3>
+                    <h5>You have not added any services to in your cart yet</h5>
+                  </div>
                 ) : (
                   cartDetailList.map((v, i) => (
                     <CartProductList
@@ -211,7 +293,7 @@ export default function CartAndOffer({ show, onHide }) {
                   className={styles.CheckoutButtonWrraper}
                 >
                   <PrimaryButton
-                    clickHandler={() => setShowCheckout(true)}
+                    clickHandler={() => CheckOutHandler()}
                     title={"Checkout"}
                     buttonStyle={{
                       width: "100%",
@@ -258,7 +340,6 @@ export default function CartAndOffer({ show, onHide }) {
                     key={i}
                     applyaction={() => {
                       setCouponShow(true);
-                      // setSelectedCoupons(v);
                       dispatch(setCouponssSuccess(v));
                       setActive(0);
                     }}

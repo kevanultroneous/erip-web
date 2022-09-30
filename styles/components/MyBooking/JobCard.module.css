@@ -32,12 +32,8 @@
 }
 
 .orderNumber {
-  padding: 1rem 2rem;
+  justify-content: center;
   border: none;
-}
-
-.orderNumber p {
-  margin: 0;
 }
 
 .nameSection {

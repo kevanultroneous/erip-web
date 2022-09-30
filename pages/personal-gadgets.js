@@ -72,8 +72,6 @@ function IssuePage({ data }) {
     console.log(categoryTestimonial.data, "offer");
   }, [categoryTestimonial.data]);
 
-  useEffect(() => {}, []);
-
   // useEffects
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);

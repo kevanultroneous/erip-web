@@ -31,25 +31,26 @@ export default function Footer() {
               <div>
                 <Image
                   fluid
-                  src="/assets/icons/py-1.png"
+                  src="/assets/icons/py-1.svg"
                   alt="visa"
                   className={styles.PaymentImage}
                 />
                 <Image
                   fluid
-                  src="/assets/icons/py-3.png"
+                  src="/assets/icons/py-3.svg"
                   alt="master-card"
+                  width={25}
                   className={styles.PaymentImage}
                 />
                 <Image
                   fluid
-                  src="/assets/icons/py-4.png"
+                  src="/assets/icons/py-4.svg"
                   alt="maestro"
                   className={styles.PaymentImage}
                 />
                 <Image
                   fluid
-                  src="/assets/icons/py-5.png"
+                  src="/assets/icons/py-5.svg"
                   alt="american-express"
                   className={styles.PaymentImage}
                 />
@@ -103,36 +104,6 @@ export default function Footer() {
             </div>
           </div>
         </Col>
-        <div className={styles.mobileFooterPay}>
-          <div className={styles.PaymentSection}>
-            <p className={styles.PaymentSmallTitle}>Secure Payment</p>
-            <div>
-              <Image
-                src="/assets/images/visa.png"
-                alt="visa"
-                className={styles.PaymentImage}
-              />
-              <Image
-                src="/assets/images/master-card.png"
-                alt="master-card"
-                className={styles.PaymentImage}
-              />
-              <Image
-                src="/assets/images/maestro.png"
-                alt="maestro"
-                className={styles.PaymentImage}
-              />
-              <Image
-                src="/assets/images/american-express.png"
-                alt="american-express"
-                className={styles.PaymentImage}
-              />
-            </div>
-          </div>
-          <small className={styles.Copyright}>
-            2020-2022 &copy; All Rights Reserved
-          </small>
-        </div>
       </Row>
     </Container>
   );
