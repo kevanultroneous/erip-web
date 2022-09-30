@@ -49,6 +49,7 @@ export default function PaymentOption() {
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [selectWallet, setSelectWallet] = useState(null);
   const [mobileView, setMobileView] = useState(false);
+
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
   }, []);
@@ -194,7 +195,6 @@ export default function PaymentOption() {
                       />
                     </div>
                   </Col>
-
                   <Col
                     xs={12}
                     md={8}

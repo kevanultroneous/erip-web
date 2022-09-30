@@ -12,19 +12,13 @@ import GetYourFix from "@/components/Home/GetYourFix";
 import HomeHero from "@/components/Home/Hero";
 import OfferBanner from "@/components/Home/OfferBanner";
 import JobCardPopUp from "@/components/MyBooking/JobCardPopUp";
-import FeedbackQuestions from "@/components/Popups/FeedbackQuestions";
 import OfferadPopup from "@/components/Popups/OfferadPopup";
-import RatingAndReview from "@/components/Popups/RatingAndReview";
-import Thankyou from "@/components/Popups/ThankYou";
 import axios from "axios";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import {
   API_URL,
   GetYourFixCard,
   HomeHerodata,
-  homeHerodata,
   NewsandUpdateData,
   OfferBannerhomedata,
   TestimonialData,
@@ -116,28 +110,28 @@ export async function getServerSideProps() {
         herosection: !hero_section_home
           ? HomeHerodata
           : hero_section_home.data.length > 0
-          ? hero_section_home
-          : HomeHerodata,
+            ? hero_section_home
+            : HomeHerodata,
         blogdata: !blog_response
           ? NewsandUpdateData
           : blog_response.data.length > 0
-          ? blog_response
-          : NewsandUpdateData,
+            ? blog_response
+            : NewsandUpdateData,
         hometestimonial: !home_testimonial
           ? TestimonialData
           : home_testimonial.data.length > 0
-          ? home_testimonial
-          : TestimonialData,
+            ? home_testimonial
+            : TestimonialData,
         offersection: !offersection_home
           ? OfferBannerhomedata
           : offersection_home.data.length > 0
-          ? offersection_home
-          : OfferBannerhomedata,
+            ? offersection_home
+            : OfferBannerhomedata,
         getyourfix: !getyour_fix
           ? GetYourFixCard
           : getyour_fix.data.length > 0
-          ? getyour_fix
-          : GetYourFixCard,
+            ? getyour_fix
+            : GetYourFixCard,
       },
     },
   };

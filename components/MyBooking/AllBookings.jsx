@@ -117,8 +117,8 @@ function AllBookings() {
                                   : null
                                 : null
                             }
-                            // partnerAssigningStatus={bookings.partnerAssigningOTP}
-                            // OTP={bookings.OTP}
+                            partnerAssigningStatus={1}
+                            OTP={"121211"}
                           />
                         </Col>
                       );
