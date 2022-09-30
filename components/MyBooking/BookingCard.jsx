@@ -14,6 +14,7 @@ function BookingCard({
   OTP,
   viewdetails,
   callsupport,
+  partnerrating,
 }) {
   return (
     <div className={styles.bookingCardContainer}>
@@ -23,15 +24,30 @@ function BookingCard({
         </Col>
         <Col xl={6} xs={6}>
           <div className={styles.bookingCardStatus}>
-            <p>{"Assigning Partner"}</p>
+            <p>{partnerStatusAssigned}</p>
           </div>
         </Col>
       </Row>
       <Row className={styles.bookingCardBody}>
-        <Col xl={3} xs={4}>
+        <Col xl={4} xs={4}>
           <div className={styles.bookingCardProfile}>
             <Image fluid src={partnerImage} alt={partnerName} />
-            <p>{partnerName}</p>
+            <div className="d-flex">
+              <p>{partnerName}</p>
+              <div className="d-flex align-items-center">
+                <span>{partnerrating}</span>
+                {partnerrating == " " ? (
+                  <label
+                    style={{
+                      background: "#030B1C",
+                      height: "10px",
+                      padding: "0.3rem",
+                      marginLeft: "1rem",
+                    }}
+                  ></label>
+                ) : null}
+              </div>
+            </div>
           </div>
         </Col>
         <Col xl={8} xs={8}>
@@ -54,7 +70,17 @@ function BookingCard({
       <Row className={styles.actionButtons}>
         <Col xl={6} xs={6}>
           <PrimaryButton
-            title="Call Support"
+            title={
+              partnerStatusAssigned == "assigning professional"
+                ? "Call Support"
+                : partnerStatusAssigned == "partner assigned"
+                ? "Call Professional"
+                : partnerStatusAssigned == "men at work"
+                ? "Call Professional"
+                : partnerStatusAssigned == "job completed"
+                ? "support"
+                : "Call"
+            }
             customClass={styles.actionBtn}
             // clickHandler={callsupport}
             href={callsupport}

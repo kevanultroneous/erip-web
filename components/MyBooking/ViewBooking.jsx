@@ -62,7 +62,11 @@ export default function ViewBooking({ backhandler, order }) {
       </Row>
 
       <Row>
-        <PartnerStatusProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
+        <PartnerStatusProgress
+          data={details.length > 0 ? details[0].order_user_timeline_detail : []}
+          process={false}
+          processname={"processname"}
+        />
       </Row>
 
       <CancelOrder

@@ -100,9 +100,25 @@ function AllBookings() {
                               bookings.order_appointments[0]
                                 .appointment_timeslot
                             }
-                            // partnerStatusAssigned={bookings.partnerStatusAssigned}
-                            // partnerImage={bookings.partnerImage}
-                            // partnerName={bookings.partnerName}
+                            partnerStatusAssigned={
+                              bookings.order_user_timeline[0].out_text
+                            }
+                            partnerImage={
+                              bookings.order_partner_details !== null
+                                ? bookings.order_partner_details.length > 0
+                                  ? bookings.order_partner_details[0]
+                                      .partner_photo
+                                  : ""
+                                : ""
+                            }
+                            partnerName={
+                              bookings.order_partner_details !== null
+                                ? bookings.order_partner_details.length > 0
+                                  ? bookings.order_partner_details[0]
+                                      .partner_name
+                                  : ""
+                                : ""
+                            }
                             // bookingDateAndTime={bookings.bookingDateAndTime}
                             issueDevice={bookings.order_category}
                             issueType={
@@ -117,8 +133,30 @@ function AllBookings() {
                                   : null
                                 : null
                             }
-                            partnerAssigningStatus={1}
-                            // OTP={"otp"}
+                            partnerrating={
+                              bookings.order_partner_details !== null
+                                ? bookings.order_partner_details.length > 0
+                                  ? bookings.order_partner_details[0]
+                                      .partner_ratings
+                                  : ""
+                                : ""
+                            }
+                            partnerAssigningStatus={
+                              bookings.order_user_timeline[0].out_text ==
+                              "assigning professional"
+                                ? 0
+                                : bookings.order_user_timeline[0].out_text ==
+                                  "partner assigned"
+                                ? 1
+                                : bookings.order_user_timeline[0].out_text ==
+                                  "men at work"
+                                ? 2
+                                : bookings.order_user_timeline[0].out_text ==
+                                  "job completed"
+                                ? 2
+                                : 0
+                            }
+                            OTP={"111111"}
                           />
                         </Col>
                       );
