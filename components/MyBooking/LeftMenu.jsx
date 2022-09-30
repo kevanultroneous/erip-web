@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { callFetchProfile } from "redux/actions/profileActions/profileActions";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 function LeftMenu({
   profileImage,
@@ -13,7 +14,6 @@ function LeftMenu({
   menus,
   alternativenumberaction,
   addemailaction,
-  logout,
   altnum,
   altemail,
 }) {
@@ -56,8 +56,23 @@ function LeftMenu({
       <div className={styles.profileDetailsLogOut}>
         <p
           onClick={() => {
-            localStorage.removeItem("token");
-            router.push("/");
+            axios
+              .get(`http://43.204.87.153/api/v1/users/logout`, {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              })
+              .then((response) => {
+                if (response.data.success) {
+                  localStorage.removeItem("token");
+                  router.push("/");
+                } else {
+                  alert(response.data.message);
+                }
+              })
+              .catch((e) => {
+                console.log(e);
+              });
           }}
         >
           Log Out

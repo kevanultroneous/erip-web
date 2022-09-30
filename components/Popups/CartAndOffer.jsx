@@ -112,14 +112,14 @@ export default function CartAndOffer({ show, onHide }) {
   const EnquireNow = () => {
     PostEnqApi(commonselector.userdata.useraccess, {
       flowGroup: cartDetailList[0].flow_group,
-      sourceType: 2,
-      subSourceType: 4,
+      sourceType: 1,
+      subSourceType: 1,
       city: localStorage.getItem("cityid"),
       category: cartDetailList[0].category_id,
       brand: cartDetailList[0].brand_id,
       model_segment: cartDetailList[0].model_segment,
       issues: listOfIssue,
-      coupon: 0,
+      coupon: couponShow ? selectingCoupons.coupon_id : 0,
     })
       .then((r) => {
         if (r.data.success) {

@@ -5,7 +5,13 @@ import Slider from "react-slick";
 import PrimaryButton from "../common/PrimaryButton";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { daysforcal, GMAP_API, monthsforcal, timesofsloats } from "utils/data";
+import {
+  API_URL,
+  daysforcal,
+  GMAP_API,
+  monthsforcal,
+  timesofsloats,
+} from "utils/data";
 import { FiSearch } from "react-icons/fi";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
 import { Gmaps, Marker } from "react-gmaps";
@@ -39,6 +45,7 @@ import {
 import Thankyou from "./ThankYou";
 import ThankYouHero from "../ThankYou/ThankYouHero";
 import { postOrders } from "api/ordersAPI";
+import axios from "axios";
 
 export default function CheckoutPopup({ show, onHide }) {
   const dispatch = useDispatch();
@@ -85,7 +92,21 @@ export default function CheckoutPopup({ show, onHide }) {
   const [finalway, setFinalWay] = useState(false);
   const [proccessComplete, setProcessComplete] = useState(false);
   const [savepincode, setSavePincode] = useState([]);
-
+  const [addType, setAddType] = useState([
+    {
+      id: 1,
+      title: "HOME",
+    },
+    {
+      id: 2,
+      title: "OFFICE",
+    },
+    {
+      id: 3,
+      title: "OTHER",
+    },
+  ]);
+  const [selectedTypeadd, setSelectedTypeadd] = useState();
   const RemoveFromCart = (id) => {
     dispatch(callAddorRemoveCart(localStorage.getItem("token"), id));
     dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
@@ -138,6 +159,7 @@ export default function CheckoutPopup({ show, onHide }) {
   useEffect(() => {
     BillAmount();
   }, [cartSelector]);
+
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
     window.innerWidth < 768 && window.innerWidth > 992
@@ -162,6 +184,12 @@ export default function CheckoutPopup({ show, onHide }) {
         }
       })
       .catch((e) => console.log("myaddress fetching " + e));
+
+    axios.get(`${API_URL}api/v1/address_types`).then((response) => {
+      if (response.data.success) {
+        setAddType(response.data.data);
+      }
+    });
   }, []);
   useEffect(() => {
     if (localStorage.getItem("cityid")) {
@@ -327,14 +355,15 @@ export default function CheckoutPopup({ show, onHide }) {
         alert("Please Login Now");
       } else {
         console.log(localStorage.getItem("pincode"));
+        alert(houseInput.substring(0, 10));
+
         SaveAddress(
           localStorage.getItem("token"),
-          addressType[0],
-          houseInput.substring(0, 10),
+          addressType,
+          addressType,
           selectedAddress.substring(0, 49),
           selectedAddress.substring(0, 49),
           landmarkInput,
-          // localStorage.getItem("pincode").substring(2, 5)
           "001"
         )
           .then((r) => {
@@ -345,7 +374,8 @@ export default function CheckoutPopup({ show, onHide }) {
               setSelectedAddressStatus(true);
               setProcessStatus(processStatus.concat(1));
               setFinalLocationStep(false);
-              setDirectSelected(true);
+              // setDirectSelected(true);
+              setFinalPayment(true);
             }
           })
           .catch((e) => console.log(e));
@@ -363,6 +393,7 @@ export default function CheckoutPopup({ show, onHide }) {
     var latlng = new google.maps.LatLng(latitude, longitude);
     var count, country, state, city;
     getPincode(latitude, longitude);
+
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[0]) {
@@ -382,6 +413,7 @@ export default function CheckoutPopup({ show, onHide }) {
       }
     });
   }
+
   useEffect(() => {
     CityDetactionAPI()
       .then((r) => setCityData(r.data.data))
@@ -795,7 +827,6 @@ export default function CheckoutPopup({ show, onHide }) {
                               ) {
                                 alert("Please select valid address");
                               } else {
-                                alert(selectedAddress);
                                 setFinalLocationStep(true);
                                 setConfirmLocationSession(false);
                                 setChangeModalSize(true);
@@ -921,11 +952,14 @@ export default function CheckoutPopup({ show, onHide }) {
                             />
                           </div>
                           <div className={styles.SelectionMenu}>
-                            {["Home", "Office", "Others"].map((v, i) => (
+                            {addType.map((v, i) => (
                               <PrimaryButton
-                                clickHandler={() => setAddressType(v)}
+                                clickHandler={() => {
+                                  setAddressType(v.id);
+                                  setSelectedTypeadd(v.title);
+                                }}
                                 key={i}
-                                title={v}
+                                title={v.title}
                                 buttonStyle={{
                                   width: "30%",
                                   padding: "0.2rem 0.5rem",
@@ -996,7 +1030,11 @@ export default function CheckoutPopup({ show, onHide }) {
                 {paymentway == null && (
                   <StatusProcess
                     processStatus={processStatus}
-                    address={myselectedaddress.address}
+                    address={
+                      myselectedaddress.address
+                        ? myselectedaddress.address
+                        : myselectedaddress
+                    }
                     datetime={
                       new Date().getFullYear() +
                       " - " +
