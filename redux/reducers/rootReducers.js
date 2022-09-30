@@ -25,8 +25,6 @@ import {
   infoModelsReducer,
 } from "./informationReducers/informationReducer";
 import { issueReducer } from "./issueReducers/issueReducer";
-import { mixReducer } from "./mixReducers/mixReducers";
-import { profileReducer } from "./profileReducers/profileReducers";
 import {
   offerSectionBrandReducer,
   offerSectionCategoryReducer,
