@@ -15,6 +15,7 @@ export default function Layout({ title, keywords, description, children }) {
         <meta name="keywords" content={keywords} key="erip-key-keywords" />
         <link rel="erip icon" href="" />
         <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        {/* <script src="https://checkout.razorpay.com/v1/razorpay.js"></script> */}
       </Head>
       <script
         src={`https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&key=${GMAP_API}&libraries=places`}
