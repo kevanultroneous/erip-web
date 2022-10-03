@@ -65,7 +65,9 @@ export default function ViewBooking({ backhandler, order }) {
         <PartnerStatusProgress
           data={details.length > 0 ? details[0].order_user_timeline_detail : []}
           process={false}
-          processname={"processname"}
+          processname={
+            details.length > 0 ? details[0].order_user_timeline[0].out_text : ""
+          }
         />
       </Row>
 
@@ -154,7 +156,9 @@ export default function ViewBooking({ backhandler, order }) {
               </Col>
             ) : null}
             <Col xs={12} md={6} lg={6} xl={6}>
-              <NeedHelp />
+              <NeedHelp
+                data={details.length > 0 ? details[0].order_user_need_help : []}
+              />
             </Col>
 
             <Quotation rejectaccept={true} showpaybutton={false} hide />
