@@ -48,8 +48,8 @@ import {
 import { mixReducer } from "./mixReducers/mixReducers";
 import { profileReducer } from "./profileReducers/profileReducers";
 import { userAuthenticationReducer } from "./userReducer/userReducer";
-import { enquiresReducers } from "./enquiresReducers/enquiresReducers";
 import orderReducer from "./orderReducers/orderReducer";
+import enquiresReducer from "./enquiresReducers/enquiresReducers";
 
 export const rootReducer = combineReducers({
   locationdata: cityReducer,
@@ -86,6 +86,6 @@ export const rootReducer = combineReducers({
   brandName: selectPersonalGadgetsBrandsReducer,
   modelName: selectPersonalGadgetsModelReducer,
   profile: profileReducer,
-  enquires: enquiresReducers,
+  enquires: enquiresReducer,
   mix: mixReducer,
 });

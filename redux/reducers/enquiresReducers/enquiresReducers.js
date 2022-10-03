@@ -4,7 +4,7 @@ const enqinitstate = {
     actionenqdata: null,
     loading: true
 }
-export const enquiresReducer = (state = enqinitstate, { type, payload }) => {
+const enquiresReducer = (state = enqinitstate, { type, payload }) => {
     switch (type) {
         case enq.FETCH_ENQ_START:
             return {
@@ -44,3 +44,4 @@ export const enquiresReducer = (state = enqinitstate, { type, payload }) => {
             return state
     }
 }
+export default enquiresReducer
