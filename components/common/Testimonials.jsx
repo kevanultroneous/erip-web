@@ -7,7 +7,8 @@ import { TestimonialData } from "utils/data";
 import styles from "@/styles/components/common/Testimonial.module.css";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { useEffect, useState } from "react";
-export default function Testimonials({ data = TestimonialData, limit }) {
+import { HomeTestimonialAPI } from "api/homeapi";
+export default function Testimonials() {
   const settings = {
     dots: false,
     infinite: true,
@@ -48,8 +49,12 @@ export default function Testimonials({ data = TestimonialData, limit }) {
   };
   const [mobileView, setMobileView] = useState(false);
 
+  const [data, setData] = useState(TestimonialData);
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
+    HomeTestimonialAPI()
+      .then((r) => setData(r.data))
+      .catch((e) => console.log(e));
   }, []);
 
   return (

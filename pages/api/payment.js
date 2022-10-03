@@ -8,7 +8,6 @@ export default async function handler(req, res) {
             key_id: "rzp_test_S4aufpoLKPe4by",
             key_secret: "O2OSsNhkadG2FBPPTTuYCPBh",
         });
-
         // Create an order -> generate the OrderID -> Send it to the Front-end
         // Also, check the amount and currency on the backend (Security measure)
         const payment_capture = 1;

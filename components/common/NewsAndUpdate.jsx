@@ -7,7 +7,9 @@ import "slick-carousel/slick/slick-theme.css";
 import { NewsandUpdateData } from "utils/data";
 import Link from "next/link";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-export default function NewsAndUpdate({ data = NewsandUpdateData }) {
+import { useEffect, useState } from "react";
+import { BlogResponseApi } from "api/homeapi";
+export default function NewsAndUpdate() {
   const settings = {
     infinite: true,
     speed: 500,
@@ -44,6 +46,14 @@ export default function NewsAndUpdate({ data = NewsandUpdateData }) {
       },
     ],
   };
+  const [data, setData] = useState(NewsandUpdateData);
+
+  useEffect(() => {
+    BlogResponseApi()
+      .then((r) => setData(r.data))
+      .catch((e) => console.log(e));
+  }, []);
+
   return (
     <Container>
       <div className={styles.NewsandUpdateHeadingWrraper}>

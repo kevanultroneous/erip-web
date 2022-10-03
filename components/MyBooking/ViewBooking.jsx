@@ -150,6 +150,9 @@ export default function ViewBooking({ backhandler, order }) {
                 }
               />
             </Col>
+            <Col xs={12} md={6} lg={6} xl={6}>
+              <PartnerDetails off={false} otphide={false} otp="2121" />
+            </Col>
             {mobileView ? (
               <Col xs={12} md={6} lg={6} xl={6}>
                 <MobileProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />

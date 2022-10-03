@@ -13,20 +13,26 @@ import { callFaqByCategory } from "redux/actions/faqActions/faqActions";
 import { getInformationByCategory } from "redux/actions/informationActions/informationActions";
 import { getCategoryOffer } from "redux/actions/offersActions/offerActions";
 import { getTestimonialsByCategory } from "redux/actions/testimonialActions/testimonialAction";
+import { GetYourFixAPI } from "api/homeapi";
 
-export default function GetYourFix({ data = GetYourFixCard }) {
-  const dispatch = useDispatch();
+export default function GetYourFix() {
+  // const dispatch = useDispatch();
 
-  const categoryID = useSelector((state) => state.issuePage.categoryID);
+  // const categoryID = useSelector((state) => state.issuePage.categoryID);
 
+  // useEffect(() => {
+  //   dispatch(getCategoryHero(categoryID));
+  //   dispatch(callFaqByCategory(categoryID));
+  //   dispatch(getInformationByCategory(categoryID));
+  //   dispatch(getCategoryOffer(categoryID));
+  //   dispatch(getTestimonialsByCategory(categoryID));
+  // }, [categoryID]);
+  const [data, setData] = useState(GetYourFixCard);
   useEffect(() => {
-    console.log({ categoryID });
-    dispatch(getCategoryHero(categoryID));
-    dispatch(callFaqByCategory(categoryID));
-    dispatch(getInformationByCategory(categoryID));
-    dispatch(getCategoryOffer(categoryID));
-    dispatch(getTestimonialsByCategory(categoryID));
-  }, [categoryID]);
+    GetYourFixAPI(localStorage.getItem("cityid"))
+      .then((r) => setData(r.data))
+      .catch((e) => console.log(e));
+  }, []);
 
   return (
     <Container userdefinedclass={styles.TablateSpacing}>
