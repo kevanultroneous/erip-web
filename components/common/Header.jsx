@@ -20,11 +20,6 @@ import axios from "axios";
 import { FiSearch } from "react-icons/fi";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getCityFail,
-  getCityStart,
-  getCitySuccess,
-} from "redux/actions/cityActions/cityAction";
 import { LOGIN_USER_SUCCESS, USER_CLEAR } from "redux/actions/actionTypes";
 import { GET_CITY_SUCCESS } from "redux/actions/actionTypes";
 import { BiUser } from "react-icons/bi";
@@ -555,6 +550,7 @@ export function Header() {
                               <Row className={styles.SearchRow}>
                                 <Col xs={3} md={3} lg={3} xl={3}>
                                   <Image
+                                    alt="category img"
                                     src={v.category_image_url}
                                     fluid
                                     width={70}
@@ -602,6 +598,7 @@ export function Header() {
                               <Row className={styles.SearchRow}>
                                 <Col xs={3} md={3} lg={3} xl={3}>
                                   <Image
+                                    alt="brand image"
                                     src={v.brand_image_url}
                                     fluid
                                     width={70}
@@ -651,6 +648,7 @@ export function Header() {
                               <Row className={styles.SearchRow}>
                                 <Col xs={3} md={3} lg={3} xl={3}>
                                   <Image
+                                    alt="model img"
                                     src={v.model_image_url}
                                     fluid
                                     width={70}
@@ -698,6 +696,7 @@ export function Header() {
                               <Row className={styles.SearchRow}>
                                 <Col xs={3} md={3} lg={3} xl={3}>
                                   <Image
+                                    alt="segment img"
                                     src={v.segment_image_url}
                                     fluid
                                     width={70}
@@ -792,6 +791,7 @@ export function Header() {
                             <Row className={styles.SearchRow}>
                               <Col xs={3} md={3} lg={3} xl={3}>
                                 <Image
+                                  alt="category img"
                                   src={v.category_image_url}
                                   fluid
                                   width={70}
@@ -839,6 +839,7 @@ export function Header() {
                             <Row className={styles.SearchRow}>
                               <Col xs={3} md={3} lg={3} xl={3}>
                                 <Image
+                                  alt="brand img"
                                   src={v.brand_image_url}
                                   fluid
                                   width={70}
@@ -888,6 +889,7 @@ export function Header() {
                             <Row className={styles.SearchRow}>
                               <Col xs={3} md={3} lg={3} xl={3}>
                                 <Image
+                                  alt="model imgs"
                                   src={v.model_image_url}
                                   fluid
                                   width={70}
@@ -935,6 +937,7 @@ export function Header() {
                             <Row className={styles.SearchRow}>
                               <Col xs={3} md={3} lg={3} xl={3}>
                                 <Image
+                                  alt="segment img"
                                   src={v.segment_image_url}
                                   fluid
                                   width={70}

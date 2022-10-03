@@ -33,6 +33,7 @@ export default function RatingAndReview({ show, onHide, order }) {
           </Col>
           <Col xs={3} md={3} lg={4} xl={4} className={styles.ItemEnd}>
             <Image
+              alt="rating review"
               src={
                 mobileView
                   ? "/assets/icons/blue-close.png"
@@ -54,7 +55,7 @@ export default function RatingAndReview({ show, onHide, order }) {
               <Row>
                 <Col xs={3}>
                   <div className={styles.ImageWrraper}>
-                    <Image src={"/"} fluid />
+                    <Image src={"/"} fluid alt="rating review" />
                   </div>
                 </Col>
                 <Col xs={9}>
@@ -81,7 +82,7 @@ export default function RatingAndReview({ show, onHide, order }) {
               className={styles.RatingDetails}
             >
               <div className={styles.ImageWrraper}>
-                <Image src={"/"} fluid />
+                <Image src={"/"} fluid alt="rating review" />
               </div>
               <p className={styles.PartnerName}>Mr Partner Name</p>
             </Col>

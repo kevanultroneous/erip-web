@@ -71,6 +71,7 @@ export default function FeedbackQuestions({ show, onHide }) {
           </Col>
           <Col xs={2} md={2} lg={4} xl={4} className={styles.FQclose}>
             <Image
+              alt="actions btns"
               src={
                 mobileView
                   ? "/assets/icons/blue-close.png"

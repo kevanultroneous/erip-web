@@ -29,6 +29,7 @@ export default function PartnerDetails({
       <Row>
         <Col xs={4} md={3} lg={3} xl={3}>
           <Image
+            alt="small avtar"
             src="/assets/images/small-avtar.png"
             className={styles.smallAvtar}
           />
@@ -50,7 +51,7 @@ export default function PartnerDetails({
           </div>
           <small className={styles.RatingWrraper}>
             3.5
-            <Image src="/assets/images/min-rating.png" fluid />
+            <Image src="/assets/images/min-rating.png" fluid alt="min rating" />
           </small>
         </Col>
         {!otphide && (

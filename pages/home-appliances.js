@@ -88,7 +88,7 @@ function Homeappliances() {
   useEffect(() => {
     dispatch(selectCategory(2));
     dispatch(getHomeApplianceModel(categoryID));
-  }, []);
+  });
 
   // useEffect(() => {}, [homeApplianceSegment]);
   console.log({ homeApplianceSegment });

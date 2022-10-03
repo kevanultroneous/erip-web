@@ -3,7 +3,7 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import useRazorpay from "react-razorpay";
 
-export default function paynow() {
+export default function Paynow() {
     const [datas, setDatas] = useState([])
     useEffect(() => {
         axios.post("/api/payment").then((r) => setDatas(r.data)).catch((e) => console.log(e))

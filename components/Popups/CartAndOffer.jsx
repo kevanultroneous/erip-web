@@ -195,7 +195,11 @@ export default function CartAndOffer({ show, onHide }) {
               >
                 {cartSelector.data.success == false ? (
                   <div className="text-center">
-                    <Image src="/assets/images/blank-cart.png" fluid />
+                    <Image
+                      src="/assets/images/blank-cart.png"
+                      fluid
+                      alt="blank cart"
+                    />
                     <h3 className="text-center mt-xl-4 mb-xl-4 mt-lg-4 mb-lg-4 mt-4 mb-4">
                       <b>Your cart is empty!</b>
                     </h3>

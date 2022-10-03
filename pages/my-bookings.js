@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 
-function myBookings() {
+function MyBookings() {
   const [mobileView, setMobileView] = useState(false);
   const router = useRouter()
   useEffect(() => {
@@ -32,4 +32,4 @@ function myBookings() {
   );
 }
 
-export default myBookings;
+export default MyBookings;

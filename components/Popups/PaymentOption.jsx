@@ -138,7 +138,7 @@ export default function PaymentOption() {
                 </p>
                 {mobileView && (
                   <div className={styles.MobileRadio}>
-                    <Image src="/assets/images/b-radio.png" />
+                    <Image src="/assets/images/b-radio.png" alt="radio" />
                   </div>
                 )}
               </div>
@@ -157,7 +157,7 @@ export default function PaymentOption() {
                 xl={4}
                 className={styles.PaymentMobCol}
               >
-                <Image src="/assets/images/qr-imgs.png" />
+                <Image src="/assets/images/qr-imgs.png" alt="qr-img" />
               </Col>
               <Col xs={12} md={12} lg={8} xl={8}>
                 <p className={styles.QrText}>
@@ -413,7 +413,7 @@ export default function PaymentOption() {
                         className={styles.WalletRadio}
                       >
                         <div className={styles.WalletImg}>
-                          <Image src={v.img} />
+                          <Image src={v.img} alt="wallet img" />
                         </div>
                         <p className={styles.WalletName}>{v.name}</p>
                       </Col>
@@ -428,6 +428,7 @@ export default function PaymentOption() {
                           <BsCheckCircleFill size={25} color="#0E62CB" />
                         ) : (
                           <Image
+                            alt="paywallets"
                             src={"/assets/images/paywallets/radioimg.png"}
                           />
                         )}
@@ -463,7 +464,7 @@ export default function PaymentOption() {
                         className={styles.PaylaterCover}
                       >
                         <div className={styles.PaylaterImgCover}>
-                          <Image src={v.img} />
+                          <Image src={v.img} alt="paylater" />
                         </div>
                         <p className={styles.PaylaterName}>{v.name}</p>
                       </Col>
