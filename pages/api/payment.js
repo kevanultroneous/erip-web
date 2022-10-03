@@ -35,3 +35,4 @@ export default async function handler(req, res) {
         // Handle any other HTTP method
     }
 }
+

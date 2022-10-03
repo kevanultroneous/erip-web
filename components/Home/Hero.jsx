@@ -5,6 +5,7 @@ import { HomeHerodata } from "utils/data";
 import { useEffect } from "react";
 import { HeroSectionApi } from "api/homeapi";
 import { useState } from "react";
+import axios from "axios";
 
 export default function HomeHero() {
   const [HomeHerod, setHomeHeroD] = useState(HomeHerodata);
