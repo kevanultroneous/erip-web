@@ -1,6 +1,11 @@
 import React from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import styles from "@/styles/components/MyBooking/LeftMenu.module.css";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { callFetchProfile } from "redux/actions/profileActions/profileActions";
+import { useRouter } from "next/router";
+import axios from "axios";
 
 function LeftMenu({
   profileImage,
@@ -9,8 +14,11 @@ function LeftMenu({
   menus,
   alternativenumberaction,
   addemailaction,
-  logout,
+  altnum,
+  altemail,
 }) {
+  const router = useRouter();
+
   return (
     <div className={styles.leftMenuCont}>
       <div>
@@ -26,10 +34,10 @@ function LeftMenu({
                 onClick={alternativenumberaction}
                 className={styles.AlternativeButtons}
               >
-                add alternative number
+                {altnum ? altnum : "add alternative number"}
               </p>
               <p onClick={addemailaction} className={styles.AlternativeButtons}>
-                add email
+                {altemail ? altemail : "add email"}
               </p>
             </div>
           </Col>
@@ -46,7 +54,29 @@ function LeftMenu({
         </div>
       </div>
       <div className={styles.profileDetailsLogOut}>
-        <h6 onClick={logout}>Log Out</h6>
+        <p
+          onClick={() => {
+            axios
+              .get(`http://43.204.87.153/api/v1/users/logout`, {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              })
+              .then((response) => {
+                if (response.data.success) {
+                  localStorage.removeItem("token");
+                  router.push("/");
+                } else {
+                  alert(response.data.message);
+                }
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          }}
+        >
+          Log Out
+        </p>
       </div>
     </div>
   );

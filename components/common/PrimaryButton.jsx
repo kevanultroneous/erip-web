@@ -14,7 +14,7 @@ export default function PrimaryButton({
   icon,
 }) {
   return (
-    <Link href={href}>
+    <Link href={href ? href : "#"}>
       <Button
         onClick={clickHandler}
         variant={variant}

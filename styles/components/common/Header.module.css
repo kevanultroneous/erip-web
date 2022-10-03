@@ -9,6 +9,7 @@
 
 .brandLogo {
   width: 7vw;
+  cursor: pointer;
 }
 
 .navBarTopHeader {
@@ -119,7 +120,7 @@
   color: #0e62cb;
 }
 
-.InputGroup {}
+/* .InputGroup {} */
 
 .InputOrText {
   text-align: center;
@@ -150,6 +151,68 @@
   display: block !important;
 }
 
+.Searchbar {
+  border: 1px solid #676767;
+  border-radius: 3px;
+  padding: 0.3rem 1rem;
+  margin-left: 3rem;
+  font-size: 18px;
+}
+
+.Searchbar input {
+  border: none;
+  outline: none;
+
+}
+
+.SearchItems {
+  padding: 1rem;
+  position: fixed;
+  width: 21.5rem;
+  margin-left: 3rem;
+  top: 4.5rem;
+  z-index: 1;
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 3px;
+}
+
+.FlexEnd {
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+}
+
+.navHeaderCart {
+  cursor: pointer;
+}
+
+.SearchLi {
+
+  list-style: none;
+  padding-left: 0% !important;
+}
+
+.SearchText {
+  font-weight: 400;
+  font-size: 13px;
+  margin: 0%;
+  color: #676767;
+}
+
+.SearchRow {
+  cursor: pointer;
+}
+
+.SearchTextCenter {
+  display: flex;
+  align-items: center;
+}
+
+.SearchHr {
+  margin-top: 1rem;
+}
+
 @media (max-width: 600px) {
   .CartSection {
     position: relative;
@@ -166,7 +229,7 @@
 
   .SubWrraper {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
   }
 
   .brandLogo {
@@ -214,6 +277,28 @@
 
   .dropdownicons {
     transition: 0.5s;
+  }
+
+
+  .Searchbar {
+    margin: 0%;
+    margin-top: 2rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    display: flex;
+  }
+
+  .SearchItems {
+    padding: 1rem;
+    position: fixed;
+    max-width: 25rem;
+    top: 11rem;
+    z-index: 1;
+    left: 1rem;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 3px;
+    margin: 0%;
   }
 }
 
@@ -263,5 +348,26 @@
     padding: 0.5rem;
     border: none;
     outline: none;
+  }
+
+  .Searchbar {
+    margin: 0%;
+    margin-top: 1rem;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .SearchItems {
+    padding: 1rem;
+    position: fixed;
+    max-width: 25rem;
+    top: 10rem;
+    z-index: 1;
+    left: 2.5rem;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 3px;
+    margin: 0%;
   }
 }

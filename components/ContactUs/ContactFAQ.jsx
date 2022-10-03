@@ -3,24 +3,29 @@ import { AccordionFAQ } from "utils/accordionFAQ";
 import AccordionComponent from "../common/AccordionComponent";
 import Container from "../common/Container";
 import styles from "@/styles/components/ContactUs/ContactFAQ.module.css";
+import axios from "axios";
+import { API_URL } from "utils/data";
 
-function ContactFAQ() {
+function ContactFAQ({ faqArray = AccordionFAQ }) {
   const [mobileView, setMobileView] = useState(true);
+
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(false) : setMobileView(true);
   }, []);
 
   return (
     <section className={styles.faqContainer}>
-      <Container userdefinedclass={styles.faqMainContainer}>
-        <div className={styles.faqHeading}>
-          <h2>Frequently Asked Questions</h2>
-        </div>
-        <AccordionComponent
-          arr={AccordionFAQ}
-          customTitleStyle={styles.faqTitleStyles}
-        />
-      </Container>
+      {faqArray.length > 0 && (
+        <Container userdefinedclass={styles.faqMainContainer}>
+          <div className={styles.faqHeading}>
+            <h2>Frequently Asked Questions</h2>
+          </div>
+          <AccordionComponent
+            arr={faqArray}
+            customTitleStyle={styles.faqTitleStyles}
+          />
+        </Container>
+      )}
     </section>
   );
 }

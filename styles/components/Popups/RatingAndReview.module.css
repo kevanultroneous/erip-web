@@ -1,0 +1,214 @@
+.ItemCenter {
+    text-align: right;
+}
+
+.ItemEnd {
+    text-align: right;
+}
+
+.ItemHeading {
+    font-weight: 400;
+    font-size: 28px;
+}
+
+.ImageWrraper {
+    height: 80px;
+    width: 80px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ECECEC;
+}
+
+.PartnerImage {
+    height: 60px;
+    width: 60px;
+}
+
+.RatingDetails {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+
+.PartnerName {
+    font-weight: 400;
+    font-size: 18px;
+    margin: 1rem 0 0rem 1rem;
+}
+
+.TellMore {
+    background: #FFFFFF;
+    border: 1.5px solid #676767;
+    border-radius: 5px;
+    width: 100%;
+    outline: none;
+    padding: 0.5rem;
+    margin: 2rem 0;
+}
+
+.PartnerSubHeading {
+    margin: 0%;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.CheckBoxCover {
+    background: #E7F1FD;
+    border: 1px solid #0E62CB;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 1rem 0.5rem;
+    margin-top: 1rem;
+}
+
+.CheckBoxTitle {
+    margin: 0%;
+    color: #0E62CB;
+    font-weight: 700;
+    font-size: 16px;
+    margin-left: 1rem;
+}
+
+.RatingDetailsRow {
+    margin: 0rem 0rem 0 6rem;
+}
+
+.CheckBoxInput {}
+
+.SubHeadingOne {
+    text-align: center;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.SubHeadingTwo {
+    font-weight: 400;
+    font-size: 16px;
+    text-align: center;
+    color: #676767;
+    margin: 0%;
+}
+
+.SubHeadings {
+    margin-top: 1.5rem;
+}
+
+.RatingDetailsRowMainCover {
+    display: flex;
+    justify-content: center;
+    padding: 0%;
+}
+
+.PrimaryButtonCover {
+    width: 100%;
+}
+
+.PopupBody {
+    padding: 2rem 3rem;
+}
+
+@media (min-width:320px) and (max-width: 450px) {
+    .RatingDetailsRow {
+        margin: 0%;
+        padding: 0%;
+    }
+
+    .CheckBoxCover {
+        background: transparent;
+        border: none;
+        display: flex;
+        align-items: center;
+        padding: 0rem 0rem;
+        margin-top: 1rem;
+    }
+
+    .CheckBoxTitle {
+        color: #000;
+        font-weight: 400;
+        font-size: 16px;
+    }
+
+    .SubHeadingOne {
+        text-align: left;
+    }
+
+    .SubHeadingTwo {
+        text-align: left;
+    }
+
+    .ItemHeading {
+        font-weight: 400;
+        font-size: 20px;
+    }
+
+    .PrimaryButtonCover {
+        width: 100%;
+        position: sticky;
+        bottom: 2rem;
+    }
+
+    .PartnerSubHeading {
+        text-align: center;
+    }
+
+    .RatingMobSpace {
+        margin-bottom: 6rem;
+    }
+
+    .ThankyouCover {
+        width: 100%;
+        text-align: center;
+        background-color: #FFFFFF;
+        padding: 1rem;
+    }
+
+    .ThankyouText {
+        font-weight: 500;
+        font-size: 16px;
+    }
+
+    .RatingDetails {
+        align-items: center;
+    }
+
+    .MobRatingDetails {
+        align-items: flex-start;
+    }
+
+    .SelectedRatingMobSpace {
+        margin-bottom: 0%;
+        margin-left: 1rem;
+        user-select: none;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {
+    .RatingDetailsRow {
+        margin: 0%;
+    }
+
+    .PopupBody {
+        padding: 1rem 1rem;
+    }
+
+    .CheckBoxTitle {
+        font-size: 14px;
+    }
+
+    .PartnerSubHeading {
+        text-align: center;
+    }
+
+    .ItemHeading {
+        font-size: 25px;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1730px) {}
+
+@media (min-width: 650px) and (max-width: 740px) {}

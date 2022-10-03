@@ -7,7 +7,10 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import styles from "@/styles/components/Home/OfferBanner.module.css";
 import { OfferBannerhomedata } from "utils/data";
-export default function OfferBanner({ data = OfferBannerhomedata }) {
+import { useEffect, useState } from "react";
+import OfferadPopup from "../Popups/OfferadPopup";
+import { OfferSectionHomeAPI } from "api/homeapi";
+export default function OfferBanner({ clickhandler }) {
   const settings = {
     dots: false,
     infinite: true,
@@ -36,14 +39,33 @@ export default function OfferBanner({ data = OfferBannerhomedata }) {
       },
     ],
   };
+  const [data, setData] = useState(OfferBannerhomedata);
+  const [offerPopup, setOfferPopup] = useState(false);
 
+  useEffect(() => {
+    OfferSectionHomeAPI()
+      .then((r) => setData(r.data))
+      .catch((e) => console.log(e));
+  }, []);
   return (
     <Container userdefinedclass={styles.MobileSpacing}>
+      <OfferadPopup show={offerPopup} onHide={() => setOfferPopup(false)} />
       <Row className="justify-content-center m-0 OfferBannerImageSlide">
         <Slider {...settings} className="offerbanner">
           {data.map((value, index) => (
-            <Col xl={4} key={index}>
-              <Link href={value.osection_click_url} target={"_blank"}>
+            <Col
+              xl={4}
+              key={index}
+              onClick={value.osection_clickable == false ? clickhandler : null}
+            >
+              <Link
+                href={
+                  value.osection_clickable == false
+                    ? "#"
+                    : value.osection_click_url
+                }
+                target={"_blank"}
+              >
                 <div className={styles.SliderImage}>
                   <Image
                     src={value.osection_image_url}

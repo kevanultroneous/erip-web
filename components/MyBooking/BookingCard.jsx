@@ -12,30 +12,48 @@ function BookingCard({
   issueType,
   partnerAssigningStatus,
   OTP,
+  viewdetails,
+  callsupport,
+  partnerrating,
 }) {
   return (
     <div className={styles.bookingCardContainer}>
       <Row className={styles.bookingCardHead}>
-        <Col xl={4} className={styles.bookingOrder}>
+        <Col xl={4} xs={6} className={styles.bookingOrder}>
           <p>Order ID: {orderNumber}</p>
         </Col>
-        <Col xl={6}>
+        <Col xl={6} xs={6}>
           <div className={styles.bookingCardStatus}>
             <p>{partnerStatusAssigned}</p>
           </div>
         </Col>
       </Row>
       <Row className={styles.bookingCardBody}>
-        <Col xl={3}>
+        <Col xl={4} xs={4}>
           <div className={styles.bookingCardProfile}>
             <Image fluid src={partnerImage} alt={partnerName} />
-            <p>{partnerName}</p>
+            <div className="d-flex">
+              <p>{partnerName}</p>
+              <div className="d-flex align-items-center">
+                <span>{partnerrating}</span>
+                {partnerrating == " " ? (
+                  <label
+                    style={{
+                      background: "#030B1C",
+                      height: "10px",
+                      padding: "0.3rem",
+                      marginLeft: "1rem",
+                    }}
+                  ></label>
+                ) : null}
+              </div>
+            </div>
           </div>
         </Col>
-        <Col xl={8}>
-          <h6>{bookingDateAndTime}</h6>
-          <h6>{issueDevice}</h6>
-          <h6>{issueType}</h6>
+        <Col xl={8} xs={8}>
+          <h6 className={styles.SmallDetails}>{bookingDateAndTime}</h6>
+          <h6 className={styles.SmallDetails}>{issueDevice}</h6>
+          <h6 className={styles.SmallDetails}>{issueType}</h6>
         </Col>
       </Row>
       <div className={styles.customMessage}>
@@ -50,11 +68,30 @@ function BookingCard({
         </p>
       </div>
       <Row className={styles.actionButtons}>
-        <Col xl={6}>
-          <PrimaryButton title="Call Support" customClass={styles.actionBtn} />
+        <Col xl={6} xs={6}>
+          <PrimaryButton
+            title={
+              partnerStatusAssigned == "assigning professional"
+                ? "Call Support"
+                : partnerStatusAssigned == "partner assigned"
+                ? "Call Professional"
+                : partnerStatusAssigned == "men at work"
+                ? "Call Professional"
+                : partnerStatusAssigned == "job completed"
+                ? "support"
+                : "Call"
+            }
+            customClass={styles.actionBtn}
+            // clickHandler={callsupport}
+            href={callsupport}
+          />
         </Col>
-        <Col xl={6}>
-          <PrimaryButton title="View Details" customClass={styles.actionBtn} />
+        <Col xl={6} xs={6}>
+          <PrimaryButton
+            title="View Details"
+            customClass={styles.actionBtn}
+            clickHandler={viewdetails}
+          />
         </Col>
       </Row>
     </div>

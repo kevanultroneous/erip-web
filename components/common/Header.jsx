@@ -3,7 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import PrimaryButton from "./PrimaryButton";
-import { Col, Image, Row } from "react-bootstrap";
+import { Col, Image, Modal, Row, Spinner } from "react-bootstrap";
 import { moreMenu } from "utils/moreMenu";
 import { useEffect, useRef, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -14,10 +14,26 @@ import CartAndOffer from "../Popups/CartAndOffer";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
 import { API_URL, GMAP_API } from "utils/data";
 import { CityDetactionAPI, PincodeByCity, UserLogout } from "pages/api/api";
-import { MatchCity } from "utils/utilsfunctions";
+import { getPincode, MatchCity } from "utils/utilsfunctions";
 import Logout from "../Popups/Logout";
 import axios from "axios";
 import { FiSearch } from "react-icons/fi";
+import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCityFail,
+  getCityStart,
+  getCitySuccess,
+} from "redux/actions/cityActions/cityAction";
+import { LOGIN_USER_SUCCESS, USER_CLEAR } from "redux/actions/actionTypes";
+import { GET_CITY_SUCCESS } from "redux/actions/actionTypes";
+import { BiUser } from "react-icons/bi";
+import { callNavsearch } from "redux/actions/mixActions/mixActions";
+import { selectCategory } from "redux/actions/issuePageActions/issuePageActions";
+import geocodeToPincode from "geocode-to-pincode";
+import { getCookie } from "cookies-next";
+import { NavSearchApi } from "api/mixApi";
+import NavigationHandler from "../Popups/NavigationHandler";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
@@ -33,15 +49,99 @@ export function Header() {
   const [topBrandsHeaderData, setTopBrandsHeaderData] = useState([]);
   const [mobileRepairHeaderData, setmobileRepairHeaderData] = useState([]);
   const [topIssuesHeaderData, settopIssuesHeaderData] = useState([]);
-
+  const [loactionloader, setLocationLoader] = useState(false);
   const [showMobloc, setShowMobloc] = useState(false);
+  const [search, setSearch] = useState("");
+  const [sdata, setSdata] = useState(null);
+  const [savepincode, setSavePincode] = useState([]);
+  const dispatch = useDispatch();
+
+  const locationselector = useSelector((selector) => selector.locationdata);
+  const navsearch = useSelector((selector) => selector.mix.navsearch);
+  const userselector = useSelector((selector) => selector.userdata);
+  const profileselector = useSelector((selector) => selector.profile.profile);
+  const selector = useSelector((selector) => selector);
+
+  const navdata = navsearch ? (navsearch.data ? navsearch.data : null) : null;
+
+  const [categoriesSearch, setCategoriesSearch] = useState([]);
+  const [brandsSearch, setBrandsSearch] = useState([]);
+  const [modelsSearch, setModelsSearch] = useState([]);
+  const [segmentSearch, setsegmentSearch] = useState([]);
+  const [errSearch, setErrsearch] = useState("");
+  const [loadsSearch, setLoadsSearch] = useState(false);
+  const [showsearch, setShowSearch] = useState(false);
+  useEffect(() => {
+    if (search.length < 0) {
+      setShowSearch(false);
+      setCategoriesSearch(null);
+      setBrandsSearch(null);
+      setModelsSearch(null);
+      setsegmentSearch(null);
+    } else {
+      setShowSearch(true);
+    }
+    setLoadsSearch(true);
+    NavSearchApi(1, search)
+      .then((response) => {
+        if (response.data.success) {
+          if (response.data.message == "no data found") {
+            setCategoriesSearch(null);
+            setBrandsSearch(null);
+            setModelsSearch(null);
+            setsegmentSearch(null);
+            setErrsearch("No data Found");
+          } else {
+            setCategoriesSearch(response.data.data[0].categories);
+            setBrandsSearch(response.data.data[0].brands);
+            setModelsSearch(response.data.data[0].models);
+            setsegmentSearch(response.data.data[0].segments);
+            setLoadsSearch(false);
+          }
+        } else {
+          setErrsearch(response.data.message);
+          setLoadsSearch(false);
+        }
+      })
+      .catch((e) => console.log(e));
+  }, [search]);
+
+  setTimeout(() => {
+    setSdata(navdata);
+  }, 1000);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      dispatch({
+        type: LOGIN_USER_SUCCESS,
+        payload: localStorage.getItem("token"),
+      });
+    } else {
+      dispatch({
+        type: USER_CLEAR,
+        payload: 0,
+      });
+    }
+    if (getCookie("erip") == "web") {
+    } else {
+      localStorage.removeItem("token");
+      localStorage.removeItem("city");
+      localStorage.removeItem("enq_id");
+      localStorage.removeItem("cityid");
+    }
+    if (locationselector.err === "" && locationselector.city != null) {
+      setLocationPopupShow(false);
+    }
+    if (!(localStorage.getItem("city") && localStorage.getItem("cityid"))) {
+      setLocationPopupShow(true);
+    }
+  }, []);
 
   // getting header menus from api
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
     var modal = document.getElementById("dropdown_location");
     getHeaderDataFromAPI();
-    getLocation();
   }, []);
 
   const getHeaderDataFromAPI = async () => {
@@ -91,27 +191,27 @@ export function Header() {
       })
       .catch((e) => console.log(e));
 
-    if (MatchCity(cityData, currentCity)) {
+    if (MatchCity(cityData, currentCity, dispatch)) {
       setLocationPopupShow(false);
+      setShowMobloc(false);
     } else {
       setSelectedAddress("");
     }
 
     if (localStorage.getItem("cityid")) {
-      // PincodeByCity(1)
-      //   .then((r) => console.log(r))
-      //   .catch((e) => console.log(e));
+      PincodeByCity(1)
+        .then((r) => setSavePincode(r.data.data))
+        .catch((e) => console.log(e));
     }
   }, [currentCity]);
-
   function getLocation() {
+    setLocationLoader(true);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
     } else {
       alert("Geolocation is not supported by this browser.");
     }
   }
-
   const menuCollapse = useRef();
 
   useEffect(() => {
@@ -146,6 +246,7 @@ export function Header() {
   function LogoutUser() {
     setLogoutPopup(true);
   }
+
   function LogoutAction() {
     UserLogout(localStorage.getItem("token"))
       .then((response) => {
@@ -158,37 +259,51 @@ export function Header() {
       })
       .catch((e) => console.log("logout" + e));
   }
+
   function showPosition(position) {
+    geocodeToPincode({
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+      key: GMAP_API,
+    })
+      .then((response) => localStorage.setItem("pincode", response.pincode))
+      .catch((error) => console.log(error));
     reverseMap(position.coords.latitude, position.coords.longitude);
     displayLocation(position.coords.latitude, position.coords.longitude);
   }
+
   function reverseMap(lat, lng) {
     var latlng = new google.maps.LatLng(lat, lng);
     var geocoder = (geocoder = new google.maps.Geocoder());
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[1]) {
-          // setLocationPopupShow(false);
+          setLocationPopupShow(false);
+          setLocationLoader(false);
           setSelectedAddress(results[1].formatted_address);
         }
       }
     });
   }
+
   function getLatandLongByAddress(address) {
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({ address: address }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         var latitude = results[0].geometry.location.lat();
         var longitude = results[0].geometry.location.lng();
+        getPincode(latitude, longitude);
         displayLocation(latitude, longitude);
       }
     });
   }
+
   function displayLocation(latitude, longitude) {
     var geocoder;
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(latitude, longitude);
     var count, country, state, city;
+    getPincode(latitude, longitude);
     geocoder.geocode({ latLng: latlng }, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[0]) {
@@ -208,6 +323,7 @@ export function Header() {
       }
     });
   }
+
   {
     if (mobileView) {
       return (
@@ -215,15 +331,17 @@ export function Header() {
           <Container className={styles.ContainerNavmob}>
             <Row>
               <Col xs={6} sm={6} md={6} className={styles.MobNavCol}>
-                <Navbar.Brand href="/">
-                  <div className={styles.brandLogo}>
-                    <Image
-                      fluid
-                      src="/assets/icons/erip-logo-blue.png"
-                      alt="Erip Logo"
-                    />
-                  </div>
-                </Navbar.Brand>
+                <Link href={"/"}>
+                  <Navbar.Brand>
+                    <div className={styles.brandLogo}>
+                      <Image
+                        fluid
+                        src="/assets/icons/erip-logo-blue.png"
+                        alt="Erip Logo"
+                      />
+                    </div>
+                  </Navbar.Brand>
+                </Link>
               </Col>
               <Col xs={6} sm={6} md={6} className={styles.SubMainWrraper}>
                 <div className={styles.SubWrraper}>
@@ -243,21 +361,23 @@ export function Header() {
 
             <Navbar.Collapse id="basic-navbar-nav" ref={menuCollapse}>
               <Nav className="me-auto">
-                <Nav.Link
-                  href="#home"
-                  className={styles.mobileMenuLink}
-                  onClick={() => (token ? LogoutAction() : setLoginPopup(true))}
-                >
-                  {token ? "Logout" : "Login"}
-                </Nav.Link>
+                {token ? null : (
+                  <Nav.Link
+                    href="#"
+                    className={styles.mobileMenuLink}
+                    onClick={() => setLoginPopup(true)}
+                  >
+                    Login
+                  </Nav.Link>
+                )}
 
-                <Nav.Link href="#link" className={styles.mobileMenuLink}>
+                <Nav.Link href="#" className={styles.mobileMenuLink}>
                   My Bookings
                 </Nav.Link>
-                <Nav.Link href="#link" className={styles.mobileMenuLink}>
+                <Nav.Link href="#" className={styles.mobileMenuLink}>
                   About Us
                 </Nav.Link>
-                <Nav.Link href="#link" className={styles.mobileMenuLink}>
+                <Nav.Link href="#" className={styles.mobileMenuLink}>
                   Blogs
                 </Nav.Link>
               </Nav>
@@ -280,7 +400,7 @@ export function Header() {
                 onClick={() => setShowMobloc(!showMobloc)}
               >
                 <Image src="/assets/icons/mobile-loc.png" alt="mob-loc" />
-                <p className={styles.LocationText}>Banglore</p>
+                <p className={styles.LocationText}>{locationselector.name}</p>
                 <Image
                   src="/assets/icons/mobile-dropdown.png"
                   alt="mob-loc"
@@ -293,8 +413,64 @@ export function Header() {
                 />
               </div>
             </Col>
+            <Modal
+              show={showMobloc}
+              onHide={() => setShowMobloc(false)}
+              centered
+              size="md"
+              className="OfferPopup Searchpopups"
+            >
+              <Modal.Body style={{ height: "90vh" }}>
+                <NavigationHandler backhandler={() => setShowMobloc(false)} />
+                <div className={`${styles.SearchLocMob}`}>
+                  <FiSearch className={styles.SearchIcon} />
+                  <ReactGoogleAutocomplete
+                    defaultValue={selectedAddress}
+                    placeholder="Search city, area, pincode"
+                    apiKey={GMAP_API}
+                    onPlaceSelected={(place) => {
+                      setLocationLoader(true);
+                      setTimeout(() => {
+                        if (place) {
+                          setLocationLoader(false);
+                          getLatandLongByAddress(place.formatted_address);
+                        }
+                      }, 3000);
+                    }}
+                    options={{
+                      types: ["establishment"],
+                      componentRestrictions: { country: "in" },
+                    }}
+                    className={styles.SearchBoxMob}
+                  />
+                </div>
+                <p className={styles.InputOrText}>or</p>
+                <div
+                  className={styles.ModalHeadDetect}
+                  onClick={() => getLocation()}
+                >
+                  <Image
+                    src="/assets/icons/location-color.svg"
+                    loading="lazy"
+                    alt="Location"
+                  />
+                  <p className={styles.LocationDetectText}>
+                    Detect My Location
+                  </p>
+                </div>
+                <center>
+                  {loactionloader && (
+                    <Spinner
+                      animation="border"
+                      variant="primary"
+                      className="ms-2"
+                    />
+                  )}
+                </center>
+              </Modal.Body>
+            </Modal>
             <Col xs={12}>
-              <div
+              {/* <div
                 style={
                   showMobloc
                     ? { display: "block", transition: "0.5s ease" }
@@ -325,11 +501,228 @@ export function Header() {
                   <Image
                     src="/assets/icons/location-color.svg"
                     loading="lazy"
+                    alt="Location"
                   />
                   <p className={styles.LocationDetectText}>
                     Detect My Location
                   </p>
                 </div>
+              </div> */}
+              <div className={styles.Searchbar}>
+                <FiSearch
+                  size={25}
+                  color="#0E62CB"
+                  style={{ marginRight: "1rem" }}
+                />
+                <input
+                  type="text"
+                  placeholder="Search your brand or model"
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                {search.length <= 0 ? null : (
+                  <div className={styles.SearchItems}>
+                    {loadsSearch ? (
+                      <center>
+                        <Spinner
+                          animation="border"
+                          variant="primary"
+                          className="ms-2"
+                        />
+                      </center>
+                    ) : (
+                      <ul className={styles.SearchLi}>
+                        {categoriesSearch.map((v, i) => (
+                          <li key={i}>
+                            <Link
+                              href={
+                                v.category_flow_group == "1"
+                                  ? {
+                                      pathname: "personal-gadgets",
+                                      query: {
+                                        issue: v.category_id,
+                                        category: v.category_title,
+                                      },
+                                    }
+                                  : {
+                                      pathname: "home-appliances",
+                                      query: {
+                                        issue: v.category_id,
+                                        category: v.category_title,
+                                      },
+                                    }
+                              }
+                            >
+                              <Row className={styles.SearchRow}>
+                                <Col xs={3} md={3} lg={3} xl={3}>
+                                  <Image
+                                    src={v.category_image_url}
+                                    fluid
+                                    width={70}
+                                  />
+                                </Col>
+                                <Col
+                                  xs={9}
+                                  md={9}
+                                  lg={9}
+                                  xl={9}
+                                  className={styles.SearchTextCenter}
+                                >
+                                  <p className={styles.SearchText}>
+                                    {v.category_title}
+                                  </p>
+                                </Col>
+                                <hr className={styles.SearchHr} />
+                              </Row>
+                            </Link>
+                          </li>
+                        ))}
+                        {brandsSearch.map((v, i) => (
+                          <li key={i}>
+                            <Link
+                              href={
+                                v.category_flow_group == "1"
+                                  ? {
+                                      pathname: "personal-gadgets",
+                                      query: {
+                                        issue: v.category_id,
+                                        category: v.category_title,
+                                        brand: v.brand_title,
+                                      },
+                                    }
+                                  : {
+                                      pathname: "home-appliances",
+                                      query: {
+                                        issue: v.category_id,
+                                        category: v.category_title,
+                                        brand: v.brand_title,
+                                      },
+                                    }
+                              }
+                            >
+                              <Row className={styles.SearchRow}>
+                                <Col xs={3} md={3} lg={3} xl={3}>
+                                  <Image
+                                    src={v.brand_image_url}
+                                    fluid
+                                    width={70}
+                                  />
+                                </Col>
+                                <Col
+                                  xs={9}
+                                  md={9}
+                                  lg={9}
+                                  xl={9}
+                                  className={styles.SearchTextCenter}
+                                >
+                                  <p className={styles.SearchText}>
+                                    {v.category_title}
+                                  </p>
+                                </Col>
+                                <hr className={styles.SearchHr} />
+                              </Row>
+                            </Link>
+                          </li>
+                        ))}
+                        {modelsSearch.map((v, i) => (
+                          <li key={i}>
+                            <Link
+                              href={
+                                v.category_flow_group == "1"
+                                  ? {
+                                      pathname: "personal-gadgets",
+                                      query: {
+                                        issue: v.category_id,
+                                        category: v.category_title,
+                                        brand: v.brand_title,
+                                        model: v.model_title,
+                                      },
+                                    }
+                                  : {
+                                      pathname: "home-appliances",
+                                      query: {
+                                        issue: v.category_id,
+                                        category: v.category_title,
+                                        brand: v.brand_title,
+                                        model: v.model_title,
+                                      },
+                                    }
+                              }
+                            >
+                              <Row className={styles.SearchRow}>
+                                <Col xs={3} md={3} lg={3} xl={3}>
+                                  <Image
+                                    src={v.model_image_url}
+                                    fluid
+                                    width={70}
+                                  />
+                                </Col>
+                                <Col
+                                  xs={9}
+                                  md={9}
+                                  lg={9}
+                                  xl={9}
+                                  className={styles.SearchTextCenter}
+                                >
+                                  <p className={styles.SearchText}>
+                                    {v.model_title}
+                                  </p>
+                                </Col>
+                                <hr className={styles.SearchHr} />
+                              </Row>
+                            </Link>
+                          </li>
+                        ))}
+                        {segmentSearch.map((v, i) => (
+                          <li key={i}>
+                            <Link
+                              href={
+                                v.category_flow_group == "1"
+                                  ? {
+                                      pathname: "personal-gadgets",
+                                      query: {
+                                        issue: v.category_id,
+                                        category: v.category_title,
+                                        brand: v.brand_title,
+                                        model: v.model_title,
+                                      },
+                                    }
+                                  : {
+                                      pathname: "home-appliances",
+                                      query: {
+                                        issue: v.category_id,
+                                        category: v.category_title,
+                                      },
+                                    }
+                              }
+                            >
+                              <Row className={styles.SearchRow}>
+                                <Col xs={3} md={3} lg={3} xl={3}>
+                                  <Image
+                                    src={v.segment_image_url}
+                                    fluid
+                                    width={70}
+                                  />
+                                </Col>
+                                <Col
+                                  xs={9}
+                                  md={9}
+                                  lg={9}
+                                  xl={9}
+                                  className={styles.SearchTextCenter}
+                                >
+                                  <p className={styles.SearchText}>
+                                    {v.segment_title}
+                                  </p>
+                                </Col>
+                                <hr className={styles.SearchHr} />
+                              </Row>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )}
               </div>
             </Col>
           </Row>
@@ -339,20 +732,239 @@ export function Header() {
       return (
         <Navbar expand="lg" className={styles.navHeader}>
           <Container fluid className={styles.navBarTopHeader}>
-            <Navbar.Brand href="/">
-              <div className={styles.brandLogo}>
-                <Image
-                  fluid
-                  src="/assets/icons/erip-logo-blue.png"
-                  alt="Erip Logo"
+            <Navbar.Brand>
+              <Link href={"/"}>
+                <div className={styles.brandLogo}>
+                  <Image
+                    fluid
+                    src="/assets/icons/erip-logo-blue.png"
+                    alt="Erip Logo"
+                  />
+                </div>
+              </Link>
+            </Navbar.Brand>
+            <Navbar.Brand>
+              <div className={styles.Searchbar}>
+                <FiSearch
+                  size={25}
+                  color="#0E62CB"
+                  style={{ marginRight: "1rem" }}
+                />
+                <input
+                  type="text"
+                  placeholder="Search your brand or model"
+                  onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
+              {search.length <= 0 ? null : (
+                <div className={styles.SearchItems}>
+                  {loadsSearch ? (
+                    <center>
+                      <Spinner
+                        animation="border"
+                        variant="primary"
+                        className="ms-2"
+                      />
+                    </center>
+                  ) : (
+                    <ul className={styles.SearchLi}>
+                      {categoriesSearch.map((v, i) => (
+                        <li key={i}>
+                          <Link
+                            href={
+                              v.category_flow_group == "1"
+                                ? {
+                                    pathname: "personal-gadgets",
+                                    query: {
+                                      issue: v.category_id,
+                                      category: v.category_title,
+                                    },
+                                  }
+                                : {
+                                    pathname: "home-appliances",
+                                    query: {
+                                      issue: v.category_id,
+                                      category: v.category_title,
+                                    },
+                                  }
+                            }
+                          >
+                            <Row className={styles.SearchRow}>
+                              <Col xs={3} md={3} lg={3} xl={3}>
+                                <Image
+                                  src={v.category_image_url}
+                                  fluid
+                                  width={70}
+                                />
+                              </Col>
+                              <Col
+                                xs={9}
+                                md={9}
+                                lg={9}
+                                xl={9}
+                                className={styles.SearchTextCenter}
+                              >
+                                <p className={styles.SearchText}>
+                                  {v.category_title}
+                                </p>
+                              </Col>
+                              <hr className={styles.SearchHr} />
+                            </Row>
+                          </Link>
+                        </li>
+                      ))}
+                      {brandsSearch.map((v, i) => (
+                        <li key={i}>
+                          <Link
+                            href={
+                              v.category_flow_group == "1"
+                                ? {
+                                    pathname: "personal-gadgets",
+                                    query: {
+                                      issue: v.category_id,
+                                      category: v.category_title,
+                                      brand: v.brand_title,
+                                    },
+                                  }
+                                : {
+                                    pathname: "home-appliances",
+                                    query: {
+                                      issue: v.category_id,
+                                      category: v.category_title,
+                                      brand: v.brand_title,
+                                    },
+                                  }
+                            }
+                          >
+                            <Row className={styles.SearchRow}>
+                              <Col xs={3} md={3} lg={3} xl={3}>
+                                <Image
+                                  src={v.brand_image_url}
+                                  fluid
+                                  width={70}
+                                />
+                              </Col>
+                              <Col
+                                xs={9}
+                                md={9}
+                                lg={9}
+                                xl={9}
+                                className={styles.SearchTextCenter}
+                              >
+                                <p className={styles.SearchText}>
+                                  {v.category_title}
+                                </p>
+                              </Col>
+                              <hr className={styles.SearchHr} />
+                            </Row>
+                          </Link>
+                        </li>
+                      ))}
+                      {modelsSearch.map((v, i) => (
+                        <li key={i}>
+                          <Link
+                            href={
+                              v.category_flow_group == "1"
+                                ? {
+                                    pathname: "personal-gadgets",
+                                    query: {
+                                      issue: v.category_id,
+                                      category: v.category_title,
+                                      brand: v.brand_title,
+                                      model: v.model_title,
+                                    },
+                                  }
+                                : {
+                                    pathname: "home-appliances",
+                                    query: {
+                                      issue: v.category_id,
+                                      category: v.category_title,
+                                      brand: v.brand_title,
+                                      model: v.model_title,
+                                    },
+                                  }
+                            }
+                          >
+                            <Row className={styles.SearchRow}>
+                              <Col xs={3} md={3} lg={3} xl={3}>
+                                <Image
+                                  src={v.model_image_url}
+                                  fluid
+                                  width={70}
+                                />
+                              </Col>
+                              <Col
+                                xs={9}
+                                md={9}
+                                lg={9}
+                                xl={9}
+                                className={styles.SearchTextCenter}
+                              >
+                                <p className={styles.SearchText}>
+                                  {v.model_title}
+                                </p>
+                              </Col>
+                              <hr className={styles.SearchHr} />
+                            </Row>
+                          </Link>
+                        </li>
+                      ))}
+                      {segmentSearch.map((v, i) => (
+                        <li key={i}>
+                          <Link
+                            href={
+                              v.category_flow_group == "1"
+                                ? {
+                                    pathname: "personal-gadgets",
+                                    query: {
+                                      issue: v.category_id,
+                                      category: v.category_title,
+                                      brand: v.brand_title,
+                                      model: v.model_title,
+                                    },
+                                  }
+                                : {
+                                    pathname: "home-appliances",
+                                    query: {
+                                      issue: v.category_id,
+                                      category: v.category_title,
+                                    },
+                                  }
+                            }
+                          >
+                            <Row className={styles.SearchRow}>
+                              <Col xs={3} md={3} lg={3} xl={3}>
+                                <Image
+                                  src={v.segment_image_url}
+                                  fluid
+                                  width={70}
+                                />
+                              </Col>
+                              <Col
+                                xs={9}
+                                md={9}
+                                lg={9}
+                                xl={9}
+                                className={styles.SearchTextCenter}
+                              >
+                                <p className={styles.SearchText}>
+                                  {v.segment_title}
+                                </p>
+                              </Col>
+                              <hr className={styles.SearchHr} />
+                            </Row>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll" className={styles.navBarcolor}>
               <Nav className="me-auto my-2 my-lg-0"></Nav>
               {/* location popup */}
-
               <div
                 className={styles.navBarGeo}
                 onClick={() => setLocationPopupShow(!locationPopupShow)}
@@ -363,7 +975,7 @@ export function Header() {
                   alt="header location"
                 />
 
-                <p id="dropdown_location">Bengaluru</p>
+                <p id="dropdown_location">{locationselector.name}</p>
                 <Image
                   id="dropdown_location"
                   src="assets/icons/header-down-arrow.svg"
@@ -381,14 +993,34 @@ export function Header() {
                     : setCartAndOfferPopup(true);
                 }}
               />
-
-              <PrimaryButton
-                title={token ? "Logout" : "Login"}
-                className={styles.headerLoginBtn}
-                clickHandler={() =>
-                  token ? LogoutAction() : setLoginPopup(true)
-                }
-              />
+              {token ? (
+                <Link href={"/my-bookings"}>
+                  <div className={styles.FlexEnd}>
+                    <BiUser size={30} />
+                    <span
+                      style={{
+                        color: "#0E62CB",
+                        fontSize: "20px",
+                        fontWeight: "700",
+                        margin: "0%",
+                        marginLeft: "1rem",
+                      }}
+                    >
+                      {profileselector
+                        ? profileselector.data
+                          ? profileselector.data[0].user_fullname
+                          : null
+                        : null}
+                    </span>
+                  </div>
+                </Link>
+              ) : (
+                <PrimaryButton
+                  title={"Login"}
+                  className={styles.headerLoginBtn}
+                  clickHandler={() => setLoginPopup(true)}
+                />
+              )}
             </Navbar.Collapse>
           </Container>
           <Container fluid className="navBarBottomHeader">
@@ -416,9 +1048,17 @@ export function Header() {
                         </Dropdown.Item>
                         {menu.submenuItems.map((model, index) => {
                           return (
-                            <Dropdown.Item eventKey="4.2" key={index}>
-                              {model.model_title}
-                            </Dropdown.Item>
+                            <Link
+                              key={index}
+                              href={{
+                                pathname: "personal-gadgets",
+                                query: { issue: model.model_id },
+                              }}
+                            >
+                              <Dropdown.Item eventKey="4.2">
+                                {model.model_title}
+                              </Dropdown.Item>
+                            </Link>
                           );
                         })}
                       </div>
@@ -434,11 +1074,19 @@ export function Header() {
               >
                 {topBrandsHeaderData.map((menu, menuIndex) => {
                   return (
-                    <div key={menuIndex}>
-                      <Dropdown.Item eventKey="4.2" key={menuIndex}>
-                        {menu.brand_title}
-                      </Dropdown.Item>
-                    </div>
+                    <Link
+                      key={menuIndex}
+                      href={{
+                        pathname: "personal-gadgets",
+                        query: { issue: menu.brand_id },
+                      }}
+                    >
+                      <div>
+                        <Dropdown.Item eventKey="4.2" key={menuIndex}>
+                          {menu.brand_title}
+                        </Dropdown.Item>
+                      </div>
+                    </Link>
                   );
                 })}
               </DropdownButton>
@@ -450,11 +1098,25 @@ export function Header() {
               >
                 {mobileRepairHeaderData.map((menu, menuIndex) => {
                   return (
-                    <div key={menuIndex}>
-                      <Dropdown.Item eventKey="4.2" key={menuIndex}>
-                        {menu.model_title}
-                      </Dropdown.Item>
-                    </div>
+                    <Link
+                      key={menuIndex}
+                      href={{
+                        pathname: "personal-gadgets",
+                        query: { issue: menu.model_id },
+                      }}
+                    >
+                      <div>
+                        <Dropdown.Item
+                          eventKey="4.2"
+                          key={menuIndex}
+                          onClick={() => {
+                            dispatch(selectCategory(1));
+                          }}
+                        >
+                          {menu.model_title}
+                        </Dropdown.Item>
+                      </div>
+                    </Link>
                   );
                 })}
               </DropdownButton>
@@ -508,7 +1170,11 @@ export function Header() {
             }`}
           >
             <div className={styles.ModalHeadDir}>
-              <Image src="/assets/icons/gmap-location.svg" loading="lazy" />
+              <Image
+                src="/assets/icons/gmap-location.svg"
+                loading="lazy"
+                alt="location"
+              />
               <p className={styles.LocationText}>
                 Please provide your location for best experience
               </p>
@@ -518,8 +1184,19 @@ export function Header() {
               className={styles.ModalHeadDetect}
               onClick={() => getLocation()}
             >
-              <Image src="/assets/icons/location-color.svg" loading="lazy" />
+              <Image
+                src="/assets/icons/location-color.svg"
+                loading="lazy"
+                alt="location"
+              />
               <p className={styles.LocationDetectText}>Detect My Location</p>
+              {loactionloader && (
+                <Spinner
+                  animation="border"
+                  variant="primary"
+                  className="ms-2"
+                />
+              )}
             </div>
             <div className={styles.InputGroup}>
               <p className={styles.InputOrText}>or</p>
@@ -527,9 +1204,15 @@ export function Header() {
                 defaultValue={selectedAddress}
                 placeholder="Search city, area, pincode"
                 apiKey={GMAP_API}
-                onPlaceSelected={(place) =>
-                  getLatandLongByAddress(place.formatted_address)
-                }
+                onPlaceSelected={(place) => {
+                  setLocationLoader(true);
+                  setTimeout(() => {
+                    if (place) {
+                      getLatandLongByAddress(place.formatted_address);
+                      setLocationLoader(false);
+                    }
+                  }, 3000);
+                }}
                 options={{
                   types: ["establishment"],
                   componentRestrictions: { country: "in" },

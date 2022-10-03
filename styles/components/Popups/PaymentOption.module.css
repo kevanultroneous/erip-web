@@ -1,0 +1,396 @@
+.PaymentMainHeading {
+    font-weight: 400;
+    font-size: 24px;
+    margin: 0%;
+}
+
+.PaymentOptionWrraper {
+    border-right: 3px solid #DAE3FE;
+}
+
+.PaymentOptionCover {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 0rem 1rem 0rem;
+    cursor: pointer;
+    left: 0.1rem;
+    position: relative;
+    padding: 0.7rem;
+
+}
+
+.SelectedOption {
+    background: #DAE3FE;
+    border-right: 3px solid #0E62CB;
+}
+
+.PaymentName {
+    margin: 0 1rem;
+    font-weight: 400;
+    font-size: 18px;
+    color: #676767;
+}
+
+.SelectedPaymentName {
+    color: #0E62CB;
+}
+
+.PaymentImgWrraper {
+    width: 2.5rem;
+}
+
+/* qr  */
+.QrText {
+    font-weight: 400;
+    font-size: 18px;
+    width: 374px;
+}
+
+/* card */
+.InputLabel {
+    font-weight: 400;
+    font-size: 16px;
+    margin: 0%;
+    color: #676767;
+    margin-bottom: 0.5rem;
+}
+
+.InputWrraperCol {
+    margin-top: 1rem;
+}
+
+.InputWrraper {
+    width: 100%;
+    display: flex;
+    background: #EAEAEA;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.InputWrraper input {
+    border: none;
+    outline: none;
+    width: 100%;
+    background: none;
+}
+
+/*  */
+.VeryfyText {
+    font-weight: 700;
+    font-size: 16px;
+    color: #0E62CB;
+    cursor: pointer;
+}
+
+.UpiHeading {
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.UpisubTitle {
+    font-weight: 400;
+    font-size: 18px;
+    color: #676767;
+    margin: 0%;
+}
+
+.Upi {
+    margin-top: 0.5rem;
+}
+
+/* net banking */
+.NetBanking {
+    margin-top: 0.5rem;
+}
+
+.NetBankingBox {
+    display: flex;
+    align-items: center;
+    border: 1px solid #0E62CB;
+    border-radius: 5px;
+    justify-content: center;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.NetBankingName {
+    margin: 0%;
+    font-weight: 400;
+    font-size: 18px;
+    margin-left: 1rem;
+}
+
+.BankNameTitle {
+    margin: 0%;
+    margin-bottom: 1rem;
+}
+
+.BankDropdown {
+    background: #EAEAEA;
+    border-radius: 8px;
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    outline: none;
+    opacity: 0.67;
+}
+
+.BankSelector {
+    margin-top: 2rem;
+}
+
+/* wallet */
+.WalletRadio {
+    display: flex;
+    align-items: center;
+}
+
+.WalletName {
+    font-weight: 400;
+    font-size: 18px;
+    margin: 0%;
+    margin-left: 1rem;
+}
+
+.WalletImg {
+    width: 3rem;
+}
+
+.RadioRight {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.WalletCover {
+    padding: 0.5rem;
+    border: 1px solid #676767;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.SelectedWalletCover {
+    border: 1px solid #0E62CB;
+    border-radius: 5px;
+}
+
+.WalletRow {
+    margin-top: 1rem;
+}
+
+/* paylater */
+.PaylaterName {
+    font-weight: 400;
+    font-size: 18px;
+    margin: 0%;
+}
+
+.PaylaterCover {
+    display: flex;
+    align-items: center;
+}
+
+.PaylaterImgCover {
+    width: 4rem;
+}
+
+.PaylaterWrraper {
+    border: 1px solid #0E62CB;
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+}
+
+.ArrowRight {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.PaylaterRow {
+    margin-top: 1rem;
+}
+
+.PrimaryButtonWrrapers {
+    position: relative;
+    bottom: 2rem;
+}
+
+@media (min-width:320px) and (max-width: 450px) {
+    .PaymentMainHeading {
+        font-weight: 400;
+        font-size: 18px;
+    }
+
+    .Hr {
+        display: none;
+    }
+
+    .PaymentOptionWrraper {
+        border-right: 0px solid #DAE3FE;
+    }
+
+    .PaymentOptionCover {
+        background: transparent;
+        border-right: 0px solid #0E62CB;
+        border-bottom: 1px solid #DAE3FE;
+        padding-bottom: 1.5rem;
+    }
+
+    .SelectedOption {}
+
+    .PaymentName {
+        color: #0E62CB;
+        min-width: 10rem;
+    }
+
+    .MobileRadio {
+        min-width: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .PrimaryButtonWrrapers {
+        position: relative;
+        bottom: 0rem;
+    }
+
+    .PaymentMobCol {
+        display: flex;
+        justify-content: center;
+    }
+
+    .QrText {
+        padding: 1rem 3rem 4rem 3rem;
+        text-align: center;
+
+    }
+
+    .MobSpecRow {
+        margin-bottom: 4rem;
+    }
+
+    .Upi {
+        margin-bottom: 4rem;
+    }
+
+    .NetBankingBox {
+        margin-bottom: 1rem;
+    }
+
+    .BankNameTitle {
+        display: none;
+    }
+
+    .NetBanking {
+        margin-bottom: 4rem;
+    }
+
+    .WalletCover {
+        border: none;
+        margin: 0.5rem;
+        border-bottom: 1px solid #DAE3FE;
+        border-radius: 0%;
+    }
+
+    .WalletRow {
+        margin-bottom: 4rem;
+    }
+
+    .MobSubText {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1080px) {
+    .PaymentMainHeading {
+        font-weight: 400;
+        font-size: 18px;
+    }
+
+    .Hr {
+        display: none;
+    }
+
+    .PaymentOptionWrraper {
+        border-right: 0px solid #DAE3FE;
+    }
+
+    .PaymentOptionCover {
+        background: transparent;
+        border-right: 0px solid #0E62CB;
+        border-bottom: 1px solid #DAE3FE;
+        padding-bottom: 1.5rem;
+    }
+
+    .SelectedOption {}
+
+    .PaymentName {
+        color: #0E62CB;
+        min-width: 17rem;
+    }
+
+    .MobileRadio {
+        min-width: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .PrimaryButtonWrrapers {
+        position: relative;
+        bottom: 0rem;
+    }
+
+    .PaymentMobCol {
+        display: flex;
+        justify-content: center;
+    }
+
+    .QrText {
+        padding: 1rem 3rem 4rem 3rem;
+        text-align: center;
+
+    }
+
+    .MobSpecRow {
+        margin-bottom: 4rem;
+    }
+
+    .Upi {
+        margin-bottom: 4rem;
+    }
+
+    .NetBankingBox {
+        margin-bottom: 1rem;
+    }
+
+    .BankNameTitle {
+        display: none;
+    }
+
+    .NetBanking {
+        margin-bottom: 4rem;
+    }
+
+    .WalletCover {
+        border: none;
+        margin: 0.5rem;
+        border-bottom: 1px solid #DAE3FE;
+        border-radius: 0%;
+    }
+
+    .WalletRow {
+        margin-bottom: 4rem;
+    }
+
+    .MobSubText {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1730px) {}
+
+@media (min-width: 650px) and (max-width: 740px) {}
