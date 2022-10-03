@@ -107,14 +107,18 @@ export default function PaymentSummary({ order, back, title, show, onHide }) {
             <Col xs={12} md={12} lg={12} xl={12}>
               <div>
                 <p className="m-0 fs-20">Terms and Conditions</p>
-                {receiptData[0].terms_conditions_1.map((v) => (
-                  <p className="m-0 mb-1 fs-18">{v}</p>
+                {receiptData[0].terms_conditions_1.map((v, i) => (
+                  <p className="m-0 mb-1 fs-18" key={i}>
+                    {v}
+                  </p>
                 ))}
               </div>
               <div>
                 <p className="m-0 fs-20">What is Not Covered Under Warranty</p>
-                {receiptData[0].terms_conditions_2.map((v) => (
-                  <p className="m-0 fs-18">{v}</p>
+                {receiptData[0].terms_conditions_2.map((v, i) => (
+                  <p className="m-0 fs-18" key={i}>
+                    {v}
+                  </p>
                 ))}
               </div>
             </Col>

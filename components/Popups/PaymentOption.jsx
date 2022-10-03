@@ -397,7 +397,7 @@ export default function PaymentOption() {
                   name: "JioMoney",
                 },
               ].map((v, i) => (
-                <Col xs={12} md={12} lg={6} xl={6}>
+                <Col xs={12} md={12} lg={6} xl={6} key={i}>
                   <div
                     className={`${styles.WalletCover} ${
                       selectWallet == i && styles.SelectedWalletCover

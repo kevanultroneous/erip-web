@@ -96,7 +96,7 @@ export default function FeedbackQuestions({ show, onHide }) {
                       "Option E",
                       "Option F",
                     ].map((v, i) => (
-                      <Col xs={6} md={6} lg={6} xl={6}>
+                      <Col xs={6} md={6} lg={6} xl={6} key={i}>
                         <div className={styles.CheckBoxCover}>
                           <div>
                             <Form.Check name={`group${index}`} type={"radio"} />

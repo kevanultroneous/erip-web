@@ -126,7 +126,7 @@ export default function Support({ backaction }) {
                 className={styles.SelectionCol}
               >
                 {[0, 1, 2].map((v, i) => (
-                  <div className={styles.SelectIssue}>
+                  <div className={styles.SelectIssue} key={i}>
                     <div className={styles.IssueName}>
                       <p>Lorem ipsum albeto clifor</p>
                     </div>
@@ -145,7 +145,7 @@ export default function Support({ backaction }) {
                 className={styles.SelectionCol}
               >
                 {[0, 1, 2].map((v, i) => (
-                  <div className={styles.SelectIssue}>
+                  <div className={styles.SelectIssue} key={i}>
                     <div className={styles.IssueName}>
                       <p>Lorem ipsum albeto clifor tab2</p>
                     </div>

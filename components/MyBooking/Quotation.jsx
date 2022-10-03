@@ -14,7 +14,7 @@ export default function Quotation({ rejectaccept, showpaybutton, hide }) {
         <Col xs={12} md={12} lg={12} xl={12}>
           <label className={styles.SubLabels}>Parts</label>
           {[0, 1].map((v, i) => (
-            <Row>
+            <Row key={i}>
               <Col xs={1} md={1} lg={1} xl={1}>
                 <Image src="/assets/icons/setting-ico.png" alt="icon" />
               </Col>
@@ -30,7 +30,7 @@ export default function Quotation({ rejectaccept, showpaybutton, hide }) {
         <Col xs={12} md={12} lg={12} xl={12}>
           <label className={styles.SubLabels}>Issues</label>
           {[0, 1].map((v, i) => (
-            <Row>
+            <Row key={i}>
               <Col xs={1} md={1} lg={1} xl={1}>
                 <Image src="/assets/icons/warning-ico.png" alt="icon" />
               </Col>

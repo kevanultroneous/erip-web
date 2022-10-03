@@ -1225,7 +1225,7 @@ export default function CheckoutPopup({ show, onHide }) {
                         title: "Pay After Services",
                       },
                     ].map((v, i) => (
-                      <Col xs={12} md={6} lg={6} xl={6}>
+                      <Col xs={12} md={6} lg={6} xl={6} key={i}>
                         <div
                           key={i}
                           className={`${styles.PaymentSelection} ${

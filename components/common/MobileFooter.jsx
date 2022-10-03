@@ -77,7 +77,7 @@ export const BottomBar = () => {
       >
         <Modal.Body style={{ height: "100vh" }}>
           {devicedata.map((v, i) => (
-            <Row className="mb-3">
+            <Row className="mb-3" key={i}>
               <Col xs={2} md={2} lg={2} xl={2}>
                 <Image src={v.category_icon_url} height={60} />
                 {v.coming_soon ? (
