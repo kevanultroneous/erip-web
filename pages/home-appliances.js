@@ -43,6 +43,7 @@ function Homeappliances() {
 
   // Brand/ Category/ Segment/ Category
   const categoryID = useSelector((state) => state.issuePage.categoryID);
+  const segmentID = useSelector((state) => state.issuePage.segmentID);
 
   const homeApplianceSegment = useSelector(
     (state) => state.homeAppliancesModel.data
@@ -106,14 +107,7 @@ function Homeappliances() {
     setFaqs(brandsFaq.data);
     setOffers(brandsOffer.data);
     setTestimonial(brandsTestimonial.data);
-  }, [getBrandID]);
-
-  useEffect(() => {
-    setInformation(modelInfo.data);
-    setFaqs(modelsFaq.data);
-    setOffers(modelOffer.data);
-    setTestimonial(modelTestimonial.data);
-  }, [getModelID]);
+  }, [segmentID]);
 
   return (
     <Layout title={"Home Appliances"}>
