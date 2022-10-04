@@ -125,8 +125,6 @@ function SelectDeviceHero({
   }, []);
 
   useEffect(() => {
-    console.log({ categoryID });
-    console.log("category", { selectCategoryID });
     dispatch(getPersonalGadgetsByBrands(categoryID));
     dispatch(getCategoryHero(categoryID));
     dispatch(callFaqByCategory(categoryID));
@@ -136,7 +134,6 @@ function SelectDeviceHero({
   }, [categoryID]);
 
   useEffect(() => {
-    console.log({ getBrandID });
     // dispatch(getPersonalGadgetsByModels(getBrandID));
     // dispatch(getBrandsHero(getBrandID));
     // dispatch(callFaqByBrands(getBrandID));

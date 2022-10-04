@@ -35,10 +35,10 @@ export const getIssuesBySegments = async (segmentID) => {
     });
 };
 
-export const getIssuesBySegmentsDetails = async (segmentID, cityID) => {
+export const getIssuesBySegmentsDetails = async (segmentID) => {
   return await axios
     .get(
-      `${API_URL}api/v1/issues_by_segments_detail?segment=${segmentID}&city=${cityID}`
+      `${API_URL}api/v1/issues_by_segments_detail?segment=${segmentID}&city=${1}`
     )
     .then((data) => {
       if (data.status === 200) {

@@ -36,6 +36,10 @@ function Homeappliances() {
   const [mobileView, setMobileView] = useState(true);
   const [popupLogin, setPopupLogin] = useState(false);
   const [token, setToken] = useState(false);
+  const [information, setInformation] = useState("");
+  const [offers, setOffers] = useState([]);
+  const [faqs, setFaqs] = useState([]);
+  const [testimonial, setTestimonial] = useState([]);
 
   // Brand/ Category/ Segment/ Category
   const categoryID = useSelector((state) => state.issuePage.categoryID);
@@ -86,36 +90,30 @@ function Homeappliances() {
   }, []);
 
   useEffect(() => {
-    dispatch(selectCategory(2));
+    dispatch(selectCategory(categoryID));
     dispatch(getHomeApplianceModel(categoryID));
   }, []);
 
-  // useEffect(() => {}, [homeApplianceSegment]);
-  console.log({ homeApplianceSegment });
+  useEffect(() => {
+    setInformation(categoryInfo.data);
+    setFaqs(categoryFaq.data);
+    setOffers(categoryOffer.data);
+    setTestimonial(categoryTestimonial.data);
+  }, [categoryID]);
 
-  function useIsInViewport(ref) {
-    const [isIntersecting, setIsIntersecting] = useState(false);
+  useEffect(() => {
+    setInformation(brandsInfo.data);
+    setFaqs(brandsFaq.data);
+    setOffers(brandsOffer.data);
+    setTestimonial(brandsTestimonial.data);
+  }, [getBrandID]);
 
-    // const observer = useMemo(
-    //   () =>
-    //     new IntersectionObserver(([entry]) =>
-    //       setIsIntersecting(entry.isIntersecting)
-    //     ),
-    //   []
-    // );
-
-    // console.log(observer, "observer");
-
-    // useEffect(() => {
-    //   observer.observe(ref.current);
-
-    //   return () => {
-    //     observer.disconnect();
-    //   };
-    // }, [ref, observer]);
-
-    return isIntersecting;
-  }
+  useEffect(() => {
+    setInformation(modelInfo.data);
+    setFaqs(modelsFaq.data);
+    setOffers(modelOffer.data);
+    setTestimonial(modelTestimonial.data);
+  }, [getModelID]);
 
   return (
     <Layout title={"Home Appliances"}>
@@ -128,9 +126,9 @@ function Homeappliances() {
         quoteaction={() => setPopupLogin(true)}
       />
       {mobileView && <WhyErip />}
-      {mobileView && <Testimonials data={TestimonialData} />}
-      {mobileView && <HomeApplianceDetails />}
-      {mobileView && <ContactFAQ faqArray={AccordionFAQ} />}
+      {mobileView && <Testimonials data={testimonial} />}
+      {mobileView && <HomeApplianceDetails paragraph={information} />}
+      {mobileView && <ContactFAQ faqArray={faqs} />}
       {mobileView ? <Footer /> : <MobileFooter />}
     </Layout>
   );

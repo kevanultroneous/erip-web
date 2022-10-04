@@ -8,11 +8,7 @@ function InformationSection({ title, paragraph }) {
         <>
           <h2>{title}</h2>
           {paragraph.map((para, index) => {
-            return (
-              <>
-                <p key={index}>{para.infosection_content}</p>
-              </>
-            );
+            return <p key={index}>{para.infosection_content}</p>;
           })}
         </>
       )}
