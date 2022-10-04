@@ -220,7 +220,7 @@ function SelectDeviceHero({
   const getBrands = async (eventKey, key) => {
     dispatch(selectCategory(eventKey));
     dispatch(selectCategoryName(cityID));
-
+    alert(eventKey);
     await axios
       .get(`${API_URL}api/v1/brands_by_category?category=${eventKey}`)
       .then((data) => {
@@ -281,6 +281,7 @@ function SelectDeviceHero({
     setDisplayIssues(false);
     setIssues([]);
     setModelName("Models");
+    alert(key.target.accessKey);
   };
 
   // const totalprice =

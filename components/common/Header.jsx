@@ -106,6 +106,11 @@ export function Header() {
   }, 1000);
 
   useEffect(() => {
+    if (localStorage.getItem("city") && localStorage.getItem("cityid")) {
+    } else {
+      localStorage.setItem("city", "Bengluru");
+      localStorage.setItem("cityid", 1);
+    }
     if (localStorage.getItem("token")) {
       dispatch({
         type: LOGIN_USER_SUCCESS,
