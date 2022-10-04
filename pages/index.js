@@ -32,32 +32,33 @@ export default function Home({ data }) {
   const router = useRouter()
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
-    if (localStorage.getItem("city")) {
+    if (router.pathname == "/") {
+      localStorage.setItem("city", "Bengluru")
+      localStorage.setItem("cityid", 1)
       router.push(`${localStorage.getItem("city")}`)
     }
   }, []);
 
   return (
-    <></>
-    // <Layout title={"Home"}>
-    //   <Header />
-    //   <OfferadPopup show={offerad} onHide={() => setOfferAd(false)} />
-    //   <HomeHero />
-    //   <GetYourFix />
-    //   <OfferBanner />
-    //   <HowItWork />
-    //   <WhyErip />
-    //   <ExclusiveService />
+    <Layout title={"Home"}>
+      <Header />
+      <OfferadPopup show={offerad} onHide={() => setOfferAd(false)} />
+      <HomeHero />
+      <GetYourFix />
+      <OfferBanner />
+      <HowItWork />
+      <WhyErip />
+      <ExclusiveService />
 
-    //   <BrowseOffer
-    //     href={"offer-page"}
-    //     imgsrc={"/assets/images/offer-big-banner.png"}
-    //     imgalt={"offer-big-banner"}
-    //   />
-    //   <Testimonials />
-    //   <NewsAndUpdate />
-    //   {mobileView ? <Footer /> : <MobileFooter />}
-    // </Layout>
+      <BrowseOffer
+        href={"offer-page"}
+        imgsrc={"/assets/images/offer-big-banner.png"}
+        imgalt={"offer-big-banner"}
+      />
+      <Testimonials />
+      <NewsAndUpdate />
+      {mobileView ? <Footer /> : <MobileFooter />}
+    </Layout>
   );
 }
 
