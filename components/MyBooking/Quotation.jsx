@@ -1,7 +1,23 @@
 import { Col, Image, Row } from "react-bootstrap";
 import styles from "@/styles/components/MyBooking/Quotation.module.css";
 import PrimaryButton from "../common/PrimaryButton";
-export default function Quotation({ rejectaccept, showpaybutton, hide }) {
+import { useState } from "react";
+import { useEffect } from "react";
+export default function Quotation({
+  rejectaccept,
+  showpaybutton,
+  hide,
+  quotationdata,
+}) {
+  const [totalAmount, setTotalAmount] = useState(0);
+  var totals = 0;
+  for (let k = 0; k < quotationdata.length; k++) {
+    totals = totals + parseInt(quotationdata[k].issue_discounted_price);
+  }
+  useEffect(() => {
+    setTotalAmount(totals);
+  }, [totals]);
+
   return (
     <div
       className={styles.QuotationCard}
@@ -11,7 +27,7 @@ export default function Quotation({ rejectaccept, showpaybutton, hide }) {
         <Col xs={12} md={12} lg={12} xl={12}>
           <label className={styles.MainTitle}>Quotation for Approval</label>
         </Col>
-        <Col xs={12} md={12} lg={12} xl={12}>
+        {/* <Col xs={12} md={12} lg={12} xl={12}>
           <label className={styles.SubLabels}>Parts</label>
           {[0, 1].map((v, i) => (
             <Row key={i}>
@@ -26,19 +42,21 @@ export default function Quotation({ rejectaccept, showpaybutton, hide }) {
               </Col>
             </Row>
           ))}
-        </Col>
+        </Col> */}
         <Col xs={12} md={12} lg={12} xl={12}>
           <label className={styles.SubLabels}>Issues</label>
-          {[0, 1].map((v, i) => (
+          {quotationdata.map((v, i) => (
             <Row key={i}>
               <Col xs={1} md={1} lg={1} xl={1}>
                 <Image src="/assets/icons/warning-ico.png" alt="icon" />
               </Col>
               <Col xs={8} md={8} lg={8} xl={8}>
-                <p className={styles.AdditionalPart}>Issue number 1</p>
+                <p className={styles.AdditionalPart}>{v.issue_name}</p>
               </Col>
               <Col xs={3} md={3} lg={3} xl={3}>
-                <p className={styles.AdditionalAmount}>₹ Amt</p>
+                <p className={styles.AdditionalAmount}>
+                  {v.issue_display_price}
+                </p>
               </Col>
             </Row>
           ))}
@@ -49,9 +67,9 @@ export default function Quotation({ rejectaccept, showpaybutton, hide }) {
               <label className={styles.TotalAmount}>Total amount</label>
             </Col>
             <Col xs={3} md={3} lg={3} xl={3}>
-              <p className={styles.BigAmount}>₹ Amt</p>
+              <p className={styles.BigAmount}>₹{totalAmount}</p>
             </Col>
-            <Col xs={9} md={9} lg={9} xl={9}>
+            {/*  <Col xs={9} md={9} lg={9} xl={9}>
               <label className={styles.TotalAmount}>Paid</label>
             </Col>
             <Col xs={3} md={3} lg={3} xl={3}>
@@ -62,7 +80,7 @@ export default function Quotation({ rejectaccept, showpaybutton, hide }) {
             </Col>
             <Col xs={3} md={3} lg={3} xl={3}>
               <p className={styles.BigAmount}>₹ Amt</p>
-            </Col>
+            </Col>*/}
           </Row>
         </Col>
         <Col xs={12} md={12} lg={12} xl={12}>

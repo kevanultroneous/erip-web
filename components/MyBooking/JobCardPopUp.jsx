@@ -9,7 +9,7 @@ import { MdDownload } from "react-icons/md";
 import ReactToPrint from "react-to-print";
 import DownloadComponent from "../common/downloadComponent";
 
-function JobCardPopUp({ show, onHide }) {
+function JobCardPopUp({ show, onHide, sliderdata, jcdetails, jcqc }) {
   const jobCardRef = useRef();
 
   const settings = {
@@ -86,7 +86,7 @@ function JobCardPopUp({ show, onHide }) {
             <Col xl={3}>
               <div>
                 <p>Date</p>
-                <input type="text" value={""} disabled />
+                <input type="text" value={jcdetails.delivery_date} disabled />
               </div>
             </Col>
           </Row>
@@ -120,77 +120,63 @@ function JobCardPopUp({ show, onHide }) {
             <Col xl={3}>
               <div>
                 <p>IMEI/SL</p>
-                <input type="text" value={""} disabled />
+                <input type="text" value={jcdetails.imei_sl} disabled />
               </div>
             </Col>
           </Row>
           <Row className={(styles.nameSection, styles.sliderJobCard)}>
             <Slider {...settings}>
-              <Col xl={4} className={styles.sliderImages}>
-                <div>
-                  <Image
-                    fluid
-                    src={"/assets/images/jobCard.png"}
-                    alt={"image number 1"}
-                  />
-                </div>
-              </Col>
-              <Col xl={4} className={styles.sliderImages}>
-                <div>
-                  <Image
-                    fluid
-                    src={"/assets/images/jobCard.png"}
-                    alt={"image number 1"}
-                  />
-                </div>
-              </Col>
-              <Col xl={4} className={styles.sliderImages}>
-                <div>
-                  <Image
-                    fluid
-                    src={"/assets/images/jobCard.png"}
-                    alt={"image number 1"}
-                  />
-                </div>
-              </Col>
+              {sliderdata.map((v, i) => (
+                <Col xl={3} className={styles.sliderImages} key={i}>
+                  <div>
+                    <Image src={v.photo_url} alt={"image of jobcard"} fluid />
+                  </div>
+                </Col>
+              ))}
             </Slider>
           </Row>
           <Row className={styles.orderDetailsTitle}>
             <h5>Before Repair Quality Check (QC)</h5>
           </Row>
-          <Row className={(styles.nameSection, styles.radioSection)}>
-            {["r1", "r2", "r3", "r4", "r5", "r6"].map((radioBtns, index) => {
-              return (
-                <Col xl={4} className={styles.jobCardRadioSection} key={index}>
-                  <p>Lorem ipsum albeto clifor</p>
-                  <Row>
-                    <Col
-                      className={`${styles.jobCardRadio} jobCardRadio`}
-                      xl={2}
-                      xs={6}
-                    >
-                      <input
-                        type="checkbox"
-                        name={radioBtns}
-                        disabled
-                        checked
-                      />
-                      <h6>Yes</h6>
-                    </Col>
-                    <Col className={styles.jobCardRadio} xl={2} xs={6}>
-                      <input type="checkbox" name={radioBtns} disabled />
-                      <h6>No</h6>
-                    </Col>
-                  </Row>
-                </Col>
-              );
-            })}
-          </Row>
+          {jcqc.length > 0 && (
+            <Row className={(styles.nameSection, styles.radioSection)}>
+              {["r1", "r2", "r3", "r4", "r5", "r6"].map((radioBtns, index) => {
+                return (
+                  <Col
+                    xl={4}
+                    className={styles.jobCardRadioSection}
+                    key={index}
+                  >
+                    <p>Lorem ipsum albeto clifor</p>
+                    <Row>
+                      <Col
+                        className={`${styles.jobCardRadio} jobCardRadio`}
+                        xl={2}
+                        xs={6}
+                      >
+                        <input
+                          type="checkbox"
+                          name={radioBtns}
+                          disabled
+                          checked
+                        />
+                        <h6>Yes</h6>
+                      </Col>
+                      <Col className={styles.jobCardRadio} xl={2} xs={6}>
+                        <input type="checkbox" name={radioBtns} disabled />
+                        <h6>No</h6>
+                      </Col>
+                    </Row>
+                  </Col>
+                );
+              })}
+            </Row>
+          )}
           <Row className={styles.nameSection}>
             <Col xl={6}>
               <div>
                 <p>Remarks</p>
-                <input type="text" disabled />
+                <input type="text" disabled value={jcdetails.remark} />
               </div>
             </Col>
             <Col xl={6}>

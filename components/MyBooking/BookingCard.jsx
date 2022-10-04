@@ -31,9 +31,9 @@ function BookingCard({
       <Row className={styles.bookingCardBody}>
         <Col xl={4} xs={4}>
           <div className={styles.bookingCardProfile}>
-            <Image fluid src={partnerImage} alt={partnerName} />
+            <Image src={partnerImage} alt={partnerName} height={100} />
             <div className="d-flex">
-              <p>{partnerName}</p>
+              <p>{partnerName}&nbsp;&nbsp;&nbsp;</p>
               <div className="d-flex align-items-center">
                 <span>{partnerrating}</span>
                 {partnerrating == " " ? (

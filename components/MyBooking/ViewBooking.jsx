@@ -138,29 +138,115 @@ export default function ViewBooking({ backhandler, order }) {
                     : null
                 }
                 hidereschedulebuttons={false}
-                deliveryAndJobcard={true}
+                deliveryAndJobcard={
+                  details.length > 0
+                    ? details[0].order_jobcard_details.length > 0
+                      ? true
+                      : false
+                    : false
+                }
                 hideoutcallsupport={false}
                 showinnercallsupport={false}
-                raiseticketshow={true}
+                raiseticketshow={
+                  details.length > 0
+                    ? details[0].order_jobcard_details.length > 0
+                      ? true
+                      : false
+                    : false
+                }
                 callsupport={
                   details.length > 0
                     ? "tel:+91" +
                       Object.values(details[0].order_options_1[0])[1]
                     : null
                 }
-              />
-            </Col>
-            <Col xs={12} md={6} lg={6} xl={6}>
-              <PartnerDetails
-                off={false}
-                otphide={false}
-                otp={
+                sliderdata={
                   details.length > 0
-                    ? details[0].order_job_start_otp[0].otp_number
-                    : null
+                    ? details[0].order_jobcard_photos.length > 0
+                      ? details[0].order_jobcard_photos
+                      : []
+                    : []
+                }
+                jcdetails={
+                  details.length > 0
+                    ? details[0].order_jobcard_details.length > 0
+                      ? details[0].order_jobcard_details[0]
+                      : []
+                    : []
+                }
+                jcqc={
+                  details.length > 0
+                    ? details[0].order_jobcard_qc.length > 0
+                      ? details[0].order_jobcard_qc
+                      : []
+                    : []
                 }
               />
             </Col>
+            <Col xs={12} md={6} lg={6} xl={6}>
+              <Quotation
+                rejectaccept={true}
+                showpaybutton={false}
+                quotationdata={
+                  details.length > 0
+                    ? details[0].order_quotation_details.length > 0
+                      ? details[0].order_quotation_details
+                      : []
+                    : []
+                }
+              />
+            </Col>
+            {details.length > 0 ? (
+              details[0].order_partner_details.length > 0 ? (
+                <Col xs={12} md={6} lg={6} xl={6}>
+                  <PartnerDetails
+                    off={false}
+                    otphide={
+                      details.length > 0
+                        ? details[0].order_job_start_otp.length > 0
+                          ? false
+                          : true
+                        : true
+                    }
+                    otp={
+                      details.length > 0
+                        ? details[0].order_job_start_otp.length > 0
+                          ? details[0].order_job_start_otp[0].otp_number
+                          : ""
+                        : ""
+                    }
+                    pimg={
+                      details.length > 0
+                        ? details[0].order_partner_details.length > 0
+                          ? details[0].order_partner_details[0].partner_photo
+                          : ""
+                        : ""
+                    }
+                    pmobile={
+                      details.length > 0
+                        ? details[0].order_partner_details.length > 0
+                          ? details[0].order_partner_details[0].partner_mobile
+                          : ""
+                        : ""
+                    }
+                    pname={
+                      details.length > 0
+                        ? details[0].order_partner_details.length > 0
+                          ? details[0].order_partner_details[0].partner_name
+                          : ""
+                        : ""
+                    }
+                    prating={
+                      details.length > 0
+                        ? details[0].order_partner_details.length > 0
+                          ? details[0].order_partner_details[0].partner_ratings
+                          : ""
+                        : ""
+                    }
+                  />
+                </Col>
+              ) : null
+            ) : null}
             {mobileView ? (
               <Col xs={12} md={6} lg={6} xl={6}>
                 <MobileProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
@@ -172,8 +258,7 @@ export default function ViewBooking({ backhandler, order }) {
               />
             </Col>
 
-            <Quotation rejectaccept={true} showpaybutton={false} hide />
-            <PartnerDetails off={true} otphide={false} otp="2121" />
+            {/* <PartnerDetails off={true} otphide={false} otp="2121" /> */}
           </Row>
           {mobileView ? (
             <Col xs={12} className="d-flex justify-content-center  pt-3 pb-5">
@@ -182,7 +267,7 @@ export default function ViewBooking({ backhandler, order }) {
           ) : null}
         </Col>
       ) : null}
-
+      {/* 
       {(f1 == 1 && f2 == 0 && f3 == null && f4 == null && f5 == null) ||
       (f1 == 1 &&
         f2 == 1 &&
@@ -212,7 +297,12 @@ export default function ViewBooking({ backhandler, order }) {
               <NeedHelp />
             </Col>
             <Col xs={12} md={6} lg={6} xl={6}>
-              <Quotation rejectaccept={true} showpaybutton={false} hide />
+              <Quotation
+                rejectaccept={true}
+                showpaybutton={false}
+                issuedatasqt={[]}
+                hide
+              />
             </Col>
           </Row>
           {mobileView ? (
@@ -303,7 +393,7 @@ export default function ViewBooking({ backhandler, order }) {
             </Col>
           ) : null}
         </Row>
-      ) : null}
+      ) : null} */}
     </div>
   );
 }

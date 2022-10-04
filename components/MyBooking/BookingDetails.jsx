@@ -6,11 +6,17 @@ import { BsChevronRight } from "react-icons/bs";
 import PrimaryButton from "../common/PrimaryButton";
 import PaymentSummary from "../Popups/PaymentSummary";
 import JobCardPopUp from "./JobCardPopUp";
-export const DeliveryJobCard = () => {
+export const DeliveryJobCard = ({ sliderdata, jcdetails, jcqc }) => {
   const [jobcard, setJobcard] = useState(false);
   return (
     <div>
-      <JobCardPopUp show={jobcard} onHide={() => setJobcard(false)} />
+      <JobCardPopUp
+        show={jobcard}
+        onHide={() => setJobcard(false)}
+        sliderdata={sliderdata}
+        jcdetails={jcdetails}
+        jcqc={jcqc}
+      />
       <Row className={styles.MiniCard}>
         <Col xs={6} md={6} lg={6} xl={6}>
           <p className={styles.ItemTitle}>Estimated to deliver on</p>
@@ -47,6 +53,9 @@ export default function BookingDetails({
   rescheduleclick,
   cancelorderclick,
   callsupport,
+  sliderdata,
+  jcdetails,
+  jcqc,
 }) {
   const [mobileView, setMobileView] = useState(false);
   const [summaryView, setSummaryView] = useState(false);
@@ -146,7 +155,13 @@ export default function BookingDetails({
             </Col>
           </Row>
         ))}
-      {deliveryAndJobcard && <DeliveryJobCard />}
+      {deliveryAndJobcard && (
+        <DeliveryJobCard
+          sliderdata={sliderdata}
+          jcdetails={jcdetails}
+          jcqc={jcqc}
+        />
+      )}
       {raiseticketshow ? (
         <Row className={styles.MiniCard}>
           <Col xs={12} md={12} lg={12} xl={12}>

@@ -110,7 +110,9 @@ export default function PaymentOption({ amount }) {
                 className={`${styles.PaymentOptionCover} ${
                   selectedPayment == i && styles.SelectedOption
                 } `}
-                onClick={() => setSelectedPayment(i)}
+                onClick={() => {
+                  i == 5 ? handlePayment() : setSelectedPayment(i);
+                }}
               >
                 <div className={styles.PaymentImgWrraper}>
                   <Image
