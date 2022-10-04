@@ -6,7 +6,7 @@ import { BsCheckCircleFill, BsChevronRight } from "react-icons/bs";
 import axios from "axios";
 import Layout from "../common/Layout";
 import useRazorpay from "react-razorpay";
-export default function PaymentOption() {
+export default function PaymentOption({ amount }) {
   const paymentOption = [
     {
       option: 1,
@@ -55,20 +55,17 @@ export default function PaymentOption() {
   }, []);
 
   const [datas, setDatas] = useState();
-  useEffect(() => {
-    axios
-      .post("/api/payment")
-      .then((r) => setDatas(r.data))
-      .catch((e) => console.log(e));
-  }, []);
-  console.log(datas);
 
   const Razorpay = useRazorpay();
 
   const handlePayment = () => {
+    axios
+      .post("/api/payment")
+      .then((r) => setDatas(r.data))
+      .catch((e) => console.log(e));
     const options = {
       key: "rzp_test_edc0iutgef4r18",
-      amount: "3000",
+      amount: amount * 100,
       currency: "INR",
       name: "Acme Corp",
       description: "Test Transaction",
@@ -81,8 +78,6 @@ export default function PaymentOption() {
         name: "Piyush Garg",
         email: "youremail@example.com",
         contact: "9999999999",
-        method: "netbanking",
-        bank: "HDFC Bank",
       },
       notes: {
         address: "Razorpay Corporate Office",

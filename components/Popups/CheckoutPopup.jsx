@@ -1242,7 +1242,17 @@ export default function CheckoutPopup({ show, onHide }) {
                     ))}
                   </Row>
                 )}
-                {finalway == 0 ? <PaymentOption /> : null}
+                {finalway == 0 ? (
+                  <PaymentOption
+                    amount={
+                      selectingCoupons != undefined
+                        ? selectingCoupons.coupon_amount
+                          ? total - parseInt(selectingCoupons.coupon_amount)
+                          : total
+                        : total
+                    }
+                  />
+                ) : null}
                 {paymentway == 1 ? (
                   <Row>
                     <Col xs={12} md={12} lg={12} xl={12}>

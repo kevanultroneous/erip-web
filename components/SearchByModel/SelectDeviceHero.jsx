@@ -68,6 +68,7 @@ function SelectDeviceHero({
   const [models, setmodels] = useState([{}]);
   const [modal, setModal] = useState(false);
   const [modalData, setModalData] = useState({});
+  const [cartRemove, setCartRemove] = useState(false);
 
   const [categoryName, setCategoryName] = useState("Device");
   const [brandName, setBrandName] = useState("Brands");
@@ -99,6 +100,7 @@ function SelectDeviceHero({
   const getBrandID = useSelector((state) => state.issuePage.brandID);
   const getModelID = useSelector((state) => state.issuePage.modelID);
 
+  const [currentIssuids, setCurrentIssueIds] = useState(null);
   // personalGadgetsArrays
   const personalGadgetCategory = useSelector((state) => state.personalGadget);
   const personalGadgetBrands = useSelector(
@@ -310,14 +312,21 @@ function SelectDeviceHero({
     return (heroCatName = firstLetter + smallLetter.toLowerCase());
   };
 
-  const getCartData = (e) => {
-    dispatch(callAddorRemoveCart(localStorage.getItem("token"), e));
+  const getCartData = (issueID) => {
+    dispatch(callAddorRemoveCart(localStorage.getItem("token"), issueID));
     dispatch(callMyCartBycity(localStorage.getItem("token")));
+    if (cartdata.data.data !== undefined) {
+      cartdata.data.data.forEach((data) => {
+        if (data.issue_id == issueID) console.log(data);
+        data.issue_id !== issueID ? setCartRemove(!cartRemove) : null;
+      });
+    }
   };
 
   useEffect(() => {
     console.log({ cartdata });
   }, [cartdata]);
+
   return (
     <div>
       <section className={`${styles.modelHeroContainer} ${modelSection}`}>
@@ -515,14 +524,16 @@ function SelectDeviceHero({
                   addToCart={() => {
                     token ? getCartData(issues.issue_id) : quoteaction();
                   }}
-                  buttonName={token ? "Add to cart" : "Get Quote"}
+                  token={token}
+                  cartRemove={cartRemove}
+                  issueID={issues.issue_id}
                 />
               </Col>
             );
           })}
         </Row>
       )}
-      {token && cartIssues.length > 0 && (
+      {token && cartdata.length > 0 && (
         <IssueTotalBill totalPrice={totalprice} />
       )}
       <div>

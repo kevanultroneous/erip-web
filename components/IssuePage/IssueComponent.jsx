@@ -25,6 +25,9 @@ function IssueComponent({
   discountedPercentage,
   loggedIn,
   modalHandler,
+  token,
+  cartRemove,
+  issueID,
 }) {
   const [mobileView, setMobileView] = useState(false);
   useEffect(() => {
@@ -110,7 +113,13 @@ function IssueComponent({
               </a>
             </div>
             <PrimaryButton
-              title={buttonName}
+              title={
+                token
+                  ? cartRemove && issueID
+                    ? "Remove From Cart"
+                    : "Add to cart"
+                  : "Get Quote"
+              }
               clickHandler={addToCart}
               customClass={styles.issuePrimaryButton}
             />

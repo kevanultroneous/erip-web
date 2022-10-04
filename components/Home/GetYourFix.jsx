@@ -28,6 +28,7 @@ export default function GetYourFix() {
   //   dispatch(getTestimonialsByCategory(categoryID));
   // }, [categoryID]);
   const [data, setData] = useState(GetYourFixCard);
+
   useEffect(() => {
     GetYourFixAPI(localStorage.getItem("cityid"))
       .then((r) => setData(r.data))
@@ -40,38 +41,40 @@ export default function GetYourFix() {
         <div className={styles.MainTitleWrraper}>
           <h3 className={styles.MainTitle}>Get Your Fix!</h3>
         </div>
-        {data.map((value, index) => (
-          <Link
-            key={index}
-            href={
-              value.group_id == 1
-                ? {
-                    pathname: "personal-gadgets",
-                    query: {
-                      issue: value.category_id,
-                      category: value.category_title,
-                    },
-                  }
-                : {
-                    pathname: "home-appliances",
-                    query: {
-                      issue: value.category_id,
-                      category: value.category_title,
-                    },
-                  }
-            }
-            onClick={() => dispatch(selectCategory(value.category_id))}
-          >
-            <Col xl={2} lg={2} xs={4} key={index}>
-              <FixCard
-                imgsrc={value.category_icon_url}
-                imgalt={value.category_title}
-                title={value.coming_soon ? null : value.category_title}
-              />
-              {value.coming_soon ? <p>coming soon</p> : null}
-            </Col>
-          </Link>
-        ))}
+
+        {data != undefined &&
+          data.map((value, index) => (
+            <Link
+              key={index}
+              href={
+                value.group_id == 1
+                  ? {
+                      pathname: "personal-gadgets",
+                      query: {
+                        issue: value.category_id,
+                        category: value.category_title,
+                      },
+                    }
+                  : {
+                      pathname: "home-appliances",
+                      query: {
+                        issue: value.category_id,
+                        category: value.category_title,
+                      },
+                    }
+              }
+              onClick={() => dispatch(selectCategory(value.category_id))}
+            >
+              <Col xl={2} lg={2} xs={4} key={index}>
+                <FixCard
+                  imgsrc={value.category_icon_url}
+                  imgalt={value.category_title}
+                  title={value.coming_soon ? null : value.category_title}
+                />
+                {value.coming_soon ? <p>coming soon</p> : null}
+              </Col>
+            </Link>
+          ))}
       </Row>
     </Container>
   );
