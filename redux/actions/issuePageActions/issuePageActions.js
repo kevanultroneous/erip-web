@@ -3,6 +3,7 @@ import {
   GET_BRAND_ID_SUCCESS,
   GET_MODEL_ID_SUCCESS,
   GET_SEGMENT_ID_SUCCESS,
+  GET_ISSUE_ID_SUCCESS,
 } from "../actionTypes";
 
 export const selectCategory = (data) => {
@@ -29,6 +30,13 @@ export const selectModels = (data) => {
 export const selectSegments = (data) => {
   return {
     type: GET_SEGMENT_ID_SUCCESS,
+    payload: data,
+  };
+};
+
+export const selectIssues = (data) => {
+  return {
+    type: GET_ISSUE_ID_SUCCESS,
     payload: data,
   };
 };

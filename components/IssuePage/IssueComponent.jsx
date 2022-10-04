@@ -113,13 +113,7 @@ function IssueComponent({
               </a>
             </div>
             <PrimaryButton
-              title={
-                token
-                  ? cartRemove && issueID
-                    ? "Remove From Cart"
-                    : "Add to cart"
-                  : "Get Quote"
-              }
+              title={buttonName}
               clickHandler={addToCart}
               customClass={styles.issuePrimaryButton}
             />

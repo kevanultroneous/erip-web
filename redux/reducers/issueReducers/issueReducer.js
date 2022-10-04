@@ -3,6 +3,7 @@ import {
   GET_BRAND_ID_SUCCESS,
   GET_MODEL_ID_SUCCESS,
   GET_SEGMENT_ID_SUCCESS,
+  GET_ISSUE_ID_SUCCESS,
 } from "../../actions/actionTypes";
 
 const idState = {
@@ -10,6 +11,7 @@ const idState = {
   categoryID: 0,
   modelID: 0,
   segmentID: 0,
+  issueID: 0,
 };
 
 export const issueReducer = (state = idState, { type, payload }) => {
@@ -33,6 +35,11 @@ export const issueReducer = (state = idState, { type, payload }) => {
       return {
         ...state,
         segmentID: payload,
+      };
+    case GET_ISSUE_ID_SUCCESS:
+      return {
+        ...state,
+        issueID: payload,
       };
     default:
       return state;

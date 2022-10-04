@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
-import { searchDeviceData } from "utils/SearchByModelData";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import { NavDropdown } from "react-bootstrap";
 import axios from "axios";
@@ -20,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectBrands,
   selectCategory,
+  selectIssues,
   selectModels,
 } from "redux/actions/issuePageActions/issuePageActions";
 import {
@@ -68,7 +67,7 @@ function SelectDeviceHero({
   const [models, setmodels] = useState([{}]);
   const [modal, setModal] = useState(false);
   const [modalData, setModalData] = useState({});
-  const [cartRemove, setCartRemove] = useState(false);
+  const [cartButtonName, setcartButtonName] = useState([]);
 
   const [categoryName, setCategoryName] = useState("Device");
   const [brandName, setBrandName] = useState("Brands");
@@ -99,6 +98,7 @@ function SelectDeviceHero({
   const categoryID = useSelector((state) => state.issuePage.categoryID);
   const getBrandID = useSelector((state) => state.issuePage.brandID);
   const getModelID = useSelector((state) => state.issuePage.modelID);
+  const issueID = useSelector((state) => state.issuePage.issueID);
 
   const [currentIssuids, setCurrentIssueIds] = useState(null);
   // personalGadgetsArrays
@@ -312,14 +312,16 @@ function SelectDeviceHero({
     return (heroCatName = firstLetter + smallLetter.toLowerCase());
   };
 
-  const getCartData = (issueID) => {
-    dispatch(callAddorRemoveCart(localStorage.getItem("token"), issueID));
+  useEffect(() => {
+    // getCartData(issueID);
+  }, [cartButtonName, issueID]);
+
+  const getCartData = (issueId) => {
+    dispatch(selectIssues(issueId));
+    dispatch(callAddorRemoveCart(localStorage.getItem("token"), issueId));
     dispatch(callMyCartBycity(localStorage.getItem("token")));
     if (cartdata.data.data !== undefined) {
-      cartdata.data.data.forEach((data) => {
-        if (data.issue_id == issueID) console.log(data);
-        data.issue_id !== issueID ? setCartRemove(!cartRemove) : null;
-      });
+      setcartButtonName(cartdata.data.data);
     }
   };
 
@@ -507,6 +509,7 @@ function SelectDeviceHero({
       )}
       {displayIssues && (
         <Row className={style.issuePageRow}>
+          {console.log(issues, "totalIssue")}
           {issues.map((issues, index) => {
             return (
               <Col key={index} xl={4} md={6} className={style.issueColumn}>
@@ -524,9 +527,16 @@ function SelectDeviceHero({
                   addToCart={() => {
                     token ? getCartData(issues.issue_id) : quoteaction();
                   }}
-                  token={token}
-                  cartRemove={cartRemove}
-                  issueID={issues.issue_id}
+                  buttonName={
+                    token
+                      ? cartButtonName.some(
+                          (cartIssueData) =>
+                            cartIssueData.issue_id === issues.issue_id
+                        )
+                        ? "Remove From Cart"
+                        : "Add to Cart"
+                      : "Get Quote"
+                  }
                 />
               </Col>
             );
