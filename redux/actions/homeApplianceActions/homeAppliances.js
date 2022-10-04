@@ -1,5 +1,9 @@
 import { getCategoriesByCity } from "api/categoryByCity";
-import { getIssuesBySegments, getSegmentByCategory } from "api/homeAppliances";
+import {
+  getIssuesBySegments,
+  getIssuesBySegmentsDetails,
+  getSegmentByCategory,
+} from "api/homeAppliances";
 import * as homeAppliances from "../actionTypes";
 
 export const getHomeAppliancesStart = () => {
@@ -101,7 +105,7 @@ export const getHomeApplianceModel = (data) => {
 export const getHomeApplianceIssue = (data) => {
   return async function (dispatch) {
     getHomeApplianceIssueStart();
-    await getIssuesBySegments(data)
+    await getIssuesBySegmentsDetails(data)
       .then((response) => {
         dispatch(getHomeApplianceIssueSuccess(response));
       })

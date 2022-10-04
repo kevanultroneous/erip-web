@@ -38,7 +38,6 @@ export default function CartAndOffer({ show, onHide }) {
 
   useEffect(() => {
     BillAmount();
-    console.log({ cartSelector }, "cart");
   }, [cartSelector]);
 
   useEffect(() => {

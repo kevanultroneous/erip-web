@@ -32,6 +32,10 @@ function IssuePage({ data }) {
   const [mobileView, setMobileView] = useState(true);
   const [popupLogin, setPopupLogin] = useState(false);
   const [token, setToken] = useState(false);
+  const [information, setInformation] = useState("");
+  const [offers, setOffers] = useState([]);
+  const [faqs, setFaqs] = useState([]);
+  const [testimonial, setTestimonial] = useState([]);
 
   // useSelector
 
@@ -84,6 +88,27 @@ function IssuePage({ data }) {
     }
   }, []);
 
+  useEffect(() => {
+    setInformation(categoryInfo.data);
+    setFaqs(categoryFaq.data);
+    setOffers(categoryOffer.data);
+    setTestimonial(categoryTestimonial.data);
+  }, [categoryID]);
+
+  useEffect(() => {
+    setInformation(brandsInfo.data);
+    setFaqs(brandsFaq.data);
+    setOffers(brandsOffer.data);
+    setTestimonial(brandsTestimonial.data);
+  }, [getBrandID]);
+
+  useEffect(() => {
+    setInformation(modelInfo.data);
+    setFaqs(modelsFaq.data);
+    setOffers(modelOffer.data);
+    setTestimonial(modelTestimonial.data);
+  }, [getModelID]);
+
   // returned components
   return (
     <Layout title={"Personal Gadgets"}>
@@ -96,12 +121,12 @@ function IssuePage({ data }) {
         modelSection={styles.selectDeviceSection}
         homeQuery={router.query.issue}
       />
-      <HomeHero offers={categoryOffer.data} />
+      <HomeHero offers={offers} />
       <HowItWork />
       <WhyErip />
-      <InformationSection paragraph={categoryInfo.data} />
-      <ContactFAQ faqArray={categoryFaq.data} />
-      <Testimonials data={categoryTestimonial.data} />
+      <InformationSection paragraph={information} />
+      <ContactFAQ faqArray={faqs} />
+      <Testimonials data={testimonial} />
       {mobileView ? <Footer /> : <MobileFooter />}
     </Layout>
   );

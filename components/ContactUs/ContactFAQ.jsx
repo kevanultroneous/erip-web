@@ -6,13 +6,15 @@ import styles from "@/styles/components/ContactUs/ContactFAQ.module.css";
 import axios from "axios";
 import { API_URL } from "utils/data";
 
-function ContactFAQ({ faqArray = AccordionFAQ }) {
+function ContactFAQ({ faqArray }) {
   const [mobileView, setMobileView] = useState(true);
-
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(false) : setMobileView(true);
   }, []);
 
+  if (faqArray.length < 1) {
+    faqArray = AccordionFAQ;
+  }
   return (
     <section className={styles.faqContainer}>
       {faqArray.length > 0 && (

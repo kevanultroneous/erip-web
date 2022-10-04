@@ -137,7 +137,6 @@ function SelectDeviceHero({
   }, [categoryID]);
 
   useEffect(() => {
-    console.log({ getBrandID });
     // dispatch(getPersonalGadgetsByModels(getBrandID));
     // dispatch(getBrandsHero(getBrandID));
     // dispatch(callFaqByBrands(getBrandID));
