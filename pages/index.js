@@ -17,6 +17,7 @@ import { HeroSectionApi } from "api/homeapi";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   API_URL,
   GetYourFixCard,
@@ -26,6 +27,7 @@ import {
   TestimonialData,
 } from "utils/data";
 
+
 export default function Home({ data }) {
   const [mobileView, setMobileView] = useState(true);
   const [offerad, setOfferAd] = useState(false);
@@ -33,9 +35,9 @@ export default function Home({ data }) {
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
     if (router.pathname == "/") {
-      localStorage.setItem("city", "Bengluru")
+      localStorage.setItem("city", "Bengaluru")
       localStorage.setItem("cityid", 1)
-      router.push(`${localStorage.getItem("city")}`)
+      router.push(`${localStorage.getItem("city")}`, `${localStorage.getItem("city")}`, {shallow: true})
     }
   }, []);
 

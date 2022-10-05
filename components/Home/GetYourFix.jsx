@@ -18,7 +18,7 @@ import { GetYourFixAPI } from "api/homeapi";
 export default function GetYourFix() {
   // const dispatch = useDispatch();
 
-  // const categoryID = useSelector((state) => state.issuePage.categoryID);
+  const categoryID = useSelector((state) => state.issuePage.categoryID);
 
   // useEffect(() => {
   //   dispatch(getCategoryHero(categoryID));
@@ -41,6 +41,8 @@ export default function GetYourFix() {
       .catch((e) => console.log(e));
   }, []);
 
+  const cityName = useSelector((state) => state.locationdata.name);
+
   return (
     <Container userdefinedclass={styles.TablateSpacing}>
       <Row>
@@ -48,17 +50,18 @@ export default function GetYourFix() {
           <h3 className={styles.MainTitle}>Get Your Fix!</h3>
         </div>
 
+
         {data.map((value, index) => (
           <Link
             key={index}
             href={
               value.group_id == 1
                 ? {
-                    pathname: "personal-gadgets",
-                    query: {
-                      issue: value.category_id,
-                      category: value.category_title,
-                    },
+                    pathname: `${cityName}/${value.category_title.toLowerCase()}-repair`,
+                    // query: {
+                    //   issue: value.category_id,
+                    //   category: value.category_title,
+                    // },
                   }
                 : {
                     pathname: "home-appliances",

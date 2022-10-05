@@ -54,6 +54,9 @@ import {
   selectCategoryName,
 } from "redux/actions/personalGadgetActions/personalGadget";
 import KnowMoreModal from "../HomeAppliances/KnowMoreModal";
+import { getCategoriesByCity } from "api/categoryByCity";
+import { getBrandsByCategory, getModelsByBrand } from "api/personalGadgetsApi";
+import { useRouter } from "next/router";
 
 function SelectDeviceHero({
   headClass,
@@ -121,6 +124,7 @@ function SelectDeviceHero({
   const selectModelsName = useSelector((state) => state.modelName.modelName);
 
   const dispatch = useDispatch();
+  const router = useRouter()
 
   useEffect(() => {
     window.innerWidth < 662 ? setMobileView(true) : setMobileView(false);
@@ -175,7 +179,7 @@ function SelectDeviceHero({
 
     const issueURL = !token
       ? `${API_URL}api/v1/issues_by_models?model=${modelID}`
-      : `${API_URL}api/v1/issues_by_models_detail?model=${modelID}&city=1`;
+      : `${API_URL}api/v1/issues_by_models_detail?model=${modelID}&city=${cityID}`;
 
     await axios.get(issueURL).then((data) => {
       if (data.data.data !== undefined) {
@@ -185,10 +189,9 @@ function SelectDeviceHero({
         setIssues([]);
       }
     });
-    await axios
-      .get(`${API_URL}api/v1/models_by_brand?brand=${brandId}`)
+    await getModelsByBrand(brandId)
       .then((data) => {
-        const selectedModel = data.data.data;
+        const selectedModel = data;
         if (selectedModel) {
           selectedModel.forEach((model) => {
             if (model.model_id == key.target.accessKey) {
@@ -204,39 +207,35 @@ function SelectDeviceHero({
   }, []);
 
   const getCategory = async () => {
-    await axios
-      .get(`${API_URL}api/v1/categories_by_cities?city=${cityID}`)
+    await getCategoriesByCity(cityID)
       .then((data) => {
         setcategories(
-          data.data.data.filter((category) => category.group_id == 1)
+          data.filter((category) => category.group_id == 1)
         );
       })
       .catch(() => setcategories([]));
-    if (homeQuery) {
-      getBrands(homeQuery);
+    if (categoryID !== 0) {
+      getBrands(categoryID);
     }
   };
 
   const getBrands = async (eventKey, key) => {
     dispatch(selectCategory(eventKey));
     dispatch(selectCategoryName(cityID));
-    alert(eventKey);
-    await axios
-      .get(`${API_URL}api/v1/brands_by_category?category=${eventKey}`)
+    await getBrandsByCategory(eventKey)
       .then((data) => {
-        if (data.data.data !== undefined) {
+        if (data !== undefined) {
           setDisableBrands(false);
-          setbrandData(data.data.data);
+          setbrandData(data);
         } else {
           setDisableBrands(true);
           alert("No data found");
           setbrandData([]);
         }
       });
-    await axios
-      .get(`${API_URL}api/v1/categories_by_cities?city=1`)
+    await getCategoriesByCity(cityID)
       .then((data) => {
-        const category = data.data.data;
+        const category = data;
         category.forEach((element) => {
           if (element.category_id == eventKey) {
             setCategoryName(element.category_title);
@@ -250,32 +249,32 @@ function SelectDeviceHero({
     setBrandName("Brands");
     setModelName("Models");
   };
-
+  
   const getModels = async (eventKey, key) => {
     dispatch(selectBrands(key.target.accessKey));
 
-    const modelData = await axios
-      .get(`${API_URL}api/v1/models_by_brand?brand=${key.target.accessKey}`)
+    const modelData = await getModelsByBrand(key.target.accessKey)
       .then((data) => {
-        if (data.data.data !== undefined) {
+        if (data !== undefined) {
           setDisableModel(false);
-          setmodels(data.data.data);
+          setmodels(data);
         } else {
           alert("no data");
           setDisableModel(true);
           setmodels([]);
         }
       });
-    setBrandId(key.target.accessKey);
-    await axios
-      .get(`${API_URL}api/v1/brands_by_category?category=1`)
+      setBrandId(key.target.accessKey);
+      await getBrandsByCategory(categoryID)
       .then((data) => {
-        const model = data.data.data;
+        const model = data;
         model.forEach((element) => {
           if (element.brand_id == key.target.accessKey) {
             setBrandName(element.brand_title);
           }
         });
+        const href = `${cityName}/${router.query.category}/${brandName}`
+        router.push(href, {shallow: true})
       });
     setTopBrands(false);
     setDisplayIssues(false);
