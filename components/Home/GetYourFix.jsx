@@ -33,7 +33,7 @@ export default function GetYourFix() {
     let cityID =
       localStorage.getItem("cityid") == null
         ? 1
-        : ocalStorage.getItem("cityid");
+        : localStorage.getItem("cityid");
     GetYourFixAPI(cityID)
       .then((r) => {
         setData(r.data);
@@ -49,7 +49,6 @@ export default function GetYourFix() {
         <div className={styles.MainTitleWrraper}>
           <h3 className={styles.MainTitle}>Get Your Fix!</h3>
         </div>
-
 
         {data.map((value, index) => (
           <Link
