@@ -119,6 +119,7 @@ function categoryids({ data }) {
 
   useEffect(() => {
     getCategoryFromQuery();
+    console.log("from Category");
   }, []);
 
   const getCategoryFromQuery = async () => {
