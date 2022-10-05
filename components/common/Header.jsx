@@ -346,7 +346,7 @@ export function Header() {
               <Col xs={6} sm={6} md={6} className={styles.SubMainWrraper}>
                 <div className={styles.SubWrraper}>
                   <Image
-                    src="assets/icons/mobile-header-cart.svg"
+                    src="/assets/icons/mobile-header-cart.svg"
                     alt="header cart"
                     className={styles.CartSpace}
                     onClick={() => setCartAndOfferPopup(true)}
@@ -470,44 +470,6 @@ export function Header() {
               </Modal.Body>
             </Modal>
             <Col xs={12}>
-              {/* <div
-                style={
-                  showMobloc
-                    ? { display: "block", transition: "0.5s ease" }
-                    : { display: "none", transition: "0.5s ease" }
-                }
-              >
-                <div className={`${styles.SearchLocMob}`}>
-                  <FiSearch className={styles.SearchIcon} />
-                  <ReactGoogleAutocomplete
-                    defaultValue={selectedAddress}
-                    placeholder="Search city, area, pincode"
-                    apiKey={GMAP_API}
-                    onPlaceSelected={(place) =>
-                      getLatandLongByAddress(place.formatted_address)
-                    }
-                    options={{
-                      types: ["establishment"],
-                      componentRestrictions: { country: "in" },
-                    }}
-                    className={styles.SearchBoxMob}
-                  />
-                </div>
-                <p className={styles.InputOrText}>or</p>
-                <div
-                  className={styles.ModalHeadDetect}
-                  onClick={() => getLocation()}
-                >
-                  <Image
-                    src="/assets/icons/location-color.svg"
-                    loading="lazy"
-                    alt="Location"
-                  />
-                  <p className={styles.LocationDetectText}>
-                    Detect My Location
-                  </p>
-                </div>
-              </div> */}
               <div className={styles.Searchbar}>
                 <FiSearch
                   size={25}
@@ -979,20 +941,20 @@ export function Header() {
               >
                 <Image
                   id="dropdown_location"
-                  src="assets/icons/header-location.svg"
+                  src="/assets/icons/header-location.svg"
                   alt="header location"
                 />
 
                 <p id="dropdown_location">{locationselector.name}</p>
                 <Image
                   id="dropdown_location"
-                  src="assets/icons/header-down-arrow.svg"
+                  src="/assets/icons/header-down-arrow.svg"
                   alt="header down arrow"
                 />
               </div>
 
               <Image
-                src="assets/icons/header-cart.svg"
+                src="/assets/icons/header-cart.svg"
                 alt="header cart"
                 className={styles.navHeaderCart}
                 onClick={() => {
