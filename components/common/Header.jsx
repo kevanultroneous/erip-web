@@ -499,11 +499,13 @@ export function Header() {
                               href={
                                 v.category_flow_group == "1"
                                   ? {
-                                      pathname: "personal-gadgets",
-                                      query: {
-                                        issue: v.category_id,
-                                        category: v.category_title,
-                                      },
+                                      pathname: `${localStorage.getItem(
+                                        "city"
+                                      )}/${v.category_title.toLowerCase()}-repair`,
+                                      // query: {
+                                      //   issue: v.category_id,
+                                      //   category: v.category_title,
+                                      // },
                                     }
                                   : {
                                       pathname: "home-appliances",
@@ -545,12 +547,16 @@ export function Header() {
                               href={
                                 v.category_flow_group == "1"
                                   ? {
-                                      pathname: "personal-gadgets",
-                                      query: {
-                                        issue: v.category_id,
-                                        category: v.category_title,
-                                        brand: v.brand_title,
-                                      },
+                                      pathname: `${localStorage.getItem(
+                                        "city"
+                                      )}/${v.category_title.toLowerCase()}-repair/${
+                                        v.brand_title
+                                      }`,
+                                      // query: {
+                                      //   issue: v.category_id,
+                                      //   category: v.category_title,
+                                      //   brand: v.brand_title,
+                                      // },
                                     }
                                   : {
                                       pathname: "home-appliances",
@@ -593,13 +599,17 @@ export function Header() {
                               href={
                                 v.category_flow_group == "1"
                                   ? {
-                                      pathname: "personal-gadgets",
-                                      query: {
-                                        issue: v.category_id,
-                                        category: v.category_title,
-                                        brand: v.brand_title,
-                                        model: v.model_title,
-                                      },
+                                      pathname: `${localStorage.getItem(
+                                        "city"
+                                      )}/${v.category_title.toLowerCase()}-repair/${
+                                        v.brand_title
+                                      }/${v.model_title}`,
+                                      // query: {
+                                      //   issue: v.category_id,
+                                      //   category: v.category_title,
+                                      //   brand: v.brand_title,
+                                      //   model: v.model_title,
+                                      // },
                                     }
                                   : {
                                       pathname: "home-appliances",
@@ -643,13 +653,17 @@ export function Header() {
                               href={
                                 v.category_flow_group == "1"
                                   ? {
-                                      pathname: "personal-gadgets",
-                                      query: {
-                                        issue: v.category_id,
-                                        category: v.category_title,
-                                        brand: v.brand_title,
-                                        model: v.model_title,
-                                      },
+                                      pathname: `${localStorage.getItem(
+                                        "city"
+                                      )}/${v.category_title.toLowerCase()}-repair/${
+                                        v.brand_title
+                                      }/${v.model_title}`,
+                                      // query: {
+                                      //   issue: v.category_id,
+                                      //   category: v.category_title,
+                                      //   brand: v.brand_title,
+                                      //   model: v.model_title,
+                                      // },
                                     }
                                   : {
                                       pathname: "home-appliances",
@@ -740,11 +754,13 @@ export function Header() {
                             href={
                               v.category_flow_group == "1"
                                 ? {
-                                    pathname: "personal-gadgets",
-                                    query: {
-                                      issue: v.category_id,
-                                      category: v.category_title,
-                                    },
+                                    pathname: `${localStorage.getItem(
+                                      "city"
+                                    )}/${v.category_title.toLowerCase()}-repair`,
+                                    // query: {
+                                    //   issue: v.category_id,
+                                    //   category: v.category_title,
+                                    // },
                                   }
                                 : {
                                     pathname: "home-appliances",
@@ -786,12 +802,16 @@ export function Header() {
                             href={
                               v.category_flow_group == "1"
                                 ? {
-                                    pathname: "personal-gadgets",
-                                    query: {
-                                      issue: v.category_id,
-                                      category: v.category_title,
-                                      brand: v.brand_title,
-                                    },
+                                    pathname: `${localStorage.getItem(
+                                      "city"
+                                    )}/${v.category_title.toLowerCase()}-repair/${
+                                      v.brand_title
+                                    }`,
+                                    // query: {
+                                    //   issue: v.category_id,
+                                    //   category: v.category_title,
+                                    //   brand: v.brand_title,
+                                    // },
                                   }
                                 : {
                                     pathname: "home-appliances",
@@ -834,13 +854,17 @@ export function Header() {
                             href={
                               v.category_flow_group == "1"
                                 ? {
-                                    pathname: "personal-gadgets",
-                                    query: {
-                                      issue: v.category_id,
-                                      category: v.category_title,
-                                      brand: v.brand_title,
-                                      model: v.model_title,
-                                    },
+                                    pathname: `${localStorage.getItem(
+                                      "city"
+                                    )}/${v.category_title.toLowerCase()}-repair/${
+                                      v.brand_title
+                                    }/${v.model_title}`,
+                                    // query: {
+                                    //   issue: v.category_id,
+                                    //   category: v.category_title,
+                                    //   brand: v.brand_title,
+                                    //   model: v.model_title,
+                                    // },
                                   }
                                 : {
                                     pathname: "home-appliances",
@@ -884,13 +908,17 @@ export function Header() {
                             href={
                               v.category_flow_group == "1"
                                 ? {
-                                    pathname: "personal-gadgets",
-                                    query: {
-                                      issue: v.category_id,
-                                      category: v.category_title,
-                                      brand: v.brand_title,
-                                      model: v.model_title,
-                                    },
+                                    pathname: `${localStorage.getItem(
+                                      "city"
+                                    )}/${v.category_title.toLowerCase()}-repair/${
+                                      v.brand_title
+                                    }/${v.model_title}`,
+                                    // query: {
+                                    //   issue: v.category_id,
+                                    //   category: v.category_title,
+                                    //   brand: v.brand_title,
+                                    //   model: v.model_title,
+                                    // },
                                   }
                                 : {
                                     pathname: "home-appliances",
