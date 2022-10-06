@@ -156,7 +156,14 @@ function AllBookings() {
                                 ? 2
                                 : 0
                             }
-                            OTP={"111111"}
+                            OTP={
+                              bookings.length > 0
+                                ? bookings[0].order_job_start_otp.length > 0
+                                  ? bookings[0].order_job_start_otp[0]
+                                      .otp_number
+                                  : ""
+                                : ""
+                            }
                           />
                         </Col>
                       );

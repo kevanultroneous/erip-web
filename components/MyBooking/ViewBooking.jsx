@@ -183,19 +183,23 @@ export default function ViewBooking({ backhandler, order }) {
                 }
               />
             </Col>
-            <Col xs={12} md={6} lg={6} xl={6}>
-              <Quotation
-                rejectaccept={true}
-                showpaybutton={false}
-                quotationdata={
-                  details.length > 0
-                    ? details[0].order_quotation_details.length > 0
-                      ? details[0].order_quotation_details
-                      : []
-                    : []
-                }
-              />
-            </Col>
+            {details.length > 0 ? (
+              details[0].order_quotation_details.length > 0 ? (
+                <Col xs={12} md={6} lg={6} xl={6}>
+                  <Quotation
+                    rejectaccept={true}
+                    showpaybutton={false}
+                    quotationdata={
+                      details.length > 0
+                        ? details[0].order_quotation_details.length > 0
+                          ? details[0].order_quotation_details
+                          : []
+                        : []
+                    }
+                  />
+                </Col>
+              ) : null
+            ) : null}
             {details.length > 0 ? (
               details[0].order_partner_details.length > 0 ? (
                 <Col xs={12} md={6} lg={6} xl={6}>
