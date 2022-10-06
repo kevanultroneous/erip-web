@@ -1,11 +1,10 @@
 // react hooks
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, useRef, useMemo } from "react";
 
 // components
 import { Header } from "@/components/common/Header";
-import SelectDeviceHero from "@/components/SearchByModel/SelectDeviceHero";
 import WhyErip from "@/components/common/WhyErip";
 import Testimonials from "@/components/common/Testimonials";
 import MobileFooter from "@/components/common/MobileFooter";
@@ -13,24 +12,28 @@ import Footer from "@/components/common/Footer";
 import Layout from "@/components/common/Layout";
 import LoginPopup from "@/components/Popups/LoginPopup";
 import HowItWork from "@/components/common/HowItWork";
+import InformationSection from "@/components/PersonalGadgets/informationSection";
 import ContactFAQ from "@/components/ContactUs/ContactFAQ";
 
 // data
 import { API_URL, TestimonialData } from "utils/data";
+import { AccordionFAQ } from "utils/accordionFAQ";
 
 // external library
 import axios from "axios";
+import ModelSelect from "@/components/HomeAppliances/ModelSelect";
+import HomeApplianceIssues from "@/components/HomeAppliances/HomeApplianceIssues";
+import HomeApplianceHero from "@/components/HomeAppliances/HomeApplianceHero";
+import HomeApplianceDetails from "@/components/HomeAppliances/HomeApplianceDetails";
+import { getSegmentByCategory } from "api/homeAppliances";
+import { getHomeApplianceModel } from "redux/actions/homeApplianceActions/homeAppliances";
+import { selectCategory } from "redux/actions/issuePageActions/issuePageActions";
+import { getCategoriesByCity } from "api/categoryByCity";
 
 // styles
-import styles from "@/styles/components/personalGadgets/issuepage.module.css";
-import OfferBanner from "@/components/Home/OfferBanner";
-import InformationSection from "@/components/PersonalGadgets/informationSection";
-import HomeHero from "@/components/Home/Hero";
-import { getCategoriesByCity } from "api/categoryByCity";
-import { selectCategory } from "redux/actions/issuePageActions/issuePageActions";
+// import styles from "@/styles/components/IssuePage/issuepage.module.css";
 
-function Categoryids({ data }) {
-  // states
+function HomeappliancesCategory() {
   const [mobileView, setMobileView] = useState(true);
   const [popupLogin, setPopupLogin] = useState(false);
   const [token, setToken] = useState(false);
@@ -39,13 +42,14 @@ function Categoryids({ data }) {
   const [faqs, setFaqs] = useState([]);
   const [testimonial, setTestimonial] = useState([]);
 
-  // useSelector
+  // Brand/ Category/ Segment/ Category
+  const categoryID = useSelector((state) => state.issuePage.categoryID);
+  const segmentID = useSelector((state) => state.issuePage.segmentID);
   const cityID = useSelector((state) => state.locationdata.city);
 
-  // category brand model IDs
-  const categoryID = useSelector((state) => state.issuePage.categoryID);
-  const getBrandID = useSelector((state) => state.issuePage.brandID);
-  const getModelID = useSelector((state) => state.issuePage.modelID);
+  const homeApplianceSegment = useSelector(
+    (state) => state.homeAppliancesModel.data
+  );
 
   // Arrays of category testimonial hero Offers
   const categoryFaq = useSelector((state) => state.faqCategory);
@@ -72,15 +76,11 @@ function Categoryids({ data }) {
   const brandsOffer = useSelector((state) => state.offerBrands);
   const modelOffer = useSelector((state) => state.offerModels);
 
-  // declaration
-  const router = useRouter();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(categoryTestimonial.data, "offer");
-  }, [categoryTestimonial.data]);
+  // declaration
+  const router = useRouter();
 
-  // useEffects
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
 
@@ -91,6 +91,12 @@ function Categoryids({ data }) {
       setToken(false);
     }
   }, []);
+
+  useEffect(() => {
+    dispatch(selectCategory(categoryID));
+    dispatch(getHomeApplianceModel(categoryID));
+    console.log({ homeApplianceSegment });
+  }, [categoryID]);
 
   useEffect(() => {
     setInformation(categoryInfo.data);
@@ -104,79 +110,51 @@ function Categoryids({ data }) {
     setFaqs(brandsFaq.data);
     setOffers(brandsOffer.data);
     setTestimonial(brandsTestimonial.data);
-  }, [getBrandID]);
+  }, [segmentID]);
 
   useEffect(() => {
-    setInformation(modelInfo.data);
-    setFaqs(modelsFaq.data);
-    setOffers(modelOffer.data);
-    setTestimonial(modelTestimonial.data);
-  }, [getModelID]);
-
-  const queryCategoryName = router.query.category
-    .substring(0, router.query.category.lastIndexOf("-"))
-    .toUpperCase();
-
-  useEffect(() => {
-    getCategoryFromQuery();
-    console.log("from Category");
+    if (router.query.category) getCategoryFromQuery();
+    console.log(router, "homeQuery");
+    console.log("from homeAppliance");
   }, []);
 
   const getCategoryFromQuery = async () => {
+    const queryCategoryName = router.query.category
+      .substring(0, router.query.category.lastIndexOf("-"))
+      .replace("-", " ")
+      .toUpperCase();
     await getCategoriesByCity(cityID)
-      .then((response) => {
-        const allCategories = response.filter(
-          (cate) => cate.category_title == queryCategoryName
-        )[0];
-        dispatch(selectCategory(allCategories.category_id));
-        // return response
+      .then(
+        (response) =>
+          response.filter((cate) => cate.category_title == queryCategoryName)[0]
+      )
+      .then((selectedsegment) => {
+        console.log({ selectedsegment });
+        if (selectedsegment) {
+          dispatch(selectCategory(selectedsegment.category_id));
+          dispatch(getHomeApplianceModel(selectedsegment.category_id));
+        }
       })
-      .catch((e) => e);
-    // console.log({allCategories})
+      .catch((e) => console.log(e));
   };
 
-  // returned components
   return (
-    <Layout title={"Personal Gadgets"}>
+    <Layout title={"Home Appliances"}>
       <Header />
       <LoginPopup show={popupLogin} onHide={() => setPopupLogin(false)} />
-      <SelectDeviceHero
+      <HomeApplianceHero />
+      <ModelSelect segmentArray={homeApplianceSegment} />
+      <HomeApplianceIssues
         token={token}
         quoteaction={() => setPopupLogin(true)}
-        // headClass={styles.selectDeviceHero}
-        modelSection={styles.selectDeviceSection}
-        // homeQuery={router.query.issue}
       />
-      <HomeHero offers={offers} />
-      <HowItWork />
-      <WhyErip />
-      <InformationSection paragraph={information} />
-      <ContactFAQ faqArray={faqs} />
-      <Testimonials data={testimonial} />
+      {mobileView && <WhyErip />}
+      {mobileView && <Testimonials data={testimonial} />}
+      {mobileView && <HomeApplianceDetails paragraph={information} />}
+      {mobileView && <ContactFAQ faqArray={faqs} />}
       {mobileView ? <Footer /> : <MobileFooter />}
     </Layout>
   );
 }
 
-// Testimonial API Calling
-export async function getServerSideProps() {
-  let home_testimonial = await axios
-    .get(`${API_URL}api/v1/cms/testimonials`, {
-      params: {
-        page: "home",
-      },
-    })
-    .then((res) => {
-      res.data;
-    })
-    .catch((e) => console.log("testimonial error" + e));
-  return {
-    props: {
-      data: {
-        hometestimonial: home_testimonial ? home_testimonial : TestimonialData,
-      },
-    },
-  };
-}
-
-export default Categoryids;
+export default HomeappliancesCategory;

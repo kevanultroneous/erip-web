@@ -56,18 +56,14 @@ export default function GetYourFix() {
             href={
               value.group_id == 1
                 ? {
-                    pathname: `${cityName}/${value.category_title.toLowerCase()}-repair`,
-                    // query: {
-                    //   issue: value.category_id,
-                    //   category: value.category_title,
-                    // },
+                    pathname: `${cityName}/${value.category_title
+                      .replace(" ", "-")
+                      .toLowerCase()}-repair`,
                   }
                 : {
-                    pathname: "home-appliances",
-                    query: {
-                      issue: value.category_id,
-                      category: value.category_title,
-                    },
+                    pathname: `${cityName}/home-appliance/${value.category_title
+                      .replace(" ", "-")
+                      .toLowerCase()}-repair`,
                   }
             }
             onClick={() => dispatch(selectCategory(value.category_id))}
