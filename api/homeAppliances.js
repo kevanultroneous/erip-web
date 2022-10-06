@@ -18,7 +18,7 @@ export const getSegmentByCategory = async (categoryID) => {
         return [];
       });
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
 
@@ -39,15 +39,15 @@ export const getIssuesBySegments = async (segmentID) => {
         return [];
       });
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
 
-export const getIssuesBySegmentsDetails = async (segmentID, cityID) => {
+export const getIssuesBySegmentsDetails = async (segmentID) => {
   try {
     return await axios
       .get(
-        `${API_URL}api/v1/issues_by_segments_detail?segment=${segmentID}&city=${cityID}`
+        `${API_URL}api/v1/issues_by_segments_detail?segment=${segmentID}&city=${1}`
       )
       .then((data) => {
         if (data.status === 200) {
@@ -62,6 +62,6 @@ export const getIssuesBySegmentsDetails = async (segmentID, cityID) => {
         return [];
       });
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };

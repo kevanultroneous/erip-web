@@ -26,31 +26,10 @@ function ModelSelect({ segmentArray }) {
     dispatch(getHomeApplianceIssue(e));
   };
 
+  useEffect(() => {}, []);
+
   const getCity = useSelector((state) => state.locationdata.city);
   const segments = useSelector((state) => state.homeAppliancesModel.data);
-
-  useEffect(() => {
-    console.log({ segments });
-  }, [segments]);
-
-  const modelData = [
-    {
-      segment_id: 1,
-      segment_title: "SCREEN MORE THEN 46",
-      segment_image: "fff9f6d2b8c5da23042a256d1d168aa7.png",
-      segment_image_url:
-        "http://43.204.87.153/images/segments/fff9f6d2b8c5da23042a256d1d168aa7.png",
-      segment_slug_01: "0",
-    },
-    {
-      segment_id: 2,
-      segment_title: "SCREEN UP TO 52 INCH",
-      segment_image: "4e0489bad915691901b5ca32596f42cf.png",
-      segment_image_url:
-        "http://43.204.87.153/images/segments/4e0489bad915691901b5ca32596f42cf.png",
-      segment_slug_01: "0",
-    },
-  ];
 
   return (
     <Container userdefinedclass={styles.modelSelectContainer}>
