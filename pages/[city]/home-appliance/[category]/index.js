@@ -129,7 +129,7 @@ function HomeappliancesCategory() {
           response.filter((cate) => cate.category_title == queryCategoryName)[0]
       )
       .then((selectedsegment) => {
-        console.log({ selectedsegment });
+        console.log({ "Jadu teri bajar": selectedsegment });
         if (selectedsegment) {
           dispatch(selectCategory(selectedsegment.category_id));
           dispatch(getHomeApplianceModel(selectedsegment.category_id));

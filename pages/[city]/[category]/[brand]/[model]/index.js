@@ -83,13 +83,13 @@ function modelIds({ data }) {
   // useEffects
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
-
     if (localStorage.getItem("token")) {
       setToken(true);
       setPopupLogin(false);
     } else {
       setToken(false);
     }
+    getCategoryFromQuery();
   }, []);
 
   useEffect(() => {
@@ -113,13 +113,10 @@ function modelIds({ data }) {
     setTestimonial(modelTestimonial.data);
   }, [getModelID]);
 
-    const queryCategoryName = router.query.category
-      .substring(0, router.query.category.lastIndexOf("-"))
-      .toUpperCase();
+  const queryCategoryName = router.query.category
+    .substring(0, router.query.category.lastIndexOf("-"))
+    .toUpperCase();
 
-  useEffect(() => {
-    getCategoryFromQuery();
-  }, []);
 
   const getCategoryFromQuery = async () => {
     await getCategoriesByCity(cityID)
@@ -129,7 +126,7 @@ function modelIds({ data }) {
         // return response
       })
       .catch((e) => e);
-      // console.log({allCategories})
+    // console.log({allCategories})
   };
 
   // returned components
@@ -142,7 +139,7 @@ function modelIds({ data }) {
         quoteaction={() => setPopupLogin(true)}
         // headClass={styles.selectDeviceHero}
         modelSection={styles.selectDeviceSection}
-        // homeQuery={router.query.issue}
+      // homeQuery={router.query.issue}
       />
       <HomeHero offers={offers} />
       <HowItWork />

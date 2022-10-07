@@ -56,7 +56,7 @@ function HomeApplianceIssues({ token, quoteaction }) {
     },
   ];
 
-  console.log({ homeAppliancesIssues });
+  // console.log({ homeAppliancesIssues });
 
   const handlingModal = (modalIssue) => {
     setModalData(modalIssue);

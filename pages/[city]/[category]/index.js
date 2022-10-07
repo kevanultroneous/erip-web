@@ -90,6 +90,8 @@ function Categoryids({ data }) {
     } else {
       setToken(false);
     }
+    getCategoryFromQuery();
+    console.log("from Category");
   }, []);
 
   useEffect(() => {
@@ -117,10 +119,7 @@ function Categoryids({ data }) {
     .substring(0, router.query.category.lastIndexOf("-"))
     .toUpperCase();
 
-  useEffect(() => {
-    getCategoryFromQuery();
-    console.log("from Category");
-  }, []);
+
 
   const getCategoryFromQuery = async () => {
     await getCategoriesByCity(cityID)
@@ -145,7 +144,7 @@ function Categoryids({ data }) {
         quoteaction={() => setPopupLogin(true)}
         // headClass={styles.selectDeviceHero}
         modelSection={styles.selectDeviceSection}
-        // homeQuery={router.query.issue}
+      // homeQuery={router.query.issue}
       />
       <HomeHero offers={offers} />
       <HowItWork />

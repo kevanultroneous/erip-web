@@ -207,11 +207,11 @@ function SelectDeviceHero({
 
   useEffect(() => {
     getCategory();
-    if(router.query.brand){
-      getBrands(router.query.brand)
-    };
-    if(router.query.model){
-      getModels("", router.query.model)
+    if (router.query.brand) {
+      getBrands(router.query.brand);
+    }
+    if (router.query.model) {
+      getModels("", router.query.model);
     }
   }, []);
 
@@ -252,7 +252,9 @@ function SelectDeviceHero({
       })
       .then((categoryDataName) => {
         if (categoryDataName) {
-          const href = `/${cityName}/${categoryDataName.toLowerCase()}-repair`;
+          const href = `/${cityName}/${categoryDataName
+            .replace(" ", "-")
+            .toLowerCase()}-repair`;
           router.push(href, href, { shallow: true });
         }
       });

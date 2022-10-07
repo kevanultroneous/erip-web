@@ -44,8 +44,10 @@ export default function CartAndOffer({ show, onHide }) {
     if (!show) {
       setActive(0);
       setShowCheckout(false);
+    } else {
+      dispatch(callFetchCoupons(commonselector.locationdata.city, 1));
+      dispatch(callMyCartBycity(localStorage.getItem("token")));
     }
-    dispatch(callMyCartBycity(localStorage.getItem("token")));
   }, [show]);
 
   const BillAmount = () => {
@@ -60,11 +62,6 @@ export default function CartAndOffer({ show, onHide }) {
     dispatch(callAddorRemoveCart(localStorage.getItem("token"), id));
     dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
   };
-
-  useEffect(() => {
-    dispatch(callFetchCoupons(commonselector.locationdata.city, 1));
-    dispatch(callMyCartBycity(localStorage.getItem("token")));
-  }, []);
 
   const couponsdataList = couponsselector.data
     ? couponsselector.data.data !== undefined

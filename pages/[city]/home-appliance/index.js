@@ -89,12 +89,13 @@ function Homeappliances() {
     } else {
       setToken(false);
     }
-  }, []);
-
-  useEffect(() => {
     dispatch(selectCategory(categoryID));
     dispatch(getHomeApplianceModel(categoryID));
+    getCategoryFromQuery();
+    console.log("from homeAppliance");
   }, []);
+
+
 
   useEffect(() => {
     setInformation(categoryInfo.data);
@@ -110,10 +111,6 @@ function Homeappliances() {
     setTestimonial(brandsTestimonial.data);
   }, [segmentID]);
 
-  useEffect(() => {
-    getCategoryFromQuery();
-    console.log("from homeAppliance");
-  }, []);
 
   const getCategoryFromQuery = async () => {
     console.log(router.query, "homeQuery");

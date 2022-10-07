@@ -67,44 +67,113 @@ export function Header() {
   const [loadsSearch, setLoadsSearch] = useState(false);
   const [showsearch, setShowSearch] = useState(false);
   useEffect(() => {
-    if (search.length < 0) {
-      setShowSearch(false);
-      setCategoriesSearch(null);
-      setBrandsSearch(null);
-      setModelsSearch(null);
-      setsegmentSearch(null);
-    } else {
-      setShowSearch(true);
-    }
-    setLoadsSearch(true);
-    NavSearchApi(1, search)
-      .then((response) => {
-        if (response.data.success) {
-          if (response.data.message == "no data found") {
-            setCategoriesSearch(null);
-            setBrandsSearch(null);
-            setModelsSearch(null);
-            setsegmentSearch(null);
-            setErrsearch("No data Found");
+    if (search != "") {
+      if (search.length < 0) {
+        setShowSearch(false);
+        setCategoriesSearch(null);
+        setBrandsSearch(null);
+        setModelsSearch(null);
+        setsegmentSearch(null);
+      } else {
+        setShowSearch(true);
+      }
+      setLoadsSearch(true);
+      NavSearchApi(localStorage.getItem("cityid"), search)
+        .then((response) => {
+          if (response.data.success) {
+            if (response.data.message == "no data found") {
+              setCategoriesSearch(null);
+              setBrandsSearch(null);
+              setModelsSearch(null);
+              setsegmentSearch(null);
+              setErrsearch("No data Found");
+            } else {
+              setCategoriesSearch(response.data.data[0].categories);
+              setBrandsSearch(response.data.data[0].brands);
+              setModelsSearch(response.data.data[0].models);
+              setsegmentSearch(response.data.data[0].segments);
+              setLoadsSearch(false);
+            }
           } else {
-            setCategoriesSearch(response.data.data[0].categories);
-            setBrandsSearch(response.data.data[0].brands);
-            setModelsSearch(response.data.data[0].models);
-            setsegmentSearch(response.data.data[0].segments);
+            setErrsearch(response.data.message);
             setLoadsSearch(false);
           }
-        } else {
-          setErrsearch(response.data.message);
-          setLoadsSearch(false);
-        }
-      })
-      .catch((e) => console.log(e));
+        })
+        .catch((e) => console.log(e));
+    }
   }, [search]);
 
   setTimeout(() => {
     setSdata(navdata);
   }, 1000);
 
+  const callDropdataApple = async () => {
+    await axios
+      .get(`${API_URL}api/v1/cms/top_apple_products`)
+      .then((data) =>
+        data.data.data !== undefined
+          ? setAppleHeaderData(data.data.data)
+          : setAppleHeaderData([])
+      );
+  };
+  const callDropdataBrands = async () => {
+    await axios.get(`${API_URL}api/v1/cms/top_brands`).then((data) => {
+      data.data.data !== undefined
+        ? setTopBrandsHeaderData(data.data.data)
+        : setTopBrandsHeaderData([]);
+    });
+  };
+  const callDropdataModel = async () => {
+    await axios
+      .get(`${API_URL}api/v1/cms/top_models`)
+      .then((data) =>
+        data.data.data !== undefined
+          ? setmobileRepairHeaderData(data.data.data)
+          : setmobileRepairHeaderData([])
+      );
+  };
+  const callDropdataIssue = async () => {
+    await axios
+      .get(`${API_URL}api/v1/cms/top_issues`)
+      .then((data) =>
+        data.data.data !== undefined
+          ? settopIssuesHeaderData(data.data.data)
+          : settopIssuesHeaderData([])
+      );
+  };
+
+  const dropdowndata = [
+    {
+      title: "Apple Products",
+      drop: "down",
+      handler: callDropdataApple,
+      data: appleHeaderData,
+    },
+    {
+      title: "Top Brands",
+      drop: "down",
+      handler: callDropdataBrands,
+      data: topBrandsHeaderData,
+    },
+    {
+      title: "Mobile Repairs",
+      drop: "down",
+      handler: callDropdataModel,
+      data: mobileRepairHeaderData,
+    },
+    {
+      title: "Top Issues",
+      drop: "start",
+      handler: callDropdataIssue,
+      data: topIssuesHeaderData,
+    },
+    {
+      title: "More",
+      drop: "start",
+      handler: () => null,
+      data: moreMenu,
+    },
+  ];
   useEffect(() => {
     if (localStorage.getItem("city") && localStorage.getItem("cityid")) {
     } else {
@@ -135,43 +204,9 @@ export function Header() {
     if (!(localStorage.getItem("city") && localStorage.getItem("cityid"))) {
       setLocationPopupShow(true);
     }
-  }, []);
-
-  // getting header menus from api
-  useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
     var modal = document.getElementById("dropdown_location");
-    getHeaderDataFromAPI();
   }, []);
-
-  const getHeaderDataFromAPI = async () => {
-    await axios
-      .get(`${API_URL}api/v1/cms/top_apple_products`)
-      .then((data) =>
-        data.data.data !== undefined
-          ? setAppleHeaderData(data.data.data)
-          : setAppleHeaderData([])
-      );
-    await axios.get(`${API_URL}api/v1/cms/top_brands`).then((data) => {
-      data.data.data !== undefined
-        ? setTopBrandsHeaderData(data.data.data)
-        : setTopBrandsHeaderData([]);
-    });
-    await axios
-      .get(`${API_URL}api/v1/cms/top_models`)
-      .then((data) =>
-        data.data.data !== undefined
-          ? setmobileRepairHeaderData(data.data.data)
-          : setmobileRepairHeaderData([])
-      );
-    await axios
-      .get(`${API_URL}api/v1/cms/top_issues`)
-      .then((data) =>
-        data.data.data !== undefined
-          ? settopIssuesHeaderData(data.data.data)
-          : settopIssuesHeaderData([])
-      );
-  };
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -183,27 +218,22 @@ export function Header() {
   });
 
   useEffect(() => {
-    // setLocationPopupShow(false);
-
-    CityDetactionAPI()
-      .then((r) => {
-        setCityData(r.data.data);
-      })
-      .catch((e) => console.log(e));
-
-    if (MatchCity(cityData, currentCity, dispatch)) {
-      setLocationPopupShow(false);
-      setShowMobloc(false);
-    } else {
-      setSelectedAddress("");
-    }
-
-    if (localStorage.getItem("cityid")) {
-      PincodeByCity(1)
-        .then((r) => setSavePincode(r.data.data))
+    if (currentCity != "") {
+      CityDetactionAPI()
+        .then((r) => {
+          setCityData(r.data.data);
+        })
         .catch((e) => console.log(e));
+
+      if (MatchCity(cityData, currentCity, dispatch)) {
+        setLocationPopupShow(false);
+        setShowMobloc(false);
+      } else {
+        setSelectedAddress("");
+      }
     }
   }, [currentCity]);
+
   function getLocation() {
     setLocationLoader(true);
     if (navigator.geolocation) {
@@ -1028,7 +1058,100 @@ export function Header() {
               className={styles.navDropMain}
               ref={menuCollapse}
             >
-              <DropdownButton
+              {dropdowndata.map((v, i) => (
+                <DropdownButton
+                  title={v.title}
+                  className="dropDownMenuHead"
+                  key={i}
+                  drop={v.drop}
+                  onClick={() => v.handler()}
+                >
+                  {v.data.map((menu, menuIndex) => {
+                    return (
+                      <>
+                        {v.title == dropdowndata[0].title ? (
+                          <div key={menuIndex}>
+                            <Dropdown.Item
+                              eventKey="4.1"
+                              className={styles.listedItemHead}
+                            >
+                              {menu.submenu}
+                            </Dropdown.Item>
+
+                            {menu.submenuItems &&
+                              menu.submenuItems.map((model, index) => {
+                                return (
+                                  <Link
+                                    key={index}
+                                    href={{
+                                      pathname: "personal-gadgets",
+                                      query: { issue: model.model_id },
+                                    }}
+                                  >
+                                    <Dropdown.Item eventKey="4.2">
+                                      {model.model_title}
+                                    </Dropdown.Item>
+                                  </Link>
+                                );
+                              })}
+                          </div>
+                        ) : null}
+                        {v.title == dropdowndata[1].title ? (
+                          <Link
+                            key={menuIndex}
+                            href={{
+                              pathname: "personal-gadgets",
+                              query: { issue: menu.brand_id },
+                            }}
+                          >
+                            <div>
+                              <Dropdown.Item eventKey="4.2" key={menuIndex}>
+                                {menu.brand_title}
+                              </Dropdown.Item>
+                            </div>
+                          </Link>
+                        ) : null}
+                        {v.title == dropdowndata[2].title ? (
+                          <Link
+                            key={menuIndex}
+                            href={{
+                              pathname: "personal-gadgets",
+                              query: { issue: menu.model_id },
+                            }}
+                          >
+                            <div>
+                              <Dropdown.Item
+                                eventKey="4.2"
+                                key={menuIndex}
+                                onClick={() => {
+                                  dispatch(selectCategory(1));
+                                }}
+                              >
+                                {menu.model_title}
+                              </Dropdown.Item>
+                            </div>
+                          </Link>
+                        ) : null}
+                        {v.title == dropdowndata[3].title ? (
+                          <div key={menuIndex}>
+                            <Dropdown.Item eventKey="4.2" key={menuIndex}>
+                              {menu.length <= 0 ? "" : menu.model_title}
+                            </Dropdown.Item>
+                          </div>
+                        ) : null}
+                        {v.title == dropdowndata[4].title ? (
+                          <div key={menuIndex}>
+                            <Dropdown.Item eventKey="4.2" key={menuIndex}>
+                              {menu.length <= 0 ? "" : menu.menuName}
+                            </Dropdown.Item>
+                          </div>
+                        ) : null}
+                      </>
+                    );
+                  })}
+                </DropdownButton>
+              ))}
+              {/* <DropdownButton
                 title={"Apple Products"}
                 className="dropDownMenuHead"
                 key={"Apple"}
@@ -1149,18 +1272,13 @@ export function Header() {
                     </div>
                   );
                 })}
-              </DropdownButton>
+              </DropdownButton> */}
             </Nav>
             <LoginPopup show={loginPopup} onHide={() => setLoginPopup(false)} />
             <CartAndOffer
               show={cartandOfferPopup}
               onHide={() => setCartAndOfferPopup(false)}
             />
-            {/* <Logout
-              show={logoutpopup}
-              yesaction={() => LogoutAction()}
-              noaction={() => setLogoutPopup(false)}
-            /> */}
           </Container>
           <div
             className={`${styles.LocationSmallModal} ${

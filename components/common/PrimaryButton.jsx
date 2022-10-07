@@ -14,17 +14,32 @@ export default function PrimaryButton({
   icon,
 }) {
   return (
-    <Link href={href ? href : "#"}>
-      <Button
-        onClick={clickHandler}
-        variant={variant}
-        style={buttonStyle}
-        className={`${customClass} ${styles.primaryButtonStyle}`}
-        // size={buttonSize}
-      >
-        {showIcons && <span className={styles.btnIcons}>{icon}</span>}
-        <p>{title}</p>
-      </Button>
-    </Link>
+    <>
+      {href ? (
+        <Link href={href}>
+          <Button
+            onClick={clickHandler}
+            variant={variant}
+            style={buttonStyle}
+            className={`${customClass} ${styles.primaryButtonStyle}`}
+            // size={buttonSize}
+          >
+            {showIcons && <span className={styles.btnIcons}>{icon}</span>}
+            <p>{title}</p>
+          </Button>
+        </Link>
+      ) : (
+        <Button
+          onClick={clickHandler}
+          variant={variant}
+          style={buttonStyle}
+          className={`${customClass} ${styles.primaryButtonStyle}`}
+          // size={buttonSize}
+        >
+          {showIcons && <span className={styles.btnIcons}>{icon}</span>}
+          <p>{title}</p>
+        </Button>
+      )}
+    </>
   );
 }

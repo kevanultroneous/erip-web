@@ -167,35 +167,12 @@ export default function CheckoutPopup({ show, onHide }) {
       : setTabletView(false)
       ? setMobileView(true)
       : setMobileView(false);
-    TimeSloatAPI()
-      .then((time_sloat) => {
-        if (time_sloat.data.success) {
-          setTimeSloatData(time_sloat.data.data);
-        } else {
-          console.log("time sloat says" + time_sloat.data.message);
-        }
-      })
-      .catch((e) => console.log("time sloat api" + e));
-
-    MyAddress(localStorage.getItem("token"))
-      .then((response) => {
-        if (response.data.success) {
-          setMyaddress(response.data.data);
-        }
-      })
-      .catch((e) => console.log("myaddress fetching " + e));
-
-    axios.get(`${API_URL}api/v1/address_types`).then((response) => {
-      if (response.data.success) {
-        setAddType(response.data.data);
-      }
-    });
   }, []);
   useEffect(() => {
     if (localStorage.getItem("cityid")) {
-      PincodeByCity(1)
-        .then((r) => setSavePincode(r.data.data))
-        .catch((e) => console.log(e));
+      // PincodeByCity(1)
+      //   .then((r) => setSavePincode(r.data.data))
+      //   .catch((e) => console.log(e));
     }
   }, [currentLocation]);
   useEffect(() => {
@@ -321,6 +298,29 @@ export default function CheckoutPopup({ show, onHide }) {
       setProcessComplete(false);
     } else {
       setSelectedDate(0);
+      TimeSloatAPI()
+        .then((time_sloat) => {
+          if (time_sloat.data.success) {
+            setTimeSloatData(time_sloat.data.data);
+          } else {
+            console.log("time sloat says" + time_sloat.data.message);
+          }
+        })
+        .catch((e) => console.log("time sloat api" + e));
+
+      MyAddress(localStorage.getItem("token"))
+        .then((response) => {
+          if (response.data.success) {
+            setMyaddress(response.data.data);
+          }
+        })
+        .catch((e) => console.log("myaddress fetching " + e));
+
+      axios.get(`${API_URL}api/v1/address_types`).then((response) => {
+        if (response.data.success) {
+          setAddType(response.data.data);
+        }
+      });
     }
   }, [show]);
 
@@ -415,13 +415,15 @@ export default function CheckoutPopup({ show, onHide }) {
   }
 
   useEffect(() => {
-    CityDetactionAPI()
-      .then((r) => setCityData(r.data.data))
-      .catch((e) => console.log(e));
+    if (currentCity != "") {
+      CityDetactionAPI()
+        .then((r) => setCityData(r.data.data))
+        .catch((e) => console.log(e));
 
-    if (MatchCity(cityData, currentCity, dispatch)) {
-    } else {
-      setSelectedAddress("");
+      if (MatchCity(cityData, currentCity, dispatch)) {
+      } else {
+        setSelectedAddress("");
+      }
     }
   }, [currentCity]);
 

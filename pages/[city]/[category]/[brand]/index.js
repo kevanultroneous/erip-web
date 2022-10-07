@@ -90,6 +90,11 @@ function brandIds({ data }) {
     } else {
       setToken(false);
     }
+
+    if (router.query.category) getCategoryFromQuery();
+    getBrandFromQuery();
+
+    console.log("from Brand");
   }, []);
 
   useEffect(() => {
@@ -112,13 +117,6 @@ function brandIds({ data }) {
     setOffers(modelOffer.data);
     setTestimonial(modelTestimonial.data);
   }, [getModelID]);
-
-  useEffect(() => {
-    if(router.query.category) getCategoryFromQuery();
-    getBrandFromQuery();
-
-    console.log("from Brand");
-  }, []);
 
   const getBrandFromQuery = async () => {
     console.log(router.query);
@@ -148,7 +146,7 @@ function brandIds({ data }) {
         quoteaction={() => setPopupLogin(true)}
         // headClass={styles.selectDeviceHero}
         modelSection={styles.selectDeviceSection}
-        // homeQuery={router.query.issue}
+      // homeQuery={router.query.issue}
       />
       <HomeHero offers={offers} />
       <HowItWork />
