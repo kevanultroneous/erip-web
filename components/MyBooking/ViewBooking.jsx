@@ -34,7 +34,7 @@ export default function ViewBooking({ backhandler, order }) {
   const [feedQue, setFeedQuestions] = useState(false);
   const [ratingr, setRatingr] = useState(false);
   const [thankYouShow, setThankYouShow] = useState(false);
-
+  const [totalpaid, setTotalPaid] = useState(0);
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
     getAllDetail();
@@ -45,7 +45,18 @@ export default function ViewBooking({ backhandler, order }) {
       .then((r) => setDetails(r.data.data))
       .catch((e) => console.log(e));
   };
-
+  const PaidTotal = () => {
+    var tot = 0;
+    if (details.length > 0)
+      if (details[0].order_issues != null)
+        if (details[0].order_issues.length > 0) {
+          for (let t = 0; t < details[0].order_issues.length; t++) {
+            tot =
+              tot + parseInt(details[0].order_issues[t].issue_discounted_price);
+          }
+        }
+    setTotalPaid(tot);
+  };
   return (
     <div>
       <Row className={styles.ViewBookingRow}>
@@ -103,6 +114,7 @@ export default function ViewBooking({ backhandler, order }) {
           <Row>
             <Col xs={12} md={6} lg={6} xl={6}>
               <BookingDetails
+                totalpaid={totalpaid}
                 cancelorderclick={() => setCancelOrder(true)}
                 rescheduleclick={() => setReschedule(true)}
                 orderkey={order}

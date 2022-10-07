@@ -56,6 +56,7 @@ export default function BookingDetails({
   sliderdata,
   jcdetails,
   jcqc,
+  totalpaid,
 }) {
   const [mobileView, setMobileView] = useState(false);
   const [summaryView, setSummaryView] = useState(false);
@@ -89,7 +90,9 @@ export default function BookingDetails({
             alt="box-icons"
             className={styles.BoxImg}
           />
-          <label className={styles.BoxAmount}>Amount to be paid: ₹200</label>
+          <label className={styles.BoxAmount}>
+            Amount to be paid: ₹{totalpaid}
+          </label>
         </Col>
         <Col xs={12} md={12} lg={12} xl={12}>
           <Image
