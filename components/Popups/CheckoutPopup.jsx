@@ -92,6 +92,7 @@ export default function CheckoutPopup({ show, onHide }) {
   const [finalway, setFinalWay] = useState(false);
   const [proccessComplete, setProcessComplete] = useState(false);
   const [savepincode, setSavePincode] = useState([]);
+  const [bcolor, setBcolor] = useState("#676767");
   const [addType, setAddType] = useState([
     {
       id: 1,
@@ -337,6 +338,18 @@ export default function CheckoutPopup({ show, onHide }) {
     }
   }, [selectedAddressStatus]);
   //  save and proceed Handle
+  useEffect(() => {
+    if (
+      houseInput == "" ||
+      nameInput == "" ||
+      landmarkInput == "" ||
+      addType == null
+    ) {
+      setBcolor("#676767");
+    } else {
+      setBcolor("#0E62CB");
+    }
+  }, [houseInput, nameInput, landmarkInput, addType]);
   const SaveAndProceedHandle = () => {
     if (houseInput.length <= 0) {
       setLocationError(1);
@@ -623,34 +636,43 @@ export default function CheckoutPopup({ show, onHide }) {
                 <StatusProcess processStatus={processStatus} />
                 <Row className={styles.ConfirmSelectedAddress}>
                   <Col xs={12} md={12} lg={12} xl={12}>
-                    {myaddress.map((v, i) => (
-                      <Row className={styles.AddressDiv} key={i}>
-                        <Col
-                          xs={10}
-                          md={10}
-                          lg={10}
-                          xl={10}
-                          className={styles.AddressInput}
-                        >
-                          <input
-                            type="radio"
-                            name={"address"}
-                            onChange={() =>
-                              setMyselectedAddress({
-                                id: i,
-                                address: v.address_line_1,
-                              })
-                            }
-                            defaultChecked={i == 0 ? true : false}
-                          />{" "}
-                          <span className={styles.AddressLine}>
-                            {v.address_line_1}
-                          </span>
-                        </Col>
-                        {/* if you need so put here code-backup-no-002 from etc.code.txt */}
-                        <hr />
-                      </Row>
-                    ))}
+                    <div
+                      style={{
+                        height: "20rem",
+                        overflowY: "scroll",
+                        overflowX: "hidden",
+                      }}
+                    >
+                      {myaddress.map((v, i) => (
+                        <Row className={styles.AddressDiv} key={i}>
+                          <Col
+                            xs={10}
+                            md={10}
+                            lg={10}
+                            xl={10}
+                            className={styles.AddressInput}
+                          >
+                            <input
+                              type="radio"
+                              name={"address"}
+                              onChange={() =>
+                                setMyselectedAddress({
+                                  id: i,
+                                  address: v.address_line_1,
+                                })
+                              }
+                              defaultChecked={i == 0 ? true : false}
+                            />{" "}
+                            <span className={styles.AddressLine}>
+                              {v.address_line_1}
+                            </span>
+                          </Col>
+                          {/* if you need so put here code-backup-no-002 from etc.code.txt */}
+                          <hr />
+                        </Row>
+                      ))}
+                    </div>
+
                     <div className={styles.AddNewWrraper}>
                       <p
                         onClick={() => {
@@ -711,6 +733,7 @@ export default function CheckoutPopup({ show, onHide }) {
                             setAddressFlowOne(true);
                             setConfirmSession(true);
                             setChangeModalSize(false);
+                            getLocation();
                           }}
                           title={
                             <div>
@@ -801,7 +824,9 @@ export default function CheckoutPopup({ show, onHide }) {
                         </div>
                         <div
                           className={styles.CurrentLocationDiv}
-                          onClick={() => getLocation()}
+                          onClick={() => {
+                            getLocation();
+                          }}
                         >
                           <Image
                             src={
@@ -982,7 +1007,7 @@ export default function CheckoutPopup({ show, onHide }) {
                             title={"Save and Proceed"}
                             buttonStyle={{
                               width: "100%",
-                              backgroundColor: "#676767",
+                              backgroundColor: bcolor,
                               color: "#fff",
                               border: "none",
                             }}

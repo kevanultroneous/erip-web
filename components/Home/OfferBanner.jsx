@@ -41,7 +41,7 @@ export default function OfferBanner({ clickhandler }) {
   };
   const [data, setData] = useState(OfferBannerhomedata);
   const [offerPopup, setOfferPopup] = useState(false);
-
+  const [selectedImg, setSelectedImg] = useState("");
   useEffect(() => {
     OfferSectionHomeAPI()
       .then((r) => setData(r.data))
@@ -49,32 +49,39 @@ export default function OfferBanner({ clickhandler }) {
   }, []);
   return (
     <Container userdefinedclass={styles.MobileSpacing}>
-      <OfferadPopup show={offerPopup} onHide={() => setOfferPopup(false)} />
+      <OfferadPopup
+        show={offerPopup}
+        onHide={() => setOfferPopup(false)}
+        img={selectedImg}
+      />
       <Row className="justify-content-center m-0 OfferBannerImageSlide">
         <Slider {...settings} className="offerbanner">
           {data.map((value, index) => (
             <Col
               xl={4}
               key={index}
-              onClick={value.osection_clickable == false ? clickhandler : null}
+              onClick={() => {
+                setOfferPopup(true);
+                setSelectedImg(value.osection_image_url);
+              }}
             >
-              <Link
+              {/* <Link
                 href={
                   value.osection_clickable == false
-                    ? "#"
+                    ? "/"
                     : value.osection_click_url
                 }
                 target={"_blank"}
-              >
-                <div className={styles.SliderImage}>
-                  <Image
-                    src={value.osection_image_url}
-                    alt={value.osection_title}
-                    className={styles.OfferBannerImage}
-                    loading="lazy"
-                  />
-                </div>
-              </Link>
+              > */}
+              <div className={styles.SliderImage}>
+                <Image
+                  src={value.osection_image_url}
+                  alt={value.osection_title}
+                  className={styles.OfferBannerImage}
+                  loading="lazy"
+                />
+              </div>
+              {/* </Link> */}
             </Col>
           ))}
         </Slider>

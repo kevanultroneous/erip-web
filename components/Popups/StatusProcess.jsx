@@ -30,7 +30,7 @@ export function StatusProcess({
                 }`}
               >
                 {v}
-                <h6 style={{ position: "absolute" }}>
+                <h6 style={{ position: "absolute", width: "20rem" }}>
                   {i == 0 && datetime ? (
                     <>
                       {datetime}

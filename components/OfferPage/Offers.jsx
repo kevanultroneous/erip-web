@@ -49,6 +49,7 @@ function Offers() {
                   fluid
                   src={newOffers[0].offer_image_url}
                   alt={newOffers[0].offer_promo_code}
+                  className={styles.offerImage}
                 />
               </div>
             </Row>

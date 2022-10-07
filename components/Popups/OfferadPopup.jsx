@@ -1,7 +1,7 @@
 import { Col, Image, Modal, Row } from "react-bootstrap";
 import PrimaryButton from "../common/PrimaryButton";
 import styles from "@/styles/components/Popups/OfferadPopup.module.css";
-export default function OfferadPopup({ show, onHide }) {
+export default function OfferadPopup({ show, onHide, img }) {
   return (
     <Modal
       show={show}
@@ -13,13 +13,14 @@ export default function OfferadPopup({ show, onHide }) {
       <Modal.Header closeButton className={styles.OfferHeader}></Modal.Header>
       <Modal.Body className={styles.OfferHeadModal}>
         <Row>
-          <Col xs={12} md={12} lg={12} xl={12} className={styles.CenteredImg}>
+          {/* <Col xs={12} md={12} lg={12} xl={12} className={styles.CenteredImg}>
             <div className={styles.CouponsImg}>
               <Image src="/assets/images/couponss-1.png" alt="coupons" />
             </div>
-          </Col>
+          </Col> */}
           <Col xs={12} md={12} lg={12} xl={12}>
-            <div className={styles.MainDetails}>
+            <Image src={img} style={{ width: "100%", height: "auto" }} />
+            {/* <div className={styles.MainDetails}>
               <b className={styles.MainDetailsTitle}>Get 25% Off</b>
               <p className={styles.MainDetailsDescription}>
                 Get 25% off on your first order
@@ -37,7 +38,7 @@ export default function OfferadPopup({ show, onHide }) {
                   Other Terms & Conditions may apply
                 </li>
               </ul>
-            </div>
+            </div> */}
             <PrimaryButton
               title="Close"
               buttonStyle={{

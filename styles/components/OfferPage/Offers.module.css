@@ -3,24 +3,33 @@
 }
 
 .offerSliderImage {
-  margin: 1rem 0.5rem;
+  margin: 1rem 1.5rem;
 }
 
 .offerSliderImage img {
   margin: auto;
+  width: 100%;
+  height: auto;
 }
 
 .offerSlider {
   margin: 0 1rem;
 }
 
+.offerImage {
+  width: 100%;
+  height: auto;
+}
+
 @media (max-width: 600px) {
   .offerSliderImage {
     margin: 0.5rem 0.2rem;
   }
+
   .offerSections {
     margin: 0 0 1rem;
   }
+
   .offerSlider {
     margin: 0 0 2rem;
   }
@@ -30,6 +39,7 @@
   .offerSections {
     margin: 1rem;
   }
+
   .offerSlider {
     margin: 0 0.7rem;
   }
