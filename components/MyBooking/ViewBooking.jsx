@@ -39,7 +39,9 @@ export default function ViewBooking({ backhandler, order }) {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
     getAllDetail();
   }, []);
-
+  useEffect(() => {
+    PaidTotal();
+  }, [details]);
   const getAllDetail = () => {
     getOrdersDetails(localStorage.getItem("token"), order)
       .then((r) => setDetails(r.data.data))

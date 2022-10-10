@@ -655,12 +655,12 @@ export default function CheckoutPopup({ show, onHide }) {
                             <input
                               type="radio"
                               name={"address"}
-                              onChange={() =>
+                              onChange={() => {
                                 setMyselectedAddress({
-                                  id: i,
+                                  id: v.address_id,
                                   address: v.address_line_1,
-                                })
-                              }
+                                });
+                              }}
                               defaultChecked={i == 0 ? true : false}
                             />{" "}
                             <span className={styles.AddressLine}>
@@ -873,37 +873,36 @@ export default function CheckoutPopup({ show, onHide }) {
                         </div>
                       </div>
                     </Col>
-                    {!(selectedAddress == "") && (
-                      <Col
-                        xs={12}
-                        md={12}
-                        lg={6}
-                        xl={7}
-                        className={`${styles.ConfirmLocationSpace}`}
+
+                    <Col
+                      xs={12}
+                      md={12}
+                      lg={6}
+                      xl={7}
+                      className={`${styles.ConfirmLocationSpace}`}
+                    >
+                      <Gmaps
+                        height={mobileView ? "500px" : "300px"}
+                        lat={currentLocation.latitude}
+                        lng={currentLocation.longitude}
+                        zoom={19}
+                        loadingMessage={"Waiting For Maps...."}
+                        params={params}
+                        onMapCreated={() => onMapCreated}
                       >
-                        <Gmaps
-                          height={mobileView ? "500px" : "300px"}
+                        <Marker
                           lat={currentLocation.latitude}
                           lng={currentLocation.longitude}
-                          zoom={12}
-                          loadingMessage={"Waiting For Maps...."}
-                          params={params}
-                          onMapCreated={() => onMapCreated}
-                        >
-                          <Marker
-                            lat={currentLocation.latitude}
-                            lng={currentLocation.longitude}
-                            draggable={true}
-                            onDragEnd={(e) =>
-                              setCurrentLocation({
-                                latitude: e.latLng.lat(),
-                                longitude: e.latLng.lng(),
-                              })
-                            }
-                          />
-                        </Gmaps>
-                      </Col>
-                    )}
+                          draggable={true}
+                          onDragEnd={(e) =>
+                            setCurrentLocation({
+                              latitude: e.latLng.lat(),
+                              longitude: e.latLng.lng(),
+                            })
+                          }
+                        />
+                      </Gmaps>
+                    </Col>
                   </Row>
                 ) : null}
 
@@ -1026,7 +1025,7 @@ export default function CheckoutPopup({ show, onHide }) {
                         height={"430px"}
                         lat={currentLocation.latitude}
                         lng={currentLocation.longitude}
-                        zoom={12}
+                        zoom={19}
                         loadingMessage={"Waiting For Maps...."}
                         params={params}
                         onMapCreated={() => onMapCreated}
