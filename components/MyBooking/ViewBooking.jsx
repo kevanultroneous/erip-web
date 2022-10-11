@@ -21,6 +21,8 @@ import FeedbackQuestions from "../Popups/FeedbackQuestions";
 import RatingAndReview from "../Popups/RatingAndReview";
 import Thankyou from "../Popups/ThankYou";
 import { OrderQuotation } from "api/homeapi";
+import useRazorpay from "react-razorpay";
+import axios from "axios";
 export default function ViewBooking({ backhandler, order }) {
   const [f1, setF1] = useState(0);
   const [f2, setF2] = useState(null);
@@ -36,6 +38,7 @@ export default function ViewBooking({ backhandler, order }) {
   const [ratingr, setRatingr] = useState(false);
   const [thankYouShow, setThankYouShow] = useState(false);
   const [totalpaid, setTotalPaid] = useState(0);
+
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
     getAllDetail();
@@ -65,12 +68,14 @@ export default function ViewBooking({ backhandler, order }) {
       .then((response) => {
         if (response.success) {
           alert(response.message);
+          getAllDetail();
         } else {
           alert(response.message);
         }
       })
       .catch((err) => alert(err));
   };
+
   return (
     <div>
       <Row className={styles.ViewBookingRow}>
@@ -207,25 +212,26 @@ export default function ViewBooking({ backhandler, order }) {
               }
             />
           </Col>
-          {/* {details.length > 0 ? (
-            details[0].order_quotation_details.length > 0 ? ( */}
-          <Col xs={12} md={6} lg={6} xl={6}>
-            <Quotation
-              rejectaccept={true}
-              showpaybutton={true}
-              acceptclick={() => acceptReject(order, 1)}
-              rejectclick={() => acceptReject(order)}
-              quotationdata={
-                details.length > 0
-                  ? details[0].order_quotation_details.length > 0
-                    ? details[0].order_quotation_details
-                    : []
-                  : []
-              }
-            />
-          </Col>
-          {/* ) : null
-          ) : null} */}
+          {details.length > 0 ? (
+            details[0].order_quotation_details.length > 0 ? (
+              <Col xs={12} md={6} lg={6} xl={6}>
+                <Quotation
+                  paynow={() => handlePayment()}
+                  rejectaccept={true}
+                  showpaybutton={true}
+                  acceptclick={() => acceptReject(order, 1)}
+                  rejectclick={() => acceptReject(order)}
+                  quotationdata={
+                    details.length > 0
+                      ? details[0].order_quotation_details.length > 0
+                        ? details[0].order_quotation_details
+                        : []
+                      : []
+                  }
+                />
+              </Col>
+            ) : null
+          ) : null}
           {details.length > 0 ? (
             details[0].order_partner_details.length > 0 ? (
               <Col xs={12} md={6} lg={6} xl={6}>

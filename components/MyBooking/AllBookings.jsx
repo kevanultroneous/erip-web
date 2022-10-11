@@ -95,10 +95,13 @@ function AllBookings() {
                             }}
                             orderNumber={bookings.order_id}
                             bookingDateAndTime={
-                              bookings.order_appointments[0].appointment_date +
+                              bookings.order_appointments[
+                                bookings.order_appointments.length - 1
+                              ].appointment_date +
                               " , " +
-                              bookings.order_appointments[0]
-                                .appointment_timeslot
+                              bookings.order_appointments[
+                                bookings.order_appointments.length - 1
+                              ].appointment_timeslot
                             }
                             partnerStatusAssigned={
                               bookings.order_user_timeline[0].out_text

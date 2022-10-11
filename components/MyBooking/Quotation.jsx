@@ -3,6 +3,8 @@ import styles from "@/styles/components/MyBooking/Quotation.module.css";
 import PrimaryButton from "../common/PrimaryButton";
 import { useState } from "react";
 import { useEffect } from "react";
+import useRazorpay from "react-razorpay";
+import axios from "axios";
 export default function Quotation({
   rejectaccept,
   showpaybutton,
@@ -10,8 +12,10 @@ export default function Quotation({
   quotationdata,
   rejectclick,
   acceptclick,
+  paynow,
 }) {
   const [totalAmount, setTotalAmount] = useState(0);
+  const [datas, setDatas] = useState();
   var totals = 0;
   for (let k = 0; k < quotationdata.length; k++) {
     totals = totals + parseInt(quotationdata[k].issue_discounted_price);
@@ -20,6 +24,40 @@ export default function Quotation({
     setTotalAmount(totals);
   }, [totals]);
 
+  const Razorpay = useRazorpay();
+
+  const handlePayment = (amount) => {
+    axios
+      .post("/api/payment")
+      .then((r) => setDatas(r.data))
+      .catch((e) => console.log(e));
+    const options = {
+      key: "rzp_test_edc0iutgef4r18",
+      amount: amount * 100,
+      currency: "INR",
+      name: "Acme Corp",
+      description: "Test Transaction",
+      image: "https://example.com/your_logo",
+      order_id: datas ? datas.id : null,
+      handler: (res) => {
+        console.log(res);
+      },
+      prefill: {
+        name: "Piyush Garg",
+        email: "youremail@example.com",
+        contact: "9999999999",
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    let rzp = new Razorpay(options);
+    console.log(rzp);
+    rzp.open();
+  };
   return (
     <div
       className={styles.QuotationCard}
@@ -118,6 +156,7 @@ export default function Quotation({
           <Col xs={12} md={12} lg={12} xl={12} className={styles.ButtonSpace}>
             <PrimaryButton
               title={`Pay Now (₹${totalAmount})`}
+              clickHandler={() => handlePayment(totalAmount)}
               buttonStyle={{
                 width: "100%",
                 background: "#0E62CB",
