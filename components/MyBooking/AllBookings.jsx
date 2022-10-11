@@ -80,11 +80,6 @@ function AllBookings() {
                       return (
                         <Col key={bookings.order_id} xl={6} md={12}>
                           <BookingCard
-                            // callsupport={() =>
-                            //   alert(
-                            //
-                            //   )
-                            // }
                             callsupport={
                               "tel:+91" +
                               Object.values(bookings.order_options_1[0])[1]

@@ -1,4 +1,4 @@
-import { Accordion, Col, Image, Row } from "react-bootstrap";
+import { Accordion, Col, Image, Modal, Row } from "react-bootstrap";
 import styles from "@/styles/components/MyBooking/ProcessStatus.module.css";
 import { BiArrowBack } from "react-icons/bi";
 import Container from "../common/Container";
@@ -23,6 +23,7 @@ import Thankyou from "../Popups/ThankYou";
 import { OrderQuotation } from "api/homeapi";
 import useRazorpay from "react-razorpay";
 import axios from "axios";
+import PaymentOption from "../Popups/PaymentOption";
 export default function ViewBooking({ backhandler, order }) {
   const [f1, setF1] = useState(0);
   const [f2, setF2] = useState(null);
@@ -42,10 +43,25 @@ export default function ViewBooking({ backhandler, order }) {
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
     getAllDetail();
+    startRating();
   }, []);
   useEffect(() => {
     PaidTotal();
   }, [details]);
+
+  const startRating = () => {
+    {
+      details.length > 0
+        ? details[0].order_user_timeline_detail[0].outd_bg_color == "ccfff0" &&
+          details[0].order_user_timeline_detail[1].outd_bg_color == "ccfff0" &&
+          details[0].order_user_timeline_detail[2].outd_bg_color == "ccfff0" &&
+          details[0].order_user_timeline_detail[3].outd_bg_color == "ccfff0" &&
+          details[0].order_user_timeline_detail[4].outd_bg_color == "ccfff0"
+          ? setRatingr(true)
+          : null
+        : null;
+    }
+  };
   const getAllDetail = () => {
     getOrdersDetails(localStorage.getItem("token"), order)
       .then((r) => setDetails(r.data.data))
@@ -117,18 +133,25 @@ export default function ViewBooking({ backhandler, order }) {
       />
 
       {/* in the last reviw */}
+
       <FeedbackQuestions
         show={feedQue}
-        onHide={() => setFeedQuestions(false)}
+        onHide={() => {
+          setFeedQuestions(false);
+          setThankYouShow(true);
+        }}
       />
       <RatingAndReview
         show={ratingr}
-        onHide={() => setRatingr(false)}
+        onHide={() => {
+          setRatingr(false);
+          setFeedQuestions(true);
+        }}
         order={order}
       />
       <Thankyou show={thankYouShow} onHide={() => setThankYouShow(false)} />
 
-      <Col xs={12} md={12} lg={12} xl={12}>
+      <Col xs={12} md={12} lg={12} xl={12} className="pb-5">
         <Row>
           <Col xs={12} md={6} lg={6} xl={6}>
             <BookingDetails
@@ -167,16 +190,46 @@ export default function ViewBooking({ backhandler, order }) {
                     ].appointment_timeslot
                   : null
               }
-              hidereschedulebuttons={false}
-              deliveryAndJobcard={
+              hidereschedulebuttons={
                 details.length > 0
-                  ? details[0].order_jobcard_details.length > 0
+                  ? details[0].order_user_timeline_detail[2].outd_bg_color ===
+                    "ccfff0"
                     ? true
                     : false
                   : false
               }
-              hideoutcallsupport={false}
-              showinnercallsupport={false}
+              deliveryAndJobcard={
+                details.length > 0
+                  ? details[0].order_user_timeline_detail[3].outd_bg_color !=
+                      "ccfff0" &&
+                    details[0].order_user_timeline_detail[0].outd_bg_color ==
+                      "ccfff0" &&
+                    details[0].order_user_timeline_detail[1].outd_bg_color ==
+                      "ccfff0" &&
+                    details[0].order_user_timeline_detail[2].outd_bg_color ==
+                      "ccfff0" &&
+                    details[0].order_user_timeline_detail[4].outd_bg_color !=
+                      "ccfff0"
+                    ? true
+                    : false
+                  : false
+              }
+              hideoutcallsupport={
+                details.length > 0
+                  ? details[0].order_user_timeline_detail[0].outd_bg_color ===
+                    "ccfff0"
+                    ? true
+                    : false
+                  : false
+              }
+              showinnercallsupport={
+                details.length > 0
+                  ? details[0].order_user_timeline_detail[2].outd_bg_color ===
+                    "ccfff0"
+                    ? true
+                    : false
+                  : false
+              }
               raiseticketshow={
                 details.length > 0
                   ? details[0].order_jobcard_details.length > 0
@@ -217,8 +270,34 @@ export default function ViewBooking({ backhandler, order }) {
               <Col xs={12} md={6} lg={6} xl={6}>
                 <Quotation
                   paynow={() => handlePayment()}
-                  rejectaccept={true}
-                  showpaybutton={true}
+                  rejectaccept={
+                    details.length > 0
+                      ? details[0].order_user_timeline_detail[3]
+                          .outd_bg_color != "ccfff0" &&
+                        details[0].order_user_timeline_detail[0]
+                          .outd_bg_color == "ccfff0" &&
+                        details[0].order_user_timeline_detail[1]
+                          .outd_bg_color == "ccfff0" &&
+                        details[0].order_user_timeline_detail[2]
+                          .outd_bg_color == "ccfff0"
+                        ? true
+                        : false
+                      : false
+                  }
+                  showpaybutton={
+                    details.length > 0
+                      ? details[0].order_user_timeline_detail[3]
+                          .outd_bg_color != "ccfff0" &&
+                        details[0].order_user_timeline_detail[0]
+                          .outd_bg_color == "ccfff0" &&
+                        details[0].order_user_timeline_detail[1]
+                          .outd_bg_color == "ccfff0" &&
+                        details[0].order_user_timeline_detail[2]
+                          .outd_bg_color == "ccfff0"
+                        ? true
+                        : false
+                      : false
+                  }
                   acceptclick={() => acceptReject(order, 1)}
                   rejectclick={() => acceptReject(order)}
                   quotationdata={
@@ -239,15 +318,22 @@ export default function ViewBooking({ backhandler, order }) {
                   off={false}
                   otphide={
                     details.length > 0
-                      ? details[0].order_job_start_otp.length > 0
-                        ? false
-                        : true
-                      : true
+                      ? details[0].order_user_timeline_detail[0]
+                          .outd_bg_color == "ccfff0" &&
+                        details[0].order_user_timeline_detail[1]
+                          .outd_bg_color == "ccfff0" &&
+                        details[0].order_user_timeline_detail[2]
+                          .outd_bg_color == "ccfff0"
+                        ? true
+                        : false
+                      : false
                   }
                   otp={
                     details.length > 0
                       ? details[0].order_job_start_otp.length > 0
-                        ? details[0].order_job_start_otp[0].otp_number
+                        ? details[0].order_job_start_otp[
+                            details[0].order_job_start_otp.length - 1
+                          ].otp_number
                         : ""
                       : ""
                   }
@@ -285,7 +371,7 @@ export default function ViewBooking({ backhandler, order }) {
           ) : null}
           {mobileView ? (
             <Col xs={12} md={6} lg={6} xl={6}>
-              <MobileProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
+              <MobileProgress />
             </Col>
           ) : null}
           <Col xs={12} md={6} lg={6} xl={6}>
@@ -294,8 +380,22 @@ export default function ViewBooking({ backhandler, order }) {
             />
           </Col>
 
-          {/* <PartnerDetails off={true} otphide={false} otp="2121" /> */}
+          {details.length > 0 ? (
+            details[0].order_user_timeline_detail[0].outd_bg_color ==
+              "ccfff0" &&
+            details[0].order_user_timeline_detail[1].outd_bg_color ==
+              "ccfff0" &&
+            details[0].order_user_timeline_detail[2].outd_bg_color ==
+              "ccfff0" &&
+            details[0].order_user_timeline_detail[3].outd_bg_color ==
+              "ccfff0" &&
+            details[0].order_user_timeline_detail[4].outd_bg_color ==
+              "ccfff0" ? (
+              <></>
+            ) : null
+          ) : null}
         </Row>
+
         {mobileView ? (
           <Col xs={12} className="d-flex justify-content-center  pt-3 pb-5">
             <PrimaryButton title="Call Us For Support" />

@@ -1,10 +1,12 @@
-import { Col, Image, Row } from "react-bootstrap";
+import { Col, Image, Modal, Row } from "react-bootstrap";
 import styles from "@/styles/components/MyBooking/Quotation.module.css";
 import PrimaryButton from "../common/PrimaryButton";
 import { useState } from "react";
 import { useEffect } from "react";
 import useRazorpay from "react-razorpay";
 import axios from "axios";
+import PaymentOption from "../Popups/PaymentOption";
+import NavigationHandler from "../Popups/NavigationHandler";
 export default function Quotation({
   rejectaccept,
   showpaybutton,
@@ -16,6 +18,8 @@ export default function Quotation({
 }) {
   const [totalAmount, setTotalAmount] = useState(0);
   const [datas, setDatas] = useState();
+  const [paymentOpt, setPaymentOpt] = useState(false);
+
   var totals = 0;
   for (let k = 0; k < quotationdata.length; k++) {
     totals = totals + parseInt(quotationdata[k].issue_discounted_price);
@@ -24,45 +28,29 @@ export default function Quotation({
     setTotalAmount(totals);
   }, [totals]);
 
-  const Razorpay = useRazorpay();
-
-  const handlePayment = (amount) => {
-    axios
-      .post("/api/payment")
-      .then((r) => setDatas(r.data))
-      .catch((e) => console.log(e));
-    const options = {
-      key: "rzp_test_edc0iutgef4r18",
-      amount: amount * 100,
-      currency: "INR",
-      name: "Acme Corp",
-      description: "Test Transaction",
-      image: "https://example.com/your_logo",
-      order_id: datas ? datas.id : null,
-      handler: (res) => {
-        console.log(res);
-      },
-      prefill: {
-        name: "Piyush Garg",
-        email: "youremail@example.com",
-        contact: "9999999999",
-      },
-      notes: {
-        address: "Razorpay Corporate Office",
-      },
-      theme: {
-        color: "#3399cc",
-      },
-    };
-    let rzp = new Razorpay(options);
-    console.log(rzp);
-    rzp.open();
-  };
   return (
     <div
       className={styles.QuotationCard}
       style={hide ? { display: "none" } : null}
     >
+      <Modal
+        show={paymentOpt}
+        onHide={() => setPaymentOpt(false)}
+        size={"xl"}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        className="CheckoutPopup"
+      >
+        <Modal.Body className="p-5">
+          <NavigationHandler
+            backhandler={() => setPaymentOpt(false)}
+            navtitle="Payment"
+            unique
+            titlestyle={"mb-5"}
+          />
+          <PaymentOption amount={totalAmount} />
+        </Modal.Body>
+      </Modal>
       <Row>
         <Col xs={12} md={12} lg={12} xl={12}>
           <label className={styles.MainTitle}>Quotation for Approval</label>
@@ -156,7 +144,7 @@ export default function Quotation({
           <Col xs={12} md={12} lg={12} xl={12} className={styles.ButtonSpace}>
             <PrimaryButton
               title={`Pay Now (₹${totalAmount})`}
-              clickHandler={() => handlePayment(totalAmount)}
+              clickHandler={() => setPaymentOpt(true)}
               buttonStyle={{
                 width: "100%",
                 background: "#0E62CB",

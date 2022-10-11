@@ -483,7 +483,7 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
       addressId: myselectedaddress.id,
       dateOrder: generated_date,
       timeslot: selected_time,
-      paymentType: paymentway,
+      paymentType: paymentway + 1,
     })
       .then((r) => {
         if (r.data) {
