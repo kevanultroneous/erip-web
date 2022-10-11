@@ -174,6 +174,7 @@ export function Header() {
       data: moreMenu,
     },
   ];
+
   useEffect(() => {
     if (localStorage.getItem("city") && localStorage.getItem("cityid")) {
     } else {
@@ -206,6 +207,33 @@ export function Header() {
     }
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
     var modal = document.getElementById("dropdown_location");
+
+    const handleScroll = (event) => {
+      const scroll = window.scrollY;
+      const menuOpen = menuCollapse.current.classList.contains("show");
+      const childs = menuCollapse.current.children;
+
+      for (let i = 0; i < childs.length; i++) {
+        const element = childs[i];
+        if (element.classList.contains("show")) {
+          element.children[1].classList.remove("show");
+        }
+      }
+
+      if (menuOpen) {
+        if (scroll > 70) {
+          menuCollapse.current.classList.remove("show");
+        }
+      }
+      setLocationPopupShow(false);
+      setShowMobloc(false);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -243,35 +271,6 @@ export function Header() {
     }
   }
   const menuCollapse = useRef();
-
-  useEffect(() => {
-    const handleScroll = (event) => {
-      const scroll = window.scrollY;
-      const menuOpen = menuCollapse.current.classList.contains("show");
-      const childs = menuCollapse.current.children;
-
-      for (let i = 0; i < childs.length; i++) {
-        const element = childs[i];
-        if (element.classList.contains("show")) {
-          element.children[1].classList.remove("show");
-        }
-      }
-
-      if (menuOpen) {
-        if (scroll > 70) {
-          menuCollapse.current.classList.remove("show");
-        }
-      }
-      setLocationPopupShow(false);
-      setShowMobloc(false);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   function LogoutUser() {
     setLogoutPopup(true);
