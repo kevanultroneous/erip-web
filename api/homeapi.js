@@ -61,3 +61,13 @@ export const GetYourFixAPI = async (city) => {
     }
 }
 
+export const OrderQuotation = async (token, order, status) => {
+    try {
+        return await axios.post(`${API_URL}api/v1/users/orders_quotation`, { order: order, quotationStatus: status }, {
+            headers: { Authorization: `Bearer ${token}` },
+        }).then((res) => res.data)
+            .catch((e) => console.log("order quotation error" + e))
+    } catch (e) {
+        console.log(e)
+    }
+}

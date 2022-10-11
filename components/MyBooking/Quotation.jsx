@@ -8,6 +8,8 @@ export default function Quotation({
   showpaybutton,
   hide,
   quotationdata,
+  rejectclick,
+  acceptclick,
 }) {
   const [totalAmount, setTotalAmount] = useState(0);
   var totals = 0;
@@ -93,6 +95,7 @@ export default function Quotation({
             <Row className={styles.ButtonSpace}>
               <Col xs={6} md={6} lg={6} xl={6}>
                 <PrimaryButton
+                  clickHandler={rejectclick}
                   title="Reject"
                   buttonStyle={{
                     width: "100%",
@@ -102,7 +105,11 @@ export default function Quotation({
                 />
               </Col>
               <Col xs={6} md={6} lg={6} xl={6}>
-                <PrimaryButton title="Accept" buttonStyle={{ width: "100%" }} />
+                <PrimaryButton
+                  title="Accept"
+                  buttonStyle={{ width: "100%" }}
+                  clickHandler={acceptclick}
+                />
               </Col>
             </Row>
           </Col>
@@ -110,7 +117,7 @@ export default function Quotation({
         {showpaybutton && (
           <Col xs={12} md={12} lg={12} xl={12} className={styles.ButtonSpace}>
             <PrimaryButton
-              title="Pay Now (₹500)"
+              title={`Pay Now (₹${totalAmount})`}
               buttonStyle={{
                 width: "100%",
                 background: "#0E62CB",

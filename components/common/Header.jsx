@@ -66,42 +66,6 @@ export function Header() {
   const [errSearch, setErrsearch] = useState("");
   const [loadsSearch, setLoadsSearch] = useState(false);
   const [showsearch, setShowSearch] = useState(false);
-  useEffect(() => {
-    if (search != "") {
-      if (search.length < 0) {
-        setShowSearch(false);
-        setCategoriesSearch(null);
-        setBrandsSearch(null);
-        setModelsSearch(null);
-        setsegmentSearch(null);
-      } else {
-        setShowSearch(true);
-      }
-      setLoadsSearch(true);
-      NavSearchApi(localStorage.getItem("cityid"), search)
-        .then((response) => {
-          if (response.data.success) {
-            if (response.data.message == "no data found") {
-              setCategoriesSearch(null);
-              setBrandsSearch(null);
-              setModelsSearch(null);
-              setsegmentSearch(null);
-              setErrsearch("No data Found");
-            } else {
-              setCategoriesSearch(response.data.data[0].categories);
-              setBrandsSearch(response.data.data[0].brands);
-              setModelsSearch(response.data.data[0].models);
-              setsegmentSearch(response.data.data[0].segments);
-              setLoadsSearch(false);
-            }
-          } else {
-            setErrsearch(response.data.message);
-            setLoadsSearch(false);
-          }
-        })
-        .catch((e) => console.log(e));
-    }
-  }, [search]);
 
   setTimeout(() => {
     setSdata(navdata);
@@ -237,6 +201,43 @@ export function Header() {
   }, []);
 
   useEffect(() => {
+    if (search != "") {
+      if (search.length < 0) {
+        setShowSearch(false);
+        setCategoriesSearch(null);
+        setBrandsSearch(null);
+        setModelsSearch(null);
+        setsegmentSearch(null);
+      } else {
+        setShowSearch(true);
+      }
+      setLoadsSearch(true);
+      NavSearchApi(localStorage.getItem("cityid"), search)
+        .then((response) => {
+          if (response.data.success) {
+            if (response.data.message == "no data found") {
+              setCategoriesSearch(null);
+              setBrandsSearch(null);
+              setModelsSearch(null);
+              setsegmentSearch(null);
+              setErrsearch("No data Found");
+            } else {
+              setCategoriesSearch(response.data.data[0].categories);
+              setBrandsSearch(response.data.data[0].brands);
+              setModelsSearch(response.data.data[0].models);
+              setsegmentSearch(response.data.data[0].segments);
+              setLoadsSearch(false);
+            }
+          } else {
+            setErrsearch(response.data.message);
+            setLoadsSearch(false);
+          }
+        })
+        .catch((e) => console.log(e));
+    }
+  }, [search]);
+
+  useEffect(() => {
     if (localStorage.getItem("token")) {
       setToken(true);
       setLoginPopup(false);
@@ -290,15 +291,15 @@ export function Header() {
   }
 
   function showPosition(position) {
-    geocodeToPincode({
-      lat: position.coords.latitude,
-      lng: position.coords.longitude,
-      key: GMAP_API,
-    })
-      .then((response) => localStorage.setItem("pincode", response.pincode))
-      .catch((error) => console.log(error));
-    reverseMap(position.coords.latitude, position.coords.longitude);
-    displayLocation(position.coords.latitude, position.coords.longitude);
+    // geocodeToPincode({
+    //   lat: position.coords.latitude,
+    //   lng: position.coords.longitude,
+    //   key: GMAP_API,
+    // })
+    //   .then((response) => localStorage.setItem("pincode", response.pincode))
+    //   .catch((error) => console.log(error));
+    // reverseMap(position.coords.latitude, position.coords.longitude);
+    // displayLocation(position.coords.latitude, position.coords.longitude);
   }
 
   function reverseMap(lat, lng) {
@@ -1277,6 +1278,7 @@ export function Header() {
             <CartAndOffer
               show={cartandOfferPopup}
               onHide={() => setCartAndOfferPopup(false)}
+              backshow={() => setCartAndOfferPopup(true)}
             />
           </Container>
           <div

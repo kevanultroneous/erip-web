@@ -7,7 +7,7 @@ import Coupons from "./Coupons";
 import { useEffect, useState } from "react";
 import CouponsCard from "./CouponsCard";
 import CheckoutPopup from "./CheckoutPopup";
-import { CouponsByCC, MyCart } from "pages/api/api";
+import { AddToCart, CouponsByCC, MyCart } from "pages/api/api";
 import styles from "@/styles/components/Popups/CartAndOffer.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -25,7 +25,7 @@ import { VerifyCoupons } from "api/couponsApi";
 import axios from "axios";
 import { PostEnqApi } from "api/enquireAPI";
 
-export default function CartAndOffer({ show, onHide }) {
+export default function CartAndOffer({ show, onHide, backshow }) {
   const [active, setActive] = useState(0);
   const [total, setTotal] = useState(0);
   const [showCheckout, setShowCheckout] = useState(false);
@@ -33,7 +33,7 @@ export default function CartAndOffer({ show, onHide }) {
   const commonselector = useSelector((state) => state);
   const cartSelector = useSelector((state) => state.cartdata);
   const couponsselector = useSelector((state) => state.couponsdata);
-
+  const [spinning, setSpinning] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function CartAndOffer({ show, onHide }) {
   useEffect(() => {
     if (!show) {
       setActive(0);
-      setShowCheckout(false);
+      // setShowCheckout(false);
     } else {
       dispatch(callFetchCoupons(commonselector.locationdata.city, 1));
       dispatch(callMyCartBycity(localStorage.getItem("token")));
@@ -59,8 +59,21 @@ export default function CartAndOffer({ show, onHide }) {
   };
 
   const RemoveFromCart = (id) => {
-    dispatch(callAddorRemoveCart(localStorage.getItem("token"), id));
-    dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
+    setSpinning(true);
+    AddToCart(localStorage.getItem("token"), id)
+      .then((response) => {
+        setSpinning(false);
+      })
+      .catch((err) => {
+        alert(err);
+        setSpinning(false);
+      });
+    dispatch(
+      callMyCartBycity(
+        localStorage.getItem("token"),
+        localStorage.getItem("cityid")
+      )
+    );
   };
 
   const couponsdataList = couponsselector.data
@@ -128,8 +141,8 @@ export default function CartAndOffer({ show, onHide }) {
   };
 
   const CheckOutHandler = () => {
-    console.log(total);
-    console.log(selectingCoupons);
+    // console.log(total);
+    // console.log(selectingCoupons);
     if (couponShow) {
       VerifyCoupons(
         commonselector.userdata.useraccess,
@@ -151,6 +164,7 @@ export default function CartAndOffer({ show, onHide }) {
     } else {
       EnquireNow();
       setShowCheckout(true);
+      onHide();
     }
   };
   return (
@@ -207,6 +221,7 @@ export default function CartAndOffer({ show, onHide }) {
                       key={i}
                       productname={v.issue_title}
                       price={v.issue_price}
+                      spinner={spinning}
                       clickHandler={() => RemoveFromCart(v.issue_id)}
                     />
                   ))
@@ -293,7 +308,9 @@ export default function CartAndOffer({ show, onHide }) {
                   className={styles.CheckoutButtonWrraper}
                 >
                   <PrimaryButton
-                    clickHandler={() => CheckOutHandler()}
+                    clickHandler={() => {
+                      CheckOutHandler();
+                    }}
                     title={"Checkout"}
                     buttonStyle={{
                       width: "100%",
@@ -351,8 +368,11 @@ export default function CartAndOffer({ show, onHide }) {
         )}
       </Modal>
       <CheckoutPopup
+        backmain={backshow}
         show={showCheckout}
-        onHide={() => setShowCheckout(false)}
+        onHide={() => {
+          setShowCheckout(false);
+        }}
       />
     </div>
   );

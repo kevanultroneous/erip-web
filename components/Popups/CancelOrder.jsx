@@ -18,6 +18,7 @@ export default function CancelOrder({ show, onHide, order, backhandler }) {
   const submitHandler = () => {
     if (!reasons.length > 0) {
       setErr(true);
+      alert(JSON.stringify(reasons));
     } else {
       setErr(false);
       postOrdersCancel(localStorage.getItem("token"), {
@@ -70,7 +71,11 @@ export default function CancelOrder({ show, onHide, order, backhandler }) {
           <Col xs={12} md={12} lg={12} xl={12}>
             {checkboxdata.map((value, index) => (
               <div className={styles.CheckBox} key={index}>
-                <input type={"checkbox"} key={index} />
+                <input
+                  type={"checkbox"}
+                  key={index}
+                  onChange={() => setReasons(reasons.concat(index))}
+                />
                 <label className={styles.CheckBoxLabel}>{value}</label>
               </div>
             ))}

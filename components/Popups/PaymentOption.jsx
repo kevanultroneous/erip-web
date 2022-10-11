@@ -88,14 +88,7 @@ export default function PaymentOption({ amount }) {
     };
     let rzp = new Razorpay(options);
     console.log(rzp);
-    rzp
-      .open()
-      .then((data) => {
-        console.log("success");
-      })
-      .catch((error) => {
-        console.log("fail");
-      });
+    rzp.open();
   };
 
   return (

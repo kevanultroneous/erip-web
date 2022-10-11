@@ -47,7 +47,7 @@ import ThankYouHero from "../ThankYou/ThankYouHero";
 import { postOrders } from "api/ordersAPI";
 import axios from "axios";
 
-export default function CheckoutPopup({ show, onHide }) {
+export default function CheckoutPopup({ show, onHide, backmain }) {
   const dispatch = useDispatch();
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedDate, setSelectedDate] = useState(0);
@@ -451,8 +451,18 @@ export default function CheckoutPopup({ show, onHide }) {
       setFinalPayment(false);
     }
   };
-
+  const removeThecartdata = () => {
+    for (let cartdata = 0; cartdata < cartDetailList.length; cartdata++) {
+      dispatch(
+        callAddorRemoveCart(
+          localStorage.getItem("token"),
+          cartDetailList[cartdata].issue_id
+        )
+      );
+    }
+  };
   const [paymentway, setSelectedPaymentWay] = useState(null);
+
   const FinalOrderNow = () => {
     var setup_day =
       datelist[selectedDate].dates < 10
@@ -480,6 +490,7 @@ export default function CheckoutPopup({ show, onHide }) {
           if (r.data.success) {
             alert(r.data.message);
             setProcessComplete(true);
+            removeThecartdata();
           } else {
             alert(r.data.message);
           }
@@ -487,6 +498,7 @@ export default function CheckoutPopup({ show, onHide }) {
       })
       .catch((e) => console.log(e));
   };
+
   return (
     <Modal
       show={show}
@@ -502,13 +514,23 @@ export default function CheckoutPopup({ show, onHide }) {
         }`}
       >
         {proccessComplete ? (
-          <ThankYouHero clkhandler={onHide} />
+          <ThankYouHero
+            clkhandler={() => {
+              onHide();
+            }}
+          />
         ) : (
           <>
             {/*======================================== date time selection ======================================== */}
             {dateandTimeSelection ? (
               <Row>
-                <NavigationHandler backhandler={onHide} navtitle="Checkout" />
+                <NavigationHandler
+                  backhandler={() => {
+                    onHide();
+                    backmain();
+                  }}
+                  navtitle="Checkout"
+                />
                 <Col xs={12} md={12} lg={12} xl={12}>
                   {showDateError && (
                     <Alert variant={"danger"}>Please Select Date !</Alert>
@@ -1279,36 +1301,38 @@ export default function CheckoutPopup({ show, onHide }) {
                     }
                   />
                 ) : null}
-                {paymentway == 1 ? (
-                  <Row>
-                    <Col xs={12} md={12} lg={12} xl={12}>
-                      <PrimaryButton
-                        title="Place Request"
-                        buttonStyle={{
-                          width: "100%",
-                          background: "#0E62CB",
-                          color: "#fff",
-                        }}
-                        clickHandler={() => {
-                          FinalOrderNow();
-                        }}
-                      />
-                    </Col>
-                  </Row>
-                ) : finalway != 0 ? (
-                  <Row>
-                    <Col xs={12} md={12} lg={12} xl={12}>
-                      <PrimaryButton
-                        title="Proceed"
-                        buttonStyle={{
-                          width: "100%",
-                          background: "#0E62CB",
-                          color: "#fff",
-                        }}
-                        clickHandler={() => setFinalWay(0)}
-                      />
-                    </Col>
-                  </Row>
+                {total > 0 ? (
+                  paymentway == 1 ? (
+                    <Row>
+                      <Col xs={12} md={12} lg={12} xl={12}>
+                        <PrimaryButton
+                          title="Place Request"
+                          buttonStyle={{
+                            width: "100%",
+                            background: "#0E62CB",
+                            color: "#fff",
+                          }}
+                          clickHandler={() => {
+                            FinalOrderNow();
+                          }}
+                        />
+                      </Col>
+                    </Row>
+                  ) : finalway != 0 ? (
+                    <Row>
+                      <Col xs={12} md={12} lg={12} xl={12}>
+                        <PrimaryButton
+                          title="Proceed"
+                          buttonStyle={{
+                            width: "100%",
+                            background: "#0E62CB",
+                            color: "#fff",
+                          }}
+                          clickHandler={() => setFinalWay(0)}
+                        />
+                      </Col>
+                    </Row>
+                  ) : null
                 ) : null}
               </div>
             )}

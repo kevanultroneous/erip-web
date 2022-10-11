@@ -3,8 +3,14 @@ import { Col, Image, Row } from "react-bootstrap";
 import styles from "@/styles/components/ThankYou/ThankYouHero.module.css";
 import PrimaryButton from "../common/PrimaryButton";
 import Container from "../common/Container";
+import { useRouter } from "next/router";
 
 function ThankYouHero({ clkhandler }) {
+  const router = useRouter();
+  setTimeout(() => {
+    router.push("/my-bookings");
+    clkhandler();
+  }, 2000);
   return (
     <section className={styles.thankyouContainer}>
       <Container>

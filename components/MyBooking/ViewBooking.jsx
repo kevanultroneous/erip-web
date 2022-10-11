@@ -20,6 +20,7 @@ import Reschedule from "../Popups/Reschedule";
 import FeedbackQuestions from "../Popups/FeedbackQuestions";
 import RatingAndReview from "../Popups/RatingAndReview";
 import Thankyou from "../Popups/ThankYou";
+import { OrderQuotation } from "api/homeapi";
 export default function ViewBooking({ backhandler, order }) {
   const [f1, setF1] = useState(0);
   const [f2, setF2] = useState(null);
@@ -58,6 +59,17 @@ export default function ViewBooking({ backhandler, order }) {
           }
         }
     setTotalPaid(tot);
+  };
+  const acceptReject = (order, status = 0) => {
+    OrderQuotation(localStorage.getItem("token"), order, status)
+      .then((response) => {
+        if (response.success) {
+          alert(response.message);
+        } else {
+          alert(response.message);
+        }
+      })
+      .catch((err) => alert(err));
   };
   return (
     <div>
@@ -111,180 +123,179 @@ export default function ViewBooking({ backhandler, order }) {
       />
       <Thankyou show={thankYouShow} onHide={() => setThankYouShow(false)} />
 
-      {f1 == 0 && f2 == null && f3 == null && f4 == null && f5 == null ? (
-        <Col xs={12} md={12} lg={12} xl={12}>
-          <Row>
-            <Col xs={12} md={6} lg={6} xl={6}>
-              <BookingDetails
-                totalpaid={totalpaid}
-                cancelorderclick={() => setCancelOrder(true)}
-                rescheduleclick={() => setReschedule(true)}
-                orderkey={order}
-                orderid={details.length > 0 ? details[0].order_id : null}
-                device={details.length > 0 ? details[0].order_category : null}
-                issue={
-                  details.length > 0
-                    ? details[0].order_issues != null
-                      ? details[0].order_issues.length > 0
-                        ? details[0].order_issues.map((v) => (
-                            <>
-                              {v.issue_name}
-                              <br />
-                            </>
-                          ))
-                        : null
+      <Col xs={12} md={12} lg={12} xl={12}>
+        <Row>
+          <Col xs={12} md={6} lg={6} xl={6}>
+            <BookingDetails
+              totalpaid={totalpaid}
+              cancelorderclick={() => setCancelOrder(true)}
+              rescheduleclick={() => setReschedule(true)}
+              orderkey={order}
+              orderid={details.length > 0 ? details[0].order_id : null}
+              device={details.length > 0 ? details[0].order_category : null}
+              issue={
+                details.length > 0
+                  ? details[0].order_issues != null
+                    ? details[0].order_issues.length > 0
+                      ? details[0].order_issues.map((v) => (
+                          <>
+                            {v.issue_name}
+                            <br />
+                          </>
+                        ))
                       : null
                     : null
-                }
-                datetime={
-                  details.length > 0
-                    ? details[0].order_appointments[
-                        details[0].order_appointments.length > 0
-                          ? details[0].order_appointments.length - 1
-                          : 0
-                      ].appointment_date +
-                      "," +
-                      details[0].order_appointments[
-                        details[0].order_appointments.length > 0
-                          ? details[0].order_appointments.length - 1
-                          : 0
-                      ].appointment_timeslot
-                    : null
-                }
-                hidereschedulebuttons={false}
-                deliveryAndJobcard={
-                  details.length > 0
-                    ? details[0].order_jobcard_details.length > 0
-                      ? true
-                      : false
+                  : null
+              }
+              datetime={
+                details.length > 0
+                  ? details[0].order_appointments[
+                      details[0].order_appointments.length > 0
+                        ? details[0].order_appointments.length - 1
+                        : 0
+                    ].appointment_date +
+                    "," +
+                    details[0].order_appointments[
+                      details[0].order_appointments.length > 0
+                        ? details[0].order_appointments.length - 1
+                        : 0
+                    ].appointment_timeslot
+                  : null
+              }
+              hidereschedulebuttons={false}
+              deliveryAndJobcard={
+                details.length > 0
+                  ? details[0].order_jobcard_details.length > 0
+                    ? true
                     : false
-                }
-                hideoutcallsupport={false}
-                showinnercallsupport={false}
-                raiseticketshow={
-                  details.length > 0
-                    ? details[0].order_jobcard_details.length > 0
-                      ? true
-                      : false
+                  : false
+              }
+              hideoutcallsupport={false}
+              showinnercallsupport={false}
+              raiseticketshow={
+                details.length > 0
+                  ? details[0].order_jobcard_details.length > 0
+                    ? true
                     : false
-                }
-                callsupport={
-                  details.length > 0
-                    ? "tel:+91" +
-                      Object.values(details[0].order_options_1[0])[1]
-                    : null
-                }
-                sliderdata={
-                  details.length > 0
-                    ? details[0].order_jobcard_photos.length > 0
-                      ? details[0].order_jobcard_photos
-                      : []
+                  : false
+              }
+              callsupport={
+                details.length > 0
+                  ? "tel:+91" + Object.values(details[0].order_options_1[0])[1]
+                  : null
+              }
+              sliderdata={
+                details.length > 0
+                  ? details[0].order_jobcard_photos.length > 0
+                    ? details[0].order_jobcard_photos
                     : []
-                }
-                jcdetails={
-                  details.length > 0
-                    ? details[0].order_jobcard_details.length > 0
-                      ? details[0].order_jobcard_details[0]
-                      : []
+                  : []
+              }
+              jcdetails={
+                details.length > 0
+                  ? details[0].order_jobcard_details.length > 0
+                    ? details[0].order_jobcard_details[0]
                     : []
-                }
-                jcqc={
-                  details.length > 0
-                    ? details[0].order_jobcard_qc.length > 0
-                      ? details[0].order_jobcard_qc
-                      : []
+                  : []
+              }
+              jcqc={
+                details.length > 0
+                  ? details[0].order_jobcard_qc.length > 0
+                    ? details[0].order_jobcard_qc
                     : []
-                }
-              />
-            </Col>
-            {details.length > 0 ? (
-              details[0].order_quotation_details.length > 0 ? (
-                <Col xs={12} md={6} lg={6} xl={6}>
-                  <Quotation
-                    rejectaccept={true}
-                    showpaybutton={false}
-                    quotationdata={
-                      details.length > 0
-                        ? details[0].order_quotation_details.length > 0
-                          ? details[0].order_quotation_details
-                          : []
-                        : []
-                    }
-                  />
-                </Col>
-              ) : null
-            ) : null}
-            {details.length > 0 ? (
-              details[0].order_partner_details.length > 0 ? (
-                <Col xs={12} md={6} lg={6} xl={6}>
-                  <PartnerDetails
-                    off={false}
-                    otphide={
-                      details.length > 0
-                        ? details[0].order_job_start_otp.length > 0
-                          ? false
-                          : true
-                        : true
-                    }
-                    otp={
-                      details.length > 0
-                        ? details[0].order_job_start_otp.length > 0
-                          ? details[0].order_job_start_otp[0].otp_number
-                          : ""
-                        : ""
-                    }
-                    pimg={
-                      details.length > 0
-                        ? details[0].order_partner_details.length > 0
-                          ? details[0].order_partner_details[0].partner_photo
-                          : ""
-                        : ""
-                    }
-                    pmobile={
-                      details.length > 0
-                        ? details[0].order_partner_details.length > 0
-                          ? details[0].order_partner_details[0].partner_mobile
-                          : ""
-                        : ""
-                    }
-                    pname={
-                      details.length > 0
-                        ? details[0].order_partner_details.length > 0
-                          ? details[0].order_partner_details[0].partner_name
-                          : ""
-                        : ""
-                    }
-                    prating={
-                      details.length > 0
-                        ? details[0].order_partner_details.length > 0
-                          ? details[0].order_partner_details[0].partner_ratings
-                          : ""
-                        : ""
-                    }
-                  />
-                </Col>
-              ) : null
-            ) : null}
-            {mobileView ? (
+                  : []
+              }
+            />
+          </Col>
+          {/* {details.length > 0 ? (
+            details[0].order_quotation_details.length > 0 ? ( */}
+          <Col xs={12} md={6} lg={6} xl={6}>
+            <Quotation
+              rejectaccept={true}
+              showpaybutton={true}
+              acceptclick={() => acceptReject(order, 1)}
+              rejectclick={() => acceptReject(order)}
+              quotationdata={
+                details.length > 0
+                  ? details[0].order_quotation_details.length > 0
+                    ? details[0].order_quotation_details
+                    : []
+                  : []
+              }
+            />
+          </Col>
+          {/* ) : null
+          ) : null} */}
+          {details.length > 0 ? (
+            details[0].order_partner_details.length > 0 ? (
               <Col xs={12} md={6} lg={6} xl={6}>
-                <MobileProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
+                <PartnerDetails
+                  off={false}
+                  otphide={
+                    details.length > 0
+                      ? details[0].order_job_start_otp.length > 0
+                        ? false
+                        : true
+                      : true
+                  }
+                  otp={
+                    details.length > 0
+                      ? details[0].order_job_start_otp.length > 0
+                        ? details[0].order_job_start_otp[0].otp_number
+                        : ""
+                      : ""
+                  }
+                  pimg={
+                    details.length > 0
+                      ? details[0].order_partner_details.length > 0
+                        ? details[0].order_partner_details[0].partner_photo
+                        : ""
+                      : ""
+                  }
+                  pmobile={
+                    details.length > 0
+                      ? details[0].order_partner_details.length > 0
+                        ? details[0].order_partner_details[0].partner_mobile
+                        : ""
+                      : ""
+                  }
+                  pname={
+                    details.length > 0
+                      ? details[0].order_partner_details.length > 0
+                        ? details[0].order_partner_details[0].partner_name
+                        : ""
+                      : ""
+                  }
+                  prating={
+                    details.length > 0
+                      ? details[0].order_partner_details.length > 0
+                        ? details[0].order_partner_details[0].partner_ratings
+                        : ""
+                      : ""
+                  }
+                />
               </Col>
-            ) : null}
-            <Col xs={12} md={6} lg={6} xl={6}>
-              <NeedHelp
-                data={details.length > 0 ? details[0].order_user_need_help : []}
-              />
-            </Col>
-
-            {/* <PartnerDetails off={true} otphide={false} otp="2121" /> */}
-          </Row>
+            ) : null
+          ) : null}
           {mobileView ? (
-            <Col xs={12} className="d-flex justify-content-center  pt-3 pb-5">
-              <PrimaryButton title="Call Us For Support" />
+            <Col xs={12} md={6} lg={6} xl={6}>
+              <MobileProgress f1={f1} f2={f2} f3={f3} f4={f4} f5={f5} />
             </Col>
           ) : null}
-        </Col>
-      ) : null}
+          <Col xs={12} md={6} lg={6} xl={6}>
+            <NeedHelp
+              data={details.length > 0 ? details[0].order_user_need_help : []}
+            />
+          </Col>
+
+          {/* <PartnerDetails off={true} otphide={false} otp="2121" /> */}
+        </Row>
+        {mobileView ? (
+          <Col xs={12} className="d-flex justify-content-center  pt-3 pb-5">
+            <PrimaryButton title="Call Us For Support" />
+          </Col>
+        ) : null}
+      </Col>
       {/* 
       {(f1 == 1 && f2 == 0 && f3 == null && f4 == null && f5 == null) ||
       (f1 == 1 &&
