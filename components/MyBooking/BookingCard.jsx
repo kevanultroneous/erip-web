@@ -82,7 +82,7 @@ function BookingCard({
                 : "Call"
             }
             customClass={styles.actionBtn}
-            // clickHandler={callsupport}
+            clickHandler={callsupport}
             href={callsupport}
           />
         </Col>

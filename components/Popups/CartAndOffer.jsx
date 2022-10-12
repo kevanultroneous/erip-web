@@ -63,17 +63,19 @@ export default function CartAndOffer({ show, onHide, backshow }) {
     AddToCart(localStorage.getItem("token"), id)
       .then((response) => {
         setSpinning(false);
+        if (response.data.success) {
+          dispatch(
+            callMyCartBycity(
+              localStorage.getItem("token"),
+              localStorage.getItem("cityid")
+            )
+          );
+        }
       })
       .catch((err) => {
         alert(err);
         setSpinning(false);
       });
-    dispatch(
-      callMyCartBycity(
-        localStorage.getItem("token"),
-        localStorage.getItem("cityid")
-      )
-    );
   };
 
   const couponsdataList = couponsselector.data

@@ -16,6 +16,7 @@ function LeftMenu({
   addemailaction,
   altnum,
   altemail,
+  updatename,
 }) {
   const router = useRouter();
 
@@ -28,7 +29,9 @@ function LeftMenu({
               <Image fluid src={profileImage} alt={profileName} />
             </div>
             <div className={styles.profileDetails}>
-              <h5>{profileName}</h5>
+              <h5 onClick={updatename} className={styles.AlternativeButtons}>
+                {profileName == "0" ? "Erip User" : profileName}
+              </h5>
               <p
                 onClick={alternativenumberaction}
                 className={styles.AlternativeButtons}

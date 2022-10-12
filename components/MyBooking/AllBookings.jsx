@@ -13,6 +13,7 @@ import Support from "./Support";
 import { useDispatch, useSelector } from "react-redux";
 import { callFetchProfile } from "redux/actions/profileActions/profileActions";
 import { getOrders } from "api/ordersAPI";
+import { MdEdit } from "react-icons/md";
 
 function AllBookings() {
   const [alternatePopup, setAlternatePopup] = useState(false);
@@ -21,7 +22,7 @@ function AllBookings() {
   const [viewSupport, setViewSupport] = useState(false);
   const [orderData, setOrderData] = useState([]);
   const [orderhash, setOrderHash] = useState();
-
+  const [mobileView, setMobileView] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     if (localStorage.getItem("orderview")) {
@@ -29,6 +30,7 @@ function AllBookings() {
     }
     dispatch(callFetchProfile(localStorage.getItem("token")));
     allOrders();
+    window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
   }, []);
 
   const allOrders = () => {
@@ -73,6 +75,51 @@ function AllBookings() {
               order={orderhash}
             />
           ) : null}
+
+          {mobileView && (
+            <div>
+              <Row
+                className="mt-4 ms-2 me-2 pt-3 pb-3"
+                style={{
+                  background: "#FFFFFF",
+                  boxShadow: "1px 2px 10px rgba(0, 0, 0, 0.08)",
+                  borderRadius: "5px",
+                }}
+              >
+                <Col xs={3}>
+                  <div className={styles.profileImage}>
+                    <Image
+                      height={70}
+                      src={"/assets/images/bookings-page-profile.png"}
+                      alt={"profile"}
+                    />
+                  </div>
+                </Col>
+                <Col
+                  xs={8}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  <p className="m-0">
+                    {profiledetail !== null && profiledetail.name}
+                  </p>
+                  <p className="m-0">
+                    {profiledetail !== null && profiledetail.altnum.length > 0
+                      ? "+91" + profiledetail.altnum[0].mobile_number
+                      : null}
+                    &nbsp;&nbsp;&nbsp;
+                    <MdEdit
+                      color="#0E62CB"
+                      onClick={() => setAlternatePopup(true)}
+                    />
+                  </p>
+                </Col>
+              </Row>
+            </div>
+          )}
           {!viewdetail && !viewSupport && (
             <Row className={styles.BookingContainer}>
               <Col xs={12} md={12} lg={12} xl={12}>
@@ -84,7 +131,10 @@ function AllBookings() {
                       return (
                         <Col key={bookings.order_id} xl={6} md={12}>
                           <BookingCard
-                            // callsupport={"tel:+91"}
+                            callsupport={
+                              "tel:+91" +
+                              Object.values(bookings.order_options_1)[1]
+                            }
                             viewdetails={() => {
                               localStorage.setItem(
                                 "orderview",
@@ -189,6 +239,7 @@ function AllBookings() {
                 ? "+91" + profiledetail.altnum[0].mobile_number
                 : null
             }
+            updatename={() => setaddEmail(true)}
             altemail={profiledetail !== null && profiledetail.email}
           />
         </Col>
