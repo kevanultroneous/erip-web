@@ -162,7 +162,7 @@ export default function Reschedule({ show, onHide, order }) {
             <h5 className={styles.SubtitleText}>Select Time</h5>
             <Row
               className={styles.SelectionTimeRow}
-              style={{ padding: "0 6rem" }}
+              style={{ padding: "0 0rem" }}
             >
               {timesloatsata.map((v, i) => (
                 <Col xs={6} xl={4} key={i} className={`${styles.TimeCardCol}`}>
