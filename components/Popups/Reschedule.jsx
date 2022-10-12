@@ -134,7 +134,7 @@ export default function Reschedule({ show, onHide, order }) {
             lg={12}
             xl={12}
             className={styles.CalenderWrraper}
-            style={{ padding: "0 2rem" }}
+            style={{ padding: "0 " }}
           >
             <Slider {...calenderslidersettings} className={"CalendarSlider"}>
               {datelist.map((v, i) => (
