@@ -76,7 +76,7 @@ function AllBookings() {
             />
           ) : null}
 
-          {mobileView && (
+          {mobileView && !localStorage.getItem("orderview") && (
             <div>
               <Row
                 className="mt-4 ms-2 me-2 pt-3 pb-3"
