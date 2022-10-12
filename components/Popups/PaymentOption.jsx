@@ -54,25 +54,38 @@ export default function PaymentOption({ amount }) {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
   }, []);
 
-  const [datas, setDatas] = useState();
+  const [datas, setDatas] = useState(0);
 
   const Razorpay = useRazorpay();
 
-  const handlePayment = () => {
+  const idgeneration = () => {
     axios
-      .post("/api/payment")
+      .post("/api/payment", { money: amount })
       .then((r) => setDatas(r.data))
       .catch((e) => console.log(e));
+    checkingId();
+  };
+  const checkingId = () => {
+    alert("checking id");
+    if (datas != null || datas != undefined || datas != {}) {
+      handlePayment();
+    }
+  };
+  const handlePayment = useCallback(() => {
     const options = {
       key: "rzp_test_edc0iutgef4r18",
       amount: amount * 100,
       currency: "INR",
-      name: "Acme Corp",
-      description: "Test Transaction",
+      name: "ERIP",
+      description: "",
       image: "https://example.com/your_logo",
-      order_id: datas ? datas.id : null,
-      handler: (res) => {
-        console.log(res);
+      // callback_url: "http://192.168.1.28:3000/razortest",
+      // redirect: true,
+      order_id: datas.id,
+      handler: function (response) {
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature);
       },
       prefill: {
         name: "Piyush Garg",
@@ -87,9 +100,12 @@ export default function PaymentOption({ amount }) {
       },
     };
     let rzp = new Razorpay(options);
-    console.log(rzp);
-    rzp.open();
-  };
+    if (datas.id != "" || datas.id) {
+      console.log(datas.id);
+      alert(datas.id);
+      rzp.open();
+    }
+  }, [Razorpay]);
 
   return (
     <Layout>
@@ -112,7 +128,7 @@ export default function PaymentOption({ amount }) {
                   selectedPayment == i && styles.SelectedOption
                 } `}
                 onClick={() => {
-                  i == 5 ? handlePayment() : setSelectedPayment(i);
+                  i == 5 ? idgeneration() : setSelectedPayment(i);
                 }}
               >
                 <div className={styles.PaymentImgWrraper}>
@@ -498,7 +514,7 @@ export default function PaymentOption({ amount }) {
             className={styles.PrimaryButtonWrrapers}
           >
             <PrimaryButton
-              clickHandler={handlePayment}
+              clickHandler={idgeneration}
               title="Place Request"
               buttonStyle={{
                 width: "100%",

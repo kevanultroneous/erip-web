@@ -79,11 +79,7 @@ export const BottomBar = () => {
           {devicedata.map((v, i) => (
             <Row className="mb-3" key={i}>
               <Col xs={2} md={2} lg={2} xl={2}>
-                <Image
-                  src={v.category_icon_url}
-                  height={60}
-                  alt="coming soon"
-                />
+                <Image src={v.category_icon_url} alt="coming soon" fluid />
                 {v.coming_soon ? (
                   <p
                     style={{ background: "red", fontSize: "12px" }}

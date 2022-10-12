@@ -3,13 +3,7 @@ import { IoIosArrowUp } from "react-icons/io";
 import styles from "@/styles/components/MyBooking/MobileProgress.module.css";
 import { BsCheck2, BsCheckLg } from "react-icons/bs";
 import { useState } from "react";
-export default function MobileProgress({
-  f1 = {},
-  f2 = {},
-  f3 = {},
-  f4 = {},
-  f5 = {},
-}) {
+export default function MobileProgress({ data, processname }) {
   const [openmenu, setOpenMenu] = useState(true);
   return (
     <div className={styles.NextStepMain}>
@@ -37,41 +31,46 @@ export default function MobileProgress({
           />
         </Col>
         <Col xs={12}>
-          {/* 1 */}
-          <div className={styles.StepsCover}>
-            <span
-              className={`${styles.NumorCheck} ${
-                f1 == 0
-                  ? styles.currentnumber
-                  : f1 == 1
-                  ? styles.completenumber
-                  : f1 == 2
-                  ? styles.delayednumber
-                  : null
-              }`}
-            >
-              {f1 == 1 ? <BsCheckLg color="#00B67F" size={10} /> : "1"}
-            </span>{" "}
-            <p
-              className={`${
-                f1 == 0
-                  ? styles.currentstep
-                  : f1 == 1
-                  ? styles.completestep
-                  : f1 == 2
-                  ? styles.delayedstep
-                  : null
-              }`}
-            >
-              Assigning Proffesional
-            </p>
-          </div>
+          {data.map((v, i) => (
+            <>
+              <div className={styles.StepsCover}>
+                <span
+                  className={`${styles.NumorCheck} ${
+                    f1 == 0
+                      ? styles.currentnumber
+                      : f1 == 1
+                      ? styles.completenumber
+                      : f1 == 2
+                      ? styles.delayednumber
+                      : null
+                  }`}
+                >
+                  {f1 == 1 ? <BsCheckLg color="#00B67F" size={10} /> : "1"}
+                </span>{" "}
+                <p
+                  className={`${
+                    f1 == 0
+                      ? styles.currentstep
+                      : f1 == 1
+                      ? styles.completestep
+                      : f1 == 2
+                      ? styles.delayedstep
+                      : null
+                  }`}
+                >
+                  Assigning Proffesional
+                </p>
+              </div>
 
-          <div className={styles.StepsCover}>
-            <div className={styles.GapeLine}></div>
-          </div>
+              <div className={styles.StepsCover}>
+                <div className={styles.GapeLine}></div>
+              </div>
+            </>
+          ))}
+          {/* 1 */}
+
           {/* 2 */}
-          <div className={styles.StepsCover}>
+          {/* <div className={styles.StepsCover}>
             <span
               className={`${styles.NumorCheck} ${
                 f2 == 0
@@ -101,9 +100,9 @@ export default function MobileProgress({
           </div>
           <div className={styles.StepsCover}>
             <div className={styles.GapeLine}></div>
-          </div>
+          </div> */}
           {/* 3 */}
-          <div className={styles.StepsCover}>
+          {/* <div className={styles.StepsCover}>
             <span
               className={`${styles.NumorCheck} ${
                 f3 == 0
@@ -133,9 +132,9 @@ export default function MobileProgress({
           </div>
           <div className={styles.StepsCover}>
             <div className={styles.GapeLine}></div>
-          </div>
+          </div> */}
           {/* 4 */}
-          <div className={styles.StepsCover}>
+          {/* <div className={styles.StepsCover}>
             <span
               className={`${styles.NumorCheck} ${
                 f4 == 0
@@ -162,12 +161,12 @@ export default function MobileProgress({
             >
               Payment & Receipt
             </p>
-          </div>
-          <div className={styles.StepsCover}>
+          </div> */}
+          {/* <div className={styles.StepsCover}>
             <div className={styles.GapeLine}></div>
-          </div>
+          </div> */}
           {/* 5 */}
-          <div className={styles.StepsCover}>
+          {/* <div className={styles.StepsCover}>
             <span
               className={`${styles.NumorCheck} ${
                 f5 == 0
@@ -194,7 +193,7 @@ export default function MobileProgress({
             >
               Rating & Review
             </p>
-          </div>
+          </div> */}
         </Col>
       </Row>
     </div>

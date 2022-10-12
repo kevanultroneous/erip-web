@@ -21,6 +21,7 @@ function JobCardPopUp({
   brand,
   issue,
   estimation,
+  jcqcdata,
 }) {
   const jobCardRef = useRef();
   const profileselector = useSelector((selector) => selector.profile.profile);
@@ -83,7 +84,13 @@ function JobCardPopUp({
                 <p>Full Name</p>
                 <input
                   type="text"
-                  value={profileselector.data[0].user_fullname}
+                  value={
+                    profileselector
+                      ? profileselector.data
+                        ? profileselector.data[0].user_fullname
+                        : null
+                      : null
+                  }
                   disabled
                 />
               </div>
@@ -93,7 +100,13 @@ function JobCardPopUp({
                 <p>Contact Number</p>
                 <input
                   type="tel"
-                  value={profileselector.data[0].user_mobile}
+                  value={
+                    profileselector
+                      ? profileselector.data
+                        ? profileselector.data[0].user_mobile
+                        : null
+                      : null
+                  }
                   disabled
                 />
               </div>
@@ -103,7 +116,13 @@ function JobCardPopUp({
                 <p>Email Address</p>
                 <input
                   type="email"
-                  value={profileselector.data[0].user_email}
+                  value={
+                    profileselector
+                      ? profileselector.data
+                        ? profileselector.data[0].user_email
+                        : null
+                      : null
+                  }
                   disabled
                 />
               </div>
@@ -165,14 +184,14 @@ function JobCardPopUp({
           </Row>
           {jcqc.length > 0 && (
             <Row className={(styles.nameSection, styles.radioSection)}>
-              {["r1", "r2", "r3", "r4", "r5", "r6"].map((radioBtns, index) => {
+              {jcqcdata.map((radioBtns, index) => {
                 return (
                   <Col
                     xl={4}
                     className={styles.jobCardRadioSection}
                     key={index}
                   >
-                    <p>Lorem ipsum albeto clifor</p>
+                    <p>{radioBtns.question}</p>
                     <Row>
                       <Col
                         className={`${styles.jobCardRadio} jobCardRadio`}
@@ -181,14 +200,18 @@ function JobCardPopUp({
                       >
                         <input
                           type="checkbox"
-                          name={radioBtns}
                           disabled
-                          checked
+                          checked={radioBtns.answer_yes}
                         />
                         <h6>Yes</h6>
                       </Col>
                       <Col className={styles.jobCardRadio} xl={2} xs={6}>
-                        <input type="checkbox" name={radioBtns} disabled />
+                        <input
+                          type="checkbox"
+                          name={radioBtns}
+                          disabled
+                          checked={radioBtns.answer_no}
+                        />
                         <h6>No</h6>
                       </Col>
                     </Row>

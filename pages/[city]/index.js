@@ -29,7 +29,9 @@ import {
 export default function cityid() {
     const [mobileView, setMobileView] = useState(true);
     const [offerad, setOfferAd] = useState(false);
-
+    useEffect(() => {
+        window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
+    }, []);
     return (
         <Layout title={"Home"}>
             <Header />
@@ -40,7 +42,6 @@ export default function cityid() {
             <HowItWork />
             <WhyErip />
             <ExclusiveService />
-
             <BrowseOffer
                 href={"offer-page"}
                 imgsrc={"/assets/images/offer-big-banner.png"}

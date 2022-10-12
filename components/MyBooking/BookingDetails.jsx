@@ -15,11 +15,14 @@ export const DeliveryJobCard = ({
   estimation,
   issue,
   model,
+  date,
+  jcqcdata,
 }) => {
   const [jobcard, setJobcard] = useState(false);
   return (
     <div>
       <JobCardPopUp
+        jcqcdata={jcqcdata}
         show={jobcard}
         onHide={() => setJobcard(false)}
         sliderdata={sliderdata}
@@ -36,7 +39,7 @@ export const DeliveryJobCard = ({
           <p className={styles.ItemTitle}>Estimated to deliver on</p>
         </Col>
         <Col xs={6} md={6} lg={6} xl={6}>
-          <p className={styles.ItemAns}>24th April</p>
+          <p className={styles.ItemAns}>{date}</p>
         </Col>
       </Row>
       <Row className={styles.MiniCard}>
@@ -72,10 +75,12 @@ export default function BookingDetails({
   jcqc,
   totalpaid,
   addressbox,
-  // brand,
-  // estimation,
-  // issue,
-  // model,
+  brand,
+  estimation,
+  model,
+  issuenew,
+  date,
+  jcqcdata,
 }) {
   const [mobileView, setMobileView] = useState(false);
   const [summaryView, setSummaryView] = useState(false);
@@ -178,9 +183,15 @@ export default function BookingDetails({
       {deliveryAndJobcard && (
         <DeliveryJobCard
           sliderdata={sliderdata}
+          jcqcdata={jcqcdata}
           jcdetails={jcdetails}
           jcqc={jcqc}
           address={addressbox}
+          brand={brand}
+          estimation={estimation}
+          issue={issuenew}
+          model={model}
+          date={date}
         />
       )}
       {raiseticketshow ? (

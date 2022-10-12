@@ -182,6 +182,28 @@ export default function ViewBooking({ backhandler, order }) {
         <Row>
           <Col xs={12} md={6} lg={6} xl={6}>
             <BookingDetails
+              jcqcdata={details.length > 0 ? details[0].order_jobcard_qc : null}
+              date={
+                details.length > 0
+                  ? details[0].order_appointments[0].appointment_date
+                  : null
+              }
+              brand={details.length > 0 ? details[0].order_brand : null}
+              estimation={
+                details.length > 0
+                  ? details[0].order_appointments[0].appointment_date
+                  : null
+              }
+              model={details.length > 0 ? details[0].order_model_segment : null}
+              issuenew={
+                details.length > 0
+                  ? details[0].order_issues != null
+                    ? details[0].order_issues.length > 0
+                      ? details[0].order_issues.map((v) => v.issue_name)
+                      : null
+                    : null
+                  : null
+              }
               totalpaid={totalpaid}
               cancelorderclick={() => setCancelOrder(true)}
               rescheduleclick={() => setReschedule(true)}
@@ -239,21 +261,20 @@ export default function ViewBooking({ backhandler, order }) {
                   : false
               }
               deliveryAndJobcard={
-                true
-                // details.length > 0
-                //   ? details[0].order_user_timeline_detail[3].outd_bg_color !=
-                //       "ccfff0" &&
-                //     details[0].order_user_timeline_detail[0].outd_bg_color ==
-                //       "ccfff0" &&
-                //     details[0].order_user_timeline_detail[1].outd_bg_color ==
-                //       "ccfff0" &&
-                //     details[0].order_user_timeline_detail[2].outd_bg_color ==
-                //       "ccfff0" &&
-                //     details[0].order_user_timeline_detail[4].outd_bg_color !=
-                //       "ccfff0"
-                //     ? true
-                //     : false
-                //   : false
+                details.length > 0
+                  ? details[0].order_user_timeline_detail[3].outd_bg_color !=
+                      "ccfff0" &&
+                    details[0].order_user_timeline_detail[0].outd_bg_color ==
+                      "ccfff0" &&
+                    details[0].order_user_timeline_detail[1].outd_bg_color ==
+                      "ccfff0" &&
+                    details[0].order_user_timeline_detail[2].outd_bg_color ==
+                      "ccfff0" &&
+                    details[0].order_user_timeline_detail[4].outd_bg_color !=
+                      "ccfff0"
+                    ? true
+                    : false
+                  : false
               }
               hideoutcallsupport={
                 details.length > 0
@@ -272,12 +293,11 @@ export default function ViewBooking({ backhandler, order }) {
                   : false
               }
               raiseticketshow={
-                // details.length > 0
-                //   ? details[0].order_jobcard_details.length > 0
-                //     ? true
-                //     : false
-                //   : false
-                true
+                details.length > 0
+                  ? details[0].order_jobcard_details.length > 0
+                    ? true
+                    : false
+                  : false
               }
               callsupport={
                 details.length > 0
