@@ -8,10 +8,23 @@ import { useRef } from "react";
 import { MdDownload } from "react-icons/md";
 import ReactToPrint from "react-to-print";
 import DownloadComponent from "../common/downloadComponent";
+import { useSelector } from "react-redux";
 
-function JobCardPopUp({ show, onHide, sliderdata, jcdetails, jcqc }) {
+function JobCardPopUp({
+  show,
+  onHide,
+  sliderdata,
+  jcdetails,
+  jcqc,
+  address,
+  model,
+  brand,
+  issue,
+  estimation,
+}) {
   const jobCardRef = useRef();
-
+  const profileselector = useSelector((selector) => selector.profile.profile);
+  console.log(profileselector);
   const settings = {
     dots: true,
     infinite: true,
@@ -68,19 +81,31 @@ function JobCardPopUp({ show, onHide, sliderdata, jcdetails, jcqc }) {
             <Col xl={3}>
               <div>
                 <p>Full Name</p>
-                <input type="text" value={""} disabled />
+                <input
+                  type="text"
+                  value={profileselector.data[0].user_fullname}
+                  disabled
+                />
               </div>
             </Col>
             <Col xl={3} xs={6}>
               <div>
                 <p>Contact Number</p>
-                <input type="tel" value={""} disabled />
+                <input
+                  type="tel"
+                  value={profileselector.data[0].user_mobile}
+                  disabled
+                />
               </div>
             </Col>
             <Col xl={3} xs={6}>
               <div>
                 <p>Email Address</p>
-                <input type="email" value={""} disabled />
+                <input
+                  type="email"
+                  value={profileselector.data[0].user_email}
+                  disabled
+                />
               </div>
             </Col>
             <Col xl={3}>
@@ -94,19 +119,19 @@ function JobCardPopUp({ show, onHide, sliderdata, jcdetails, jcqc }) {
             <Col xl={6}>
               <div>
                 <p>Address</p>
-                <input type="text" value={""} disabled />
+                <input type="text" value={address} disabled />
               </div>
             </Col>
             <Col xl={3} xs={6}>
               <div>
                 <p>Model</p>
-                <input type="email" value={""} disabled />
+                <input type="email" value={model} disabled />
               </div>
             </Col>
             <Col xl={3} xs={6}>
               <div>
                 <p>Brand</p>
-                <input type="text" value={""} disabled />
+                <input type="text" value={brand} disabled />
               </div>
             </Col>
           </Row>
@@ -114,7 +139,7 @@ function JobCardPopUp({ show, onHide, sliderdata, jcdetails, jcqc }) {
             <Col xl={9}>
               <div>
                 <p>Issue</p>
-                <input type="text" value={""} disabled />
+                <input type="text" value={issue} disabled />
               </div>
             </Col>
             <Col xl={3}>
@@ -182,7 +207,7 @@ function JobCardPopUp({ show, onHide, sliderdata, jcdetails, jcqc }) {
             <Col xl={6}>
               <div>
                 <p>Estimation</p>
-                <input type="text" disabled />
+                <input type="text" value={estimation} disabled />
               </div>
             </Col>
           </Row>

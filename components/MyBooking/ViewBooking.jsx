@@ -24,6 +24,7 @@ import { OrderQuotation } from "api/homeapi";
 import useRazorpay from "react-razorpay";
 import axios from "axios";
 import PaymentOption from "../Popups/PaymentOption";
+
 export default function ViewBooking({ backhandler, order }) {
   const [f1, setF1] = useState(0);
   const [f2, setF2] = useState(null);
@@ -63,7 +64,10 @@ export default function ViewBooking({ backhandler, order }) {
     }
   };
   const getAllDetail = () => {
-    getOrdersDetails(localStorage.getItem("token"), order)
+    getOrdersDetails(
+      localStorage.getItem("token"),
+      order ? order : localStorage.getItem("orderview")
+    )
       .then((r) => setDetails(r.data.data))
       .catch((e) => console.log(e));
   };
@@ -112,7 +116,30 @@ export default function ViewBooking({ backhandler, order }) {
           data={details.length > 0 ? details[0].order_user_timeline_detail : []}
           process={false}
           processname={
-            details.length > 0 ? details[0].order_user_timeline[0].out_text : ""
+            details.length > 0
+              ? details[0].order_user_timeline_detail != null
+                ? details[0].order_user_timeline_detail[0]
+                    .outd_description_status == true
+                  ? details[0].order_user_timeline_detail[0].outd_description
+                  : null
+                : details[0].order_user_timeline_detail[1]
+                    .outd_description_status == true
+                ? details[0].order_user_timeline_detail[1].outd_description
+                : null
+                ? details[0].order_user_timeline_detail[2]
+                    .outd_description_status == true
+                  ? details[0].order_user_timeline_detail[2].outd_description
+                  : null
+                : details[0].order_user_timeline_detail[3]
+                    .outd_description_status == true
+                ? details[0].order_user_timeline_detail[3].outd_description
+                : null
+                ? details[0].order_user_timeline_detail[4]
+                    .outd_description_status == true
+                  ? details[0].order_user_timeline_detail[4].outd_description
+                  : null
+                : null
+              : []
           }
         />
       </Row>
@@ -161,6 +188,19 @@ export default function ViewBooking({ backhandler, order }) {
               orderkey={order}
               orderid={details.length > 0 ? details[0].order_id : null}
               device={details.length > 0 ? details[0].order_category : null}
+              addressbox={
+                details.length > 0
+                  ? details[0].order_address
+                    ? details[0].order_address
+                      ? details[0].order_address != null
+                        ? details[0].order_address.length > 0
+                          ? details[0].order_address[0].address_line_1
+                          : null
+                        : null
+                      : null
+                    : null
+                  : null
+              }
               issue={
                 details.length > 0
                   ? details[0].order_issues != null
@@ -199,20 +239,21 @@ export default function ViewBooking({ backhandler, order }) {
                   : false
               }
               deliveryAndJobcard={
-                details.length > 0
-                  ? details[0].order_user_timeline_detail[3].outd_bg_color !=
-                      "ccfff0" &&
-                    details[0].order_user_timeline_detail[0].outd_bg_color ==
-                      "ccfff0" &&
-                    details[0].order_user_timeline_detail[1].outd_bg_color ==
-                      "ccfff0" &&
-                    details[0].order_user_timeline_detail[2].outd_bg_color ==
-                      "ccfff0" &&
-                    details[0].order_user_timeline_detail[4].outd_bg_color !=
-                      "ccfff0"
-                    ? true
-                    : false
-                  : false
+                true
+                // details.length > 0
+                //   ? details[0].order_user_timeline_detail[3].outd_bg_color !=
+                //       "ccfff0" &&
+                //     details[0].order_user_timeline_detail[0].outd_bg_color ==
+                //       "ccfff0" &&
+                //     details[0].order_user_timeline_detail[1].outd_bg_color ==
+                //       "ccfff0" &&
+                //     details[0].order_user_timeline_detail[2].outd_bg_color ==
+                //       "ccfff0" &&
+                //     details[0].order_user_timeline_detail[4].outd_bg_color !=
+                //       "ccfff0"
+                //     ? true
+                //     : false
+                //   : false
               }
               hideoutcallsupport={
                 details.length > 0
@@ -231,11 +272,12 @@ export default function ViewBooking({ backhandler, order }) {
                   : false
               }
               raiseticketshow={
-                details.length > 0
-                  ? details[0].order_jobcard_details.length > 0
-                    ? true
-                    : false
-                  : false
+                // details.length > 0
+                //   ? details[0].order_jobcard_details.length > 0
+                //     ? true
+                //     : false
+                //   : false
+                true
               }
               callsupport={
                 details.length > 0

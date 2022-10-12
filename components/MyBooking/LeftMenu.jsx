@@ -29,13 +29,18 @@ function LeftMenu({
             </div>
             <div className={styles.profileDetails}>
               <h5>{profileName}</h5>
-              <p>{profileNumber}</p>
               <p
                 onClick={alternativenumberaction}
                 className={styles.AlternativeButtons}
               >
-                {altnum ? altnum : "add alternative number"}
+                {profileNumber ? profileNumber : "add alternative number"}
               </p>
+              {/* <p
+                onClick={alternativenumberaction}
+                className={styles.AlternativeButtons}
+              >
+                {altnum ? altnum : }
+              </p> */}
               <p onClick={addemailaction} className={styles.AlternativeButtons}>
                 {altemail ? altemail : "add email"}
               </p>
@@ -71,7 +76,7 @@ function LeftMenu({
                 }
               })
               .catch((e) => {
-                console.log(e);
+                alert(e);
               });
           }}
         >

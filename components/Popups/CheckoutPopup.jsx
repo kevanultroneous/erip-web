@@ -93,6 +93,7 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
   const [proccessComplete, setProcessComplete] = useState(false);
   const [savepincode, setSavePincode] = useState([]);
   const [bcolor, setBcolor] = useState("#676767");
+  const [addId, setAddId] = useState(0);
   const [addType, setAddType] = useState([
     {
       id: 1,
@@ -183,7 +184,11 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
   }, [directSelected]);
   useEffect(() => {
     if (myaddress.length > 0) {
-      setMyselectedAddress({ id: 0, address: myaddress[0].address_line_1 });
+      setAddId(myaddress[0].address_id);
+      setMyselectedAddress({
+        id: myaddress[0].address_id,
+        address: myaddress[0].address_line_1,
+      });
     }
   }, [myaddress]);
 
@@ -324,7 +329,15 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
       });
     }
   }, [show]);
-
+  const refreshAddress = () => {
+    MyAddress(localStorage.getItem("token"))
+      .then((response) => {
+        if (response.data.success) {
+          setMyaddress(response.data.data);
+        }
+      })
+      .catch((e) => console.log("myaddress fetching " + e));
+  };
   const [datelist, setDateList] = useState(getDatesInRange(startdate, enddate));
   useEffect(() => {
     if (selectedAddressStatus) {
@@ -367,9 +380,6 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
       if (!localStorage.getItem("token")) {
         alert("Please Login Now");
       } else {
-        console.log(localStorage.getItem("pincode"));
-        alert(houseInput.substring(0, 10));
-
         SaveAddress(
           localStorage.getItem("token"),
           addressType,
@@ -380,15 +390,14 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
           "001"
         )
           .then((r) => {
-            console.log(r);
             if (r.data.success) {
-              alert("address saved");
               setMyselectedAddress(selectedAddress.substring(0, 49));
               setSelectedAddressStatus(true);
               setProcessStatus(processStatus.concat(1));
               setFinalLocationStep(false);
-              // setDirectSelected(true);
               setFinalPayment(true);
+              refreshAddress();
+              setAddId(myaddress[0].address_id);
             }
           })
           .catch((e) => console.log(e));
@@ -480,7 +489,7 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
     var selected_time = timesloatsata[selectedTime].id;
     postOrders(localStorage.getItem("token"), {
       enquiryId: localStorage.getItem("enq_id"),
-      addressId: myselectedaddress.id,
+      addressId: addId,
       dateOrder: generated_date,
       timeslot: selected_time,
       paymentType: paymentway + 1,
@@ -674,10 +683,20 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
                             xl={10}
                             className={styles.AddressInput}
                           >
+                            <p className="m-0 ms-3 font-weight-bold">
+                              {v.address_no == "1"
+                                ? "Home"
+                                : v.address_no == "2"
+                                ? "Office"
+                                : v.address_no == "3"
+                                ? "Others"
+                                : ""}
+                            </p>
                             <input
                               type="radio"
                               name={"address"}
                               onChange={() => {
+                                setAddId(v.address_id);
                                 setMyselectedAddress({
                                   id: v.address_id,
                                   address: v.address_line_1,

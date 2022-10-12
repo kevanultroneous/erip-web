@@ -24,6 +24,9 @@ function AllBookings() {
 
   const dispatch = useDispatch();
   useEffect(() => {
+    if (localStorage.getItem("orderview")) {
+      setViewDetail(true);
+    }
     dispatch(callFetchProfile(localStorage.getItem("token")));
     allOrders();
   }, []);
@@ -65,6 +68,7 @@ function AllBookings() {
               backhandler={() => {
                 setViewDetail(false);
                 allOrders();
+                localStorage.removeItem("orderview");
               }}
               order={orderhash}
             />
@@ -85,6 +89,10 @@ function AllBookings() {
                               Object.values(bookings.order_options_1[0])[1]
                             }
                             viewdetails={() => {
+                              localStorage.setItem(
+                                "orderview",
+                                bookings.order_id_encrypted
+                              );
                               setViewDetail(true);
                               setOrderHash(bookings.order_id_encrypted);
                             }}
@@ -155,12 +163,9 @@ function AllBookings() {
                                 : 0
                             }
                             OTP={
-                              bookings.length > 0
-                                ? bookings[0].order_job_start_otp.length > 0
-                                  ? bookings[0].order_job_start_otp[0]
-                                      .otp_number
-                                  : ""
-                                : ""
+                              bookings.order_job_start_otp.length > 0
+                                ? bookings.order_job_start_otp[0].otp_number
+                                : null
                             }
                           />
                         </Col>

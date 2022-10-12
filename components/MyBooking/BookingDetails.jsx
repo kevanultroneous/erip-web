@@ -6,7 +6,16 @@ import { BsChevronRight } from "react-icons/bs";
 import PrimaryButton from "../common/PrimaryButton";
 import PaymentSummary from "../Popups/PaymentSummary";
 import JobCardPopUp from "./JobCardPopUp";
-export const DeliveryJobCard = ({ sliderdata, jcdetails, jcqc }) => {
+export const DeliveryJobCard = ({
+  sliderdata,
+  jcdetails,
+  jcqc,
+  address,
+  brand,
+  estimation,
+  issue,
+  model,
+}) => {
   const [jobcard, setJobcard] = useState(false);
   return (
     <div>
@@ -16,6 +25,11 @@ export const DeliveryJobCard = ({ sliderdata, jcdetails, jcqc }) => {
         sliderdata={sliderdata}
         jcdetails={jcdetails}
         jcqc={jcqc}
+        address={address}
+        brand={brand}
+        estimation={estimation}
+        issue={issue}
+        model={model}
       />
       <Row className={styles.MiniCard}>
         <Col xs={6} md={6} lg={6} xl={6}>
@@ -57,6 +71,11 @@ export default function BookingDetails({
   jcdetails,
   jcqc,
   totalpaid,
+  addressbox,
+  // brand,
+  // estimation,
+  // issue,
+  // model,
 }) {
   const [mobileView, setMobileView] = useState(false);
   const [summaryView, setSummaryView] = useState(false);
@@ -100,9 +119,7 @@ export default function BookingDetails({
             alt="box-icons"
             className={styles.BoxImg}
           />
-          <label className={styles.BoxAddress}>
-            Lorem ipsum cotor bajolt valom
-          </label>
+          <label className={styles.BoxAddress}>{addressbox}</label>
         </Col>
         <Col xs={12} md={6} lg={6} xl={12}>
           <Image
@@ -163,6 +180,7 @@ export default function BookingDetails({
           sliderdata={sliderdata}
           jcdetails={jcdetails}
           jcqc={jcqc}
+          address={addressbox}
         />
       )}
       {raiseticketshow ? (
