@@ -294,7 +294,16 @@ export default function ViewBooking({ backhandler, order }) {
               }
               raiseticketshow={
                 details.length > 0
-                  ? details[0].order_jobcard_details.length > 0
+                  ? (details[0].order_user_timeline_detail[3].outd_bg_color ==
+                      "ccfff0" &&
+                      details[0].order_user_timeline_detail[0].outd_bg_color ==
+                        "ccfff0" &&
+                      details[0].order_user_timeline_detail[1].outd_bg_color ==
+                        "ccfff0" &&
+                      details[0].order_user_timeline_detail[2].outd_bg_color ==
+                        "ccfff0") ||
+                    details[0].order_user_timeline_detail[4].outd_bg_color ==
+                      "ccfff0"
                     ? true
                     : false
                   : false
@@ -433,7 +442,7 @@ export default function ViewBooking({ backhandler, order }) {
           ) : null}
           {mobileView ? (
             <Col xs={12} md={6} lg={6} xl={6}>
-              <MobileProgress />
+              {/* <MobileProgress /> */}
             </Col>
           ) : null}
           <Col xs={12} md={6} lg={6} xl={6}>

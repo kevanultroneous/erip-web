@@ -46,9 +46,9 @@ export default function PartnerDetails({
                   width: "9rem",
                 }}
               >
-                <Link href={`tel:+91${pmobile}`}>
+                <a href={`tel:+91${pmobile}`}>
                   <ImPhone color="#0E62CB" size={20} />{" "}
-                </Link>
+                </a>
               </div>
             ) : null}
           </div>

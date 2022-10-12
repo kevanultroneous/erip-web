@@ -84,10 +84,7 @@ function AllBookings() {
                       return (
                         <Col key={bookings.order_id} xl={6} md={12}>
                           <BookingCard
-                            callsupport={
-                              "tel:+91" +
-                              Object.values(bookings.order_options_1[0])[1]
-                            }
+                            // callsupport={"tel:+91"}
                             viewdetails={() => {
                               localStorage.setItem(
                                 "orderview",

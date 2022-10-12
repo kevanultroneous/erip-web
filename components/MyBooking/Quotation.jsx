@@ -111,11 +111,13 @@ export default function Quotation({
             </Col>*/}
           </Row>
         </Col>
-        <Col xs={12} md={12} lg={12} xl={12}>
-          <label className={styles.AcceptText}>
-            Do you accept the quotation?
-          </label>
-        </Col>
+        {rejectaccept && (
+          <Col xs={12} md={12} lg={12} xl={12}>
+            <label className={styles.AcceptText}>
+              Do you accept the quotation?
+            </label>
+          </Col>
+        )}
         {rejectaccept && (
           <Col xs={12} md={12} lg={12} xl={12}>
             <Row className={styles.ButtonSpace}>

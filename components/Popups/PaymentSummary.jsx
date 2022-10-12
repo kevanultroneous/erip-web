@@ -27,7 +27,7 @@ export default function PaymentSummary({ order, back, title, show, onHide }) {
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      className="LoginPopup"
+      // className="LoginPopup"
     >
       <Modal.Body className="p-2 p-xl-5 p-lg-5 p-md-5">
         <NavigationHandler backhandler={back} navtitle={title} unique />

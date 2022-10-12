@@ -75,11 +75,16 @@ export const BottomBar = () => {
         size="md"
         className="OfferPopup Searchpopups"
       >
-        <Modal.Body style={{ height: "100vh" }}>
+        <Modal.Body>
           {devicedata.map((v, i) => (
             <Row className="mb-3" key={i}>
               <Col xs={2} md={2} lg={2} xl={2}>
-                <Image src={v.category_icon_url} alt="coming soon" fluid />
+                <Image
+                  src={v.category_icon_url}
+                  alt="coming soon"
+                  height={50}
+                  width={"100%"}
+                />
                 {v.coming_soon ? (
                   <p
                     style={{ background: "red", fontSize: "12px" }}
@@ -113,7 +118,6 @@ export const BottomBar = () => {
                   </Col>
                 </Row>
               </Col>
-              <BottomBar />
             </Row>
           ))}
         </Modal.Body>

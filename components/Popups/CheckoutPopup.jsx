@@ -20,6 +20,7 @@ import { calenderslidersettings } from "utils/sliderSettings";
 import { StatusProcess } from "./StatusProcess";
 import NavigationHandler from "./NavigationHandler";
 import {
+  AddToCart,
   CityDetactionAPI,
   MyAddress,
   PincodeByCity,
@@ -109,9 +110,14 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
     },
   ]);
   const [selectedTypeadd, setSelectedTypeadd] = useState();
-  const RemoveFromCart = (id) => {
-    dispatch(callAddorRemoveCart(localStorage.getItem("token"), id));
-    dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
+  const RemoveFromCart = async (id) => {
+    await AddToCart(localStorage.getItem("token"), id)
+      .then((response) => {
+        if (response.data.success) {
+          dispatch(callMyCartBycity(localStorage.getItem("token"), 1));
+        }
+      })
+      .catch((err) => dispatch(setAddorRemoveCartFail(err)));
   };
 
   const TimeIsOver = (timesloatsata, timesofsloats) => {
@@ -1309,7 +1315,7 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
                     ))}
                   </Row>
                 )}
-                {finalway == 0 ? (
+                {finalway == 0 && total > 0 ? (
                   <PaymentOption
                     amount={
                       selectingCoupons != undefined
