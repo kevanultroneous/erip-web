@@ -129,6 +129,7 @@ function AllBookings() {
                       return (
                         <Col key={bookings.order_id} xl={6} md={12}>
                           <BookingCard
+                            key={bookings.order_id}
                             callsupport={
                               "tel:+91" +
                               Object.values(bookings.order_options_1)[1]

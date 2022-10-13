@@ -36,7 +36,7 @@ export const BottomBar = () => {
       .then((res) => {
         if (res.data.success) {
           setDeviceData(res.data.data);
-          console.log(res.data.data);
+          // console.log(res.data.data);
         }
       })
       .catch((e) => console.log("get your fix error" + e));

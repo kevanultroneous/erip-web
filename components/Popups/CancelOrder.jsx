@@ -18,7 +18,7 @@ export default function CancelOrder({ show, onHide, order, backhandler }) {
   const submitHandler = () => {
     if (!reasons.length > 0) {
       setErr(true);
-      alert(JSON.stringify(reasons));
+      // alert(JSON.stringify(reasons));
     } else {
       setErr(false);
       postOrdersCancel(localStorage.getItem("token"), {
@@ -28,11 +28,11 @@ export default function CancelOrder({ show, onHide, order, backhandler }) {
       })
         .then((response) => {
           if (response.data.success) {
-            alert(response.data.message);
+            // alert(response.data.message);
             onHide();
             backhandler();
           } else {
-            alert(response.data.message);
+            // alert(response.data.message);
           }
         })
         .catch((e) => console.log(e));

@@ -264,17 +264,24 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
   }, [currentLocation]);
 
   function reverseMap(lat, lng) {
-    var latlng = new google.maps.LatLng(lat, lng);
-    var geocoder = (geocoder = new google.maps.Geocoder());
-    getPincode(lat, lng);
-    geocoder.geocode({ latLng: latlng }, function (results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        // results.map((v) => console.log(v));
-        if (results[1]) {
-          setSelectedAddress(results[1].formatted_address);
-        }
+    if (
+      (lat != null && lng != null) ||
+      (lat != undefined && lng != undefined)
+    ) {
+      var latlng = new google.maps.LatLng(lat, lng);
+      if (latlng != null || latlng != undefined) {
+        var geocoder = (geocoder = new google.maps.Geocoder());
+        getPincode(lat, lng);
+        geocoder.geocode({ latLng: latlng }, function (results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            // results.map((v) => console.log(v));
+            if (results[1]) {
+              setSelectedAddress(results[1].formatted_address);
+            }
+          }
+        });
       }
-    });
+    }
   }
 
   function getLatandLongByAddress(address) {
@@ -418,30 +425,37 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
     }
   };
   function displayLocation(latitude, longitude) {
-    var geocoder;
-    geocoder = new google.maps.Geocoder();
-    var latlng = new google.maps.LatLng(latitude, longitude);
-    var count, country, state, city;
-    getPincode(latitude, longitude);
+    if (
+      (latitude != null && longitude != null) ||
+      (latitude != undefined && longitude != undefined)
+    ) {
+      var geocoder;
+      geocoder = new google.maps.Geocoder();
+      var latlng = new google.maps.LatLng(latitude, longitude);
+      if (latlng != null || latlng != undefined) {
+        var count, country, state, city;
+        getPincode(latitude, longitude);
 
-    geocoder.geocode({ latLng: latlng }, function (results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        if (results[0]) {
-          var add = results[0].formatted_address;
-          var value = add.split(",");
+        geocoder.geocode({ latLng: latlng }, function (results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            if (results[0]) {
+              var add = results[0].formatted_address;
+              var value = add.split(",");
 
-          count = value.length;
-          country = value[count - 1];
-          state = value[count - 2];
-          city = value[count - 3];
-          setCurrentCity(city);
-        } else {
-          alert("address not found");
-        }
-      } else {
-        console.log("Geocoder failed due to: " + status);
+              count = value.length;
+              country = value[count - 1];
+              state = value[count - 2];
+              city = value[count - 3];
+              setCurrentCity(city);
+            } else {
+              alert("address not found");
+            }
+          } else {
+            console.log("Geocoder failed due to: " + status);
+          }
+        });
       }
-    });
+    }
   }
 
   useEffect(() => {
