@@ -444,7 +444,13 @@ export default function ViewBooking({ backhandler, order }) {
           ) : null}
           {mobileView ? (
             <Col xs={12} md={6} lg={6} xl={6}>
-              {/* <MobileProgress /> */}
+              <MobileProgress
+                data={
+                  details.length > 0
+                    ? details[0].order_user_timeline_detail
+                    : []
+                }
+              />
             </Col>
           ) : null}
           <Col xs={12} md={6} lg={6} xl={6}>

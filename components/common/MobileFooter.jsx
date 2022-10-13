@@ -120,6 +120,11 @@ export const BottomBar = () => {
               </Col>
             </Row>
           ))}
+          <PrimaryButton
+            title="Close"
+            buttonStyle={{ width: "100%" }}
+            clickHandler={() => setDevices(false)}
+          />
         </Modal.Body>
       </Modal>
       <div className={styles.BottomNavbar}>

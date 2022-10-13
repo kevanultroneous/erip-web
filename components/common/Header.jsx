@@ -30,6 +30,7 @@ import { getCookie } from "cookies-next";
 import { NavSearchApi } from "api/mixApi";
 import NavigationHandler from "../Popups/NavigationHandler";
 import { MyProfile } from "api/profileApi";
+import { useRouter } from "next/router";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
@@ -68,7 +69,7 @@ export function Header() {
   const [loadsSearch, setLoadsSearch] = useState(false);
   const [showsearch, setShowSearch] = useState(false);
   const [profileData, setProfileData] = useState([]);
-
+  const router = useRouter();
   setTimeout(() => {
     setSdata(navdata);
   }, 1000);
@@ -431,17 +432,28 @@ export function Header() {
                     Login
                   </Nav.Link>
                 )}
-                <Link className={styles.mobileMenuLink} href="my-bookings">
+
+                <Nav.Link
+                  className={styles.mobileMenuLink}
+                  onClick={() => router.push("/my-bookings")}
+                >
                   My Bookings
-                </Link>
-                {/* <Nav.Link href="#" >
-                </Nav.Link> */}
-                <Link className={styles.mobileMenuLink} href="about-us">
+                </Nav.Link>
+
+                <Nav.Link
+                  className={styles.mobileMenuLink}
+                  onClick={() => router.push("/about-us")}
+                >
                   About Us
-                </Link>
-                <Link className={styles.mobileMenuLink} href="#">
+                </Nav.Link>
+
+                <Nav.Link
+                  className={styles.mobileMenuLink}
+                  onClick={() => router.push("/#")}
+                >
                   Blogs
-                </Link>
+                </Nav.Link>
+
                 {/* <Nav.Link href="#" className={styles.mobileMenuLink}>
                 </Nav.Link> */}
               </Nav>
