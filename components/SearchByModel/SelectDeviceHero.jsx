@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Col, Container, Image, Row } from "react-bootstrap";
+import { Col, Image, Row } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import { NavDropdown } from "react-bootstrap";
 import axios from "axios";
-import CategoryModels from "./CategoryModels";
 import IssueComponent from "@/components/IssuePage/IssueComponent";
-import { issueData } from "utils/issueData";
 
 import style from "@/styles/components/personalGadgets/issuepage.module.css";
 import styles from "@/styles/components/SearchByModel/SelectDeviceHero.module.css";
@@ -13,52 +11,20 @@ import MobileModels from "./MobileModels";
 import { API_URL } from "utils/data";
 import IssueTotalBill from "../IssuePage/IssueTotalBill";
 import { AddToCart } from "pages/api/api";
-import { getFaqsbyCategoryAxios } from "api/faqAPI";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectBrands,
   selectCategory,
-  selectIssues,
   selectModels,
 } from "redux/actions/issuePageActions/issuePageActions";
 import {
-  callFaqByBrands,
-  callFaqByCategory,
-} from "redux/actions/faqActions/faqActions";
-import {
-  getBrandsHero,
-  getCategoryHero,
-  getModelHero,
-} from "redux/actions/heroActions/heroActions";
-import {
-  getInformationByBrands,
-  getInformationByCategory,
-} from "redux/actions/informationActions/informationActions";
-import {
-  getBrandsOffer,
-  getCategoryOffer,
-} from "redux/actions/offersActions/offerActions";
-import {
-  getTestimonialsByBrand,
-  getTestimonialsByCategory,
-} from "redux/actions/testimonialActions/testimonialAction";
-import {
-  callAddorRemoveCart,
-  callMyCartBycity,
-} from "redux/actions/cartActions/cartActions";
-import {
   getPersonalGadgetsBrandSuccess,
-  getPersonalGadgetsByBrands,
-  getPersonalGadgetsByCity,
-  getPersonalGadgetsByIssues,
-  getPersonalGadgetsByModels,
   getPersonalGadgetsModelSuccess,
-  selectCategoryName,
 } from "redux/actions/personalGadgetActions/personalGadget";
 import KnowMoreModal from "../HomeAppliances/KnowMoreModal";
-import { getCategoriesByCity } from "api/categoryByCity";
 import { getBrandsByCategory, getModelsByBrand } from "api/personalGadgetsApi";
 import { useRouter } from "next/router";
+import { CartByCity } from "api/cartbyCity";
 
 function SelectDeviceHero({
   headClass,
@@ -158,7 +124,30 @@ function SelectDeviceHero({
   const disableDrop = () => {
     selectDrop.current.classList.remove("show");
   };
+  const [cartdatas, setCartDatas] = useState([]);
+  const Carts = () => {
+    CartByCity(localStorage.getItem("token"), localStorage.getItem("cityid"))
+      .then((r) => {
+        if (r.data.success) {
+          setCartDatas(r.data.data);
+        }
+      })
+      .catch((e) => console.log(e));
+  };
+  // Carts();
 
+  const RemoveFromCart = (id) => {
+    AddToCart(localStorage.getItem("token"), id)
+      .then((response) => {
+        if (response.data.success) {
+          alert("add to cart success");
+        }
+      })
+      .catch((err) => {
+        // alert(err);
+        console.log(err);
+      });
+  };
   const getIssues = async (eventKey, key) => {
     const modelID = eventKey || key.target.accessKey;
     dispatch(selectModels(modelID));
@@ -508,16 +497,13 @@ function SelectDeviceHero({
                   serviceType={issues.repair_type}
                   modalHandler={() => handlingModal(issues)}
                   addToCart={() => {
-                    token
-                      ? callAddorRemoveCart(token, issues.issue_id)
-                      : quoteaction();
+                    token ? RemoveFromCart(issues.issue_id) : quoteaction();
                   }}
                   buttonName={
                     token
-                      ? cartButtonName.some(
-                          (cartIssueData) =>
-                            cartIssueData.issue_id === issues.issue_id
-                        )
+                      ? cartdatas.filter((cartIssueData) => {
+                          cartIssueData.issue_id === issues.issue_id;
+                        })
                         ? "Remove From Cart"
                         : "Add to Cart"
                       : "Get Quote"

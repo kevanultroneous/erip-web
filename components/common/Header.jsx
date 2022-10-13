@@ -56,7 +56,7 @@ export function Header() {
   const locationselector = useSelector((selector) => selector.locationdata);
   const navsearch = useSelector((selector) => selector.mix.navsearch);
   const userselector = useSelector((selector) => selector.userdata);
-  // const profileselector = useSelector((selector) => selector.profile.profile);
+  const profileselector = useSelector((selector) => selector.profile.profile);
   const selector = useSelector((selector) => selector);
 
   const navdata = navsearch ? (navsearch.data ? navsearch.data : null) : null;
@@ -82,6 +82,9 @@ export function Header() {
       setToken(false);
     }
   });
+  useEffect(() => {
+    callDropdataApple();
+  }, []);
   const callDropdataApple = async () => {
     await axios
       .get(`${API_URL}api/v1/cms/top_apple_products`)
@@ -119,12 +122,6 @@ export function Header() {
 
   const dropdowndata = [
     {
-      title: "Apple Products",
-      drop: "down",
-      handler: callDropdataApple,
-      data: appleHeaderData,
-    },
-    {
       title: "Top Brands",
       drop: "down",
       handler: callDropdataBrands,
@@ -149,15 +146,15 @@ export function Header() {
       data: moreMenu,
     },
   ];
-  const FetchProfile = () => {
-    MyProfile(localStorage.getItem("token"))
-      .then((r) => {
-        if (r.data.success) {
-          setProfileData(r.data.data);
-        }
-      })
-      .catch((e) => console.log(e));
-  };
+  // const FetchProfile = () => {
+  //   MyProfile(localStorage.getItem("token"))
+  //     .then((r) => {
+  //       if (r.data.success) {
+  //         setProfileData(r.data.data);
+  //       }
+  //     })
+  //     .catch((e) => console.log(e));
+  // };
   useEffect(() => {
     if (localStorage.getItem("city") && localStorage.getItem("cityid")) {
     } else {
@@ -214,7 +211,6 @@ export function Header() {
       setLocationPopupShow(false);
       setShowMobloc(false);
     };
-    FetchProfile();
     window.addEventListener("scroll", handleScroll);
 
     return () => {
@@ -453,9 +449,17 @@ export function Header() {
                 >
                   Blogs
                 </Nav.Link>
-
-                {/* <Nav.Link href="#" className={styles.mobileMenuLink}>
-                </Nav.Link> */}
+                {localStorage.getItem("token") && (
+                  <Nav.Link
+                    className={styles.mobileMenuLink}
+                    onClick={() => {
+                      router.push("/");
+                      localStorage.removeItem("token");
+                    }}
+                  >
+                    Logout
+                  </Nav.Link>
+                )}
               </Nav>
             </Navbar.Collapse>
             <LoginPopup show={loginPopup} onHide={() => setLoginPopup(false)} />
@@ -1080,7 +1084,7 @@ export function Header() {
                         marginLeft: "1rem",
                       }}
                     >
-                      {profileData[0]?.user_fullname}
+                      {/* {profileselector[0]?.user_fullname} */}
                     </span>
                   </div>
                 </Link>
@@ -1100,6 +1104,42 @@ export function Header() {
               className={styles.navDropMain}
               ref={menuCollapse}
             >
+              <DropdownButton
+                title={"Apple Products"}
+                className="dropDownMenuHead"
+                key={"Apple"}
+                drop={"down"}
+              >
+                <div className="dropMenuDiv">
+                  {appleHeaderData.map((menu, menuIndex) => {
+                    return (
+                      <div key={menuIndex}>
+                        <Dropdown.Item
+                          eventKey="4.1"
+                          className={styles.listedItemHead}
+                        >
+                          {menu.submenu}
+                        </Dropdown.Item>
+                        {menu.submenuItems.map((model, index) => {
+                          return (
+                            <Link
+                              key={index}
+                              href={{
+                                pathname: "personal-gadgets",
+                                query: { issue: model.model_id },
+                              }}
+                            >
+                              <Dropdown.Item eventKey="4.2">
+                                {model.model_title}
+                              </Dropdown.Item>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    );
+                  })}
+                </div>
+              </DropdownButton>
               {dropdowndata.map((v, i) => (
                 <DropdownButton
                   title={v.title}
@@ -1112,33 +1152,6 @@ export function Header() {
                     return (
                       <>
                         {v.title == dropdowndata[0].title ? (
-                          <div key={menuIndex}>
-                            <Dropdown.Item
-                              eventKey="4.1"
-                              className={styles.listedItemHead}
-                            >
-                              {menu.submenu}
-                            </Dropdown.Item>
-
-                            {menu.submenuItems &&
-                              menu.submenuItems.map((model, index) => {
-                                return (
-                                  <Link
-                                    key={index}
-                                    href={{
-                                      pathname: "personal-gadgets",
-                                      query: { issue: model.model_id },
-                                    }}
-                                  >
-                                    <Dropdown.Item eventKey="4.2">
-                                      {model.model_title}
-                                    </Dropdown.Item>
-                                  </Link>
-                                );
-                              })}
-                          </div>
-                        ) : null}
-                        {v.title == dropdowndata[1].title ? (
                           <Link
                             key={menuIndex}
                             href={{
@@ -1153,7 +1166,7 @@ export function Header() {
                             </div>
                           </Link>
                         ) : null}
-                        {v.title == dropdowndata[2].title ? (
+                        {v.title == dropdowndata[1].title ? (
                           <Link
                             key={menuIndex}
                             href={{
@@ -1174,14 +1187,14 @@ export function Header() {
                             </div>
                           </Link>
                         ) : null}
-                        {v.title == dropdowndata[3].title ? (
+                        {v.title == dropdowndata[2].title ? (
                           <div key={menuIndex}>
                             <Dropdown.Item eventKey="4.2" key={menuIndex}>
                               {menu.length <= 0 ? "" : menu.model_title}
                             </Dropdown.Item>
                           </div>
                         ) : null}
-                        {v.title == dropdowndata[4].title ? (
+                        {v.title == dropdowndata[3].title ? (
                           <div key={menuIndex}>
                             <Dropdown.Item eventKey="4.2" key={menuIndex}>
                               {menu.length <= 0 ? "" : menu.menuName}

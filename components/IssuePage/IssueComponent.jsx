@@ -107,7 +107,6 @@ function IssueComponent({
               <p className={styles.issueDetails}>Service Time: {serviceTime}</p>
               <p className={styles.issueDetails}>Warranty: {warranty}</p>
               <p className={styles.issueDetails}>Service Type: {serviceType}</p>
-
               <a className={styles.issueLink} onClick={modalHandler}>
                 Know More
               </a>

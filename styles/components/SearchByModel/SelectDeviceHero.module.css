@@ -30,6 +30,7 @@
   display: flex;
   justify-content: center;
 }
+
 .navDropBox {
   display: flex;
   flex-direction: column;
@@ -45,10 +46,17 @@
   justify-content: center;
 }
 
+.navdropdown:hover {
+  background-color: #ffffff;
+  box-shadow: 1px 1px 5px;
+  border-radius: 5px;
+}
+
 .categoryImages {
   width: 4rem;
   margin: 0 1rem 0 0;
 }
+
 .modelContainer {
   position: relative;
   height: 100vh;
@@ -73,8 +81,8 @@
   justify-content: space-between;
 }
 
-.modelDropRow > div,
-.selectDeviceFirstRow > div {
+.modelDropRow>div,
+.selectDeviceFirstRow>div {
   width: 30vw;
 }
 
@@ -120,7 +128,7 @@
   justify-content: center;
 }
 
-.topBrandsRow > div {
+.topBrandsRow>div {
   display: flex;
   padding: 0 1rem;
   cursor: pointer;
@@ -130,29 +138,36 @@
   .modelHeroRow {
     display: none;
   }
+
   .selectDevice {
     margin: 0;
   }
+
   .selectDeviceNav {
     padding: 0;
   }
+
   .selectDeviceFirstRow {
     margin: 0;
   }
-  .selectButton > p {
+
+  .selectButton>p {
     display: none;
   }
+
   .modelDrop {
     padding: 0;
   }
+
   .modelDropRow {
     margin: 1rem 0 0;
   }
 
-  .selectDeviceFirstRow > div {
+  .selectDeviceFirstRow>div {
     width: 45vw;
   }
-  .modelDropRow > div {
+
+  .modelDropRow>div {
     width: 90vw;
   }
 }

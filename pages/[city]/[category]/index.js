@@ -77,7 +77,7 @@ function Categoryids({ categories }) {
   }, []);
 
   useEffect(() => {
-    getCategoryFromQuery();
+    if (router.query.category) getCategoryFromQuery();
     dispatch(getPersonalGadgetsSuccess(categoryAvailable));
     return;
   }, [categoryAvailable]);
@@ -103,7 +103,7 @@ function Categoryids({ categories }) {
         categoryAvailable={categoryAvailable}
         // headClass={styles.selectDeviceHero}
         modelSection={styles.selectDeviceSection}
-        // homeQuery={router.query.issue}
+      // homeQuery={router.query.issue}
       />
       <HomeHero offers={offers} />
       <HowItWork />

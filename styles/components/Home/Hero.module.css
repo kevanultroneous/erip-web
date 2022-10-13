@@ -9,7 +9,7 @@
 
 @media (min-width:320px) and (max-width: 450px) {
     .CarouselImage img {
-        height: 200px;
+        height: auto
     }
 }
 

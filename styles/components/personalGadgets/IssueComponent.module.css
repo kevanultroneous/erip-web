@@ -54,6 +54,7 @@
   .issueContainer {
     width: 100%;
   }
+
   .issueMobileDiv {
     width: 100%;
     padding: 0 0.5rem 0.8rem;
@@ -66,30 +67,38 @@
     justify-content: right;
     padding: 0;
   }
-  .issueMobileDiv > div {
+
+  .issueMobileDiv>div {
     margin: 0;
   }
+
   .issueRow {
     justify-content: space-around;
   }
+
   .issueName {
     margin: 0;
   }
+
   .mobilePrice {
     display: flex;
     flex-direction: column;
     text-align: right;
     padding: 0;
   }
+
   .mobilePrice p {
     margin: 0;
   }
+
   .issueDetails {
     font-size: 13px;
   }
+
   .issuePrimaryButton {
     padding: 0.6rem 1rem;
     width: 80%;
+    font-size: 12px;
   }
 }
 
@@ -97,14 +106,17 @@
   .issueImageBox {
     margin: 0 0.1rem 0 0;
   }
+
   .issueRow {
     display: flex;
     justify-content: space-around;
   }
+
   .issueContainer {
     width: 100%;
     margin: auto;
   }
+
   .issuePrimaryButton {
     width: 100%;
     padding: 0.6rem 0rem;
