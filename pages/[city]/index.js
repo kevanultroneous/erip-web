@@ -14,7 +14,7 @@ import OfferBanner from "@/components/Home/OfferBanner";
 import OfferadPopup from "@/components/Popups/OfferadPopup";
 import { useEffect, useState } from "react";
 
-export default function cityid() {
+export default function Cityid() {
     const [mobileView, setMobileView] = useState(true);
     const [offerad, setOfferAd] = useState(false);
     useEffect(() => {

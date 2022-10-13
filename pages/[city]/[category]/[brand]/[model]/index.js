@@ -77,7 +77,6 @@ function ModelIds({ data }) {
 
   useEffect(() => {
     if (router.query.category) getCategoryFromQuery();
-    return;
   }, [categoryAvailable]);
 
   const getCategoryFromQuery = async () => {
@@ -101,7 +100,7 @@ function ModelIds({ data }) {
         categoryAvailable={categoryAvailable}
         // headClass={styles.selectDeviceHero}
         modelSection={styles.selectDeviceSection}
-        // homeQuery={router.query.issue}
+      // homeQuery={router.query.issue}
       />
       <HomeHero offers={offers} />
       <HowItWork />
