@@ -80,8 +80,6 @@ function ModelIds({ data }) {
     return;
   }, [categoryAvailable]);
 
-  console.log(categoryAvailable, "from model outside");
-
   const getCategoryFromQuery = async () => {
     const queryCategoryName = router.query.category
       .substring(0, router.query.category.lastIndexOf("-"))

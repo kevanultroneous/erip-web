@@ -80,8 +80,6 @@ function BrandIds({ data }) {
     return;
   }, [categoryAvailable]);
 
-  console.log(categoryAvailable, "from brand outside");
-
   const getCategoryFromQuery = async () => {
     const queryCategoryName = router.query.category
       .substring(0, router.query.category.lastIndexOf("-"))

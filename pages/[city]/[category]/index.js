@@ -82,8 +82,6 @@ function Categoryids({ categories }) {
     return;
   }, [categoryAvailable]);
 
-  console.log(categoryAvailable, "from category outside");
-
   const getCategoryFromQuery = async () => {
     const queryCategoryName = router.query.category
       .substring(0, router.query.category.lastIndexOf("-"))

@@ -138,17 +138,16 @@ function SelectDeviceHero({
 
     getCategory();
     if (router.query.brand) {
-      console.log("gotBrand", router.query);
       let queryIDforBrand = getBrandIDfromQuery(router.query.brand);
-      console.log({ queryIDforBrand }, brandReducer);
+
       if (queryIDforBrand !== undefined) getModels(queryIDforBrand);
     }
     if (router.query.model) {
       let queryIdforModel = getModelIDfroimQuery(router.query.model);
-      console.log({ queryIdforModel }, modelReducer);
+
       if (queryIdforModel !== undefined) getModels(queryIdforModel);
     }
-    console.log("from select", catgeoryFromReducer);
+
     return;
   }, [catgeoryFromReducer]);
 
@@ -157,7 +156,6 @@ function SelectDeviceHero({
   const categoryModel = useRef();
 
   const disableDrop = () => {
-    console.log(selectDrop.current.classList);
     selectDrop.current.classList.remove("show");
   };
 
@@ -177,11 +175,9 @@ function SelectDeviceHero({
         setIssues([]);
       }
     });
-    console.log("inIssue");
     await getModelsByBrand(brandId)
       .then((data) => data.filter((model) => model.model_id == getModelID))
       .then((selectModel) => {
-        console.log(selectModel, "selectModel");
         if (selectModel[0]) {
           setModelName(selectModel[0].model_title);
           return selectModel[0].model_title;
@@ -189,7 +185,6 @@ function SelectDeviceHero({
       })
       .then((modelTitle) => {
         if (modelTitle && router.query.model) {
-          console.log({ modelTitle });
           const href = `/${cityName}/${router.query.category}/${router.query.brand}/${modelTitle}`;
           router.push(href, href, { shallow: true });
         }
@@ -200,7 +195,6 @@ function SelectDeviceHero({
     setcategories(
       catgeoryFromReducer.filter((category) => category.group_id == 1)
     );
-    console.log(router.query, "routerQuery");
     if (categoryID !== 0) {
       getBrands(categoryID);
     }
@@ -224,9 +218,8 @@ function SelectDeviceHero({
       (element) => element.category_id == eventKey || categoryID
     );
     if (selectedCategory[0]) {
-      console.log(selectedCategory[0], "redirectingToCate");
       setCategoryName(selectedCategory[0].category_title);
-      console.log("redirectingToCate");
+
       if (selectedCategory[0] && !router.query.brand && !router.query.model) {
         const href = `/${cityName}/${selectedCategory[0].category_title
           .replace(" ", "-")
@@ -263,7 +256,6 @@ function SelectDeviceHero({
     await getBrandsByCategory(categoryID)
       .then((data) => data.filter((element) => element.brand_id == getBrandID))
       .then((selectBrand) => {
-        console.log(selectBrand, "modelName");
         if (selectBrand[0]) {
           setBrandName(selectBrand[0].brand_title);
           return selectBrand[0].brand_title;
@@ -271,7 +263,6 @@ function SelectDeviceHero({
       })
       .then((selectBrandName) => {
         if (selectBrandName && !router.query.model) {
-          console.log("routingBrand");
           const href = `/${cityName}/${router.query.category}/${selectBrandName}`;
           router.push(href, href, { shallow: true });
         }
@@ -502,7 +493,6 @@ function SelectDeviceHero({
       )}
       {displayIssues && (
         <Row className={style.issuePageRow}>
-          {console.log(issues, "totalIssue")}
           {issues.map((issues, index) => {
             return (
               <Col key={index} xl={4} md={6} className={style.issueColumn}>
