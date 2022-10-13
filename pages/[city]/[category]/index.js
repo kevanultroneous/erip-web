@@ -1,6 +1,6 @@
 // react hooks
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // components
@@ -28,8 +28,9 @@ import InformationSection from "@/components/PersonalGadgets/informationSection"
 import HomeHero from "@/components/Home/Hero";
 import { getCategoriesByCity } from "api/categoryByCity";
 import { selectCategory } from "redux/actions/issuePageActions/issuePageActions";
+import { getPersonalGadgetsSuccess } from "redux/actions/personalGadgetActions/personalGadget";
 
-function Categoryids({ data }) {
+function Categoryids({ categories }) {
   // states
   const [mobileView, setMobileView] = useState(true);
   const [popupLogin, setPopupLogin] = useState(false);
@@ -38,6 +39,7 @@ function Categoryids({ data }) {
   const [offers, setOffers] = useState([]);
   const [faqs, setFaqs] = useState([]);
   const [testimonial, setTestimonial] = useState([]);
+  const [categoryAvailable, setCategoryAvailable] = useState([]);
 
   // useSelector
   const cityID = useSelector((state) => state.locationdata.city);
@@ -47,38 +49,9 @@ function Categoryids({ data }) {
   const getBrandID = useSelector((state) => state.issuePage.brandID);
   const getModelID = useSelector((state) => state.issuePage.modelID);
 
-  // Arrays of category testimonial hero Offers
-  const categoryFaq = useSelector((state) => state.faqCategory);
-  const brandsFaq = useSelector((state) => state.faqBrand);
-  const modelsFaq = useSelector((state) => state.faqModel);
-
-  // Arrays of category testimonial hero Offers
-  const categoryTestimonial = useSelector((state) => state.testimonialCategory);
-  const brandsTestimonial = useSelector((state) => state.testimonialBrands);
-  const modelTestimonial = useSelector((state) => state.testimonialModels);
-
-  // Arrays of category testimonial hero Offers
-  const categoryHero = useSelector((state) => state.heroCategory);
-  const brandsHero = useSelector((state) => state.heroBrands);
-  const modelHero = useSelector((state) => state.heroModels);
-
-  // Arrays of category testimonial hero Offers
-  const categoryInfo = useSelector((state) => state.informationCategory);
-  const brandsInfo = useSelector((state) => state.informationBrands);
-  const modelInfo = useSelector((state) => state.informationModels);
-
-  // Arrays of category testimonial hero Offers
-  const categoryOffer = useSelector((state) => state.offerCategory);
-  const brandsOffer = useSelector((state) => state.offerBrands);
-  const modelOffer = useSelector((state) => state.offerModels);
-
   // declaration
   const router = useRouter();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log(categoryTestimonial.data, "offer");
-  }, [categoryTestimonial.data]);
 
   // useEffects
   useEffect(() => {
@@ -90,48 +63,35 @@ function Categoryids({ data }) {
     } else {
       setToken(false);
     }
-    getCategoryFromQuery();
-    console.log("from Category");
+    // getCategoryFromQuery();
+
+    async function getCategoryFromCity() {
+      await getCategoriesByCity(cityID)
+        .then((resposnse) => {
+          setCategoryAvailable(resposnse);
+        })
+        .catch((e) => console.log(e));
+    }
+    getCategoryFromCity();
+    return;
   }, []);
 
   useEffect(() => {
-    setInformation(categoryInfo.data);
-    setFaqs(categoryFaq.data);
-    setOffers(categoryOffer.data);
-    setTestimonial(categoryTestimonial.data);
-  }, [categoryID]);
+    getCategoryFromQuery();
+    dispatch(getPersonalGadgetsSuccess(categoryAvailable));
+    return;
+  }, [categoryAvailable]);
 
-  useEffect(() => {
-    setInformation(brandsInfo.data);
-    setFaqs(brandsFaq.data);
-    setOffers(brandsOffer.data);
-    setTestimonial(brandsTestimonial.data);
-  }, [getBrandID]);
-
-  useEffect(() => {
-    setInformation(modelInfo.data);
-    setFaqs(modelsFaq.data);
-    setOffers(modelOffer.data);
-    setTestimonial(modelTestimonial.data);
-  }, [getModelID]);
-
-  const queryCategoryName = router.query.category
-    .substring(0, router.query.category.lastIndexOf("-"))
-    .toUpperCase();
-
-
+  console.log(categoryAvailable, "from category outside");
 
   const getCategoryFromQuery = async () => {
-    await getCategoriesByCity(cityID)
-      .then((response) => {
-        const allCategories = response.filter(
-          (cate) => cate.category_title == queryCategoryName
-        )[0];
-        dispatch(selectCategory(allCategories.category_id));
-        // return response
-      })
-      .catch((e) => e);
-    // console.log({allCategories})
+    const queryCategoryName = router.query.category
+      .substring(0, router.query.category.lastIndexOf("-"))
+      .toUpperCase();
+    const allCategories = categoryAvailable.filter(
+      (cate) => cate.category_title == queryCategoryName
+    )[0];
+    if (allCategories) dispatch(selectCategory(allCategories.category_id));
   };
 
   // returned components
@@ -142,9 +102,10 @@ function Categoryids({ data }) {
       <SelectDeviceHero
         token={token}
         quoteaction={() => setPopupLogin(true)}
+        categoryAvailable={categoryAvailable}
         // headClass={styles.selectDeviceHero}
         modelSection={styles.selectDeviceSection}
-      // homeQuery={router.query.issue}
+        // homeQuery={router.query.issue}
       />
       <HomeHero offers={offers} />
       <HowItWork />
@@ -157,25 +118,4 @@ function Categoryids({ data }) {
   );
 }
 
-// Testimonial API Calling
-export async function getServerSideProps() {
-  let home_testimonial = await axios
-    .get(`${API_URL}api/v1/cms/testimonials`, {
-      params: {
-        page: "home",
-      },
-    })
-    .then((res) => {
-      res.data;
-    })
-    .catch((e) => console.log("testimonial error" + e));
-  return {
-    props: {
-      data: {
-        hometestimonial: home_testimonial ? home_testimonial : TestimonialData,
-      },
-    },
-  };
-}
-
-export default Categoryids;
+export default React.memo(Categoryids);
