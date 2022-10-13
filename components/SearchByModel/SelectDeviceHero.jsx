@@ -140,7 +140,6 @@ function SelectDeviceHero({
     AddToCart(localStorage.getItem("token"), id)
       .then((response) => {
         if (response.data.success) {
-          alert("add to cart success");
         }
       })
       .catch((err) => {
