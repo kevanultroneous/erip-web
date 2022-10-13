@@ -253,13 +253,13 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
   }
 
   function showPosition(position) {
-    getPincode(position.coords.latitude, position.coords.longitude);
+    // getPincode(position.coords.latitude, position.coords.longitude);
     setCurrentLocation(position.coords);
     reverseMap(position.coords.latitude, position.coords.longitude);
     displayLocation(position.coords.latitude, position.coords.longitude);
   }
   useEffect(() => {
-    getPincode(currentLocation.latitude, currentLocation.longitude);
+    // getPincode(currentLocation.latitude, currentLocation.longitude);
     reverseMap(currentLocation.latitude, currentLocation.longitude);
   }, [currentLocation]);
 
@@ -271,7 +271,7 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
       var latlng = new google.maps.LatLng(lat, lng);
       if (latlng != null || latlng != undefined) {
         var geocoder = (geocoder = new google.maps.Geocoder());
-        getPincode(lat, lng);
+        // getPincode(lat, lng);
         geocoder.geocode({ latLng: latlng }, function (results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
             // results.map((v) => console.log(v));
@@ -434,7 +434,7 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
       var latlng = new google.maps.LatLng(latitude, longitude);
       if (latlng != null || latlng != undefined) {
         var count, country, state, city;
-        getPincode(latitude, longitude);
+        // getPincode(latitude, longitude);
 
         geocoder.geocode({ latLng: latlng }, function (results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
