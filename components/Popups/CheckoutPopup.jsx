@@ -56,7 +56,10 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
   const [showTimeError, setShowTimeError] = useState(false);
   const [processStatus, setProcessStatus] = useState([0]);
   const [secondProcessShow, setSecondProcessShow] = useState(false);
-  const [currentLocation, setCurrentLocation] = useState(0);
+  const [currentLocation, setCurrentLocation] = useState({
+    latitude: 12.972442,
+    longitude: 77.580643,
+  });
   const [selectedAddress, setSelectedAddress] = useState("");
   const [confirmLocationSession, setConfirmLocationSession] = useState(false);
   const [finalLocationStep, setFinalLocationStep] = useState(false);
@@ -119,7 +122,6 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
       })
       .catch((err) => dispatch(setAddorRemoveCartFail(err)));
   };
-
   const TimeIsOver = (timesloatsata, timesofsloats) => {
     let overdata = [];
     let newDate = new Date();
@@ -467,6 +469,10 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
       if (MatchCity(cityData, currentCity, dispatch)) {
       } else {
         setSelectedAddress("");
+        setCurrentLocation({
+          latitude: 12.972442,
+          longitude: 77.580643,
+        });
       }
     }
   }, [currentCity]);
@@ -948,7 +954,7 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
                         height={mobileView ? "500px" : "300px"}
                         lat={currentLocation.latitude}
                         lng={currentLocation.longitude}
-                        zoom={19}
+                        zoom={15}
                         loadingMessage={"Waiting For Maps...."}
                         params={params}
                         onMapCreated={() => onMapCreated}

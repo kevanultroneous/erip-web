@@ -29,6 +29,7 @@ import geocodeToPincode from "geocode-to-pincode";
 import { getCookie } from "cookies-next";
 import { NavSearchApi } from "api/mixApi";
 import NavigationHandler from "../Popups/NavigationHandler";
+import { MyProfile } from "api/profileApi";
 
 export function Header() {
   const [mobileView, setMobileView] = useState(false);
@@ -54,7 +55,7 @@ export function Header() {
   const locationselector = useSelector((selector) => selector.locationdata);
   const navsearch = useSelector((selector) => selector.mix.navsearch);
   const userselector = useSelector((selector) => selector.userdata);
-  const profileselector = useSelector((selector) => selector.profile.profile);
+  // const profileselector = useSelector((selector) => selector.profile.profile);
   const selector = useSelector((selector) => selector);
 
   const navdata = navsearch ? (navsearch.data ? navsearch.data : null) : null;
@@ -66,6 +67,7 @@ export function Header() {
   const [errSearch, setErrsearch] = useState("");
   const [loadsSearch, setLoadsSearch] = useState(false);
   const [showsearch, setShowSearch] = useState(false);
+  const [profileData, setProfileData] = useState([]);
 
   setTimeout(() => {
     setSdata(navdata);
@@ -146,7 +148,15 @@ export function Header() {
       data: moreMenu,
     },
   ];
-
+  const FetchProfile = () => {
+    MyProfile(localStorage.getItem("token"))
+      .then((r) => {
+        if (r.data.success) {
+          setProfileData(r.data.data);
+        }
+      })
+      .catch((e) => console.log(e));
+  };
   useEffect(() => {
     if (localStorage.getItem("city") && localStorage.getItem("cityid")) {
     } else {
@@ -203,7 +213,7 @@ export function Header() {
       setLocationPopupShow(false);
       setShowMobloc(false);
     };
-
+    FetchProfile();
     window.addEventListener("scroll", handleScroll);
 
     return () => {
@@ -421,16 +431,19 @@ export function Header() {
                     Login
                   </Nav.Link>
                 )}
-
-                <Nav.Link href="#" className={styles.mobileMenuLink}>
+                <Link className={styles.mobileMenuLink} href="my-bookings">
                   My Bookings
-                </Nav.Link>
-                <Nav.Link href="#" className={styles.mobileMenuLink}>
+                </Link>
+                {/* <Nav.Link href="#" >
+                </Nav.Link> */}
+                <Link className={styles.mobileMenuLink} href="about-us">
                   About Us
-                </Nav.Link>
-                <Nav.Link href="#" className={styles.mobileMenuLink}>
+                </Link>
+                <Link className={styles.mobileMenuLink} href="#">
                   Blogs
-                </Nav.Link>
+                </Link>
+                {/* <Nav.Link href="#" className={styles.mobileMenuLink}>
+                </Nav.Link> */}
               </Nav>
             </Navbar.Collapse>
             <LoginPopup show={loginPopup} onHide={() => setLoginPopup(false)} />
@@ -1055,11 +1068,7 @@ export function Header() {
                         marginLeft: "1rem",
                       }}
                     >
-                      {profileselector
-                        ? profileselector.data
-                          ? profileselector.data[0].user_fullname
-                          : null
-                        : null}
+                      {profileData[0]?.user_fullname}
                     </span>
                   </div>
                 </Link>
