@@ -87,13 +87,15 @@ export default function ViewBooking({ backhandler, order }) {
     OrderQuotation(localStorage.getItem("token"), order, status)
       .then((response) => {
         if (response.success) {
-          alert(response.message);
+          // alert(response.message);
           getAllDetail();
         } else {
-          alert(response.message);
+          // alert(response.message);
         }
       })
-      .catch((err) => alert(err));
+      .catch((err) => {
+        // alert(err)
+      });
   };
 
   return (

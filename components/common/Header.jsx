@@ -291,15 +291,15 @@ export function Header() {
   }
 
   function showPosition(position) {
-    // geocodeToPincode({
-    //   lat: position.coords.latitude,
-    //   lng: position.coords.longitude,
-    //   key: GMAP_API,
-    // })
-    //   .then((response) => localStorage.setItem("pincode", response.pincode))
-    //   .catch((error) => console.log(error));
-    // reverseMap(position.coords.latitude, position.coords.longitude);
-    // displayLocation(position.coords.latitude, position.coords.longitude);
+    geocodeToPincode({
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+      key: GMAP_API,
+    })
+      .then((response) => localStorage.setItem("pincode", response.pincode))
+      .catch((error) => console.log(error));
+    reverseMap(position.coords.latitude, position.coords.longitude);
+    displayLocation(position.coords.latitude, position.coords.longitude);
   }
 
   function reverseMap(lat, lng) {

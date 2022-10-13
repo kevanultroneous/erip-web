@@ -4,6 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styles from "@/styles/components/Popups/Checkout.module.css";
+// import styles from "@/styles/components/MyBooking/Reschedule.module.css";
 import { useState } from "react";
 import { enddate, getDatesInRange, startdate } from "utils/calenderPackage";
 import { useEffect } from "react";
@@ -85,10 +86,10 @@ export default function Reschedule({ show, onHide, order }) {
       })
         .then((response) => {
           if (response.data.success) {
-            alert(response.data.message);
+            // alert(response.data.message);
             onHide();
           } else {
-            alert(response.data.message);
+            // alert(response.data.message);
           }
         })
         .catch((e) => console.log(e));

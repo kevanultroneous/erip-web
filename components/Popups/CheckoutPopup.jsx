@@ -238,7 +238,9 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         showPosition,
-        (error) => alert(error.message),
+        (error) => {
+          alert(error.message);
+        },
         {
           enableHighAccuracy: true,
           maximumAge: 10000,
@@ -384,7 +386,7 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
         name: nameInput,
       });
       if (!localStorage.getItem("token")) {
-        alert("Please Login Now");
+        // alert("Please Login Now");
       } else {
         SaveAddress(
           localStorage.getItem("token"),
@@ -507,7 +509,7 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
             setProcessComplete(true);
             removeThecartdata();
           } else {
-            alert(r.data.message);
+            // alert(r.data.message);
           }
         }
       })

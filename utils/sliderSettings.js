@@ -14,7 +14,7 @@ export const calenderslidersettings = {
         arrows: false,
         slidesToShow: 3,
         slidesToScroll: 1,
-        initialSlide: 2,
+        initialSlide: 1,
       },
     },
     {

@@ -572,6 +572,8 @@ input[type="number"] {
     width: auto !important;
     font-family: "ProductSansRegular" !important;
     left: 0 !important;
+    position: fixed !important;
+    bottom: 0;
     padding: 0rem 1rem;
   }
 

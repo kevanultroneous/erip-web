@@ -78,13 +78,13 @@ export default function LoginPopup({ show, onHide }) {
   const RegOtpHandler = (e) => {
     setRegOtp(e.target.value);
     if (RegOtp.length >= 6) {
-      alert("Not valid OTP");
+      // alert("Not valid OTP");
     }
   };
 
   const RegOtpVerify = () => {
     if (RegOtp.length < 6) {
-      alert("Enter valid otp");
+      // alert("Enter valid otp");
     } else {
       dispatch(callRegistrationUser(ContactNumber, RegOtp));
     }
@@ -104,7 +104,7 @@ export default function LoginPopup({ show, onHide }) {
           }
           // reg check success
         } else if (userselector.process == 0.2) {
-          alert(userselector.data.message);
+          // alert(userselector.data.message);
           //reg check fail
         } else if (userselector.process == 1.1) {
           setRegOtpModal(true);
@@ -115,27 +115,27 @@ export default function LoginPopup({ show, onHide }) {
           }
           // reg otp send fail
         } else if (userselector.process == 2.1) {
-          alert(userselector.data.message);
+          // alert(userselector.data.message);
           //reg success
           dispatch(callSendLoginOTPApi());
         } else if (userselector.process == 2.2) {
-          alert(userselector.data.message);
+          // alert(userselector.data.message);
           // reg fail
         }
 
         if (userselector.process == 3.1) {
-          alert(userselector.data.message);
+          // alert(userselector.data.message);
         } else if (userselector.process == 3.2) {
-          alert(userselector.data.message);
+          // alert(userselector.data.message);
         }
 
         if (userselector.process == 4.1) {
-          alert(userselector.data.message);
+          // alert(userselector.data.message);
         } else if (userselector.process == 4.2) {
           if (userselector.data == "Mobile OTP expired") {
             dispatch(callSendLoginOTPApi(ContactNumber));
           } else {
-            alert(userselector.data);
+            // alert(userselector.data);
           }
         }
       }

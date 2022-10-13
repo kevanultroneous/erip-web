@@ -66,7 +66,7 @@ export default function PaymentOption({ amount }) {
     checkingId();
   };
   const checkingId = () => {
-    alert("checking id");
+    // alert("checking id");
     if (datas != null || datas != undefined || datas != {}) {
       handlePayment();
     }
@@ -83,9 +83,9 @@ export default function PaymentOption({ amount }) {
       // redirect: true,
       order_id: datas.id,
       handler: function (response) {
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature);
+        // alert(response.razorpay_payment_id);
+        // alert(response.razorpay_order_id);
+        // alert(response.razorpay_signature);
       },
       prefill: {
         name: "Piyush Garg",
@@ -102,7 +102,7 @@ export default function PaymentOption({ amount }) {
     let rzp = new Razorpay(options);
     if (datas.id != "" || datas.id) {
       console.log(datas.id);
-      alert(datas.id);
+      // alert(datas.id);
       rzp.open();
     }
   }, [Razorpay]);

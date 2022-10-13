@@ -235,7 +235,7 @@ function SelectDeviceHero({
         setbrandData(data);
       } else {
         setDisableBrands(true);
-        alert("No data found");
+        // alert("No data found");
         setbrandData([]);
       }
     });
@@ -275,7 +275,7 @@ function SelectDeviceHero({
           setDisableModel(false);
           setmodels(data);
         } else {
-          alert("no data");
+          // alert("no data");
           setDisableModel(true);
           setmodels([]);
         }

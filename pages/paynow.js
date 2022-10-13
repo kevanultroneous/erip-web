@@ -10,7 +10,10 @@ export default function paynow() {
 
 
     const handlePayment = async () => {
-        await axios.post("api/payment").then((r) => alert(JSON.stringify(r.data))).catch((e) => console.log(e))
+        await axios.post("api/payment").then((r) =>
+            // alert(JSON.stringify(r.data))
+        )
+            .catch((e) => console.log(e))
 
         // const options = {
         //     key: "rzp_test_edc0iutgef4r18",

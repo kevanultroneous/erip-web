@@ -75,11 +75,11 @@ function LeftMenu({
                   localStorage.removeItem("token");
                   router.push("/");
                 } else {
-                  alert(response.data.message);
+                  // alert(response.data.message);
                 }
               })
               .catch((e) => {
-                alert(e);
+                // alert(e);
               });
           }}
         >

@@ -73,7 +73,7 @@ export default function CartAndOffer({ show, onHide, backshow }) {
         }
       })
       .catch((err) => {
-        alert(err);
+        // alert(err);
         setSpinning(false);
       });
   };
@@ -136,7 +136,7 @@ export default function CartAndOffer({ show, onHide, backshow }) {
         if (r.data.success) {
           localStorage.setItem("enq_id", r.data.enquiry_data.enquiry_id);
         } else {
-          alert(r.data.message);
+          // alert(r.data.message);
         }
       })
       .catch((e) => console.log(e));
@@ -158,7 +158,7 @@ export default function CartAndOffer({ show, onHide, backshow }) {
             if (r.data.success) {
               EnquireNow();
             } else {
-              alert(r.data.message);
+              // alert(r.data.message);
             }
           }
         })

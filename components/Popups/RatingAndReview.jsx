@@ -114,9 +114,9 @@ export default function RatingAndReview({ show, onHide, order }) {
                   rating: ratings,
                 }).then((response) => {
                   if (response.data.success) {
-                    alert(response.data.message);
+                    // alert(response.data.message);
                   } else {
-                    alert(response.data.message);
+                    // alert(response.data.message);
                   }
                 });
               }}
@@ -214,10 +214,10 @@ export default function RatingAndReview({ show, onHide, order }) {
                         remark: tellus,
                       }).then((r) => {
                         if (r.data.success) {
-                          alert(r.data.message);
+                          // alert(r.data.message);
                           onHide();
                         } else {
-                          alert(r.data.message);
+                          // alert(r.data.message);
                         }
                       });
                     }}
