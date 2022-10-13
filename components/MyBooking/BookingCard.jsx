@@ -26,7 +26,6 @@ function BookingCard({
           <div className={styles.bookingCardStatus}>
             <p>{partnerStatusAssigned}</p>
           </div>
-          sadka
         </Col>
       </Row>
       <Row className={styles.bookingCardBody}>
