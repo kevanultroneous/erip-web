@@ -293,13 +293,13 @@ export function Header() {
   }
 
   function showPosition(position) {
-    geocodeToPincode({
-      lat: position.coords.latitude,
-      lng: position.coords.longitude,
-      key: GMAP_API,
-    })
-      .then((response) => localStorage.setItem("pincode", response.pincode))
-      .catch((error) => console.log(error));
+    // geocodeToPincode({
+    //   lat: position.coords.latitude,
+    //   lng: position.coords.longitude,
+    //   key: GMAP_API,
+    // })
+    //   .then((response) => localStorage.setItem("pincode", response.pincode))
+    //   .catch((error) => console.log(error));
     reverseMap(position.coords.latitude, position.coords.longitude);
     displayLocation(position.coords.latitude, position.coords.longitude);
   }
@@ -312,7 +312,6 @@ export function Header() {
       var latlng = new google.maps.LatLng(lat, lng);
       if (latlng != null || latlng != undefined) {
         var geocoder = (geocoder = new google.maps.Geocoder());
-
         geocoder.geocode({ latLng: latlng }, function (results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
             if (results[1]) {
@@ -336,7 +335,7 @@ export function Header() {
           (latitude != null && longitude != null) ||
           (latitude != undefined && longitude != undefined)
         ) {
-          getPincode(latitude, longitude);
+          // getPincode(latitude, longitude);
           displayLocation(latitude, longitude);
         }
       }
@@ -353,7 +352,7 @@ export function Header() {
       var latlng = new google.maps.LatLng(latitude, longitude);
       if (latlng != undefined || latlng != null) {
         var count, country, state, city;
-        getPincode(latitude, longitude);
+        // getPincode(latitude, longitude);
         geocoder.geocode({ latLng: latlng }, function (results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
             if (results[0]) {

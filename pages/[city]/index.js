@@ -11,20 +11,8 @@ import WhyErip from "@/components/common/WhyErip";
 import GetYourFix from "@/components/Home/GetYourFix";
 import HomeHero from "@/components/Home/Hero";
 import OfferBanner from "@/components/Home/OfferBanner";
-import JobCardPopUp from "@/components/MyBooking/JobCardPopUp";
 import OfferadPopup from "@/components/Popups/OfferadPopup";
-import { HeroSectionApi } from "api/homeapi";
-import axios from "axios";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import {
-    API_URL,
-    GetYourFixCard,
-    HomeHerodata,
-    NewsandUpdateData,
-    OfferBannerhomedata,
-    TestimonialData,
-} from "utils/data";
 
 export default function cityid() {
     const [mobileView, setMobileView] = useState(true);

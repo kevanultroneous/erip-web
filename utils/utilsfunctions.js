@@ -25,12 +25,13 @@ export const MatchCity = (cityData, currentCity, dispatch) => {
   }
 };
 export const getPincode = (lat, long) => {
-
-  geocodeToPincode({
-    lat: lat,
-    lng: long,
-    key: GMAP_API,
-  })
-    .then((response) => localStorage.setItem("pincode", response.pincode))
-    .catch((error) => console.log(error));
+  if (lat != null && long != null || lat != undefined && long != undefined) {
+    geocodeToPincode({
+      lat: lat,
+      lng: long,
+      key: GMAP_API,
+    })
+      .then((response) => localStorage.setItem("pincode", response.pincode))
+      .catch((error) => console.log(error));
+  }
 };
