@@ -1,6 +1,6 @@
 // react hooks
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // components
@@ -114,4 +114,4 @@ function ModelIds({ data }) {
   );
 }
 
-export default ModelIds;
+export default React.memo(ModelIds);

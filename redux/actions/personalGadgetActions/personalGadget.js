@@ -17,7 +17,6 @@ export const getPersonalGadgetsStart = () => {
 };
 
 export const getPersonalGadgetsSuccess = (data) => {
-  console.log({ data }, "reducerData");
   return {
     type: personalGadgets.GET_PERSONAL_GADGETS_SUCCESS,
     payload: data,
