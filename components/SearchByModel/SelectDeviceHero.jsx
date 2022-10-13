@@ -47,10 +47,12 @@ import {
   callMyCartBycity,
 } from "redux/actions/cartActions/cartActions";
 import {
+  getPersonalGadgetsBrandSuccess,
   getPersonalGadgetsByBrands,
   getPersonalGadgetsByCity,
   getPersonalGadgetsByIssues,
   getPersonalGadgetsByModels,
+  getPersonalGadgetsModelSuccess,
   selectCategoryName,
 } from "redux/actions/personalGadgetActions/personalGadget";
 import KnowMoreModal from "../HomeAppliances/KnowMoreModal";
@@ -64,6 +66,7 @@ function SelectDeviceHero({
   quoteaction,
   token,
   homeQuery,
+  categoryAvailable,
 }) {
   const [categories, setcategories] = useState([]);
   const [brandData, setbrandData] = useState([{}]);
@@ -122,46 +125,32 @@ function SelectDeviceHero({
   );
   const selectBrandsName = useSelector((state) => state.brandName.brandName);
   const selectModelsName = useSelector((state) => state.modelName.modelName);
+  const catgeoryFromReducer =
+    useSelector((state) => state.personalGadget.data) || categoryAvailable;
+  const brandReducer = useSelector((state) => state.personalGadgetBrands.data);
+  const modelReducer = useSelector((state) => state.personalGadgetModels.data);
 
   const dispatch = useDispatch();
   const router = useRouter();
 
   useEffect(() => {
     window.innerWidth < 662 ? setMobileView(true) : setMobileView(false);
-  }, []);
 
-  useEffect(() => {
-    console.log({ categoryID });
-
-    // dispatch(getPersonalGadgetsByBrands(categoryID));
-    // dispatch(getCategoryHero(categoryID));
-    // dispatch(callFaqByCategory(categoryID));
-    // dispatch(getInformationByCategory(categoryID));
-    // dispatch(getCategoryOffer(categoryID));
-    // dispatch(getTestimonialsByCategory(categoryID));
-  }, [categoryID]);
-
-  useEffect(() => {
-    // dispatch(getPersonalGadgetsByModels(getBrandID));
-    // dispatch(getBrandsHero(getBrandID));
-    // dispatch(callFaqByBrands(getBrandID));
-    // dispatch(getInformationByBrands(getBrandID));
-    // dispatch(getBrandsOffer(getBrandID));
-    // dispatch(getTestimonialsByBrand(getBrandID));
-  }, [getBrandID]);
-
-  useEffect(() => {
-    // dispatch(getPersonalGadgetsByIssues(getModelID));
-    // dispatch(getModelHero(getModelID));
-    // dispatch(callFaqByBrands(getModelID));
-    // dispatch(getInformationByBrands(getModelID));
-    // dispatch(getBrandsOffer(getModelID));
-    // dispatch(getTestimonialsByBrand(getModelID));
-  }, [getModelID]);
-
-  useEffect(() => {
-    dispatch(getPersonalGadgetsByCity(cityID));
-  }, [cityID]);
+    getCategory();
+    if (router.query.brand) {
+      console.log("gotBrand", router.query);
+      let queryIDforBrand = getBrandIDfromQuery(router.query.brand);
+      console.log({ queryIDforBrand }, brandReducer);
+      if (queryIDforBrand !== undefined) getModels(queryIDforBrand);
+    }
+    if (router.query.model) {
+      let queryIdforModel = getModelIDfroimQuery(router.query.model);
+      console.log({ queryIdforModel }, modelReducer);
+      if (queryIdforModel !== undefined) getModels(queryIdforModel);
+    }
+    console.log("from select", catgeoryFromReducer);
+    return;
+  }, [catgeoryFromReducer]);
 
   const cartdata = useSelector((state) => state.cartdata);
   const selectDrop = useRef();
@@ -188,6 +177,7 @@ function SelectDeviceHero({
         setIssues([]);
       }
     });
+    console.log("inIssue");
     await getModelsByBrand(brandId)
       .then((data) => data.filter((model) => model.model_id == getModelID))
       .then((selectModel) => {
@@ -198,29 +188,19 @@ function SelectDeviceHero({
         }
       })
       .then((modelTitle) => {
-        if (modelTitle) {
+        if (modelTitle && router.query.model) {
+          console.log({ modelTitle });
           const href = `/${cityName}/${router.query.category}/${router.query.brand}/${modelTitle}`;
           router.push(href, href, { shallow: true });
         }
       });
   };
 
-  useEffect(() => {
-    getCategory();
-    if (router.query.brand) {
-      getBrands(router.query.brand);
-    }
-    if (router.query.model) {
-      getModels("", router.query.model);
-    }
-  }, []);
-
   const getCategory = async () => {
-    await getCategoriesByCity(cityID)
-      .then((data) => {
-        setcategories(data.filter((category) => category.group_id == 1));
-      })
-      .catch(() => setcategories([]));
+    setcategories(
+      catgeoryFromReducer.filter((category) => category.group_id == 1)
+    );
+    console.log(router.query, "routerQuery");
     if (categoryID !== 0) {
       getBrands(categoryID);
     }
@@ -228,36 +208,32 @@ function SelectDeviceHero({
 
   const getBrands = async (eventKey, key) => {
     dispatch(selectCategory(eventKey));
-    dispatch(selectCategoryName(cityID));
+    // dispatch(selectCategoryName(cityID));
     await getBrandsByCategory(eventKey).then((data) => {
       if (data !== undefined) {
         setDisableBrands(false);
         setbrandData(data);
+        dispatch(getPersonalGadgetsBrandSuccess(data));
       } else {
         setDisableBrands(true);
         // alert("No data found");
         setbrandData([]);
       }
     });
-    await getCategoriesByCity(cityID)
-      .then((data) =>
-        data.filter((element) => element.category_id == Number(categoryID))
-      )
-      .then((selectCategory) => {
-        console.log(selectCategory, "selectCategory");
-        if (selectCategory[0]) {
-          setCategoryName(selectCategory[0].category_title);
-          return selectCategory[0].category_title;
-        }
-      })
-      .then((categoryDataName) => {
-        if (categoryDataName) {
-          const href = `/${cityName}/${categoryDataName
-            .replace(" ", "-")
-            .toLowerCase()}-repair`;
-          router.push(href, href, { shallow: true });
-        }
-      });
+    const selectedCategory = catgeoryFromReducer.filter(
+      (element) => element.category_id == eventKey || categoryID
+    );
+    if (selectedCategory[0]) {
+      console.log(selectedCategory[0], "redirectingToCate");
+      setCategoryName(selectedCategory[0].category_title);
+      console.log("redirectingToCate");
+      if (selectedCategory[0] && !router.query.brand && !router.query.model) {
+        const href = `/${cityName}/${selectedCategory[0].category_title
+          .replace(" ", "-")
+          .toLowerCase()}-repair`;
+        router.push(href, href, { shallow: true });
+      }
+    }
     setTopBrands(true);
     setDisplayIssues(false);
     setIssues([]);
@@ -267,13 +243,15 @@ function SelectDeviceHero({
   };
 
   const getModels = async (eventKey, key) => {
-    dispatch(selectBrands(key.target.accessKey));
+    const getModelIdFromClick = eventKey || key.target.accessKey;
+    dispatch(selectBrands(getModelIdFromClick));
 
-    const modelData = await getModelsByBrand(key.target.accessKey).then(
+    const modelData = await getModelsByBrand(getModelIdFromClick).then(
       (data) => {
         if (data !== undefined) {
           setDisableModel(false);
           setmodels(data);
+          dispatch(getPersonalGadgetsModelSuccess(data));
         } else {
           // alert("no data");
           setDisableModel(true);
@@ -281,7 +259,7 @@ function SelectDeviceHero({
         }
       }
     );
-    setBrandId(key.target.accessKey);
+    setBrandId(getModelIdFromClick);
     await getBrandsByCategory(categoryID)
       .then((data) => data.filter((element) => element.brand_id == getBrandID))
       .then((selectBrand) => {
@@ -292,7 +270,8 @@ function SelectDeviceHero({
         }
       })
       .then((selectBrandName) => {
-        if (selectBrandName) {
+        if (selectBrandName && !router.query.model) {
+          console.log("routingBrand");
           const href = `/${cityName}/${router.query.category}/${selectBrandName}`;
           router.push(href, href, { shallow: true });
         }
@@ -301,6 +280,17 @@ function SelectDeviceHero({
     setDisplayIssues(false);
     setIssues([]);
     setModelName("Models");
+  };
+
+  const getBrandIDfromQuery = (name) => {
+    if (brandReducer.length > 0)
+      return brandReducer.filter((brands) => brands.brand_title == name)[0]
+        .brand_id;
+  };
+
+  const getModelIDfroimQuery = (name) => {
+    if (modelReducer.length > 0)
+      return modelReducer.filter((model) => model.model_title == name)[0];
   };
 
   // const totalprice =
@@ -330,71 +320,6 @@ function SelectDeviceHero({
     let firstLetter = categoryName.substring(0, 1);
     let smallLetter = categoryName.substring(1, categoryName.length);
     return (heroCatName = firstLetter + smallLetter.toLowerCase());
-  };
-
-  useEffect(() => {
-    // getCartData(issueID);
-  }, [cartButtonName, issueID]);
-
-  const getCartData = (issueId) => {
-    dispatch(selectIssues(issueId));
-    dispatch(callAddorRemoveCart(localStorage.getItem("token"), issueId));
-    dispatch(callMyCartBycity(localStorage.getItem("token")));
-    if (cartdata.data.data !== undefined) {
-      setcartButtonName(cartdata.data.data);
-    }
-  };
-
-  useEffect(() => {
-    console.log({ cartdata });
-  }, [cartdata]);
-
-  useEffect(() => {
-    if (router.query.category) getCategoryFromQuery();
-    if (router.query.brand) getBrandFromQuery();
-    if (router.query.model) getModelFromQuery();
-  }, [categoryID, getBrandID, getModelID]);
-
-  useEffect(() => {
-    console.log("from select");
-  }, []);
-
-  const getCategoryFromQuery = async () => {
-    const queryCategoryName = router.query.category
-      .substring(0, router.query.category.lastIndexOf("-"))
-      .toUpperCase();
-    await getCategoriesByCity(cityID)
-      .then((response) => {
-        const allCategories = response.filter(
-          (cate) => cate.category_title == queryCategoryName
-        )[0];
-        dispatch(selectCategory(allCategories.category_id));
-      })
-      .catch((e) => console.log(e));
-  };
-
-  const getBrandFromQuery = async () => {
-    const queryBrandName = router.query.brand.toUpperCase();
-    await getBrandsByCategory(categoryID)
-      .then((response) => {
-        const allBrands = response.filter(
-          (brand) => brand.brand_title == queryBrandName
-        )[0];
-        dispatch(selectCategory(allBrands.brand_id));
-      })
-      .catch((e) => console.log(e));
-  };
-
-  const getModelFromQuery = async () => {
-    const queryModelName = router.query.model.toUpperCase();
-    await getModelsByBrand(getBrandID)
-      .then((response) => {
-        const allModels = response.filter(
-          (model) => model.model_title == queryModelName
-        )[0];
-        dispatch(selectCategory(allModels.model_id));
-      })
-      .catch((e) => console.log(e));
   };
 
   return (
@@ -593,7 +518,9 @@ function SelectDeviceHero({
                   serviceType={issues.repair_type}
                   modalHandler={() => handlingModal(issues)}
                   addToCart={() => {
-                    token ? getCartData(issues.issue_id) : quoteaction();
+                    token
+                      ? callAddorRemoveCart(token, issues.issue_id)
+                      : quoteaction();
                   }}
                   buttonName={
                     token
@@ -627,4 +554,4 @@ function SelectDeviceHero({
   );
 }
 
-export default SelectDeviceHero;
+export default React.memo(SelectDeviceHero);
