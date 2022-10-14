@@ -117,6 +117,7 @@ export default function LoginPopup({ show, onHide }) {
         } else if (userselector.process == 2.1) {
           alert(userselector.data.message);
           //reg success
+          setRegOtpModal(false);
           dispatch(callSendLoginOTPApi());
         } else if (userselector.process == 2.2) {
           alert(userselector.data.message);

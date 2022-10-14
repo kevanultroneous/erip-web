@@ -1,7 +1,6 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import PrimaryButton from "./PrimaryButton";
 import { Col, Image, Modal, Row, Spinner } from "react-bootstrap";
 import { moreMenu } from "utils/moreMenu";
@@ -13,23 +12,19 @@ import LoginPopup from "../Popups/LoginPopup";
 import CartAndOffer from "../Popups/CartAndOffer";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
 import { API_URL, GMAP_API } from "utils/data";
-import { CityDetactionAPI, PincodeByCity, UserLogout } from "pages/api/api";
-import { getPincode, MatchCity } from "utils/utilsfunctions";
+import { CityDetactionAPI, UserLogout } from "pages/api/api";
+import { MatchCity } from "utils/utilsfunctions";
 import Logout from "../Popups/Logout";
 import axios from "axios";
 import { FiSearch } from "react-icons/fi";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGIN_USER_SUCCESS, USER_CLEAR } from "redux/actions/actionTypes";
-import { GET_CITY_SUCCESS } from "redux/actions/actionTypes";
 import { BiUser } from "react-icons/bi";
-import { callNavsearch } from "redux/actions/mixActions/mixActions";
 import { selectCategory } from "redux/actions/issuePageActions/issuePageActions";
-import geocodeToPincode from "geocode-to-pincode";
 import { getCookie } from "cookies-next";
 import { NavSearchApi } from "api/mixApi";
 import NavigationHandler from "../Popups/NavigationHandler";
-import { MyProfile } from "api/profileApi";
 import { useRouter } from "next/router";
 
 export function Header() {

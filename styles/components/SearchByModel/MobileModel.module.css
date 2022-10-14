@@ -38,6 +38,7 @@
 
 .modelIcons {
   padding: 1.5rem;
+
 }
 
 .categoryBox {
@@ -52,4 +53,11 @@
 
 .categoryBox p {
   margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .modelIcons img {
+    width: 100%;
+    height: 5rem;
+  }
 }

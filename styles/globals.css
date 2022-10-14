@@ -114,9 +114,9 @@ a {
 .dropDownMenuHead .dropdown-toggle:active,
 .dropDownMenuHead .dropdown-toggle,
 .dropDownMenuHead .dropdown-toggle:hover {
-  background-color: transparent;
+  background-color: transparent !important;
   border: none;
-  color: #000;
+  color: #000 !important;
   padding: 0;
 }
 

@@ -228,6 +228,7 @@ function MobileModels({ getIssuesFromMobile, issues, setissues, homeQuery }) {
                   onClick={() => getModels(brands.brand_id)}
                 >
                   <Image
+                    // className={styles.mobImage}
                     fluid
                     accessKey={brands.brand_id}
                     src={brands.brand_icon_url}

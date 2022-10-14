@@ -352,6 +352,7 @@ function SelectDeviceHero({
                               <div className={styles.categoryImages}>
                                 <Image
                                   fluid
+                                  className={styles.cateImg}
                                   src={categories.category_icon_url}
                                   alt={categories.category_slug_01}
                                 />
@@ -499,14 +500,15 @@ function SelectDeviceHero({
                     token ? RemoveFromCart(issues.issue_id) : quoteaction();
                   }}
                   buttonName={
-                    // token
-                    //   ? cartdatas.filter((cartIssueData) => {
-                    //       cartIssueData.issue_id === issues.issue_id;
-                    //     })
-                    //     ? "Remove From Cart"
-                    //     : "Add to Cart"
-                    //   : "Get Quote"
-                    "Add to Cart"
+                    token
+                      ? // ? cartdatas.filter((cartIssueData) => {
+                        //     cartIssueData.issue_id === issues.issue_id;
+                        //   })
+                        //   ? "Remove From Cart"
+                        //   : "Add to Cart"
+                        // : "Get Quote"
+                        "Add to Cart"
+                      : "Get Quote"
                   }
                 />
               </Col>

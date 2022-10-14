@@ -109,6 +109,12 @@ function IssuePage({ data }) {
     setTestimonial(modelTestimonial.data);
   }, [getModelID]);
 
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setPopupLogin(false);
+    } else {
+    }
+  });
   // returned components
   return (
     <Layout title={"Personal Gadgets"}>
