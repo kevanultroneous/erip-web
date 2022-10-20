@@ -5,6 +5,7 @@ import Container from "../common/Container";
 import styles from "@/styles/components/About-Us/AboutTeam.module.css";
 
 function AboutTeam() {
+  //  Team data 
   const teamData = [
     {
       imagesrc: "/assets/images/about-team-box.png",
@@ -45,6 +46,7 @@ function AboutTeam() {
           <h2>About The Team</h2>
         </Row>
         <Row className={`${styles.aboutTeamBoxes} aboutTeamBoxes`}>
+          {/* Team data slider and dynamic call */}
           <Slider {...settings}>
             {teamData.map((teamMember, ind) => {
               return (

@@ -79,6 +79,7 @@ function Homeappliances() {
   // declaration
   const router = useRouter();
 
+  // For Dyanamic  login token check
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
 
@@ -90,11 +91,13 @@ function Homeappliances() {
     }
   }, []);
 
+  // redux dispatch method for Home appliance
   useEffect(() => {
     dispatch(selectCategory(categoryID));
     dispatch(getHomeApplianceModel(categoryID));
   });
 
+  // Redux Useselector for dynamic category data fetch
   useEffect(() => {
     setInformation(categoryInfo.data);
     setFaqs(categoryFaq.data);
@@ -102,6 +105,7 @@ function Homeappliances() {
     setTestimonial(categoryTestimonial.data);
   }, [categoryID]);
 
+  // Redux Useselector for dynamic brand data fetch
   useEffect(() => {
     setInformation(brandsInfo.data);
     setFaqs(brandsFaq.data);
@@ -119,6 +123,8 @@ function Homeappliances() {
         token={token}
         quoteaction={() => setPopupLogin(true)}
       />
+
+      {/* Dynamic component chnage on Different device */}
       {mobileView && <WhyErip />}
       {mobileView && <Testimonials data={testimonial} />}
       {mobileView && <HomeApplianceDetails paragraph={information} />}

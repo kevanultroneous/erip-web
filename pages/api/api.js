@@ -3,24 +3,29 @@
 import axios from "axios";
 import { API_URL } from "utils/data";
 
+// Registration Check   APIcall
 export const CheckRegistrationAPI = async (contact) => {
   try {
     return await axios.post(`${API_URL}api/v1/users/check_registration`, {
       mobile: contact,
     });
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
+
+// Registration Otp
 export const SendRegistrationOtpAPI = async (contact) => {
   try {
     return await axios.post(`${API_URL}api/v1/users/send_registration_otp`, {
       mobile: contact,
     });
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
+
+//  Registerd User
 export const RegisterUserAPI = async (contact, otp) => {
   try {
     return await axios.post(`${API_URL}api/v1/users/register`, {
@@ -28,18 +33,22 @@ export const RegisterUserAPI = async (contact, otp) => {
       mobile_otp: otp,
     });
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
+
+// Login Otp sending
 export const SendLoginOtpAPI = async (contact) => {
   try {
     return await axios.post(`${API_URL}api/v1/users/send_login_otp`, {
       mobile: contact,
     });
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
+
+// check login userdetail, otp verification , login status
 export const FinalLoginAPI = async (contact, otp) => {
   try {
     return await axios.post(`${API_URL}api/v1/users/login`, {
@@ -47,27 +56,29 @@ export const FinalLoginAPI = async (contact, otp) => {
       mobile_otp: otp,
     });
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
 
-//  Home page
+//  Home page location city
 export const CityDetactionAPI = async () => {
   try {
     return await axios.get(`${API_URL}api/v1/cities`);
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
 
-// mix
+// TimeSloat allocation
 export const TimeSloatAPI = async () => {
   try {
     return await axios.get(`${API_URL}api/v1/timeslots`);
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
+
+//Pincode for Cities
 export const PincodeByCity = async (cityid) => {
   try {
     return await axios.get(`${API_URL}api/v1/pincodes_by_city`, {
@@ -76,14 +87,16 @@ export const PincodeByCity = async (cityid) => {
       },
     });
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
+
+// Address type home,office etc
 export const AddressTypes = async () => {
   try {
     return await axios.get(`${API_URL}api/v1/address_types`);
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
 
@@ -94,10 +107,11 @@ export const UserLogout = async (token) => {
       headers: { Authorization: `Bearer ${token}` },
     });
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
-//
+
+// Discount coupon
 export const CouponsByCC = async (city = 1, category = 1) => {
   try {
     return await axios.get(`${API_URL}api/v1/cms/coupons_by_cc`, {
@@ -107,21 +121,31 @@ export const CouponsByCC = async (city = 1, category = 1) => {
       },
     });
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
-// addresssave
 
+// Fetch saved Address
 export const MyAddress = async (token) => {
   try {
     return await axios.get(`${API_URL}api/v1/users/my_addresses`, {
       headers: { Authorization: `Bearer ${token}` },
     });
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
-export const SaveAddress = async (token, type, no, add1, add2, landmark, pincode) => {
+
+// Save new address
+export const SaveAddress = async (
+  token,
+  type,
+  no,
+  add1,
+  add2,
+  landmark,
+  pincode
+) => {
   try {
     return await axios.post(
       `${API_URL}api/v1/users/my_addresses`,
@@ -138,10 +162,11 @@ export const SaveAddress = async (token, type, no, add1, add2, landmark, pincode
       }
     );
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
-// cart
+
+// All cart details
 export const MyCart = async (token, city) => {
   try {
     return await axios.get(
@@ -156,9 +181,11 @@ export const MyCart = async (token, city) => {
       }
     );
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
+
+//Add the product in cart
 export const AddToCart = async (token, issueId) => {
   try {
     return await axios.post(
@@ -169,6 +196,6 @@ export const AddToCart = async (token, issueId) => {
       }
     );
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
