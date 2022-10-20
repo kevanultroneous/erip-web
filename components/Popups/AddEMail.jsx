@@ -13,6 +13,7 @@ export default function AddEmail({ show, onHide }) {
   const altemailselector = useSelector((selector) => selector.profile);
 
   const addEmail = () => {
+    // add email function for update email
     if (validator.isEmail(email)) {
       setErr(false);
       dispatch(callUpdateEmail(localStorage.getItem("token"), email));

@@ -15,6 +15,8 @@ export default function CancelOrder({ show, onHide, order, backhandler }) {
   const [reasons, setReasons] = useState([]);
   const [err, setErr] = useState(false);
   const [reasonInp, setReasonInp] = useState("");
+
+  // submit handler function for cancel the orders
   const submitHandler = () => {
     if (!reasons.length > 0) {
       setErr(true);

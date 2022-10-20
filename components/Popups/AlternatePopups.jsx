@@ -9,6 +9,8 @@ export default function AlternatePopups({ show, onHide }) {
   const [contact, setContact] = useState("");
   const [err, setErr] = useState(false);
   const dispatch = useDispatch();
+
+  // add mobile  function for validation and calling their callupdatenumber
   const addMobile = () => {
     if (validator.isMobilePhone(contact, "en-IN")) {
       setErr(false);
@@ -19,6 +21,7 @@ export default function AlternatePopups({ show, onHide }) {
       setErr(true);
     }
   };
+
   return (
     <Modal
       show={show}
