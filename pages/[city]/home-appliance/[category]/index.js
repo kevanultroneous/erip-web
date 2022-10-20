@@ -82,8 +82,10 @@ function HomeappliancesCategory() {
   const router = useRouter();
 
   useEffect(() => {
+    // making responsive 
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
 
+    // setting token
     if (localStorage.getItem("token")) {
       setToken(true);
       setPopupLogin(false);
@@ -92,12 +94,15 @@ function HomeappliancesCategory() {
     }
   }, []);
 
+
+  // selected category, get home appliance
   useEffect(() => {
     dispatch(selectCategory(categoryID));
     dispatch(getHomeApplianceModel(categoryID));
     console.log({ homeApplianceSegment });
   }, [categoryID]);
 
+  // set info, faq, offers, testimonial
   useEffect(() => {
     setInformation(categoryInfo.data);
     setFaqs(categoryFaq.data);
@@ -105,6 +110,7 @@ function HomeappliancesCategory() {
     setTestimonial(categoryTestimonial.data);
   }, [categoryID]);
 
+  // set info,faqs, offers, testimonial
   useEffect(() => {
     setInformation(brandsInfo.data);
     setFaqs(brandsFaq.data);
@@ -113,9 +119,8 @@ function HomeappliancesCategory() {
   }, [segmentID]);
 
   useEffect(() => {
+    // getting category from routes
     if (router.query.category) getCategoryFromQuery();
-    console.log(router, "homeQuery");
-    console.log("from homeAppliance");
   }, []);
 
   const getCategoryFromQuery = async () => {

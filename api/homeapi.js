@@ -12,6 +12,8 @@ export const HeroSectionApi = async () => {
         console.log(e)
     }
 }
+
+// blog response
 export const BlogResponseApi = async () => {
     try {
         return await axios
@@ -22,6 +24,8 @@ export const BlogResponseApi = async () => {
         console.log(e)
     }
 }
+
+// home testimonials
 export const HomeTestimonialAPI = async () => {
     try {
         return await axios
@@ -36,6 +40,8 @@ export const HomeTestimonialAPI = async () => {
         console.log(e)
     }
 }
+
+// home offer section
 export const OfferSectionHomeAPI = async () => {
     try {
         return await axios
@@ -46,6 +52,8 @@ export const OfferSectionHomeAPI = async () => {
         console.log(e)
     }
 }
+
+// get your fix
 export const GetYourFixAPI = async (city) => {
     try {
         return await axios
@@ -61,6 +69,8 @@ export const GetYourFixAPI = async (city) => {
     }
 }
 
+
+// order quote
 export const OrderQuotation = async (token, order, status) => {
     try {
         return await axios.post(`${API_URL}api/v1/users/orders_quotation`, { order: order, quotationStatus: status }, {

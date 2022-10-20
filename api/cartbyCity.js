@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL } from "utils/data";
 
+// get card by city
 export const CartByCity = async (token, city) => {
     try {
         return await axios.get(

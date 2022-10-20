@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL } from "utils/data";
 
+// home hero section
 export const homeHeroSection = async () => {
   try {
     return await axios
@@ -22,6 +23,7 @@ export const homeHeroSection = async () => {
   }
 };
 
+// home categories section
 export const categoryHeroSection = async (categoryID) => {
   try {
     return await axios
@@ -43,6 +45,7 @@ export const categoryHeroSection = async (categoryID) => {
   }
 };
 
+// home brand section
 export const brandHeroSection = async (brandID) => {
   try {
     return await axios
@@ -64,6 +67,7 @@ export const brandHeroSection = async (brandID) => {
   }
 };
 
+// model hero section
 export const modelHeroSection = async (modelID) => {
   try {
     return await axios

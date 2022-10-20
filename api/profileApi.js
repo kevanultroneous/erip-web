@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL } from "utils/data";
 
+// my profile
 export const MyProfile = async (token) => {
     try {
         return await axios.get(`${API_URL}api/v1/users/my_profile`, {
@@ -11,6 +12,8 @@ export const MyProfile = async (token) => {
     }
 };
 
+
+// add user
 export const AddUserName = async (token, name) => {
     try {
         return await axios.post(`${API_URL}api/v1/users/my_profile`, {
@@ -23,6 +26,7 @@ export const AddUserName = async (token, name) => {
     }
 }
 
+// add alternate email
 export const AddAltEmail = async (token, email) => {
     try {
         return await axios.post(`${API_URL}api/v1/users/my_profile`, {
@@ -35,6 +39,7 @@ export const AddAltEmail = async (token, email) => {
     }
 }
 
+// add alternamte number
 export const AddAltNumber = async (token, number) => {
     try {
         return await axios.post(`${API_URL}api/v1/users/my_profile`, {

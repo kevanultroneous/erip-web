@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL } from "utils/data";
 
+// home offer
 export const offerHome = async () => {
   try {
     return await axios
@@ -22,6 +23,7 @@ export const offerHome = async () => {
   }
 };
 
+// offer by category
 export const offerByCategory = async (categoryID) => {
   try {
     return await axios
@@ -45,6 +47,7 @@ export const offerByCategory = async (categoryID) => {
   }
 };
 
+// offer by brands
 export const offerByBrands = async (brandID) => {
   try {
     return await axios
@@ -66,6 +69,7 @@ export const offerByBrands = async (brandID) => {
   }
 };
 
+// offer by models
 export const offerByModels = async (modelID) => {
   try {
     return await axios

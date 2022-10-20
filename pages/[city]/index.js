@@ -15,11 +15,16 @@ import OfferadPopup from "@/components/Popups/OfferadPopup";
 import { useEffect, useState } from "react";
 
 export default function Cityid() {
-    const [mobileView, setMobileView] = useState(true);
-    const [offerad, setOfferAd] = useState(false);
+
+    const [mobileView, setMobileView] = useState(true);  // responsive mobile view
+    const [offerad, setOfferAd] = useState(false); // offer ads
+
     useEffect(() => {
+        // responsive
         window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
     }, []);
+
+    // returned components
     return (
         <Layout title={"Home"}>
             <Header />
