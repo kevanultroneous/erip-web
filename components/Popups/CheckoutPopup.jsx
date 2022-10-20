@@ -82,14 +82,13 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
   const [deleteShow, setDeleteShow] = useState(false);
   const [tabletView, setTabletView] = useState(false);
   const [finalPayment, setFinalPayment] = useState(false);
-  // address flow
   const [addressFlowOne, setAddressFlowOne] = useState(false);
   const [addressFlowTwo, setAddressFlowTwo] = useState(false);
   const [confirmSession, setConfirmSession] = useState(false);
   const [dateandTimeSelection, setDateAndTimeSelection] = useState(true);
   const [directSelected, setDirectSelected] = useState(false);
   const [procced, setProcced] = useState(false);
-  //
+
   const [couponsSow, setCouponsSow] = useState(false);
   const [total, setTotal] = useState(0);
 
@@ -113,6 +112,154 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
     },
   ]);
   const [selectedTypeadd, setSelectedTypeadd] = useState();
+  const [paymentway, setSelectedPaymentWay] = useState(null);
+  const [datelist, setDateList] = useState(getDatesInRange(startdate, enddate));
+
+  // default useEffect
+  useEffect(() => {
+    window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
+    window.innerWidth < 768 && window.innerWidth > 992
+      ? setTabletView(true)
+      : setTabletView(false)
+      ? setMobileView(true)
+      : setMobileView(false);
+  }, []);
+
+  // targetting the cartselector state for final bill amount change
+  useEffect(() => {
+    BillAmount();
+  }, [cartSelector]);
+
+  //targetting the currentlocation for reverse map calling
+  useEffect(() => {
+    reverseMap(currentLocation.latitude, currentLocation.longitude);
+  }, [currentLocation]);
+
+  // if user have a address so that direct handle the address selecting process which handle by directSelected
+  useEffect(() => {
+    if (directSelected) {
+      setProcessStatus(processStatus.concat(1));
+    }
+  }, [directSelected]);
+
+  // targetting the myaddress state which handles selected address
+  useEffect(() => {
+    if (myaddress.length > 0) {
+      setAddId(myaddress[0].address_id);
+      setMyselectedAddress({
+        id: myaddress[0].address_id,
+        address: myaddress[0].address_line_1,
+      });
+    }
+  }, [myaddress]);
+
+  // targetting the timesloatdata which help to set complete time sloat data
+  useEffect(
+    () => setCompletedSloat(TimeIsOver(timesloatsata, timesofsloats)),
+    [timesloatsata]
+  );
+
+  // selectedaddress handle the lat lng and confirm location
+  useEffect(() => {
+    getLatandLongByAddress(selectedAddress);
+    setConfirmLocationSession(true);
+  }, [selectedAddress]);
+
+  //  observer for close or open modal
+  useEffect(() => {
+    if (!show) {
+      setSelectedDate(null);
+      setSelectedTime(null);
+      setShowDateError(false);
+      setShowTimeError(false);
+      setSelectedAddress("");
+      setSecondProcessShow(false);
+      setFinalLocationStep(false);
+      setChangeModalSize(true);
+      setAddressFlowOne(false);
+      setAddressFlowTwo(false);
+      setConfirmSession(false);
+      setDateAndTimeSelection(true);
+      setFinalPayment(false);
+      setFinalWay(null);
+      setSelectedPaymentWay(null);
+      setProcessComplete(false);
+    } else {
+      setSelectedDate(0);
+      // time sloat api handle
+      TimeSloatAPI()
+        .then((time_sloat) => {
+          if (time_sloat.data.success) {
+            setTimeSloatData(time_sloat.data.data);
+          } else {
+            console.log("time sloat says" + time_sloat.data.message);
+          }
+        })
+        .catch((e) => console.log("time sloat api" + e));
+      // myaddress api handle
+      MyAddress(localStorage.getItem("token"))
+        .then((response) => {
+          if (response.data.success) {
+            setMyaddress(response.data.data);
+          }
+        })
+        .catch((e) => console.log("myaddress fetching " + e));
+
+      // address type api handle
+      axios.get(`${API_URL}api/v1/address_types`).then((response) => {
+        if (response.data.success) {
+          setAddType(response.data.data);
+        }
+      });
+    }
+  }, [show]);
+
+  // selected address status tracking
+  useEffect(() => {
+    if (selectedAddressStatus) {
+      MyAddress(localStorage.getItem("token"))
+        .then((response) => {
+          if (response.data.success) {
+            setMyaddress(response.data.data);
+          }
+        })
+        .catch((e) => console.log("myaddress fetching " + e));
+    }
+  }, [selectedAddressStatus]);
+
+  //  save and proceed Handle
+  useEffect(() => {
+    if (
+      houseInput == "" ||
+      nameInput == "" ||
+      landmarkInput == "" ||
+      addType == null
+    ) {
+      setBcolor("#676767");
+    } else {
+      setBcolor("#0E62CB");
+    }
+  }, [houseInput, nameInput, landmarkInput, addType]);
+
+  // targetting the current city and handle the maps functions
+  useEffect(() => {
+    if (currentCity != "") {
+      CityDetactionAPI()
+        .then((r) => setCityData(r.data.data))
+        .catch((e) => console.log(e));
+
+      if (MatchCity(cityData, currentCity, dispatch)) {
+      } else {
+        setSelectedAddress("");
+        setCurrentLocation({
+          latitude: 12.972442,
+          longitude: 77.580643,
+        });
+      }
+    }
+  }, [currentCity]);
+
+  // remove or add cart api calling
   const RemoveFromCart = async (id) => {
     await AddToCart(localStorage.getItem("token"), id)
       .then((response) => {
@@ -122,6 +269,8 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
       })
       .catch((err) => dispatch(setAddorRemoveCartFail(err)));
   };
+
+  // use function for timesloat is availabel or not
   const TimeIsOver = (timesloatsata, timesofsloats) => {
     let overdata = [];
     let newDate = new Date();
@@ -138,6 +287,7 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
     }
     return overdata;
   };
+
   const couponsselector = useSelector((state) => state.couponsdata);
   const cartSelector = useSelector((state) => state.cartdata);
 
@@ -158,6 +308,7 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
       ? couponsselector.selectedcoupons
       : null;
 
+  // finding the bill amount
   const BillAmount = () => {
     var ans = 0;
     for (let i = 0; i < cartDetailList.length; i++) {
@@ -166,50 +317,7 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
     setTotal(ans);
   };
 
-  useEffect(() => {
-    BillAmount();
-  }, [cartSelector]);
-
-  useEffect(() => {
-    window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
-    window.innerWidth < 768 && window.innerWidth > 992
-      ? setTabletView(true)
-      : setTabletView(false)
-      ? setMobileView(true)
-      : setMobileView(false);
-  }, []);
-  useEffect(() => {
-    if (localStorage.getItem("cityid")) {
-      // PincodeByCity(1)
-      //   .then((r) => setSavePincode(r.data.data))
-      //   .catch((e) => console.log(e));
-    }
-  }, [currentLocation]);
-  useEffect(() => {
-    if (directSelected) {
-      setProcessStatus(processStatus.concat(1));
-    }
-  }, [directSelected]);
-  useEffect(() => {
-    if (myaddress.length > 0) {
-      setAddId(myaddress[0].address_id);
-      setMyselectedAddress({
-        id: myaddress[0].address_id,
-        address: myaddress[0].address_line_1,
-      });
-    }
-  }, [myaddress]);
-
-  useEffect(
-    () => setCompletedSloat(TimeIsOver(timesloatsata, timesofsloats)),
-    [timesloatsata]
-  );
-
-  useEffect(() => {
-    getLatandLongByAddress(selectedAddress);
-    setConfirmLocationSession(true);
-  }, [selectedAddress]);
-
+  // confirm process for confirm button
   const ConfirmProcessed = () => {
     selectedTime === null ? setShowTimeError(true) : setShowTimeError(false);
     selectedDate === null ? setShowDateError(true) : setShowDateError(false);
@@ -227,14 +335,14 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
   };
 
   //current location
-
   const params = { v: "3.exp", key: GMAP_API };
-
   function onMapCreated(map) {
     map.setOptions({
       disableDefaultUI: true,
     });
   }
+
+  // getlocation function for selected current latitude and longitude
 
   function getLocation() {
     if (navigator.geolocation) {
@@ -254,17 +362,14 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
     }
   }
 
+  // showposition function for getLocation function handle
   function showPosition(position) {
-    // getPincode(position.coords.latitude, position.coords.longitude);
     setCurrentLocation(position.coords);
     reverseMap(position.coords.latitude, position.coords.longitude);
     displayLocation(position.coords.latitude, position.coords.longitude);
   }
-  useEffect(() => {
-    // getPincode(currentLocation.latitude, currentLocation.longitude);
-    reverseMap(currentLocation.latitude, currentLocation.longitude);
-  }, [currentLocation]);
 
+  // reverse map for address fatching using latitude and longitude
   function reverseMap(lat, lng) {
     if (
       (lat != null && lng != null) ||
@@ -286,6 +391,7 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
     }
   }
 
+  // get address by lattitude and longitude
   function getLatandLongByAddress(address) {
     var geocoder = new google.maps.Geocoder();
     setTimeout(() => {
@@ -299,53 +405,8 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
       });
     }, 1200);
   }
-  //  observer for close or open modal
-  useEffect(() => {
-    if (!show) {
-      setSelectedDate(null);
-      setSelectedTime(null);
-      setShowDateError(false);
-      setShowTimeError(false);
-      setSelectedAddress("");
-      setSecondProcessShow(false);
-      setFinalLocationStep(false);
-      //
-      setChangeModalSize(true);
-      setAddressFlowOne(false);
-      setAddressFlowTwo(false);
-      setConfirmSession(false);
-      setDateAndTimeSelection(true);
-      setFinalPayment(false);
-      setFinalWay(null);
-      setSelectedPaymentWay(null);
-      setProcessComplete(false);
-    } else {
-      setSelectedDate(0);
-      TimeSloatAPI()
-        .then((time_sloat) => {
-          if (time_sloat.data.success) {
-            setTimeSloatData(time_sloat.data.data);
-          } else {
-            console.log("time sloat says" + time_sloat.data.message);
-          }
-        })
-        .catch((e) => console.log("time sloat api" + e));
 
-      MyAddress(localStorage.getItem("token"))
-        .then((response) => {
-          if (response.data.success) {
-            setMyaddress(response.data.data);
-          }
-        })
-        .catch((e) => console.log("myaddress fetching " + e));
-
-      axios.get(`${API_URL}api/v1/address_types`).then((response) => {
-        if (response.data.success) {
-          setAddType(response.data.data);
-        }
-      });
-    }
-  }, [show]);
+  // refresh address function for myaddress recalling
   const refreshAddress = () => {
     MyAddress(localStorage.getItem("token"))
       .then((response) => {
@@ -355,31 +416,8 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
       })
       .catch((e) => console.log("myaddress fetching " + e));
   };
-  const [datelist, setDateList] = useState(getDatesInRange(startdate, enddate));
-  useEffect(() => {
-    if (selectedAddressStatus) {
-      MyAddress(localStorage.getItem("token"))
-        .then((response) => {
-          if (response.data.success) {
-            setMyaddress(response.data.data);
-          }
-        })
-        .catch((e) => console.log("myaddress fetching " + e));
-    }
-  }, [selectedAddressStatus]);
-  //  save and proceed Handle
-  useEffect(() => {
-    if (
-      houseInput == "" ||
-      nameInput == "" ||
-      landmarkInput == "" ||
-      addType == null
-    ) {
-      setBcolor("#676767");
-    } else {
-      setBcolor("#0E62CB");
-    }
-  }, [houseInput, nameInput, landmarkInput, addType]);
+
+  // save and procced button handler function
   const SaveAndProceedHandle = () => {
     if (houseInput.length <= 0) {
       setLocationError(1);
@@ -397,6 +435,7 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
       if (!localStorage.getItem("token")) {
         // alert("Please Login Now");
       } else {
+        // save address api calling
         SaveAddress(
           localStorage.getItem("token"),
           addressType,
@@ -421,11 +460,15 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
       }
     }
   };
+
+  //on place select function for finding the address
   const OnPlaceSelect = async (place) => {
     if (!(place == undefined)) {
       setSelectedAddress(place.formatted_address);
     }
   };
+
+  // displaylocation function for the finding the city
   function displayLocation(latitude, longitude) {
     if (
       (latitude != null && longitude != null) ||
@@ -436,8 +479,6 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
       var latlng = new google.maps.LatLng(latitude, longitude);
       if (latlng != null || latlng != undefined) {
         var count, country, state, city;
-        // getPincode(latitude, longitude);
-
         geocoder.geocode({ latLng: latlng }, function (results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
             if (results[0]) {
@@ -460,34 +501,21 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
     }
   }
 
-  useEffect(() => {
-    if (currentCity != "") {
-      CityDetactionAPI()
-        .then((r) => setCityData(r.data.data))
-        .catch((e) => console.log(e));
-
-      if (MatchCity(cityData, currentCity, dispatch)) {
-      } else {
-        setSelectedAddress("");
-        setCurrentLocation({
-          latitude: 12.972442,
-          longitude: 77.580643,
-        });
-      }
-    }
-  }, [currentCity]);
-
+  // time selecting handler
   const timeselectedHandler = (index) => {
     setShowTimeError(false);
     setSelectedTime(index);
   };
 
+  // finalpayment back button handler
   const finalPaymentBackHandler = () => {
     if (myaddress.length > 0) {
       setDirectSelected(true);
       setFinalPayment(false);
     }
   };
+
+  // remove the all cart data
   const removeThecartdata = () => {
     for (let cartdata = 0; cartdata < cartDetailList.length; cartdata++) {
       dispatch(
@@ -498,8 +526,8 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
       );
     }
   };
-  const [paymentway, setSelectedPaymentWay] = useState(null);
 
+  // final order function
   const FinalOrderNow = () => {
     var setup_day =
       datelist[selectedDate].dates < 10
@@ -515,6 +543,8 @@ export default function CheckoutPopup({ show, onHide, backmain }) {
       setup_day;
 
     var selected_time = timesloatsata[selectedTime].id;
+
+    // call api for final order
     postOrders(localStorage.getItem("token"), {
       enquiryId: localStorage.getItem("enq_id"),
       addressId: addId,
