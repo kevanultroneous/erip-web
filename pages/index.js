@@ -28,9 +28,12 @@ import {
 } from "utils/data";
 
 export default function Home({ data }) {
+  // State for dynamic offer section,Routing path
   const [mobileView, setMobileView] = useState(true);
   const [offerad, setOfferAd] = useState(false);
   const router = useRouter();
+
+  // Fatching for location & local store
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
     if (router.pathname == "/") {

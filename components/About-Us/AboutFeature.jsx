@@ -4,6 +4,8 @@ import { BsCheck } from "react-icons/bs";
 import Container from "../common/Container";
 
 function AboutFeature() {
+  
+  // feature data  
   const aboutFeatureData = [
     {
       feature: "ISO Certified",
@@ -54,6 +56,7 @@ function AboutFeature() {
               <h2>Features</h2>
             </div>
             <Row>
+              {/* Dynamic call for feature data */}
               {aboutFeatureData.map((featureData, ind) => {
                 return (
                   <Col xl={6} key={ind} className={styles.featureData}>

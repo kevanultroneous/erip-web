@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Container from "../common/Container";
 
 function GreenEndevour() {
+
+//  Dynamic media query for both different devices 
   const [mobileView, setMobileView] = useState(false);
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
@@ -11,6 +13,7 @@ function GreenEndevour() {
   return (
     <section>
       <Container>
+        {/* condition for differnt Ui Mobile & other devices */}
         {mobileView && (
           <div className={styles.aboutGreenHeadingMobile}>
             <h2>Our Green Endeavor</h2>
