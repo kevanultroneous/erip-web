@@ -12,6 +12,8 @@ export default function ExclusiveService() {
         <h4 className={styles.OnlyShowOnMobile}>Exclusive Apple services</h4>
       </div>
       <Row>
+
+        {/* for  exclusive product data */}
         {ExclusiveServiceData.map((value, index) => (
           <Col xl={3} lg={3} xs={3} key={index}>
             <div className={styles.ExclusiveWrraper}>

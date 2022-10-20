@@ -5,6 +5,8 @@ import PrimaryButton from "./PrimaryButton";
 import Link from "next/link";
 
 const BookingCardComponent = () => {
+
+  // static test data
   const arr = [
     {
       id: "1234",
@@ -40,6 +42,8 @@ const BookingCardComponent = () => {
 
   return (
     <Row className={styles.BookingCardMain}>
+
+      {/* call test data  */}
       {arr.map((el, ind) => (
         <Col
           xs={12}

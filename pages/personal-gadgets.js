@@ -76,7 +76,7 @@ function IssuePage({ data }) {
     console.log(categoryTestimonial.data, "offer");
   }, [categoryTestimonial.data]);
 
-  // useEffects
+  // For token purpose
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
 
@@ -88,6 +88,7 @@ function IssuePage({ data }) {
     }
   }, []);
 
+  // Fetch category details
   useEffect(() => {
     setInformation(categoryInfo.data);
     setFaqs(categoryFaq.data);
@@ -95,6 +96,7 @@ function IssuePage({ data }) {
     setTestimonial(categoryTestimonial.data);
   }, [categoryID]);
 
+  // Fetch barnd details
   useEffect(() => {
     setInformation(brandsInfo.data);
     setFaqs(brandsFaq.data);
@@ -102,6 +104,7 @@ function IssuePage({ data }) {
     setTestimonial(brandsTestimonial.data);
   }, [getBrandID]);
 
+  // Fetch model details
   useEffect(() => {
     setInformation(modelInfo.data);
     setFaqs(modelsFaq.data);
@@ -115,6 +118,7 @@ function IssuePage({ data }) {
     } else {
     }
   });
+
   // returned components
   return (
     <Layout title={"Personal Gadgets"}>

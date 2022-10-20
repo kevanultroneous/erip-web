@@ -9,22 +9,23 @@ import MobileFooter from "@/components/common/MobileFooter";
 import Layout from "@/components/common/Layout";
 
 function AboutUs() {
+  //  State for Dynamic Media Query
   const [mobileView, setMobileView] = useState(true);
 
   useEffect(() => {
+    // Dynamic Media query automatic Footer change when fetch Mobile Device (Footer design chnage for mobile)
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
   }, []);
   return (
-    <>
-      <Layout title={"About Us"}>
-        <Header />
-        <AboutHero />
-        <AboutTeam />
-        <AboutFeature />
-        <GreenEndevour />
-        {mobileView ? <Footer /> : <MobileFooter />}
-      </Layout>
-    </>
+    <Layout title={"About Us"}>
+      <Header />
+      <AboutHero />
+      <AboutTeam />
+      <AboutFeature />
+      <GreenEndevour />
+      {/* Dynamic Footer condition  */}
+      {mobileView ? <Footer /> : <MobileFooter />}
+    </Layout>
   );
 }
 
