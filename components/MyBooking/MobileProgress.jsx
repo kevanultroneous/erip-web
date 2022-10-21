@@ -31,6 +31,8 @@ export default function MobileProgress({ data, processname }) {
           />
         </Col>
         <Col xs={12}>
+
+          {/*  ----------------------------- Process indecator for mobile ----------------------------------------*/}
           {data.map((v, i) => (
             <>
               <div className={styles.StepsCover}>

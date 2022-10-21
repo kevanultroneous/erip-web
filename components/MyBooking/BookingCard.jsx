@@ -2,6 +2,7 @@ import { Col, Image, Row } from "react-bootstrap";
 import styles from "@/styles/components/MyBooking/BookingCard.module.css";
 import PrimaryButton from "../common/PrimaryButton";
 
+//  props 
 function BookingCard({
   orderNumber,
   partnerStatusAssigned,

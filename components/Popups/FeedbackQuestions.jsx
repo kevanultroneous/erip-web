@@ -82,6 +82,7 @@ export default function FeedbackQuestions({ show, onHide }) {
           </Col>
           <Col xs={12} md={12} lg={12} xl={12}>
             <Slider {...settings}>
+              {/*  feedback dynamic data call */}
               {[1, 2, 3].map((v, index) => (
                 <div key={index}>
                   <p className={styles.Question}>

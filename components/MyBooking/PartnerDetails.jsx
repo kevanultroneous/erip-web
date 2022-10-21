@@ -20,6 +20,8 @@ export default function PartnerDetails({
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
   }, []);
 
+  // Process indicator for  bookiprocess for large screen
+
   var otparray = [];
   for (let k = 0; k < otp.length; k++) {
     otparray.push(otp[k]);

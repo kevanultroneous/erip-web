@@ -15,6 +15,8 @@ export default function Quotation({
   rejectclick,
   acceptclick,
   paynow,
+
+  //  get Quataion  process
 }) {
   const [totalAmount, setTotalAmount] = useState(0);
   const [datas, setDatas] = useState();

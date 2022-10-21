@@ -11,6 +11,8 @@ export default function PartnerStatusProgress({ process, data, processname }) {
         <div className={styles.container}>
           <div className={styles.wrapper}>
             <div className={`${styles.arrowsteps} ${styles.clearfix}`}>
+
+              {/*  ----------------------- get process status ----------------------- */}
               {data.map((v, i) => (
                 <div
                   key={i}

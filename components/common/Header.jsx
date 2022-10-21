@@ -46,14 +46,18 @@ export function Header() {
   const [search, setSearch] = useState("");
   const [sdata, setSdata] = useState(null);
   const [savepincode, setSavePincode] = useState([]);
+
+  //redux dispatch method
   const dispatch = useDispatch();
 
+  // use selector for location nav search  
   const locationselector = useSelector((selector) => selector.locationdata);
   const navsearch = useSelector((selector) => selector.mix.navsearch);
   const userselector = useSelector((selector) => selector.userdata);
   const profileselector = useSelector((selector) => selector.profile.profile);
   const selector = useSelector((selector) => selector);
 
+  // category ,brand ,model search  
   const navdata = navsearch ? (navsearch.data ? navsearch.data : null) : null;
 
   const [categoriesSearch, setCategoriesSearch] = useState([]);
@@ -77,6 +81,8 @@ export function Header() {
       setToken(false);
     }
   });
+
+  // apple call drop data 
   useEffect(() => {
     callDropdataApple();
   }, []);
@@ -89,6 +95,8 @@ export function Header() {
           : setAppleHeaderData([])
       );
   };
+
+  // brand list drop data
   const callDropdataBrands = async () => {
     await axios.get(`${API_URL}api/v1/cms/top_brands`).then((data) => {
       data.data.data !== undefined
@@ -96,6 +104,8 @@ export function Header() {
         : setTopBrandsHeaderData([]);
     });
   };
+
+  // model data call 
   const callDropdataModel = async () => {
     await axios
       .get(`${API_URL}api/v1/cms/top_models`)
@@ -105,6 +115,8 @@ export function Header() {
           : setmobileRepairHeaderData([])
       );
   };
+
+  // issue data call
   const callDropdataIssue = async () => {
     await axios
       .get(`${API_URL}api/v1/cms/top_issues`)
@@ -115,6 +127,7 @@ export function Header() {
       );
   };
 
+  // issue data
   const dropdowndata = [
     {
       title: "Top Brands",
@@ -150,6 +163,8 @@ export function Header() {
   //     })
   //     .catch((e) => console.log(e));
   // };
+
+  //  local store for city
   useEffect(() => {
     if (localStorage.getItem("city") && localStorage.getItem("cityid")) {
     } else {
@@ -186,6 +201,7 @@ export function Header() {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
     var modal = document.getElementById("dropdown_location");
 
+    // on scroll menu hide
     const handleScroll = (event) => {
       const scroll = window.scrollY;
       const menuOpen = menuCollapse.current.classList.contains("show");
@@ -213,6 +229,7 @@ export function Header() {
     };
   }, []);
 
+ // search condition api call
   useEffect(() => {
     if (search != "") {
       if (search.length < 0) {
@@ -250,6 +267,7 @@ export function Header() {
     }
   }, [search]);
 
+// city detaction on current location click (api call)
   useEffect(() => {
     if (currentCity != "") {
       CityDetactionAPI()
@@ -267,6 +285,7 @@ export function Header() {
     }
   }, [currentCity]);
 
+  //get perfect location  
   function getLocation() {
     setLocationLoader(true);
     if (navigator.geolocation) {
@@ -294,6 +313,7 @@ export function Header() {
       .catch((e) => console.log("logout" + e));
   }
 
+  // latitude & longitude point 
   function showPosition(position) {
     // geocodeToPincode({
     //   lat: position.coords.latitude,
@@ -327,6 +347,7 @@ export function Header() {
     }
   }
 
+  // enter short address suggest long address
   function getLatandLongByAddress(address) {
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({ address: address }, function (results, status) {
@@ -344,6 +365,7 @@ export function Header() {
     });
   }
 
+  // location fetch & display gmap api call
   function displayLocation(latitude, longitude) {
     if (
       (latitude != null && longitude != null) ||
@@ -376,7 +398,8 @@ export function Header() {
       }
     }
   }
-
+ 
+  // Ui chnage on mobile
   {
     if (mobileView) {
       return (
@@ -544,6 +567,8 @@ export function Header() {
                 </center>
               </Modal.Body>
             </Modal>
+
+            {/* ---------------------------------------------by search category,brand ,model process strat---------------------------------------------------------------------- */}
             <Col xs={12}>
               <div className={styles.Searchbar}>
                 <FiSearch
@@ -780,8 +805,10 @@ export function Header() {
                 )}
               </div>
             </Col>
+            {/* ---------------------------------------------- end process ------------------------------------------------------------------------------------------- */}
           </Row>
         </Navbar>
+        
       );
     } else {
       return (
@@ -977,6 +1004,8 @@ export function Header() {
                           </Link>
                         </li>
                       ))}
+
+                      {/* ---------------------------- segment search dynamic-------------------------------------- */}
                       {segmentSearch.map((v, i) => (
                         <li key={i}>
                           <Link
@@ -1037,7 +1066,7 @@ export function Header() {
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll" className={styles.navBarcolor}>
               <Nav className="me-auto my-2 my-lg-0"></Nav>
-              {/* location popup */}
+              {/*------------------------------------------------- location popup -------------------------------------------------- */}
               <div
                 className={styles.navBarGeo}
                 onClick={() => setLocationPopupShow(!locationPopupShow)}

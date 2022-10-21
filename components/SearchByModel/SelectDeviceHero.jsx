@@ -102,6 +102,7 @@ function SelectDeviceHero({
   useEffect(() => {
     window.innerWidth < 662 ? setMobileView(true) : setMobileView(false);
 
+    //  redirect for barnd and model category 
     getCategory();
     if (router.query.brand) {
       let queryIDforBrand = getBrandIDfromQuery(router.query.brand);
@@ -125,6 +126,8 @@ function SelectDeviceHero({
     selectDrop.current.classList.remove("show");
   };
   const [cartdatas, setCartDatas] = useState([]);
+
+  //  add to cart
   const Carts = () => {
     CartByCity(localStorage.getItem("token"), localStorage.getItem("cityid"))
       .then((r) => {
@@ -135,7 +138,8 @@ function SelectDeviceHero({
       .catch((e) => console.log(e));
   };
   // Carts();
-
+  
+//  Remove to cart
   const RemoveFromCart = (id) => {
     AddToCart(localStorage.getItem("token"), id)
       .then((response) => {
@@ -147,6 +151,8 @@ function SelectDeviceHero({
         console.log(err);
       });
   };
+
+  //  Issue api call & process api
   const getIssues = async (eventKey, key) => {
     const modelID = eventKey || key.target.accessKey;
     dispatch(selectModels(modelID));
@@ -179,6 +185,7 @@ function SelectDeviceHero({
       });
   };
 
+  // filter api call
   const getCategory = async () => {
     setcategories(
       catgeoryFromReducer.filter((category) => category.group_id == 1)
@@ -188,6 +195,7 @@ function SelectDeviceHero({
     }
   };
 
+  //  dispatch brand data 
   const getBrands = async (eventKey, key) => {
     dispatch(selectCategory(eventKey));
     // dispatch(selectCategoryName(cityID));

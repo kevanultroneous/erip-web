@@ -15,6 +15,7 @@ export function StatusProcess({
     <>
       <Col xs={12} md={12} lg={12} xl={12} className={styles.ProcessCol}>
         <div className={styles.Process}>
+          {/*   "Schedule Appointment" , "Select Address", "Make Payment",  process call*/}
           {process.map((v, i) => (
             <div className={styles.ProcessGroup} key={i}>
               <span

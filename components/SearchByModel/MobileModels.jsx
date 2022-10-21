@@ -34,6 +34,8 @@ function MobileModels({ getIssuesFromMobile, issues, setissues, homeQuery }) {
     getCategory();
   }, []);
 
+
+//  Get Category api call
   const getCategory = async () => {
     await axios
       .get(`${API_URL}api/v1/categories_by_cities?city=1`)
@@ -49,6 +51,7 @@ function MobileModels({ getIssuesFromMobile, issues, setissues, homeQuery }) {
     }
   };
 
+  //  Get brand api call
   const getBrands = async (categoryId) => {
     await axios
       .get(`${API_URL}api/v1/brands_by_category?category=${categoryId}`)
@@ -84,6 +87,7 @@ function MobileModels({ getIssuesFromMobile, issues, setissues, homeQuery }) {
     setModelName("Models");
   };
 
+  //  Get Model api call
   const getModels = async (brandID) => {
     await axios
       .get(`${API_URL}api/v1/models_by_brand?brand=${brandID}`)
@@ -116,6 +120,7 @@ function MobileModels({ getIssuesFromMobile, issues, setissues, homeQuery }) {
     setModelName("Models");
   };
 
+  //  Get issue api call
   const getIssues = async (issueID) => {
     await axios
       .get(`${API_URL}api/v1/models_by_brand?brand=${brandId}`)

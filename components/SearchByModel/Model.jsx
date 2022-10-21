@@ -10,6 +10,8 @@ function Models({ heading, modelsArray, overlayHandling, clickHandler }) {
           <h4>{heading}</h4>
         </div>
         <Row className={styles.categoryDataMobile}>
+
+          {/*  ----------- Model for category , baran , model ------------ */}
           {modelsArray.map((models, ind) => {
             return (
               <Col

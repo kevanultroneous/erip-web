@@ -10,6 +10,7 @@ function Offers() {
     fetchOffers();
   }, []);
 
+  //  Get offer through Api
   const fetchOffers = async () => {
     await axios
       .get("http://43.204.87.153/api/v1/cms/offers?city=1")

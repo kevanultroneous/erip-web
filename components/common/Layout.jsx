@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-sync-scripts */
+// Set layout for head ,footer & other css & script link
 import Head from "next/head";
 import { GMAP_API } from "utils/data";
 

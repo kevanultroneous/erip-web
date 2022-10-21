@@ -55,9 +55,11 @@ export default function PaymentOption({ amount }) {
   }, []);
 
   const [datas, setDatas] = useState(0);
-
+ 
+  //  Razor pay section
   const Razorpay = useRazorpay();
 
+  //  Unique id genration for 
   const idgeneration = () => {
     axios
       .post("/api/payment", { money: amount })
@@ -71,6 +73,8 @@ export default function PaymentOption({ amount }) {
       handlePayment();
     }
   };
+
+  //  payment handling
   const handlePayment = useCallback(() => {
     const options = {
       key: "rzp_test_edc0iutgef4r18",

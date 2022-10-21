@@ -15,6 +15,8 @@ function CategoryModels({
           <h4>{heading}</h4>
         </div>
         <Row className={styles.categoryDataMobile}>
+
+          {/* ------------------- Get category Data ----------------------------- */}
           {categoryArray.map((model, ind) => {
             return (
               <Col

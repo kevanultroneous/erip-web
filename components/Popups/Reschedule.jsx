@@ -49,6 +49,7 @@ export default function Reschedule({ show, onHide, order }) {
     setSelectedTime(index);
   };
 
+//  Reschedule  Time sloat Booking  process
   useEffect(() => {
     TimeSloatAPIs()
       .then((time_sloat) => {
@@ -61,6 +62,7 @@ export default function Reschedule({ show, onHide, order }) {
       .catch((e) => console.log("time sloat api" + e));
   }, []);
 
+  //  Re confirmation of bookig 
   const ConfirmProcessed = () => {
     selectedTime === null ? setShowTimeError(true) : setShowTimeError(false);
     selectedDate === null ? setShowDateError(true) : setShowDateError(false);

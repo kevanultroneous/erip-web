@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 function IssueTotalBill({ totalPrice }) {
   const [mobileView, setMobileView] = useState(true);
 
+//  Dynamic Media query for Issue bill details
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
   }, []);

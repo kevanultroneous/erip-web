@@ -17,10 +17,12 @@ function HomeApplianceIssues({ token, quoteaction }) {
   const [modal, setModal] = useState(false);
   const [modalData, setModalData] = useState({});
 
+  // home applince issue data state handle through redux
   const homeAppliancesIssues = useSelector(
     (state) => state.homeAppliancesIssues.data
   );
 
+  // temp issue data for check
   const issueData = [
     {
       issue_id: 2,
@@ -58,6 +60,7 @@ function HomeApplianceIssues({ token, quoteaction }) {
 
   // console.log({ homeAppliancesIssues });
 
+  // issue data model
   const handlingModal = (modalIssue) => {
     setModalData(modalIssue);
     setModal(!modal);

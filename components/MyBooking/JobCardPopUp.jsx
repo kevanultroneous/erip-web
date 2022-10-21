@@ -44,6 +44,7 @@ function JobCardPopUp({
     ],
   };
 
+  //  download recipt for job card
   const reactToPrintContent = React.useCallback(() => {
     if (jobCardRef.current.dialog.children[0]) {
       return jobCardRef.current.dialog.children[0];

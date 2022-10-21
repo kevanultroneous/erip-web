@@ -8,7 +8,7 @@ import { BsEmojiSmile } from "react-icons/bs";
 import { postOrderRatePartner, postOrderReview } from "api/ordersAPI";
 
 export default function RatingAndReview({ show, onHide, order }) {
-  //
+  // Rating for services patner
   const [ratings, setRatings] = useState(null);
   const [mobileView, setMobileView] = useState(false);
   const [edits, setEdits] = useState(true);
@@ -196,6 +196,7 @@ export default function RatingAndReview({ show, onHide, order }) {
                   ></textarea>
                 </div>
                 <div className={styles.PrimaryButtonCover}>
+                  {/*  dynamic for mobile view */}
                   {mobileView ? (
                     <div className={styles.ThankyouCover}>
                       <BsEmojiSmile color="#EB870E" size={20} />
@@ -207,6 +208,7 @@ export default function RatingAndReview({ show, onHide, order }) {
 
                   <PrimaryButton
                     clickHandler={() => {
+                      //  after order review
                       postOrderReview(localStorage.getItem("token"), {
                         order: order,
                         question: 1,

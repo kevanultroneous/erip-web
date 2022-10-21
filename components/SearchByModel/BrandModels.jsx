@@ -9,6 +9,7 @@ function BrandModels({ heading, brandsArray, overlayHandling, clickHandler }) {
         <div className={styles.modelHeader}>
           <h4>{heading}</h4>
         </div>
+        {/*  Get brand data  */}
         <Row className={styles.categoryDataMobile}>
           {brandsArray.map((brands, ind) => {
             return (

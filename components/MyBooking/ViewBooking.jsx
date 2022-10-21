@@ -114,6 +114,8 @@ export default function ViewBooking({ backhandler, order }) {
       </Row>
 
       <Row>
+
+        {/*  ------------------------- dynamic call of partner status progress -------------------------------- */}
         <PartnerStatusProgress
           data={details.length > 0 ? details[0].order_user_timeline_detail : []}
           process={false}
@@ -146,6 +148,7 @@ export default function ViewBooking({ backhandler, order }) {
         />
       </Row>
 
+{/*  ------------------- Cancle order button ---------------------- */}
       <CancelOrder
         show={cancelOrder}
         onHide={() => setCancelOrder(false)}
@@ -226,6 +229,7 @@ export default function ViewBooking({ backhandler, order }) {
                   : null
               }
               issue={
+                // -------------------------- issue data call dynamic ------------------------------------//
                 details.length > 0
                   ? details[0].order_issues != null
                     ? details[0].order_issues.length > 0
@@ -311,6 +315,8 @@ export default function ViewBooking({ backhandler, order }) {
                   : false
               }
               callsupport={
+
+                //------------------------------  Get dynamic detail through api -----------------------------------------------//
                 details.length > 0
                   ? "tel:+91" + Object.values(details[0].order_options_1[0])[1]
                   : null

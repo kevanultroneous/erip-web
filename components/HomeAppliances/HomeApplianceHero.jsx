@@ -6,6 +6,7 @@ import styles from "@/styles/components/homeAppliances/homeApplianceHero.module.
 function HomeApplianceHero() {
   const [mobileView, setMobileView] = useState(false);
 
+  // Home appliance  Dynamic UI for diff. device
   useEffect(() => {
     window.innerWidth < 884 ? setMobileView(false) : setMobileView(true);
   }, []);

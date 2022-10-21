@@ -48,6 +48,7 @@ export default function NewsAndUpdate() {
   };
   const [data, setData] = useState(NewsandUpdateData);
 
+  // ----------------Blog Api call------------------------// 
   useEffect(() => {
     BlogResponseApi()
       .then((r) => setData(r.data))

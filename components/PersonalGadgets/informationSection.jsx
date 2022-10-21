@@ -7,6 +7,7 @@ function InformationSection({ title, paragraph }) {
       {paragraph.length > 0 && (
         <>
           <h2>{title}</h2>
+          {/* ---------------- PersonalGadgets data -----------------------------  */}
           {paragraph.map((para, index) => {
             return <p key={index}>{para.infosection_content}</p>;
           })}

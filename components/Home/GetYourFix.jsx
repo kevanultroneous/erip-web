@@ -29,6 +29,7 @@ export default function GetYourFix() {
   // }, [categoryID]);
   const [data, setData] = useState(GetYourFixCard);
 
+
   useEffect(() => {
     let cityID =
       localStorage.getItem("cityid") == null
@@ -49,7 +50,8 @@ export default function GetYourFix() {
         <div className={styles.MainTitleWrraper}>
           <h3 className={styles.MainTitle}>Get Your Fix!</h3>
         </div>
-
+ 
+      {/* --------- condition for Seo purpose URl  */}
         {data.map((value, index) => (
           <Link
             key={index}

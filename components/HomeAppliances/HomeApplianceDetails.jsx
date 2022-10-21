@@ -7,6 +7,7 @@ import styles from "@/styles/components/homeAppliances/HomeApplianceDetails.modu
 function HomeApplianceDetails({ paragraph }) {
   return (
     <Container userdefinedclass={styles.homeApplianceDetailsContainer}>
+      {/*  pass props bcz detail changes on differnt url & section */}
       <p>{paragraph}</p>
       <h6>
         <Link href={"#"}>

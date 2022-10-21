@@ -50,6 +50,8 @@ export default function Testimonials() {
   const [mobileView, setMobileView] = useState(false);
 
   const [data, setData] = useState(TestimonialData);
+
+  //  Testimonial UI for different devices
   useEffect(() => {
     window.innerWidth < 992 ? setMobileView(true) : setMobileView(false);
     HomeTestimonialAPI()

@@ -29,6 +29,7 @@ function LeftMenu({
               <Image fluid src={profileImage} alt={profileName} />
             </div>
             <div className={styles.profileDetails}>
+              {/* --------------------- profile details ---------------------------- */}
               <h5 onClick={updatename} className={styles.AlternativeButtons}>
                 {profileName == "0" ? "Erip User" : profileName}
               </h5>
@@ -36,6 +37,7 @@ function LeftMenu({
                 onClick={alternativenumberaction}
                 className={styles.AlternativeButtons}
               >
+                {/*  ------------------ Add alternet Num --------------------------- */}
                 {profileNumber ? profileNumber : "add alternative number"}
               </p>
               {/* <p
@@ -44,6 +46,8 @@ function LeftMenu({
               >
                 {altnum ? altnum : }
               </p> */}
+
+              {/* ------------------- Add Email --------------------------------- */}
               <p onClick={addemailaction} className={styles.AlternativeButtons}>
                 {altemail ? altemail : "add email"}
               </p>
@@ -51,6 +55,7 @@ function LeftMenu({
           </Col>
         </div>
         <div>
+          {/*  --------------------------- Booking Menu ------------------------------------ */}
           {menus.map((menu, ind) => {
             return (
               <div key={ind} className={styles.bookingMenuText}>
@@ -62,6 +67,7 @@ function LeftMenu({
         </div>
       </div>
       <div className={styles.profileDetailsLogOut}>
+        {/* ----------------------------- Logout api call ------------------------- */}
         <p
           onClick={() => {
             axios

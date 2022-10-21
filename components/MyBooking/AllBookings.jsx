@@ -22,6 +22,8 @@ function AllBookings() {
   const [orderhash, setOrderHash] = useState();
   const [mobileView, setMobileView] = useState(false);
   const dispatch = useDispatch();
+
+  //  view single order store using redux
   useEffect(() => {
     if (localStorage.getItem("orderview")) {
       setViewDetail(true);
@@ -31,6 +33,7 @@ function AllBookings() {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
   }, []);
 
+//  all order history 
   const allOrders = () => {
     getOrders(localStorage.getItem("token"))
       .then((r) => {
@@ -40,6 +43,8 @@ function AllBookings() {
       })
       .catch((e) => console.log(e));
   };
+
+  // -----Profile drtail -------//
   const profileselector = useSelector((selector) => selector.profile.profile);
 
   const profiledetail = profileselector

@@ -30,6 +30,7 @@ function IssueComponent({
   issueID,
 }) {
   const [mobileView, setMobileView] = useState(false);
+  // Dynamic Media query for Issue section
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(true) : setMobileView(false);
   }, []);

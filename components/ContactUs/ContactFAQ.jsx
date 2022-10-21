@@ -8,6 +8,8 @@ import { API_URL } from "utils/data";
 
 function ContactFAQ({ faqArray }) {
   const [mobileView, setMobileView] = useState(true);
+
+  //  FAQ UI for different chnages
   useEffect(() => {
     window.innerWidth < 600 ? setMobileView(false) : setMobileView(true);
   }, []);

@@ -7,6 +7,8 @@ export default function FeedbackQue() {
       <div className={styles.NeedHelpWrraper}>
         <label className={styles.MainLabel}>Feedback Questions</label>
         <div className="Needhelpaccordian">
+
+          {/*  ---------- Feedback data ----------  */}
           <Accordion defaultActiveKey={["0"]} alwaysOpen>
             {[
               "How was the technician’s behaviour?",

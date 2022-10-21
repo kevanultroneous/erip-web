@@ -42,6 +42,8 @@ export default function OfferBanner({ clickhandler }) {
   const [data, setData] = useState(OfferBannerhomedata);
   const [offerPopup, setOfferPopup] = useState(false);
   const [selectedImg, setSelectedImg] = useState("");
+
+  //  offer section Api on home
   useEffect(() => {
     OfferSectionHomeAPI()
       .then((r) => setData(r.data))

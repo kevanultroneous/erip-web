@@ -10,6 +10,7 @@ import axios from "axios";
 export default function HomeHero() {
   const [HomeHerod, setHomeHeroD] = useState(HomeHerodata);
 
+  //  Hero section slider 
   useEffect(() => {
     HeroSectionApi()
       .then((r) => setHomeHeroD(r.data))
