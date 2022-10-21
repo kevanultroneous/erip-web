@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL } from "utils/data";
 
+// get segments by category
 export const getSegmentByCategory = async (categoryID) => {
   try {
     return await axios
@@ -22,6 +23,7 @@ export const getSegmentByCategory = async (categoryID) => {
   }
 };
 
+// get issues by segments 
 export const getIssuesBySegments = async (segmentID) => {
   try {
     return await axios
@@ -43,6 +45,7 @@ export const getIssuesBySegments = async (segmentID) => {
   }
 };
 
+// get issues by segment details
 export const getIssuesBySegmentsDetails = async (segmentID) => {
   try {
     return await axios

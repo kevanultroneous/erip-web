@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL } from "utils/data";
 
+// home testimonials
 export const testimonialsHome = async () => {
   try {
     return await axios
@@ -22,6 +23,7 @@ export const testimonialsHome = async () => {
   }
 };
 
+// get testimonials by category
 export const testimonialsByCategory = async (categoryID) => {
   try {
     return await axios
@@ -43,6 +45,7 @@ export const testimonialsByCategory = async (categoryID) => {
   }
 };
 
+// get testimonials by brands
 export const testimonialsByBrands = async (brandID) => {
   try {
     return await axios
@@ -64,6 +67,7 @@ export const testimonialsByBrands = async (brandID) => {
   }
 };
 
+// get testimonials by models
 export const testimonialsByModels = async (modelID) => {
   try {
     return await axios

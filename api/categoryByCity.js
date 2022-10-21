@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL } from "utils/data";
 
+// get categories by city
 export const getCategoriesByCity = async (cityID) => {
   try {
     return await axios

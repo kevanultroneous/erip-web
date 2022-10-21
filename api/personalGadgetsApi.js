@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL } from "utils/data";
 
+// brands by category
 export const getBrandsByCategory = async (categoryID) => {
   try {
     return await axios
@@ -22,6 +23,7 @@ export const getBrandsByCategory = async (categoryID) => {
   }
 };
 
+// models by brand
 export const getModelsByBrand = async (brandID) => {
   try {
     return await axios
@@ -43,6 +45,7 @@ export const getModelsByBrand = async (brandID) => {
   }
 };
 
+// issues by model
 export const getIssuesByModel = async (modelID) => {
   try {
     return await axios
@@ -64,6 +67,7 @@ export const getIssuesByModel = async (modelID) => {
   }
 };
 
+// issues by model details
 export const getIssuesByModelDetails = async (modelID, cityID) => {
   try {
     return await axios
@@ -87,6 +91,7 @@ export const getIssuesByModelDetails = async (modelID, cityID) => {
   }
 };
 
+// get category name
 export const getCategoryName = async (cityID, categoryID) => {
   try {
     return await axios
@@ -104,6 +109,7 @@ export const getCategoryName = async (cityID, categoryID) => {
   }
 };
 
+// get brand name
 export const getBrandName = async (categoryID, brandID) => {
   try {
     return await axios
@@ -121,6 +127,7 @@ export const getBrandName = async (categoryID, brandID) => {
   }
 };
 
+// get model name
 export const getModelName = async (brandID, modelID) => {
   try {
     return await axios

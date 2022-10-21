@@ -76,6 +76,7 @@ function Categoryids({ categories }) {
     return;
   }, []);
 
+  // get Category
   useEffect(() => {
     if (router.query.category) getCategoryFromQuery();
     dispatch(getPersonalGadgetsSuccess(categoryAvailable));

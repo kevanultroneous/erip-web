@@ -75,6 +75,8 @@ function ModelIds({ data }) {
     return;
   }, []);
 
+
+  // get categories
   useEffect(() => {
     if (router.query.category) getCategoryFromQuery();
   }, [categoryAvailable]);

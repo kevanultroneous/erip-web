@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL } from "utils/data";
 
+// get info by category
 export const infoByCategory = async (categoryID) => {
   try {
     return await axios
@@ -22,6 +23,7 @@ export const infoByCategory = async (categoryID) => {
   }
 };
 
+// get info by brands
 export const infoByBrands = async (brandID) => {
   try {
     return await axios
@@ -43,6 +45,7 @@ export const infoByBrands = async (brandID) => {
   }
 };
 
+// get info by models
 export const infoByModels = async (modelID) => {
   try {
     return await axios

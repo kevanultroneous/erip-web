@@ -75,6 +75,7 @@ function BrandIds({ data }) {
     return;
   }, []);
 
+  // get Category
   useEffect(() => {
     if (router.query.category) getCategoryFromQuery();
     return;
@@ -101,7 +102,7 @@ function BrandIds({ data }) {
         categoryAvailable={categoryAvailable}
         // headClass={styles.selectDeviceHero}
         modelSection={styles.selectDeviceSection}
-        // homeQuery={router.query.issue}
+      // homeQuery={router.query.issue}
       />
       <HomeHero offers={offers} />
       <HowItWork />
